@@ -11,8 +11,10 @@ def run_checks(t: dict[str, pd.DataFrame], school: pd.DataFrame, warnings: list[
     def section(title):
         lines.extend(["", f"## {title}", ""])
 
-    section("File discovery")
-    lines += [f"- WARNING: {w}" for w in warnings] or ["- All files recognised and in matching year folders."]
+    section("File discovery and quarantined rows")
+    lines.append("Tables below are read from silver; rows failing an error rule are in data/quarantine/.")
+    lines.append("")
+    lines += [f"- WARNING: {w}" for w in warnings] or ["- All files recognised and no rows quarantined."]
 
     section("Rows per dataset, district and year")
     counts = pd.DataFrame({k: v.groupby(["district_file", "year"]).size() for k, v in t.items()}).fillna(0).astype(int)

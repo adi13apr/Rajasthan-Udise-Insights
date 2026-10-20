@@ -1,20 +1,16 @@
-"""Turn raw tables into an analysis-ready school-year table and district summaries."""
+"""Turn silver tables into an analysis-ready school-year table and district summaries.
+
+Cleaning (district names, yes/no codes, classroom rebuild, management groups,
+facility indicators) happens in pipeline/silver.py; this module only combines
+and summarises.
+"""
 import numpy as np
 import pandas as pd
 
 from . import config as C
+from .silver import normalise_district
 
 KEY = ["year", "pseudocode"]
-
-
-def normalise_district(s: pd.Series) -> pd.Series:
-    s = s.astype(str).str.strip().str.upper().str.replace(r"\s+", " ", regex=True)
-    return s.replace(C.DISTRICT_ALIASES)
-
-
-def yes_no(s: pd.Series) -> pd.Series:
-    """1 -> 1, 2 -> 0, anything else (e.g. 9 = not applicable) -> missing."""
-    return s.map(C.YES_NO).astype("Float64")
 
 
 def class_cols(df: pd.DataFrame, classes, sex: str) -> list[str]:
@@ -60,33 +56,19 @@ def enrolment_per_school(enr1: pd.DataFrame) -> pd.DataFrame:
 
 # --- Facilities -------------------------------------------------------------
 
-def facility_flags(fac: pd.DataFrame) -> pd.DataFrame:
-    f = fac[KEY].copy()
-    f["has_electricity"] = (fac["electricity_availability"] == 1).astype(int)  # 3 = not functional
-    f["has_safe_water"] = (fac[C.SAFE_WATER_COLS] == 1).any(axis=1).astype(int)
-    f["has_girls_toilet"] = ((fac["total_girls_func_toilet"] + fac["func_girls_cwsn_friendly"]) > 0).astype(int)
-    f["has_boys_toilet"] = ((fac["total_boys_func_toilet"] + fac["func_boys_cwsn_friendly"]) > 0).astype(int)
-    f["has_handwash"] = yes_no(fac["handwash_near_toilet"])
-    f["has_library"] = yes_no(fac["library_availability"])
-    f["has_playground"] = yes_no(fac["playground_available"])
-    f["has_ramp"] = yes_no(fac["availability_ramps"])
-    f["has_internet"] = yes_no(fac["internet"])
-    f["has_computer"] = ((fac[["laptop", "desktop", "tablet"]].fillna(0).sum(axis=1)) > 0).astype(int)
-    # total_class_rooms is 0 for every school in the 2024-25 release, so the
-    # classroom count is rebuilt from the condition breakdown (which matches
-    # total_class_rooms exactly wherever that field is filled in).
-    f["classrooms"] = (fac["classrooms_in_good_condition"] + fac["classrooms_needs_minor_repair"]
-                       + fac["classrooms_needs_major_repair"])
-    f["classrooms_good"] = fac["classrooms_in_good_condition"]
-    f["pct_classrooms_major_repair"] = (fac["classrooms_needs_major_repair"]
-                                        / f["classrooms"].replace(0, float("nan")) * 100).round(1)
+FACILITY_COLS = ["has_electricity", "has_safe_water", "has_girls_toilet", "has_boys_toilet",
+                 "has_handwash", "has_library", "has_playground", "has_ramp", "has_internet",
+                 "has_computer", "classrooms", "classrooms_good", "pct_classrooms_major_repair"]
+# Simple, transparent index: share of 8 basic facilities present (0-100).
+# Playground is left out: its availability dropped by a reporting change (DATA_QUALITY_LOG #17).
+INDEX_COLS = ["has_electricity", "has_safe_water", "has_girls_toilet", "has_handwash",
+              "has_library", "has_ramp", "has_internet", "has_computer"]
 
-    # Simple, transparent index: share of 8 basic facilities present (0-100).
-    index_cols = ["has_electricity", "has_safe_water", "has_girls_toilet", "has_handwash",
-                  "has_library", "has_ramp", "has_internet", "has_computer"]
-    f["infra_index"] = (f[index_cols].astype(float).mean(axis=1) * 100).round(1)
-    flag_cols = [c for c in f.columns if c.startswith("has_")]
-    f[flag_cols] = f[flag_cols].astype(float)  # NaN = not reported / not applicable
+
+def facility_indicators(fac: pd.DataFrame) -> pd.DataFrame:
+    """Facility indicators from silver (built by silver.facility_flags) + infrastructure index."""
+    f = fac[KEY + FACILITY_COLS].copy()
+    f["infra_index"] = (f[INDEX_COLS].astype(float).mean(axis=1) * 100).round(1)
     return f
 
 
@@ -101,23 +83,17 @@ def teacher_cols(tch: pd.DataFrame) -> pd.DataFrame:
 # --- School-year table ------------------------------------------------------
 
 def build_school_year(t: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """One row per school and year. `t` holds silver tables (silver.tables_for_build)."""
     prof = t["profile1"][KEY + ["district_file", "state", "district", "block", "rural_urban",
                                 "school_category", "school_type", "lowclass", "highclass",
-                                "managment", "lgd_block_name"]].copy()
-    prof["district"] = normalise_district(prof["district"])
+                                "managment", "lgd_block_name", "block_is_admin_region",
+                                "block_clean", "location", "school_type_label",
+                                "management_group", "is_govt"]].copy()
     prof["district_file"] = normalise_district(prof["district_file"])
-    prof["block"] = prof["block"].str.strip().str.upper()
-    # Some central-govt schools list an admin region (e.g. "JAIPUR REGION") as their block.
-    prof["block_is_admin_region"] = prof["block"].str.contains("REGION", na=False)
-    prof["block_clean"] = prof["block"].where(~prof["block_is_admin_region"])
-    prof["location"] = prof["rural_urban"].map(C.RURAL_URBAN)
-    prof["school_type_label"] = prof["school_type"].map(C.SCHOOL_TYPE)
-    prof["management_group"] = prof["managment"].map(C.MANAGEMENT_GROUP).fillna("Unmapped")
-    prof["is_govt"] = prof["management_group"].isin(C.GOVT_GROUPS).astype(int)
 
     df = (prof
           .merge(enrolment_per_school(t["enrolment1"]), on=KEY, how="left")
-          .merge(facility_flags(t["facility"]), on=KEY, how="left")
+          .merge(facility_indicators(t["facility"]), on=KEY, how="left")
           .merge(teacher_cols(t["teacher"]), on=KEY, how="left"))
 
     enr_cols = [c for c in df.columns if c.startswith("enr_")]

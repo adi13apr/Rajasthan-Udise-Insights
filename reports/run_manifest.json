@@ -1,6 +1,6 @@
 {
-  "run_id": "20261020T174436Z",
-  "started_at": "2026-10-20T17:44:36+00:00",
+  "run_id": "20261020T181959Z",
+  "started_at": "2026-10-20T18:19:59+00:00",
   "stages": {
     "bronze": {
       "seconds": 0.13,
@@ -1345,13 +1345,124 @@
         }
       ]
     },
+    "silver": {
+      "seconds": 17.72,
+      "tables": {
+        "schools": {
+          "source": "profile1",
+          "rows_in": 217267,
+          "rows_silver": 212747,
+          "rows_quarantined": 4520,
+          "quarantined_by_rule": {
+            "missing_required": 0,
+            "not_a_number": 0,
+            "negative_count": 0,
+            "unknown_district": 0,
+            "duplicate_school_year": 4520
+          },
+          "flagged_by_rule": {
+            "unknown_management": 0,
+            "invalid_rural_urban": 0,
+            "invalid_code": 592
+          }
+        },
+        "enrolment": {
+          "source": "enrolment1",
+          "rows_in": 592350,
+          "rows_silver": 592350,
+          "rows_quarantined": 0,
+          "quarantined_by_rule": {
+            "missing_required": 0,
+            "not_a_number": 0,
+            "negative_count": 0,
+            "duplicate_enrolment_row": 0,
+            "orphan_school": 0
+          },
+          "flagged_by_rule": {}
+        },
+        "enrolment_other": {
+          "source": "enrolment1",
+          "rows_in": 476536,
+          "rows_silver": 476536,
+          "rows_quarantined": 0,
+          "quarantined_by_rule": {
+            "missing_required": 0,
+            "not_a_number": 0,
+            "negative_count": 0,
+            "duplicate_enrolment_row": 0,
+            "orphan_school": 0
+          },
+          "flagged_by_rule": {
+            "undocumented_item": 221
+          }
+        },
+        "facilities": {
+          "source": "facility",
+          "rows_in": 217267,
+          "rows_silver": 212747,
+          "rows_quarantined": 4520,
+          "quarantined_by_rule": {
+            "missing_required": 0,
+            "not_a_number": 0,
+            "negative_count": 0,
+            "duplicate_school_year": 4520,
+            "orphan_school": 0
+          },
+          "flagged_by_rule": {
+            "invalid_code": 19868,
+            "functional_toilets_exceed_total": 0,
+            "classroom_total_mismatch": 0
+          }
+        },
+        "teachers": {
+          "source": "teacher",
+          "rows_in": 217267,
+          "rows_silver": 212747,
+          "rows_quarantined": 4520,
+          "quarantined_by_rule": {
+            "missing_required": 0,
+            "not_a_number": 0,
+            "negative_count": 0,
+            "duplicate_school_year": 4520,
+            "orphan_school": 0
+          },
+          "flagged_by_rule": {
+            "no_teachers_with_students": 634,
+            "high_ptr": 2389
+          }
+        }
+      },
+      "reconciled": {
+        "profile1": {
+          "bronze": 217267,
+          "silver_plus_quarantine": 217267
+        },
+        "teacher": {
+          "bronze": 217267,
+          "silver_plus_quarantine": 217267
+        },
+        "enrolment1": {
+          "bronze": 1068886,
+          "silver_plus_quarantine": 1068886
+        },
+        "facility": {
+          "bronze": 217267,
+          "silver_plus_quarantine": 217267
+        }
+      }
+    },
     "profile": {
-      "seconds": 3.74,
+      "seconds": 9.44,
       "columns_with_problems": {
         "bronze__enrolment1": 1,
         "bronze__facility": 6,
         "bronze__profile1": 1,
-        "bronze__teacher": 0
+        "bronze__teacher": 0,
+        "silver__schools": 1,
+        "silver__enrolment": 0,
+        "silver__enrolment_other": 0,
+        "silver__facilities": 6,
+        "silver__teachers": 0
       },
       "duplicate_rows_on_natural_key": {
         "bronze__enrolment1": {
@@ -1369,15 +1480,35 @@
         "bronze__teacher": {
           "2024-25": 2265,
           "2025-26": 2255
+        },
+        "silver__schools": {
+          "2024-25": 0,
+          "2025-26": 0
+        },
+        "silver__enrolment": {
+          "2024-25": 0,
+          "2025-26": 0
+        },
+        "silver__enrolment_other": {
+          "2024-25": 0,
+          "2025-26": 0
+        },
+        "silver__facilities": {
+          "2024-25": 0,
+          "2025-26": 0
+        },
+        "silver__teachers": {
+          "2024-25": 0,
+          "2025-26": 0
         }
       }
     },
     "build": {
-      "seconds": 20.23,
+      "seconds": 12.8,
       "rows_loaded": {
+        "profile1": 212747,
         "enrolment1": 1068886,
         "facility": 212747,
-        "profile1": 212747,
         "teacher": 212747
       },
       "school_year_rows": 212747,
@@ -1385,9 +1516,9 @@
     }
   },
   "warnings": [
-    "facility: dropped 4,520 duplicate rows (same school in more than one file)",
-    "profile1: dropped 4,520 duplicate rows (same school in more than one file)",
-    "teacher: dropped 4,520 duplicate rows (same school in more than one file)"
+    "schools: 4,520 rows quarantined (duplicate_school_year: 4,520) -> data/quarantine/schools.parquet",
+    "facilities: 4,520 rows quarantined (duplicate_school_year: 4,520) -> data/quarantine/facilities.parquet",
+    "teachers: 4,520 rows quarantined (duplicate_school_year: 4,520) -> data/quarantine/teachers.parquet"
   ],
-  "finished_at": "2026-10-20T17:45:00+00:00"
+  "finished_at": "2026-10-20T18:20:39+00:00"
 }

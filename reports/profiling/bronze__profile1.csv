@@ -14,7 +14,7 @@ bronze,profile1,2025-26,approachable_road,True,True,VARCHAR,smallint,yes_no,1087
 bronze,profile1,2024-25,avg_instr_days,True,True,VARCHAR,smallint,numeric,108567,0,0.0,210,0,0.0,250.0,0,,,0,,"0 (54,455); 220 (4,408); 210 (2,906); 218 (2,391); 216 (2,131)",50.16,
 bronze,profile1,2025-26,avg_instr_days,True,True,VARCHAR,smallint,numeric,108700,0,0.0,214,0,0.0,250.0,0,,,0,,"0 (40,894); 220 (5,739); 210 (3,547); 218 (2,614); 225 (2,304)",37.62,
 bronze,profile1,2024-25,block,True,True,VARCHAR,varchar,text,108567,0,0.0,374,108567,,,0,,,0,,"KOTA (1,838); JHOTWARA CITY (1,006); JODHPUR CITY (966); BIKANER (958); JAIPUR WEST (773)",1.69,
-bronze,profile1,2025-26,block,True,True,VARCHAR,varchar,text,108700,0,0.0,376,108700,,,0,,,0,,"KOTA (1,820); JHOTWARA CITY (1,022); BIKANER (956); JODHPUR CITY (952); JAIPUR WEST (772)",1.67,
+bronze,profile1,2025-26,block,True,True,VARCHAR,varchar,text,108700,0,0.0,376,108700,,,0,,,0,,"KOTA (1,820); JHOTWARA CITY (1,022); BIKANER (956); JODHPUR CITY (952); GOVINDGARH (772)",1.67,
 bronze,profile1,2024-25,cce_yn,True,True,VARCHAR,smallint,yes_no,108567,0,0.0,2,0,1.0,2.0,0,"1, 2, 9","schema (Yes=1, No=2) + 9 = not applicable",0,,"1 (66,532); 2 (42,035)",61.28,
 bronze,profile1,2025-26,cce_yn,True,True,VARCHAR,smallint,yes_no,108700,0,0.0,3,0,1.0,9.0,0,"1, 2, 9","schema (Yes=1, No=2) + 9 = not applicable",0,,"1 (69,041); 2 (39,658); 9 (1)",63.52,
 bronze,profile1,2024-25,certified_fit_india_yn,False,False,VARCHAR,,,108567,108567,100.0,0,0,,,0,,,0,,"<null> (108,567)",,

@@ -90,8 +90,8 @@ then the Sattva analysis (phases A1-A6).
 - `reference/schema_columns.json`: every column of every dataset and year with type and
   documented codes, parsed from the schema PDFs by `scripts/extract_schema.py` (pdfplumber).
 - `pipeline/ingest.py`: finds zips, reads CSV inside each zip in place, parses
-  dataset/district/year from the file name, stacks files, drops duplicate
-  school-years with a warning (to change: quarantine instead).
+  dataset/district/year from the file name. `load_all()` (stack + drop duplicates) is no
+  longer used by the pipeline since P3: duplicates are quarantined in silver.
 - `pipeline/bronze.py` (P1): each raw zip -> `data/bronze/<dataset>/year=<YYYY-YY>/
   <stem>.parquet`, all values as text, plus `_source_file`, `_source_row`,
   `_district_file`, `_year`, `_ingested_at`, `_run_id`. Incremental: SHA-256 per zip in
@@ -103,7 +103,15 @@ then the Sattva analysis (phases A1-A6).
   `README.md` (problems only). School codes are never written to reports.
 - `reports/run_manifest.json`: per-run record (files, checksums, rows, timings).
 - `tests/`: pytest on synthetic zips built in a temp folder.
-- `pipeline/build.py`: school-year table (enrolment by stage and sex, SC/ST/CWSN,
+- `pipeline/silver.py` (P3): bronze -> typed, standardised tables in `data/silver/<table>/
+  year=<Y>/` (`schools`, `enrolment` = item_group 1, `enrolment_other`, `facilities`,
+  `teachers`). The cleaning functions moved here from `build.py` (district aliasing,
+  yes/no mapping, classroom rebuild, management grouping, facility indicators). Checks
+  bronze rows = silver + quarantine on every run. Rebuilt in full each run.
+- `pipeline/rules.py` (P3): rules as data; errors -> `data/quarantine/<table>.parquet`
+  (`_rule`, `_reason`, `_run_id`), warnings -> `flag_<rule>` columns.
+  `docs/quality_rules.md` is generated from it (`python -m pipeline.rules`).
+- `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).
 - `pipeline/checks.py`: automated QA report `reports/qa_report.md` (coverage,

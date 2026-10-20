@@ -52,3 +52,46 @@ Natural keys: enrolment1 = (year, pseudocode, item_group, item_id); facility = (
 |---|---|---|
 | `anganwadi_yn` | 2024-25 | 597 invalid codes: 0 (597) |
 
+## Silver layer
+
+| Table | Year | Rows | Duplicate rows on natural key | Columns with problems |
+|---|---|---:|---:|---:|
+| schools | 2024-25 | 106,302 | 0 | 1 |
+| schools | 2025-26 | 106,445 | 0 | 0 |
+| enrolment | 2024-25 | 296,086 | 0 | 0 |
+| enrolment | 2025-26 | 296,264 | 0 | 0 |
+| enrolment_other | 2024-25 | 238,908 | 0 | 0 |
+| enrolment_other | 2025-26 | 237,628 | 0 | 0 |
+| facilities | 2024-25 | 106,302 | 0 | 4 |
+| facilities | 2025-26 | 106,445 | 0 | 2 |
+| teachers | 2024-25 | 106,302 | 0 | 0 |
+| teachers | 2025-26 | 106,445 | 0 | 0 |
+
+Natural keys: schools = (year, pseudocode); enrolment = (year, pseudocode, item_group, item_id); enrolment_other = (year, pseudocode, item_group, item_id); facilities = (year, pseudocode); teachers = (year, pseudocode).
+
+### silver__schools
+
+| Column | Year | Problem |
+|---|---|---|
+| `anganwadi_yn` | 2024-25 | 592 invalid codes: 0 (592) |
+
+### silver__enrolment_other
+
+(item_group, item_id) pairs not documented in the schema:
+
+| Year | item_group | item_id | Rows |
+|---|---:|---:|---:|
+| 2024-25 | 4 | 21 | 110 |
+| 2025-26 | 4 | 21 | 111 |
+
+### silver__facilities
+
+| Column | Year | Problem |
+|---|---|---|
+| `rain_water_harvesting` | 2024-25 | 7,385 invalid codes: 3 (7,385) |
+| `rain_water_harvesting` | 2025-26 | 7,678 invalid codes: 3 (7,678) |
+| `solar_panel` | 2024-25 | 3,361 invalid codes: 3 (3,361) |
+| `solar_panel` | 2025-26 | 3,070 invalid codes: 3 (3,070) |
+| `spl_educator_yn` | 2024-25 | 29 invalid codes: 9 (29) |
+| `total_class_rooms` | 2024-25 | value 0 in 99.99% of rows, vs at most 14.91% for any value in 2025-26 (reporting change?) |
+

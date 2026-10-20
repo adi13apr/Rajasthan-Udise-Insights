@@ -13,6 +13,8 @@ REPORTS_DIR = ROOT / "reports"
 REFERENCE_DIR = ROOT / "reference"
 PROFILING_DIR = REPORTS_DIR / "profiling"
 BRONZE_DIR = ROOT / "data" / "bronze"
+SILVER_DIR = ROOT / "data" / "silver"
+QUARANTINE_DIR = ROOT / "data" / "quarantine"
 # Bronze keeps its own state (checksum of each source zip) next to the data, so
 # deleting data/bronze/ also resets incremental loading.
 BRONZE_STATE = BRONZE_DIR / "_state.json"

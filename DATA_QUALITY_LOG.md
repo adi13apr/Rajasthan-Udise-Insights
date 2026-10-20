@@ -15,7 +15,7 @@ Schemas: `docs/DSP_Schema_2024-25.pdf`, `docs/DSP_Schema_2025-26.pdf`.
 | # | Issue | Evidence | Decision |
 |---|---|---|---|
 | 1 | No state-level enrolment file | The portal's "All districts" option works for profile, facility and teacher files, but returns "File Not Found" for Enrollment-1 in both years | Enrollment-1 downloaded for each of the 41 districts separately (`download_udise.py --by-district`); other files downloaded state-wide. The pipeline joins them on school code. |
-| 2 | Same schools in two files | Kota was downloaded on its own for testing and again inside the state files (4,520 duplicate rows) | Bronze keeps both copies (it is a faithful copy of the sources: 217,267 profile rows over both years, 4,520 of them extra copies of a school-year). The build step keeps one copy and reports how many it dropped; from P3 the extra copies go to quarantine with reason `duplicate_school_year`. |
+| 2 | Same schools in two files | Kota was downloaded on its own for testing and again inside the state files (4,520 duplicate rows) | Bronze keeps both copies (it is a faithful copy of the sources: 217,267 profile rows over both years, 4,520 of them extra copies of a school-year). The Kota copies were checked to be identical to their state-file twins (0 differing rows in all three files and both years). Silver keeps the state-file copy and moves the 4,520 Kota copies to `data/quarantine/` with rule `duplicate_school_year`. |
 | 3 | District spelled differently across years | BALOTARA/BALOTRA, CHITTAURGARH/CHITTORGARH, DHAULPUR/DHOLPUR, JALOR/JALORE, PRATAPGARH (RAJ.)/PRATAPGARH | Mapped to one spelling (`DISTRICT_ALIASES` in `config.py`). Both years then have the same 41 districts. |
 
 ## Validation against published figures
@@ -39,19 +39,34 @@ All 2024-25 checks below are run automatically in `reports/qa_report.md`.
 | 11 | Yes/No questions use a third code, `9` | e.g. `smc_exists` = 9 for private schools, which are not required to have an SMC | `9` treated as "not applicable" (missing), never as "No". |
 | 12 | Central-government schools list an admin region as their block | In 2025-26, 114 schools (79 with management code 92, 35 with code 93) have block = "JAIPUR REGION" | Kept; `block_clean` left blank and flagged. District totals are unaffected. The counts fit Kendriya Vidyalayas and Navodaya Vidyalayas, which are run through regional offices (inferred, not confirmed). |
 | 13 | Management codes not documented in the schema | Codes 1, 2, 3, 5, 6, 90, 92, 93, 94, 95, 97, 98, 101 appear | Grouped using the official government totals: counting 94, 95 and 101 as government makes government teachers match the official 4,45,073 exactly (those 3 codes have exactly the 7 schools and 170 teachers that were otherwise missing). 97 and 98 are non-government. Exact names of these codes still to confirm with the UDISE+ DCF. |
-| 14 | Undocumented disability code | Enrolment item_group 4 contains item_id 21; the schema lists only 1-20 | Included in the CWSN total; flagged. |
+| 14 | Undocumented disability code | Enrolment item_group 4 contains item_id 21; the schema lists only 1-20 | Included in the CWSN total; flagged in silver (`flag_undocumented_item`, 221 rows). |
 | 15 | Schema changes between years | 2025-26 adds transgender enrolment columns, 12 facility columns and 11 profile columns | Years are stacked with all columns; missing columns left empty. Only indicators present in both years are used for comparisons. |
 | 16 | Column name differs from schema | Data: `teacher_involve_non_training_assignment`; schema: `teachers_involve_...` (cut off at 39 characters in the PDF) | Kept the name used in the data. `scripts/extract_schema.py` maps the PDF name to it (`column_in_pdf` in `reference/schema_columns.json`). |
 | 17 | State-wide drop in playgrounds | Playground availability fell more than 5 percentage points in 24 of 41 districts in a single year | Almost certainly a change in reporting, not real loss. Playground is excluded from the infrastructure index and from trend claims. |
 | 18 | Unexplained toilet drop in one district | Jhalawar: functional girls' toilets down 5.6 points and boys' down 6.3 points in one year; no other district moved this much | Kept, flagged as needing verification before being reported as a finding. |
 | 19 | Schools changing district between years | 189 schools changed district; 180 of them moved from Alwar to Kotputli-Behror | Confirmed boundary change. Year-on-year changes for Alwar and Kotputli-Behror reflect this, not real growth or decline; trend comparisons for these two use matched schools only. |
-| 20 | Implausible staffing | Schools with students but no teachers (268 in 2024-25, 366 in 2025-26); pupil-teacher ratio above 60 (1,224 and 1,165 schools) | Kept and flagged (`flag_no_teachers_with_students`, `flag_high_ptr`), not silently dropped. |
+| 20 | Implausible staffing | Schools with students but no teachers (268 in 2024-25, 366 in 2025-26); pupil-teacher ratio above 60 (1,224 and 1,165 schools) | Kept and flagged (`flag_no_teachers_with_students`: 634 rows, `flag_high_ptr`: 2,389 rows in silver `teachers`), not silently dropped. |
 | 21 | Schools in only one year | School codes are stable across years: 1,05,418 match; 884 appear only in 2024-25 and 1,027 only in 2025-26 | Treated as closures/mergers and new schools. School-level year-on-year comparisons use matched schools only. |
 | 22 | Blank location names | LGD village fields are blank for urban schools and urban fields are blank for rural schools | Structural, not missing data. No action needed. |
-| 23 | Yes/No columns with an undocumented code `3` | Schema says Yes=1, No=2 for `solar_panel` and `rain_water_harvesting`, but both use 3 in both years: `solar_panel` 3,451 rows (2024-25) and 3,156 (2025-26); `rain_water_harvesting` 7,488 and 7,782 (bronze, incl. Kota duplicates) | Meaning unknown (not in the schema). To decide in silver: treat as missing, not as Yes or No. Neither column is used in the infrastructure index. |
-| 24 | Yes/No column with code `0` | `anganwadi_yn` = 0 in 597 rows in 2024-25 only; 2025-26 uses only 1, 2, 9 | Treat as missing in silver; flagged by profiling. |
-| 25 | Code `9` in a three-way column | `spl_educator_yn` (1 = dedicated, 2 = at cluster level, 3 = no) has 9 in 29 rows in 2024-25 | Treat as "not applicable", like 9 in Yes/No columns. |
+| 23 | Yes/No columns with an undocumented code `3` | Schema says Yes=1, No=2 for `solar_panel` and `rain_water_harvesting`, but both use 3 in both years: `solar_panel` 3,451 rows (2024-25) and 3,156 (2025-26); `rain_water_harvesting` 7,488 and 7,782 (bronze, incl. Kota duplicates) | Meaning unknown (not in the schema). Silver keeps the original code and sets `flag_invalid_code`; it is never read as Yes or No. Neither column is used in the infrastructure index. |
+| 24 | Yes/No column with code `0` | `anganwadi_yn` = 0 in 597 rows in 2024-25 only; 2025-26 uses only 1, 2, 9 | Kept as is in silver with `flag_invalid_code` (592 schools after duplicates are removed); counts as missing. |
+| 25 | Code `9` in a three-way column | `spl_educator_yn` (1 = dedicated, 2 = at cluster level, 3 = no) has 9 in 29 rows in 2024-25 | Kept with `flag_invalid_code`; counts as missing. Not used in any indicator. |
 | 26 | `item_group` missing from the 2024-25 schema | The 2024-25 Enrolment_1 schema lists only `item_id`, yet the data has `item_group` (2025-26 schema lists it as `Item_group`) | Documentation gap only; the codes are the same in both years. |
 | 27 | Inconsistent capitals in LGD block names | `lgd_block_name` in 2024-25 has 626 spellings, but only 354 when case is ignored (84,128 rows all capitals, 3,191 mixed case); 2025-26 has 358 names, all in mixed case | Normalise case in silver before using LGD names. Analysis uses the UDISE+ `block` column, which is consistent. |
 
-All issues 23-27 were found by the automated profiling (`reports/profiling/README.md`), which checks every column against the codes documented in the schema PDFs.
+All issues 23-27 were found by the automated profiling (`reports/profiling/README.md`), which checks every column against the codes documented in the schema PDFs.| 28 | Column without a type in the schema | `playground_alt_yn` has no data type in either schema PDF (remarks say Yes=1, No=2) | Typed as a whole number in silver, like every coded column. |
+| 29 | Transgender enrolment is very sparse | 69 transgender students in classes 1-12 state-wide in 2025-26 (silver `enrolment`); 9 of 12 class columns are 0 in every row of `enrolment_other` | Real, not an error. The profiling rule "same value in every row" now ignores counts that are 0 everywhere. |
+
+## Silver layer and quarantine (P3)
+
+Every bronze row ends up either in silver or in quarantine; the pipeline checks this on every run and stops if the counts do not add up. Rules are listed in `docs/quality_rules.md` (generated from `pipeline/rules.py`).
+
+| Silver table | Rows | Quarantined | Rule |
+|---|---:|---:|---|
+| schools | 212,747 | 4,520 | `duplicate_school_year` (Kota test copies) |
+| enrolment (item_group 1) | 592,350 | 0 | |
+| enrolment_other | 476,536 | 0 | |
+| facilities | 212,747 | 4,520 | `duplicate_school_year` |
+| teachers | 212,747 | 4,520 | `duplicate_school_year` |
+
+No row failed `missing_required`, `not_a_number`, `negative_count`, `unknown_district` or `orphan_school`. Warnings (rows kept, flagged): `invalid_code` 592 schools and 19,868 facility rows; `no_teachers_with_students` 634; `high_ptr` 2,389; `undocumented_item` 221. After the switch to silver, `district_year.csv` and `district_year_by_management.csv` are byte-identical to the earlier output.

@@ -1,4 +1,4 @@
-"""Column profiles for every table of a layer (bronze now; silver is added in P3).
+"""Column profiles for every table of a layer (bronze and silver).
 
 For each table, column and year:
     dtype, null %, distinct count, values that are not numbers (for columns the
@@ -20,6 +20,7 @@ import duckdb
 import pandas as pd
 
 from . import config as C
+from .rules import code_set
 
 # Natural key of each table (plus year): one row per school, or per school and item for enrolment.
 NATURAL_KEYS = {
@@ -29,6 +30,12 @@ NATURAL_KEYS = {
     "teacher": ["pseudocode"],
     "safety": ["pseudocode"],
     "enrolment1": ["pseudocode", "item_group", "item_id"],
+    # silver
+    "schools": ["pseudocode"],
+    "facilities": ["pseudocode"],
+    "teachers": ["pseudocode"],
+    "enrolment": ["pseudocode", "item_group", "item_id"],
+    "enrolment_other": ["pseudocode", "item_group", "item_id"],
 }
 TOP_N = 5
 # School codes are never written to reports (UDISE+ terms: no re-identification of
@@ -54,14 +61,15 @@ def columns_by_year(con, folder: str) -> dict[str, list[str]]:
     """Columns actually present in each year's files (union_by_name fills the rest with NULL)."""
     out = {}
     for part in sorted(Path(folder).glob("year=*")):
-        rows = con.sql(f"select distinct name from parquet_schema('{part.as_posix()}/*.parquet')").fetchall()
+        rows = con.sql(f"describe select * from read_parquet('{part.as_posix()}/*.parquet', "
+                       f"union_by_name = true, hive_partitioning = false)").fetchall()
         out[part.name.split("=", 1)[1]] = [r[0] for r in rows]
     return out
 
 
 # --- Allowed values ---------------------------------------------------------
 
-def allowed_values(table: str, year: str, column: str, entry: dict | None,
+def allowed_values(dataset: str, year: str, column: str, entry: dict | None,
                    enrol_items: dict) -> tuple[set | None, str]:
     """Allowed set for a column and where it comes from; None = no rule for this column."""
     if column == "managment":
@@ -70,13 +78,14 @@ def allowed_values(table: str, year: str, column: str, entry: dict | None,
         return set(C.RURAL_URBAN), "config.RURAL_URBAN (checked against village/urban-body names)"
     if column == "district":
         return set(C.DISTRICTS) | set(C.DISTRICT_ALIASES), "reference/districts.json (names + aliases)"
-    if table == "enrolment1" and column == "item_group":
+    if dataset == "enrolment1" and column == "item_group":
         return {i["item_group"] for i in enrol_items.get(year, [])}, "schema item_group/item_id list"
-    if entry and entry["kind"] == "yes_no":
-        return {1, 2, C.NOT_APPLICABLE}, "schema (Yes=1, No=2) + 9 = not applicable"
-    if entry and entry["kind"] == "enum":
-        return {int(k) for k in entry["codes"]}, f"schema ({entry['remarks']})"
-    return None, ""
+    codes = code_set(entry)
+    if codes is None:
+        return None, ""
+    if entry["kind"] == "yes_no":
+        return codes, "schema (Yes=1, No=2) + 9 = not applicable"
+    return codes, f"schema ({entry['remarks']})"
 
 
 def is_valid(values: pd.Series, numbers: pd.Series, allowed: set) -> pd.Series:
@@ -92,7 +101,10 @@ def fmt_counts(df: pd.DataFrame) -> str:
 
 # --- Profiling --------------------------------------------------------------
 
-def profile_table(con, layer: str, table: str, folder: str, schema: dict) -> tuple[pd.DataFrame, dict]:
+def profile_table(con, layer: str, table: str, folder: str, schema: dict,
+                  dataset: str | None = None) -> tuple[pd.DataFrame, dict]:
+    """`dataset` is the bronze dataset whose schema applies (silver 'schools' -> 'profile1')."""
+    dataset = dataset or table
     src = read_sql(folder)
     present = columns_by_year(con, folder)
     dtypes = {r[0]: r[1] for r in con.sql(f"describe select * from {src}").fetchall()}
@@ -108,7 +120,7 @@ def profile_table(con, layer: str, table: str, folder: str, schema: dict) -> tup
         group by all""").df()
     vc["num"] = pd.to_numeric(vc["val"], errors="coerce")
 
-    spec = schema["datasets"].get(table, {})
+    spec = schema["datasets"].get(dataset, {})
     enrol_items = schema["enrolment1_items"]
     rows = []
     for (year, col), g in vc.groupby(["year", "col"], sort=True):
@@ -118,7 +130,7 @@ def profile_table(con, layer: str, table: str, folder: str, schema: dict) -> tup
         notnull = g[g["val"].notna()]
         n_rows, n_null = int(g["n"].sum()), int(g.loc[g["val"].isna(), "n"].sum())
         non_numeric = notnull[notnull["num"].isna()]
-        allowed, allowed_src = allowed_values(table, year, col, entry, enrol_items)
+        allowed, allowed_src = allowed_values(dataset, year, col, entry, enrol_items)
         invalid = (notnull[~is_valid(notnull["val"], notnull["num"], allowed)] if allowed is not None
                    else notnull.iloc[0:0])
         numeric = notnull["num"].notna().any()
@@ -146,7 +158,8 @@ def profile_table(con, layer: str, table: str, folder: str, schema: dict) -> tup
             "top_value_share_pct": round(notnull["n"].max() / (n_rows - n_null) * 100, 2)
                                    if n_rows > n_null else None,
         }
-        rec["problems"] = "; ".join(column_problems(rec, entry, col in NATURAL_KEYS.get(table, [])))
+        rec["problems"] = "; ".join(column_problems(rec, entry, col in NATURAL_KEYS.get(table, []),
+                                                    extra_columns_ok=layer != "bronze"))
         if col in IDENTIFIER_COLUMNS:
             rec.update({"min": None, "max": None, "top_values": HIDDEN,
                         "invalid_values": HIDDEN if rec["invalid_count"] else ""})
@@ -165,15 +178,17 @@ def profile_table(con, layer: str, table: str, folder: str, schema: dict) -> tup
 
     profile = pd.DataFrame(rows).sort_values(["column", "year"], kind="stable")
     add_drift_problems(profile)
-    return profile, table_checks(con, table, src, schema)
+    return profile, table_checks(con, table, src, schema, dataset)
 
 
-def column_problems(r: dict, entry: dict | None, is_key: bool = False) -> list[str]:
+def column_problems(r: dict, entry: dict | None, is_key: bool = False,
+                    extra_columns_ok: bool = False) -> list[str]:
+    """extra_columns_ok: silver adds its own columns (district_raw, has_*, flag_*, ...)."""
     if not r["in_source"]:
         # Missing from this year's files: a problem only if the schema says it should be there.
         return ["in schema, not in data"] if entry else []
     p = []
-    if not r["in_schema"]:
+    if not r["in_schema"] and not extra_columns_ok:
         p.append("in data, not in schema")
     if r["null_count"] == r["rows"]:
         p.append("all values empty")
@@ -183,8 +198,10 @@ def column_problems(r: dict, entry: dict | None, is_key: bool = False) -> list[s
         p.append(f"{r['negative_count']:,} negative values")
     if r["invalid_count"]:
         p.append(f"{r['invalid_count']:,} invalid codes: {r['invalid_values']}")
+    # A count that is the same non-zero number for every school is suspicious; one that is 0
+    # everywhere can be genuinely rare (e.g. transgender enrolment by religion or disability).
     if (entry and entry["kind"] == "numeric" and not is_key and r["distinct_count"] == 1
-            and r["null_count"] < r["rows"]):
+            and r["null_count"] < r["rows"] and r["min"] != 0):
         p.append(f"same value in every row ({r['top_values']})")
     return p
 
@@ -205,7 +222,7 @@ def add_drift_problems(profile: pd.DataFrame) -> None:
             profile.at[hi.name, "problems"] = f"{old}; {msg}" if old else msg
 
 
-def table_checks(con, table: str, src: str, schema: dict) -> dict:
+def table_checks(con, table: str, src: str, schema: dict, dataset: str) -> dict:
     out = {"rows": dict(con.sql(f"select year, count(*) from {src} group by 1 order by 1").fetchall())}
     key = NATURAL_KEYS.get(table)
     if key:
@@ -213,7 +230,7 @@ def table_checks(con, table: str, src: str, schema: dict) -> dict:
         out["natural_key"] = ["year"] + key
         out["duplicate_rows"] = dict(con.sql(
             f"select year, count(*) - count(distinct ({k})) from {src} group by 1 order by 1").fetchall())
-    if table == "enrolment1":
+    if dataset == "enrolment1":
         pairs = con.sql(f"""select year, try_cast(item_group as int) g, try_cast(item_id as int) i,
                                    count(*) n from {src} group by all order by all""").fetchall()
         documented = {y: {(e["item_group"], e["item_id"]) for e in items}
@@ -225,14 +242,16 @@ def table_checks(con, table: str, src: str, schema: dict) -> dict:
 
 
 def profile_layer(layer: str, tables: dict[str, str], out_dir: Path = C.PROFILING_DIR,
-                  schema: dict | None = None) -> dict:
-    """Profile every table of a layer; write one CSV per table. Returns a summary."""
+                  schema: dict | None = None, datasets: dict[str, str] | None = None) -> dict:
+    """Profile every table of a layer; write one CSV per table. Returns a summary.
+
+    datasets maps a table to the bronze dataset whose schema applies (default: same name)."""
     schema = schema or C.load_reference("schema_columns.json")
     out_dir.mkdir(parents=True, exist_ok=True)
     con = duckdb.connect()
     results = {}
     for table, folder in tables.items():
-        prof, checks = profile_table(con, layer, table, folder, schema)
+        prof, checks = profile_table(con, layer, table, folder, schema, (datasets or {}).get(table))
         prof.to_csv(out_dir / f"{layer}__{table}.csv", index=False)
         results[table] = {"profile": prof, "checks": checks}
     return results

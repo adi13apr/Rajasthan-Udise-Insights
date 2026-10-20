@@ -1,4 +1,4 @@
-"""Run the full pipeline: raw zips -> bronze Parquet -> profiling -> cleaned tables + QA report.
+"""Run the full pipeline: raw zips -> bronze -> silver (+ quarantine) -> profiling -> summaries + QA report.
 
 Usage:  python run_pipeline.py                 (incremental: unchanged zips are skipped in bronze)
         python run_pipeline.py --full-refresh  (reload every zip into bronze)
@@ -12,8 +12,8 @@ from pipeline import config as C
 from pipeline.bronze import load_bronze, new_run_id, summarise_bronze
 from pipeline.build import build_school_year, summarise
 from pipeline.checks import run_checks
-from pipeline.ingest import load_all
 from pipeline.profiling import bronze_tables, profile_layer, write_readme
+from pipeline.silver import TABLES as SILVER_TABLES, build_silver, silver_tables, tables_for_build
 
 
 def main():
@@ -36,9 +36,23 @@ def main():
                                     **summarise_bronze(bronze),
                                     "files": bronze["files"]}
 
-    # Stage 2: profiling (per-column statistics and invalid codes)
+    # Stage 2: silver (typed, cleaned, rule-checked; failures -> data/quarantine)
     t0 = time.perf_counter()
-    profiles = {"bronze": profile_layer("bronze", bronze_tables())}
+    silver = build_silver(run_id=run_id)
+    manifest["stages"]["silver"] = {"seconds": round(time.perf_counter() - t0, 2), **silver}
+    warnings = list(bronze["warnings"])
+    for table, s in silver["tables"].items():
+        rules = {r: n for r, n in s["quarantined_by_rule"].items() if n}
+        if rules:
+            warnings.append(f"{table}: {s['rows_quarantined']:,} rows quarantined ("
+                            + ", ".join(f"{r}: {n:,}" for r, n in rules.items())
+                            + f") -> data/quarantine/{table}.parquet")
+
+    # Stage 3: profiling of bronze and silver (per-column statistics and invalid codes)
+    t0 = time.perf_counter()
+    profiles = {"bronze": profile_layer("bronze", bronze_tables()),
+                "silver": profile_layer("silver", silver_tables(),
+                                        datasets={t: d for t, (d, _) in SILVER_TABLES.items()})}
     problems = write_readme(profiles)
     manifest["stages"]["profile"] = {
         "seconds": round(time.perf_counter() - t0, 2),
@@ -48,9 +62,9 @@ def main():
             for layer, res in profiles.items() for table, r in res.items() if "duplicate_rows" in r["checks"]},
     }
 
-    # Stage 3: build (pandas; still reads the raw zips until silver exists, see docs/PLAN.md P3)
+    # Stage 4: build (pandas, from silver): school-year table, district summaries, QA report
     t0 = time.perf_counter()
-    tables, warnings = load_all()
+    tables = tables_for_build()
     school = build_school_year(tables)
     district = summarise(school, ["district", "year"])
     district_mgmt = summarise(school, ["district", "year", "management_group"])
@@ -66,7 +80,6 @@ def main():
                                    "school_year_rows": len(school),
                                    "district_year_rows": len(district)}
 
-    warnings = bronze["warnings"] + warnings
     manifest["warnings"] = warnings
     manifest["finished_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     C.RUN_MANIFEST.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
@@ -75,6 +88,10 @@ def main():
     print(f"Run {run_id}")
     print(f"Bronze: {b['files_loaded']} files loaded, {b['files_skipped']} unchanged (skipped), "
           f"{b['bronze_bytes'] / 1e6:.1f} MB, {b['seconds']} s")
+    sv = manifest["stages"]["silver"]
+    print(f"Silver: {sum(s['rows_silver'] for s in sv['tables'].values()):,} rows in "
+          f"{len(sv['tables'])} tables, {sum(s['rows_quarantined'] for s in sv['tables'].values()):,} "
+          f"quarantined, bronze = silver + quarantine for every dataset, {sv['seconds']} s")
     pr = manifest["stages"]["profile"]
     print(f"Profiling: {len(pr['columns_with_problems'])} tables, "
           f"{sum(pr['columns_with_problems'].values())} column-years with problems, {pr['seconds']} s "

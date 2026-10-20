@@ -29,6 +29,10 @@ Outputs:
 - `data/bronze/<dataset>/year=<YYYY-YY>/*.parquet`: faithful Parquet copy of each raw
   zip (values as text, plus load metadata `_source_file`, `_source_row`,
   `_district_file`, `_year`, `_ingested_at`, `_run_id`). Not committed.
+- `data/silver/<table>/year=<YYYY-YY>/`: cleaned, typed tables (`schools`, `enrolment`,
+  `enrolment_other`, `facilities`, `teachers`) with `flag_<rule>` columns for warnings. Not committed.
+- `data/quarantine/<table>.parquet`: rows that failed an error rule, with `_rule` and `_reason`
+  (see `docs/quality_rules.md`). Not committed.
 - `reports/profiling/`: per-column profile of every table (`<layer>__<table>.csv`) and a
   `README.md` listing only the columns with problems (invalid codes, schema differences, ...)
 - `reports/run_manifest.json`: what the last run did (files loaded/skipped with
@@ -46,8 +50,10 @@ pipeline/
   config.py   paths, code mappings, indicator definitions
   ingest.py   finds raw zips, reads them in place, stacks years/districts
   bronze.py   raw zips -> bronze Parquet (as-is, incremental by checksum)
+  silver.py   bronze -> cleaned, typed silver tables; failures -> quarantine
+  rules.py    data quality rules (errors quarantine, warnings flag)
   profiling.py  column profiles and invalid-code checks for each layer
-  build.py    school-year table + district summaries
+  build.py    school-year table + district summaries (reads silver)
   checks.py   automated data quality report
 reference/            lookup data as JSON: districts, management codes, official totals,
                       schema columns and codes (from the PDFs via scripts/extract_schema.py)
@@ -55,7 +61,7 @@ scripts/
 run_pipeline.py
 tests/                pytest, on synthetic data
 DATA_QUALITY_LOG.md   issues found and decisions taken
-docs/                 UDISE+ schema PDFs
+docs/                 UDISE+ schema PDFs, work plan, quality_rules.md (generated)
 ```
 
 ## Data ethics and limitations
