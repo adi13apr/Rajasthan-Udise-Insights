@@ -134,6 +134,10 @@ then the Sattva analysis (phases A1-A6).
   --sample` (env `UDISE_SAMPLE=1`, imports happen after it is set) regenerates them into
   `tests/fixtures/raw/` and writes everything under `data/sample/` (both gitignored).
   `tests/test_end_to_end.py` runs it twice in a temp folder. CI: `.github/workflows/ci.yml`.
+- P9 docs: `README.md` (Mermaid architecture), `docs/design_decisions.md`, `docs/data_dictionary.md`
+  (generated: `python scripts/make_data_dictionary.py`), `docs/quality_rules.md` (generated).
+- `requirements.txt` pins exact tested versions: unpinned installs pull pandas 3.x, which breaks
+  the pipeline (string dtype). Upgrade deliberately.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

@@ -29,3 +29,18 @@ def test_schema_reference():
     assert fac["electricity_availability"]["codes"] == {"1": "Yes", "2": "No", "3": "Yes, but not functional"}
     cwsn = {i["item_id"] for i in s["enrolment1_items"]["2025-26"] if i["item_group"] == C.CWSN_GROUP}
     assert cwsn == C.CWSN_DOCUMENTED_IDS
+
+
+def test_data_dictionary_covers_every_gold_column():
+    """docs/data_dictionary.md lists every column of the real gold database (local run only)."""
+    import duckdb
+    import pytest
+    if not C.GOLD_DB.exists():
+        pytest.skip("needs the real gold database")
+    doc = (C.ROOT / "docs" / "data_dictionary.md").read_text(encoding="utf-8")
+    con = duckdb.connect(str(C.GOLD_DB), read_only=True)
+    cols = con.execute("select table_name, column_name from information_schema.columns "
+                       "where table_schema = 'main'").fetchall()
+    con.close()
+    missing = [f"{t}.{c}" for t, c in cols if f"## {t}" not in doc or f"| `{c}` |" not in doc]
+    assert not missing, "run python scripts/make_data_dictionary.py: " + ", ".join(missing[:10])
