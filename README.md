@@ -1,5 +1,7 @@
 # Rajasthan School Education Insights (UDISE+)
 
+![CI](https://github.com/adi13apr/Rajasthan-Udise-Insights/actions/workflows/ci.yml/badge.svg)
+
 District-level analysis of school infrastructure, teachers and enrolment in
 Rajasthan, built from UDISE+ school-level microdata.
 
@@ -23,6 +25,7 @@ teachers, and is that linked to girls staying in secondary school?
 pip install -r requirements.txt
 python run_pipeline.py                 # incremental: unchanged zips are skipped
 python run_pipeline.py --full-refresh  # reload every zip into bronze
+python run_pipeline.py --sample        # whole pipeline on synthetic data (outputs in data/sample/)
 python -m pytest                       # tests (synthetic data only)
 python scripts/benchmark.py            # raw CSV vs bronze vs gold timings -> reports/benchmark.md
 ```

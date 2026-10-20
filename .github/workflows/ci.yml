@@ -1,0 +1,29 @@
+# On every push and pull request: install, run the tests, run the whole pipeline on
+# synthetic sample data. No real UDISE+ data is used (portal terms: no redistribution).
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Tests
+        run: python -m pytest -v
+      - name: Pipeline on synthetic sample data
+        run: python run_pipeline.py --sample
+      - name: Upload sample reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sample-reports
+          path: data/sample/reports/

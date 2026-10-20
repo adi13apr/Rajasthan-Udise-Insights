@@ -1,31 +1,45 @@
-"""Run the full pipeline: raw zips -> bronze -> silver (+ quarantine) -> profiling -> summaries + QA report.
+"""Run the full pipeline: raw zips -> bronze -> silver (+ quarantine) -> gold (star schema + marts)
+-> validation -> profiling -> QA report.
 
 Usage:  python run_pipeline.py                 (incremental: unchanged zips are skipped in bronze)
         python run_pipeline.py --full-refresh  (reload every zip into bronze)
+        python run_pipeline.py --sample        (synthetic data from scripts/make_sample_data.py;
+                                                all outputs under data/sample/, used by CI)
 """
 import argparse
 import json
+import os
 import time
 from datetime import datetime, timezone
-
-from pipeline import config as C
-from pipeline.bronze import load_bronze, new_run_id, summarise_bronze
-from pipeline.gold import build_gold
-from pipeline.validation import validate
-from pipeline.build import build_school_year
-from pipeline.checks import run_checks
-from pipeline.profiling import bronze_tables, profile_layer, write_readme
-from pipeline.silver import TABLES as SILVER_TABLES, build_silver, silver_tables, tables_for_build
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--full-refresh", action="store_true",
                         help="reload every raw zip into bronze, even if unchanged")
+    parser.add_argument("--sample", action="store_true",
+                        help="run on synthetic sample data (outputs in data/sample/)")
     args = parser.parse_args()
+    if args.sample:
+        os.environ["UDISE_SAMPLE"] = "1"  # must be set before pipeline.config is imported
+
+    # Imported here so that config sees UDISE_SAMPLE.
+    from pipeline import config as C
+    from pipeline.bronze import load_bronze, new_run_id, summarise_bronze
+    from pipeline.build import build_school_year
+    from pipeline.checks import run_checks
+    from pipeline.gold import build_gold
+    from pipeline.profiling import bronze_tables, profile_layer, write_readme
+    from pipeline.silver import TABLES as SILVER_TABLES, build_silver, silver_tables, tables_for_build
+    from pipeline.validation import validate
+
+    if C.SAMPLE:
+        from scripts.make_sample_data import make_sample
+        make_sample(C.RAW_DIR)  # deterministic: same bytes every time, so bronze skips them on reruns
+        print(f"Sample mode: synthetic raw data in {C.RAW_DIR}, outputs in {C.DATA_DIR}")
 
     run_id = new_run_id()
-    manifest = {"run_id": run_id,
+    manifest = {"run_id": run_id, "sample": C.SAMPLE,
                 "started_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 "stages": {}}
 
@@ -48,7 +62,7 @@ def main():
         if rules:
             warnings.append(f"{table}: {s['rows_quarantined']:,} rows quarantined ("
                             + ", ".join(f"{r}: {n:,}" for r, n in rules.items())
-                            + f") -> data/quarantine/{table}.parquet")
+                            + f") -> {C.display_path(C.QUARANTINE_DIR / f'{table}.parquet')}")
 
     # Stage 3: gold (DuckDB star schema from sql/, tested by sql/tests/)
     t0 = time.perf_counter()

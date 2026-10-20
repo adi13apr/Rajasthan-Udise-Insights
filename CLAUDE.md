@@ -129,6 +129,11 @@ then the Sattva analysis (phases A1-A6).
   to data/tmp), bronze (with/without partition filter) and gold; checks all answers are equal
   first. `reports/benchmark.md/.json`. Lesson: multi-year Parquet must be read with
   `union_by_name = true` (else the first file's columns are used and 2025-26-only columns vanish).
+- P8: `scripts/make_sample_data.py` writes deterministic synthetic zips (fixed seed and zip
+  timestamps) with one planted problem per error rule and `expected.json`; `run_pipeline.py
+  --sample` (env `UDISE_SAMPLE=1`, imports happen after it is set) regenerates them into
+  `tests/fixtures/raw/` and writes everything under `data/sample/` (both gitignored).
+  `tests/test_end_to_end.py` runs it twice in a temp folder. CI: `.github/workflows/ci.yml`.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

@@ -4,18 +4,30 @@ Lookup data (district names, management codes, official totals, schema) lives in
 reference/*.json and is loaded here, so the rest of the code uses the same names.
 """
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RAW_DIR = ROOT / "data" / "raw"
-PROCESSED_DIR = ROOT / "data" / "processed"
-REPORTS_DIR = ROOT / "reports"
 REFERENCE_DIR = ROOT / "reference"
+
+# Sample mode (python run_pipeline.py --sample, and CI): synthetic raw zips from
+# scripts/make_sample_data.py, and every output under data/sample/ (or UDISE_SAMPLE_DIR),
+# so a sample run never touches the real data or the committed reports.
+SAMPLE = os.environ.get("UDISE_SAMPLE") == "1"
+if SAMPLE:
+    DATA_DIR = Path(os.environ.get("UDISE_SAMPLE_DIR", ROOT / "data" / "sample"))
+    RAW_DIR = Path(os.environ.get("UDISE_SAMPLE_RAW", ROOT / "tests" / "fixtures" / "raw"))
+    REPORTS_DIR = DATA_DIR / "reports"
+else:
+    DATA_DIR = ROOT / "data"
+    RAW_DIR = DATA_DIR / "raw"
+    REPORTS_DIR = ROOT / "reports"
+PROCESSED_DIR = DATA_DIR / "processed"
 PROFILING_DIR = REPORTS_DIR / "profiling"
-BRONZE_DIR = ROOT / "data" / "bronze"
-SILVER_DIR = ROOT / "data" / "silver"
-QUARANTINE_DIR = ROOT / "data" / "quarantine"
-GOLD_DIR = ROOT / "data" / "gold"
+BRONZE_DIR = DATA_DIR / "bronze"
+SILVER_DIR = DATA_DIR / "silver"
+QUARANTINE_DIR = DATA_DIR / "quarantine"
+GOLD_DIR = DATA_DIR / "gold"
 GOLD_DB = GOLD_DIR / "udise.duckdb"
 GOLD_PARQUET_DIR = GOLD_DIR / "parquet"
 # District-level marts as CSV for Tableau / Excel (aggregates: fine to publish and committed).
@@ -25,6 +37,14 @@ SOURCE_NOTE = "Source: UDISE+, Ministry of Education, Government of India"
 # deleting data/bronze/ also resets incremental loading.
 BRONZE_STATE = BRONZE_DIR / "_state.json"
 RUN_MANIFEST = REPORTS_DIR / "run_manifest.json"
+
+
+def display_path(path: Path) -> str:
+    """Path relative to the project if it is inside it (for reports), else absolute."""
+    try:
+        return path.relative_to(ROOT).as_posix()
+    except ValueError:
+        return path.as_posix()
 
 
 def load_reference(name: str) -> dict:
