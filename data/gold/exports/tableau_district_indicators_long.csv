@@ -1,0 +1,1969 @@
+state,district,year,pattern,indicator,value,indicator_label
+Rajasthan,AJMER,2024-25,other,schools,2440.0,Schools (with students in classes 1-12)
+Rajasthan,AJMER,2025-26,other,schools,2433.0,Schools (with students in classes 1-12)
+Rajasthan,ALWAR,2024-25,other,schools,2974.0,Schools (with students in classes 1-12)
+Rajasthan,ALWAR,2025-26,other,schools,2800.0,Schools (with students in classes 1-12)
+Rajasthan,BALOTRA,2024-25,other,schools,2143.0,Schools (with students in classes 1-12)
+Rajasthan,BALOTRA,2025-26,other,schools,2162.0,Schools (with students in classes 1-12)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),schools,3918.0,Schools (with students in classes 1-12)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),schools,3922.0,Schools (with students in classes 1-12)
+Rajasthan,BARAN,2024-25,other,schools,2125.0,Schools (with students in classes 1-12)
+Rajasthan,BARAN,2025-26,other,schools,2112.0,Schools (with students in classes 1-12)
+Rajasthan,BARMER,2024-25,girls leaving,schools,3753.0,Schools (with students in classes 1-12)
+Rajasthan,BARMER,2025-26,girls leaving,schools,3765.0,Schools (with students in classes 1-12)
+Rajasthan,BEAWAR,2024-25,other,schools,1680.0,Schools (with students in classes 1-12)
+Rajasthan,BEAWAR,2025-26,other,schools,1681.0,Schools (with students in classes 1-12)
+Rajasthan,BHARATPUR,2024-25,other,schools,1873.0,Schools (with students in classes 1-12)
+Rajasthan,BHARATPUR,2025-26,other,schools,1880.0,Schools (with students in classes 1-12)
+Rajasthan,BHILWARA,2024-25,other,schools,3860.0,Schools (with students in classes 1-12)
+Rajasthan,BHILWARA,2025-26,other,schools,3871.0,Schools (with students in classes 1-12)
+Rajasthan,BIKANER,2024-25,other,schools,3618.0,Schools (with students in classes 1-12)
+Rajasthan,BIKANER,2025-26,other,schools,3627.0,Schools (with students in classes 1-12)
+Rajasthan,BUNDI,2024-25,other,schools,1830.0,Schools (with students in classes 1-12)
+Rajasthan,BUNDI,2025-26,other,schools,1840.0,Schools (with students in classes 1-12)
+Rajasthan,CHITTORGARH,2024-25,other,schools,2492.0,Schools (with students in classes 1-12)
+Rajasthan,CHITTORGARH,2025-26,other,schools,2487.0,Schools (with students in classes 1-12)
+Rajasthan,CHURU,2024-25,other,schools,2587.0,Schools (with students in classes 1-12)
+Rajasthan,CHURU,2025-26,other,schools,2616.0,Schools (with students in classes 1-12)
+Rajasthan,DAUSA,2024-25,other,schools,2493.0,Schools (with students in classes 1-12)
+Rajasthan,DAUSA,2025-26,other,schools,2504.0,Schools (with students in classes 1-12)
+Rajasthan,DEEG,2024-25,other,schools,1416.0,Schools (with students in classes 1-12)
+Rajasthan,DEEG,2025-26,other,schools,1419.0,Schools (with students in classes 1-12)
+Rajasthan,DHOLPUR,2024-25,other,schools,1847.0,Schools (with students in classes 1-12)
+Rajasthan,DHOLPUR,2025-26,other,schools,1851.0,Schools (with students in classes 1-12)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,schools,2268.0,Schools (with students in classes 1-12)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,schools,2272.0,Schools (with students in classes 1-12)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),schools,3179.0,Schools (with students in classes 1-12)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),schools,3181.0,Schools (with students in classes 1-12)
+Rajasthan,GANGANAGAR,2024-25,other,schools,2878.0,Schools (with students in classes 1-12)
+Rajasthan,GANGANAGAR,2025-26,other,schools,2882.0,Schools (with students in classes 1-12)
+Rajasthan,HANUMANGARH,2024-25,other,schools,2035.0,Schools (with students in classes 1-12)
+Rajasthan,HANUMANGARH,2025-26,other,schools,2043.0,Schools (with students in classes 1-12)
+Rajasthan,JAIPUR,2024-25,other,schools,8159.0,Schools (with students in classes 1-12)
+Rajasthan,JAIPUR,2025-26,other,schools,8220.0,Schools (with students in classes 1-12)
+Rajasthan,JAISALMER,2024-25,girls leaving,schools,1744.0,Schools (with students in classes 1-12)
+Rajasthan,JAISALMER,2025-26,girls leaving,schools,1748.0,Schools (with students in classes 1-12)
+Rajasthan,JALORE,2024-25,other,schools,2765.0,Schools (with students in classes 1-12)
+Rajasthan,JALORE,2025-26,other,schools,2785.0,Schools (with students in classes 1-12)
+Rajasthan,JHALAWAR,2024-25,other,schools,2219.0,Schools (with students in classes 1-12)
+Rajasthan,JHALAWAR,2025-26,other,schools,2227.0,Schools (with students in classes 1-12)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,schools,2683.0,Schools (with students in classes 1-12)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,schools,2671.0,Schools (with students in classes 1-12)
+Rajasthan,JODHPUR,2024-25,other,schools,4361.0,Schools (with students in classes 1-12)
+Rajasthan,JODHPUR,2025-26,other,schools,4374.0,Schools (with students in classes 1-12)
+Rajasthan,KARAULI,2024-25,other,schools,2205.0,Schools (with students in classes 1-12)
+Rajasthan,KARAULI,2025-26,other,schools,2210.0,Schools (with students in classes 1-12)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,schools,1394.0,Schools (with students in classes 1-12)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,schools,1399.0,Schools (with students in classes 1-12)
+Rajasthan,KOTA,2024-25,boys moving in,schools,2256.0,Schools (with students in classes 1-12)
+Rajasthan,KOTA,2025-26,boys moving in,schools,2249.0,Schools (with students in classes 1-12)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,schools,1611.0,Schools (with students in classes 1-12)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,schools,1802.0,Schools (with students in classes 1-12)
+Rajasthan,NAGAUR,2024-25,other,schools,2547.0,Schools (with students in classes 1-12)
+Rajasthan,NAGAUR,2025-26,other,schools,2547.0,Schools (with students in classes 1-12)
+Rajasthan,PALI,2024-25,other,schools,2175.0,Schools (with students in classes 1-12)
+Rajasthan,PALI,2025-26,other,schools,2163.0,Schools (with students in classes 1-12)
+Rajasthan,PHALODI,2024-25,other,schools,1621.0,Schools (with students in classes 1-12)
+Rajasthan,PHALODI,2025-26,other,schools,1627.0,Schools (with students in classes 1-12)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),schools,1981.0,Schools (with students in classes 1-12)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),schools,1969.0,Schools (with students in classes 1-12)
+Rajasthan,RAJSAMAND,2024-25,other,schools,2174.0,Schools (with students in classes 1-12)
+Rajasthan,RAJSAMAND,2025-26,other,schools,2170.0,Schools (with students in classes 1-12)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),schools,1300.0,Schools (with students in classes 1-12)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),schools,1299.0,Schools (with students in classes 1-12)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,schools,1943.0,Schools (with students in classes 1-12)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,schools,1935.0,Schools (with students in classes 1-12)
+Rajasthan,SIKAR,2024-25,boys moving in,schools,3466.0,Schools (with students in classes 1-12)
+Rajasthan,SIKAR,2025-26,boys moving in,schools,3475.0,Schools (with students in classes 1-12)
+Rajasthan,SIROHI,2024-25,other,schools,1388.0,Schools (with students in classes 1-12)
+Rajasthan,SIROHI,2025-26,other,schools,1388.0,Schools (with students in classes 1-12)
+Rajasthan,TONK,2024-25,other,schools,2458.0,Schools (with students in classes 1-12)
+Rajasthan,TONK,2025-26,other,schools,2448.0,Schools (with students in classes 1-12)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),schools,4114.0,Schools (with students in classes 1-12)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),schools,4113.0,Schools (with students in classes 1-12)
+Rajasthan,AJMER,2024-25,other,enrolment,445090.0,Students in classes 1-12
+Rajasthan,AJMER,2025-26,other,enrolment,438218.0,Students in classes 1-12
+Rajasthan,ALWAR,2024-25,other,enrolment,472806.0,Students in classes 1-12
+Rajasthan,ALWAR,2025-26,other,enrolment,431008.0,Students in classes 1-12
+Rajasthan,BALOTRA,2024-25,other,enrolment,259514.0,Students in classes 1-12
+Rajasthan,BALOTRA,2025-26,other,enrolment,254277.0,Students in classes 1-12
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),enrolment,443396.0,Students in classes 1-12
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),enrolment,432232.0,Students in classes 1-12
+Rajasthan,BARAN,2024-25,other,enrolment,248091.0,Students in classes 1-12
+Rajasthan,BARAN,2025-26,other,enrolment,237600.0,Students in classes 1-12
+Rajasthan,BARMER,2024-25,girls leaving,enrolment,440614.0,Students in classes 1-12
+Rajasthan,BARMER,2025-26,girls leaving,enrolment,437411.0,Students in classes 1-12
+Rajasthan,BEAWAR,2024-25,other,enrolment,253707.0,Students in classes 1-12
+Rajasthan,BEAWAR,2025-26,other,enrolment,250658.0,Students in classes 1-12
+Rajasthan,BHARATPUR,2024-25,other,enrolment,330493.0,Students in classes 1-12
+Rajasthan,BHARATPUR,2025-26,other,enrolment,317059.0,Students in classes 1-12
+Rajasthan,BHILWARA,2024-25,other,enrolment,488245.0,Students in classes 1-12
+Rajasthan,BHILWARA,2025-26,other,enrolment,480314.0,Students in classes 1-12
+Rajasthan,BIKANER,2024-25,other,enrolment,571261.0,Students in classes 1-12
+Rajasthan,BIKANER,2025-26,other,enrolment,546231.0,Students in classes 1-12
+Rajasthan,BUNDI,2024-25,other,enrolment,228206.0,Students in classes 1-12
+Rajasthan,BUNDI,2025-26,other,enrolment,223626.0,Students in classes 1-12
+Rajasthan,CHITTORGARH,2024-25,other,enrolment,282518.0,Students in classes 1-12
+Rajasthan,CHITTORGARH,2025-26,other,enrolment,277764.0,Students in classes 1-12
+Rajasthan,CHURU,2024-25,other,enrolment,462470.0,Students in classes 1-12
+Rajasthan,CHURU,2025-26,other,enrolment,448055.0,Students in classes 1-12
+Rajasthan,DAUSA,2024-25,other,enrolment,360144.0,Students in classes 1-12
+Rajasthan,DAUSA,2025-26,other,enrolment,345013.0,Students in classes 1-12
+Rajasthan,DEEG,2024-25,other,enrolment,235243.0,Students in classes 1-12
+Rajasthan,DEEG,2025-26,other,enrolment,223448.0,Students in classes 1-12
+Rajasthan,DHOLPUR,2024-25,other,enrolment,323028.0,Students in classes 1-12
+Rajasthan,DHOLPUR,2025-26,other,enrolment,308960.0,Students in classes 1-12
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,enrolment,344605.0,Students in classes 1-12
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,enrolment,333426.0,Students in classes 1-12
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),enrolment,342246.0,Students in classes 1-12
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),enrolment,335602.0,Students in classes 1-12
+Rajasthan,GANGANAGAR,2024-25,other,enrolment,357295.0,Students in classes 1-12
+Rajasthan,GANGANAGAR,2025-26,other,enrolment,350073.0,Students in classes 1-12
+Rajasthan,HANUMANGARH,2024-25,other,enrolment,332601.0,Students in classes 1-12
+Rajasthan,HANUMANGARH,2025-26,other,enrolment,323737.0,Students in classes 1-12
+Rajasthan,JAIPUR,2024-25,other,enrolment,1522558.0,Students in classes 1-12
+Rajasthan,JAIPUR,2025-26,other,enrolment,1495347.0,Students in classes 1-12
+Rajasthan,JAISALMER,2024-25,girls leaving,enrolment,171872.0,Students in classes 1-12
+Rajasthan,JAISALMER,2025-26,girls leaving,enrolment,166949.0,Students in classes 1-12
+Rajasthan,JALORE,2024-25,other,enrolment,417057.0,Students in classes 1-12
+Rajasthan,JALORE,2025-26,other,enrolment,410486.0,Students in classes 1-12
+Rajasthan,JHALAWAR,2024-25,other,enrolment,287897.0,Students in classes 1-12
+Rajasthan,JHALAWAR,2025-26,other,enrolment,281339.0,Students in classes 1-12
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,enrolment,398695.0,Students in classes 1-12
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,enrolment,382422.0,Students in classes 1-12
+Rajasthan,JODHPUR,2024-25,other,enrolment,694124.0,Students in classes 1-12
+Rajasthan,JODHPUR,2025-26,other,enrolment,681231.0,Students in classes 1-12
+Rajasthan,KARAULI,2024-25,other,enrolment,323409.0,Students in classes 1-12
+Rajasthan,KARAULI,2025-26,other,enrolment,309558.0,Students in classes 1-12
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,enrolment,243107.0,Students in classes 1-12
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,enrolment,235588.0,Students in classes 1-12
+Rajasthan,KOTA,2024-25,boys moving in,enrolment,416261.0,Students in classes 1-12
+Rajasthan,KOTA,2025-26,boys moving in,enrolment,405801.0,Students in classes 1-12
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,enrolment,248639.0,Students in classes 1-12
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,enrolment,262126.0,Students in classes 1-12
+Rajasthan,NAGAUR,2024-25,other,enrolment,370388.0,Students in classes 1-12
+Rajasthan,NAGAUR,2025-26,other,enrolment,362372.0,Students in classes 1-12
+Rajasthan,PALI,2024-25,other,enrolment,317024.0,Students in classes 1-12
+Rajasthan,PALI,2025-26,other,enrolment,310637.0,Students in classes 1-12
+Rajasthan,PHALODI,2024-25,other,enrolment,208217.0,Students in classes 1-12
+Rajasthan,PHALODI,2025-26,other,enrolment,203771.0,Students in classes 1-12
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),enrolment,206494.0,Students in classes 1-12
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),enrolment,202325.0,Students in classes 1-12
+Rajasthan,RAJSAMAND,2024-25,other,enrolment,235697.0,Students in classes 1-12
+Rajasthan,RAJSAMAND,2025-26,other,enrolment,231668.0,Students in classes 1-12
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),enrolment,139780.0,Students in classes 1-12
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),enrolment,135839.0,Students in classes 1-12
+Rajasthan,SAWAI MADHOPUR,2024-25,other,enrolment,287484.0,Students in classes 1-12
+Rajasthan,SAWAI MADHOPUR,2025-26,other,enrolment,278780.0,Students in classes 1-12
+Rajasthan,SIKAR,2024-25,boys moving in,enrolment,586361.0,Students in classes 1-12
+Rajasthan,SIKAR,2025-26,boys moving in,enrolment,576393.0,Students in classes 1-12
+Rajasthan,SIROHI,2024-25,other,enrolment,227277.0,Students in classes 1-12
+Rajasthan,SIROHI,2025-26,other,enrolment,224247.0,Students in classes 1-12
+Rajasthan,TONK,2024-25,other,enrolment,275126.0,Students in classes 1-12
+Rajasthan,TONK,2025-26,other,enrolment,269656.0,Students in classes 1-12
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),enrolment,541347.0,Students in classes 1-12
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),enrolment,533332.0,Students in classes 1-12
+Rajasthan,AJMER,2024-25,other,teachers,23367.0,Teachers
+Rajasthan,AJMER,2025-26,other,teachers,23371.0,Teachers
+Rajasthan,ALWAR,2024-25,other,teachers,23417.0,Teachers
+Rajasthan,ALWAR,2025-26,other,teachers,22321.0,Teachers
+Rajasthan,BALOTRA,2024-25,other,teachers,11628.0,Teachers
+Rajasthan,BALOTRA,2025-26,other,teachers,11254.0,Teachers
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),teachers,20911.0,Teachers
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),teachers,20922.0,Teachers
+Rajasthan,BARAN,2024-25,other,teachers,13371.0,Teachers
+Rajasthan,BARAN,2025-26,other,teachers,13410.0,Teachers
+Rajasthan,BARMER,2024-25,girls leaving,teachers,18620.0,Teachers
+Rajasthan,BARMER,2025-26,girls leaving,teachers,18201.0,Teachers
+Rajasthan,BEAWAR,2024-25,other,teachers,12896.0,Teachers
+Rajasthan,BEAWAR,2025-26,other,teachers,12668.0,Teachers
+Rajasthan,BHARATPUR,2024-25,other,teachers,16414.0,Teachers
+Rajasthan,BHARATPUR,2025-26,other,teachers,16609.0,Teachers
+Rajasthan,BHILWARA,2024-25,other,teachers,26093.0,Teachers
+Rajasthan,BHILWARA,2025-26,other,teachers,26146.0,Teachers
+Rajasthan,BIKANER,2024-25,other,teachers,25657.0,Teachers
+Rajasthan,BIKANER,2025-26,other,teachers,25829.0,Teachers
+Rajasthan,BUNDI,2024-25,other,teachers,13084.0,Teachers
+Rajasthan,BUNDI,2025-26,other,teachers,12991.0,Teachers
+Rajasthan,CHITTORGARH,2024-25,other,teachers,17588.0,Teachers
+Rajasthan,CHITTORGARH,2025-26,other,teachers,17287.0,Teachers
+Rajasthan,CHURU,2024-25,other,teachers,23543.0,Teachers
+Rajasthan,CHURU,2025-26,other,teachers,23843.0,Teachers
+Rajasthan,DAUSA,2024-25,other,teachers,18824.0,Teachers
+Rajasthan,DAUSA,2025-26,other,teachers,19057.0,Teachers
+Rajasthan,DEEG,2024-25,other,teachers,10704.0,Teachers
+Rajasthan,DEEG,2025-26,other,teachers,10782.0,Teachers
+Rajasthan,DHOLPUR,2024-25,other,teachers,13442.0,Teachers
+Rajasthan,DHOLPUR,2025-26,other,teachers,13460.0,Teachers
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,teachers,18097.0,Teachers
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,teachers,18475.0,Teachers
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),teachers,17111.0,Teachers
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),teachers,17241.0,Teachers
+Rajasthan,GANGANAGAR,2024-25,other,teachers,21715.0,Teachers
+Rajasthan,GANGANAGAR,2025-26,other,teachers,21814.0,Teachers
+Rajasthan,HANUMANGARH,2024-25,other,teachers,18676.0,Teachers
+Rajasthan,HANUMANGARH,2025-26,other,teachers,18706.0,Teachers
+Rajasthan,JAIPUR,2024-25,other,teachers,80355.0,Teachers
+Rajasthan,JAIPUR,2025-26,other,teachers,81321.0,Teachers
+Rajasthan,JAISALMER,2024-25,girls leaving,teachers,8532.0,Teachers
+Rajasthan,JAISALMER,2025-26,girls leaving,teachers,8331.0,Teachers
+Rajasthan,JALORE,2024-25,other,teachers,17806.0,Teachers
+Rajasthan,JALORE,2025-26,other,teachers,17514.0,Teachers
+Rajasthan,JHALAWAR,2024-25,other,teachers,15348.0,Teachers
+Rajasthan,JHALAWAR,2025-26,other,teachers,15156.0,Teachers
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,teachers,26304.0,Teachers
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,teachers,26366.0,Teachers
+Rajasthan,JODHPUR,2024-25,other,teachers,36055.0,Teachers
+Rajasthan,JODHPUR,2025-26,other,teachers,36262.0,Teachers
+Rajasthan,KARAULI,2024-25,other,teachers,16155.0,Teachers
+Rajasthan,KARAULI,2025-26,other,teachers,16262.0,Teachers
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,teachers,11475.0,Teachers
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,teachers,11766.0,Teachers
+Rajasthan,KOTA,2024-25,boys moving in,teachers,22633.0,Teachers
+Rajasthan,KOTA,2025-26,boys moving in,teachers,22300.0,Teachers
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,teachers,14678.0,Teachers
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,teachers,16471.0,Teachers
+Rajasthan,NAGAUR,2024-25,other,teachers,18520.0,Teachers
+Rajasthan,NAGAUR,2025-26,other,teachers,18695.0,Teachers
+Rajasthan,PALI,2024-25,other,teachers,17443.0,Teachers
+Rajasthan,PALI,2025-26,other,teachers,16997.0,Teachers
+Rajasthan,PHALODI,2024-25,other,teachers,9249.0,Teachers
+Rajasthan,PHALODI,2025-26,other,teachers,9175.0,Teachers
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),teachers,9383.0,Teachers
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),teachers,9356.0,Teachers
+Rajasthan,RAJSAMAND,2024-25,other,teachers,13796.0,Teachers
+Rajasthan,RAJSAMAND,2025-26,other,teachers,13400.0,Teachers
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),teachers,6051.0,Teachers
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),teachers,6103.0,Teachers
+Rajasthan,SAWAI MADHOPUR,2024-25,other,teachers,15201.0,Teachers
+Rajasthan,SAWAI MADHOPUR,2025-26,other,teachers,15144.0,Teachers
+Rajasthan,SIKAR,2024-25,boys moving in,teachers,32366.0,Teachers
+Rajasthan,SIKAR,2025-26,boys moving in,teachers,32623.0,Teachers
+Rajasthan,SIROHI,2024-25,other,teachers,10210.0,Teachers
+Rajasthan,SIROHI,2025-26,other,teachers,10125.0,Teachers
+Rajasthan,TONK,2024-25,other,teachers,17187.0,Teachers
+Rajasthan,TONK,2025-26,other,teachers,17341.0,Teachers
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),teachers,27705.0,Teachers
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),teachers,27429.0,Teachers
+Rajasthan,AJMER,2024-25,other,ptr,19.048,Pupil-teacher ratio
+Rajasthan,AJMER,2025-26,other,ptr,18.751,Pupil-teacher ratio
+Rajasthan,ALWAR,2024-25,other,ptr,20.191,Pupil-teacher ratio
+Rajasthan,ALWAR,2025-26,other,ptr,19.31,Pupil-teacher ratio
+Rajasthan,BALOTRA,2024-25,other,ptr,22.318,Pupil-teacher ratio
+Rajasthan,BALOTRA,2025-26,other,ptr,22.594,Pupil-teacher ratio
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),ptr,21.204,Pupil-teacher ratio
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),ptr,20.659,Pupil-teacher ratio
+Rajasthan,BARAN,2024-25,other,ptr,18.554,Pupil-teacher ratio
+Rajasthan,BARAN,2025-26,other,ptr,17.718,Pupil-teacher ratio
+Rajasthan,BARMER,2024-25,girls leaving,ptr,23.663,Pupil-teacher ratio
+Rajasthan,BARMER,2025-26,girls leaving,ptr,24.032,Pupil-teacher ratio
+Rajasthan,BEAWAR,2024-25,other,ptr,19.673,Pupil-teacher ratio
+Rajasthan,BEAWAR,2025-26,other,ptr,19.787,Pupil-teacher ratio
+Rajasthan,BHARATPUR,2024-25,other,ptr,20.135,Pupil-teacher ratio
+Rajasthan,BHARATPUR,2025-26,other,ptr,19.09,Pupil-teacher ratio
+Rajasthan,BHILWARA,2024-25,other,ptr,18.712,Pupil-teacher ratio
+Rajasthan,BHILWARA,2025-26,other,ptr,18.37,Pupil-teacher ratio
+Rajasthan,BIKANER,2024-25,other,ptr,22.265,Pupil-teacher ratio
+Rajasthan,BIKANER,2025-26,other,ptr,21.148,Pupil-teacher ratio
+Rajasthan,BUNDI,2024-25,other,ptr,17.442,Pupil-teacher ratio
+Rajasthan,BUNDI,2025-26,other,ptr,17.214,Pupil-teacher ratio
+Rajasthan,CHITTORGARH,2024-25,other,ptr,16.063,Pupil-teacher ratio
+Rajasthan,CHITTORGARH,2025-26,other,ptr,16.068,Pupil-teacher ratio
+Rajasthan,CHURU,2024-25,other,ptr,19.644,Pupil-teacher ratio
+Rajasthan,CHURU,2025-26,other,ptr,18.792,Pupil-teacher ratio
+Rajasthan,DAUSA,2024-25,other,ptr,19.132,Pupil-teacher ratio
+Rajasthan,DAUSA,2025-26,other,ptr,18.104,Pupil-teacher ratio
+Rajasthan,DEEG,2024-25,other,ptr,21.977,Pupil-teacher ratio
+Rajasthan,DEEG,2025-26,other,ptr,20.724,Pupil-teacher ratio
+Rajasthan,DHOLPUR,2024-25,other,ptr,24.031,Pupil-teacher ratio
+Rajasthan,DHOLPUR,2025-26,other,ptr,22.954,Pupil-teacher ratio
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,ptr,19.042,Pupil-teacher ratio
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,ptr,18.047,Pupil-teacher ratio
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),ptr,20.002,Pupil-teacher ratio
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),ptr,19.465,Pupil-teacher ratio
+Rajasthan,GANGANAGAR,2024-25,other,ptr,16.454,Pupil-teacher ratio
+Rajasthan,GANGANAGAR,2025-26,other,ptr,16.048,Pupil-teacher ratio
+Rajasthan,HANUMANGARH,2024-25,other,ptr,17.809,Pupil-teacher ratio
+Rajasthan,HANUMANGARH,2025-26,other,ptr,17.307,Pupil-teacher ratio
+Rajasthan,JAIPUR,2024-25,other,ptr,18.948,Pupil-teacher ratio
+Rajasthan,JAIPUR,2025-26,other,ptr,18.388,Pupil-teacher ratio
+Rajasthan,JAISALMER,2024-25,girls leaving,ptr,20.144,Pupil-teacher ratio
+Rajasthan,JAISALMER,2025-26,girls leaving,ptr,20.039,Pupil-teacher ratio
+Rajasthan,JALORE,2024-25,other,ptr,23.422,Pupil-teacher ratio
+Rajasthan,JALORE,2025-26,other,ptr,23.438,Pupil-teacher ratio
+Rajasthan,JHALAWAR,2024-25,other,ptr,18.758,Pupil-teacher ratio
+Rajasthan,JHALAWAR,2025-26,other,ptr,18.563,Pupil-teacher ratio
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,ptr,15.157,Pupil-teacher ratio
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,ptr,14.504,Pupil-teacher ratio
+Rajasthan,JODHPUR,2024-25,other,ptr,19.252,Pupil-teacher ratio
+Rajasthan,JODHPUR,2025-26,other,ptr,18.786,Pupil-teacher ratio
+Rajasthan,KARAULI,2024-25,other,ptr,20.019,Pupil-teacher ratio
+Rajasthan,KARAULI,2025-26,other,ptr,19.036,Pupil-teacher ratio
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,ptr,21.186,Pupil-teacher ratio
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,ptr,20.023,Pupil-teacher ratio
+Rajasthan,KOTA,2024-25,boys moving in,ptr,18.392,Pupil-teacher ratio
+Rajasthan,KOTA,2025-26,boys moving in,ptr,18.197,Pupil-teacher ratio
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,ptr,16.94,Pupil-teacher ratio
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,ptr,15.914,Pupil-teacher ratio
+Rajasthan,NAGAUR,2024-25,other,ptr,19.999,Pupil-teacher ratio
+Rajasthan,NAGAUR,2025-26,other,ptr,19.383,Pupil-teacher ratio
+Rajasthan,PALI,2024-25,other,ptr,18.175,Pupil-teacher ratio
+Rajasthan,PALI,2025-26,other,ptr,18.276,Pupil-teacher ratio
+Rajasthan,PHALODI,2024-25,other,ptr,22.512,Pupil-teacher ratio
+Rajasthan,PHALODI,2025-26,other,ptr,22.209,Pupil-teacher ratio
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),ptr,22.007,Pupil-teacher ratio
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),ptr,21.625,Pupil-teacher ratio
+Rajasthan,RAJSAMAND,2024-25,other,ptr,17.084,Pupil-teacher ratio
+Rajasthan,RAJSAMAND,2025-26,other,ptr,17.289,Pupil-teacher ratio
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),ptr,23.1,Pupil-teacher ratio
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),ptr,22.258,Pupil-teacher ratio
+Rajasthan,SAWAI MADHOPUR,2024-25,other,ptr,18.912,Pupil-teacher ratio
+Rajasthan,SAWAI MADHOPUR,2025-26,other,ptr,18.409,Pupil-teacher ratio
+Rajasthan,SIKAR,2024-25,boys moving in,ptr,18.117,Pupil-teacher ratio
+Rajasthan,SIKAR,2025-26,boys moving in,ptr,17.668,Pupil-teacher ratio
+Rajasthan,SIROHI,2024-25,other,ptr,22.26,Pupil-teacher ratio
+Rajasthan,SIROHI,2025-26,other,ptr,22.148,Pupil-teacher ratio
+Rajasthan,TONK,2024-25,other,ptr,16.008,Pupil-teacher ratio
+Rajasthan,TONK,2025-26,other,ptr,15.55,Pupil-teacher ratio
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),ptr,19.54,Pupil-teacher ratio
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),ptr,19.444,Pupil-teacher ratio
+Rajasthan,AJMER,2024-25,other,pct_single_teacher,2.09,Single-teacher schools (%)
+Rajasthan,AJMER,2025-26,other,pct_single_teacher,3.247,Single-teacher schools (%)
+Rajasthan,ALWAR,2024-25,other,pct_single_teacher,3.9,Single-teacher schools (%)
+Rajasthan,ALWAR,2025-26,other,pct_single_teacher,4.893,Single-teacher schools (%)
+Rajasthan,BALOTRA,2024-25,other,pct_single_teacher,7.14,Single-teacher schools (%)
+Rajasthan,BALOTRA,2025-26,other,pct_single_teacher,10.037,Single-teacher schools (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_single_teacher,16.718,Single-teacher schools (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_single_teacher,16.522,Single-teacher schools (%)
+Rajasthan,BARAN,2024-25,other,pct_single_teacher,9.741,Single-teacher schools (%)
+Rajasthan,BARAN,2025-26,other,pct_single_teacher,9.28,Single-teacher schools (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_single_teacher,8.527,Single-teacher schools (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_single_teacher,12.776,Single-teacher schools (%)
+Rajasthan,BEAWAR,2024-25,other,pct_single_teacher,3.274,Single-teacher schools (%)
+Rajasthan,BEAWAR,2025-26,other,pct_single_teacher,4.878,Single-teacher schools (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_single_teacher,1.548,Single-teacher schools (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_single_teacher,0.851,Single-teacher schools (%)
+Rajasthan,BHILWARA,2024-25,other,pct_single_teacher,4.301,Single-teacher schools (%)
+Rajasthan,BHILWARA,2025-26,other,pct_single_teacher,5.477,Single-teacher schools (%)
+Rajasthan,BIKANER,2024-25,other,pct_single_teacher,4.339,Single-teacher schools (%)
+Rajasthan,BIKANER,2025-26,other,pct_single_teacher,5.928,Single-teacher schools (%)
+Rajasthan,BUNDI,2024-25,other,pct_single_teacher,2.678,Single-teacher schools (%)
+Rajasthan,BUNDI,2025-26,other,pct_single_teacher,3.696,Single-teacher schools (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_single_teacher,3.371,Single-teacher schools (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_single_teacher,5.308,Single-teacher schools (%)
+Rajasthan,CHURU,2024-25,other,pct_single_teacher,3.092,Single-teacher schools (%)
+Rajasthan,CHURU,2025-26,other,pct_single_teacher,3.479,Single-teacher schools (%)
+Rajasthan,DAUSA,2024-25,other,pct_single_teacher,4.813,Single-teacher schools (%)
+Rajasthan,DAUSA,2025-26,other,pct_single_teacher,6.07,Single-teacher schools (%)
+Rajasthan,DEEG,2024-25,other,pct_single_teacher,4.308,Single-teacher schools (%)
+Rajasthan,DEEG,2025-26,other,pct_single_teacher,3.453,Single-teacher schools (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_single_teacher,3.303,Single-teacher schools (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_single_teacher,3.404,Single-teacher schools (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_single_teacher,3.483,Single-teacher schools (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_single_teacher,3.345,Single-teacher schools (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_single_teacher,15.193,Single-teacher schools (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_single_teacher,14.995,Single-teacher schools (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_single_teacher,3.092,Single-teacher schools (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_single_teacher,4.303,Single-teacher schools (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_single_teacher,1.622,Single-teacher schools (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_single_teacher,2.252,Single-teacher schools (%)
+Rajasthan,JAIPUR,2024-25,other,pct_single_teacher,4.425,Single-teacher schools (%)
+Rajasthan,JAIPUR,2025-26,other,pct_single_teacher,4.331,Single-teacher schools (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_single_teacher,12.328,Single-teacher schools (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_single_teacher,16.876,Single-teacher schools (%)
+Rajasthan,JALORE,2024-25,other,pct_single_teacher,4.376,Single-teacher schools (%)
+Rajasthan,JALORE,2025-26,other,pct_single_teacher,6.499,Single-teacher schools (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_single_teacher,2.434,Single-teacher schools (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_single_teacher,4.176,Single-teacher schools (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_single_teacher,1.975,Single-teacher schools (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_single_teacher,2.321,Single-teacher schools (%)
+Rajasthan,JODHPUR,2024-25,other,pct_single_teacher,4.586,Single-teacher schools (%)
+Rajasthan,JODHPUR,2025-26,other,pct_single_teacher,5.807,Single-teacher schools (%)
+Rajasthan,KARAULI,2024-25,other,pct_single_teacher,3.855,Single-teacher schools (%)
+Rajasthan,KARAULI,2025-26,other,pct_single_teacher,4.842,Single-teacher schools (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_single_teacher,3.874,Single-teacher schools (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_single_teacher,3.503,Single-teacher schools (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_single_teacher,1.995,Single-teacher schools (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_single_teacher,3.024,Single-teacher schools (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_single_teacher,1.49,Single-teacher schools (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_single_teacher,1.831,Single-teacher schools (%)
+Rajasthan,NAGAUR,2024-25,other,pct_single_teacher,3.377,Single-teacher schools (%)
+Rajasthan,NAGAUR,2025-26,other,pct_single_teacher,4.908,Single-teacher schools (%)
+Rajasthan,PALI,2024-25,other,pct_single_teacher,5.287,Single-teacher schools (%)
+Rajasthan,PALI,2025-26,other,pct_single_teacher,6.565,Single-teacher schools (%)
+Rajasthan,PHALODI,2024-25,other,pct_single_teacher,6.292,Single-teacher schools (%)
+Rajasthan,PHALODI,2025-26,other,pct_single_teacher,10.572,Single-teacher schools (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_single_teacher,19.788,Single-teacher schools (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_single_teacher,19.909,Single-teacher schools (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_single_teacher,5.52,Single-teacher schools (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_single_teacher,8.71,Single-teacher schools (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_single_teacher,15.462,Single-teacher schools (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_single_teacher,15.781,Single-teacher schools (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_single_teacher,3.037,Single-teacher schools (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_single_teacher,3.721,Single-teacher schools (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_single_teacher,3.001,Single-teacher schools (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_single_teacher,2.993,Single-teacher schools (%)
+Rajasthan,SIROHI,2024-25,other,pct_single_teacher,7.133,Single-teacher schools (%)
+Rajasthan,SIROHI,2025-26,other,pct_single_teacher,8.718,Single-teacher schools (%)
+Rajasthan,TONK,2024-25,other,pct_single_teacher,4.394,Single-teacher schools (%)
+Rajasthan,TONK,2025-26,other,pct_single_teacher,5.188,Single-teacher schools (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_single_teacher,9.018,Single-teacher schools (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_single_teacher,10.479,Single-teacher schools (%)
+Rajasthan,AJMER,2024-25,other,avg_infra_index,85.707,Infrastructure index (0-100)
+Rajasthan,AJMER,2025-26,other,avg_infra_index,86.04,Infrastructure index (0-100)
+Rajasthan,ALWAR,2024-25,other,avg_infra_index,78.989,Infrastructure index (0-100)
+Rajasthan,ALWAR,2025-26,other,avg_infra_index,79.091,Infrastructure index (0-100)
+Rajasthan,BALOTRA,2024-25,other,avg_infra_index,77.526,Infrastructure index (0-100)
+Rajasthan,BALOTRA,2025-26,other,avg_infra_index,78.122,Infrastructure index (0-100)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),avg_infra_index,64.092,Infrastructure index (0-100)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),avg_infra_index,64.492,Infrastructure index (0-100)
+Rajasthan,BARAN,2024-25,other,avg_infra_index,68.276,Infrastructure index (0-100)
+Rajasthan,BARAN,2025-26,other,avg_infra_index,68.486,Infrastructure index (0-100)
+Rajasthan,BARMER,2024-25,girls leaving,avg_infra_index,76.792,Infrastructure index (0-100)
+Rajasthan,BARMER,2025-26,girls leaving,avg_infra_index,77.471,Infrastructure index (0-100)
+Rajasthan,BEAWAR,2024-25,other,avg_infra_index,84.851,Infrastructure index (0-100)
+Rajasthan,BEAWAR,2025-26,other,avg_infra_index,85.243,Infrastructure index (0-100)
+Rajasthan,BHARATPUR,2024-25,other,avg_infra_index,78.651,Infrastructure index (0-100)
+Rajasthan,BHARATPUR,2025-26,other,avg_infra_index,78.91,Infrastructure index (0-100)
+Rajasthan,BHILWARA,2024-25,other,avg_infra_index,82.733,Infrastructure index (0-100)
+Rajasthan,BHILWARA,2025-26,other,avg_infra_index,83.216,Infrastructure index (0-100)
+Rajasthan,BIKANER,2024-25,other,avg_infra_index,79.139,Infrastructure index (0-100)
+Rajasthan,BIKANER,2025-26,other,avg_infra_index,80.047,Infrastructure index (0-100)
+Rajasthan,BUNDI,2024-25,other,avg_infra_index,80.137,Infrastructure index (0-100)
+Rajasthan,BUNDI,2025-26,other,avg_infra_index,80.21,Infrastructure index (0-100)
+Rajasthan,CHITTORGARH,2024-25,other,avg_infra_index,82.629,Infrastructure index (0-100)
+Rajasthan,CHITTORGARH,2025-26,other,avg_infra_index,83.019,Infrastructure index (0-100)
+Rajasthan,CHURU,2024-25,other,avg_infra_index,84.181,Infrastructure index (0-100)
+Rajasthan,CHURU,2025-26,other,avg_infra_index,84.925,Infrastructure index (0-100)
+Rajasthan,DAUSA,2024-25,other,avg_infra_index,76.419,Infrastructure index (0-100)
+Rajasthan,DAUSA,2025-26,other,avg_infra_index,76.779,Infrastructure index (0-100)
+Rajasthan,DEEG,2024-25,other,avg_infra_index,75.962,Infrastructure index (0-100)
+Rajasthan,DEEG,2025-26,other,avg_infra_index,76.147,Infrastructure index (0-100)
+Rajasthan,DHOLPUR,2024-25,other,avg_infra_index,79.142,Infrastructure index (0-100)
+Rajasthan,DHOLPUR,2025-26,other,avg_infra_index,79.492,Infrastructure index (0-100)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,avg_infra_index,84.888,Infrastructure index (0-100)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,avg_infra_index,85.256,Infrastructure index (0-100)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),avg_infra_index,70.27,Infrastructure index (0-100)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),avg_infra_index,70.107,Infrastructure index (0-100)
+Rajasthan,GANGANAGAR,2024-25,other,avg_infra_index,83.995,Infrastructure index (0-100)
+Rajasthan,GANGANAGAR,2025-26,other,avg_infra_index,84.359,Infrastructure index (0-100)
+Rajasthan,HANUMANGARH,2024-25,other,avg_infra_index,88.299,Infrastructure index (0-100)
+Rajasthan,HANUMANGARH,2025-26,other,avg_infra_index,89.03,Infrastructure index (0-100)
+Rajasthan,JAIPUR,2024-25,other,avg_infra_index,83.543,Infrastructure index (0-100)
+Rajasthan,JAIPUR,2025-26,other,avg_infra_index,83.865,Infrastructure index (0-100)
+Rajasthan,JAISALMER,2024-25,girls leaving,avg_infra_index,74.462,Infrastructure index (0-100)
+Rajasthan,JAISALMER,2025-26,girls leaving,avg_infra_index,74.869,Infrastructure index (0-100)
+Rajasthan,JALORE,2024-25,other,avg_infra_index,82.355,Infrastructure index (0-100)
+Rajasthan,JALORE,2025-26,other,avg_infra_index,83.238,Infrastructure index (0-100)
+Rajasthan,JHALAWAR,2024-25,other,avg_infra_index,81.135,Infrastructure index (0-100)
+Rajasthan,JHALAWAR,2025-26,other,avg_infra_index,79.964,Infrastructure index (0-100)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,avg_infra_index,84.868,Infrastructure index (0-100)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,avg_infra_index,85.415,Infrastructure index (0-100)
+Rajasthan,JODHPUR,2024-25,other,avg_infra_index,82.131,Infrastructure index (0-100)
+Rajasthan,JODHPUR,2025-26,other,avg_infra_index,83.234,Infrastructure index (0-100)
+Rajasthan,KARAULI,2024-25,other,avg_infra_index,77.54,Infrastructure index (0-100)
+Rajasthan,KARAULI,2025-26,other,avg_infra_index,77.699,Infrastructure index (0-100)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,avg_infra_index,82.29,Infrastructure index (0-100)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,avg_infra_index,82.613,Infrastructure index (0-100)
+Rajasthan,KOTA,2024-25,boys moving in,avg_infra_index,82.663,Infrastructure index (0-100)
+Rajasthan,KOTA,2025-26,boys moving in,avg_infra_index,82.797,Infrastructure index (0-100)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,avg_infra_index,85.809,Infrastructure index (0-100)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,avg_infra_index,86.093,Infrastructure index (0-100)
+Rajasthan,NAGAUR,2024-25,other,avg_infra_index,83.284,Infrastructure index (0-100)
+Rajasthan,NAGAUR,2025-26,other,avg_infra_index,83.915,Infrastructure index (0-100)
+Rajasthan,PALI,2024-25,other,avg_infra_index,84.184,Infrastructure index (0-100)
+Rajasthan,PALI,2025-26,other,avg_infra_index,84.765,Infrastructure index (0-100)
+Rajasthan,PHALODI,2024-25,other,avg_infra_index,74.267,Infrastructure index (0-100)
+Rajasthan,PHALODI,2025-26,other,avg_infra_index,75.173,Infrastructure index (0-100)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),avg_infra_index,68.293,Infrastructure index (0-100)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),avg_infra_index,68.012,Infrastructure index (0-100)
+Rajasthan,RAJSAMAND,2024-25,other,avg_infra_index,81.618,Infrastructure index (0-100)
+Rajasthan,RAJSAMAND,2025-26,other,avg_infra_index,81.792,Infrastructure index (0-100)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),avg_infra_index,66.702,Infrastructure index (0-100)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),avg_infra_index,66.787,Infrastructure index (0-100)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,avg_infra_index,77.663,Infrastructure index (0-100)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,avg_infra_index,78.034,Infrastructure index (0-100)
+Rajasthan,SIKAR,2024-25,boys moving in,avg_infra_index,83.017,Infrastructure index (0-100)
+Rajasthan,SIKAR,2025-26,boys moving in,avg_infra_index,83.948,Infrastructure index (0-100)
+Rajasthan,SIROHI,2024-25,other,avg_infra_index,78.422,Infrastructure index (0-100)
+Rajasthan,SIROHI,2025-26,other,avg_infra_index,78.884,Infrastructure index (0-100)
+Rajasthan,TONK,2024-25,other,avg_infra_index,78.458,Infrastructure index (0-100)
+Rajasthan,TONK,2025-26,other,avg_infra_index,78.584,Infrastructure index (0-100)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),avg_infra_index,72.387,Infrastructure index (0-100)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),avg_infra_index,72.141,Infrastructure index (0-100)
+Rajasthan,AJMER,2024-25,other,girls_share,0.483,"Girls' share, classes 1-12"
+Rajasthan,AJMER,2025-26,other,girls_share,0.484,"Girls' share, classes 1-12"
+Rajasthan,ALWAR,2024-25,other,girls_share,0.474,"Girls' share, classes 1-12"
+Rajasthan,ALWAR,2025-26,other,girls_share,0.475,"Girls' share, classes 1-12"
+Rajasthan,BALOTRA,2024-25,other,girls_share,0.478,"Girls' share, classes 1-12"
+Rajasthan,BALOTRA,2025-26,other,girls_share,0.481,"Girls' share, classes 1-12"
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),girls_share,0.485,"Girls' share, classes 1-12"
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),girls_share,0.485,"Girls' share, classes 1-12"
+Rajasthan,BARAN,2024-25,other,girls_share,0.479,"Girls' share, classes 1-12"
+Rajasthan,BARAN,2025-26,other,girls_share,0.481,"Girls' share, classes 1-12"
+Rajasthan,BARMER,2024-25,girls leaving,girls_share,0.46,"Girls' share, classes 1-12"
+Rajasthan,BARMER,2025-26,girls leaving,girls_share,0.462,"Girls' share, classes 1-12"
+Rajasthan,BEAWAR,2024-25,other,girls_share,0.48,"Girls' share, classes 1-12"
+Rajasthan,BEAWAR,2025-26,other,girls_share,0.482,"Girls' share, classes 1-12"
+Rajasthan,BHARATPUR,2024-25,other,girls_share,0.465,"Girls' share, classes 1-12"
+Rajasthan,BHARATPUR,2025-26,other,girls_share,0.469,"Girls' share, classes 1-12"
+Rajasthan,BHILWARA,2024-25,other,girls_share,0.486,"Girls' share, classes 1-12"
+Rajasthan,BHILWARA,2025-26,other,girls_share,0.487,"Girls' share, classes 1-12"
+Rajasthan,BIKANER,2024-25,other,girls_share,0.478,"Girls' share, classes 1-12"
+Rajasthan,BIKANER,2025-26,other,girls_share,0.481,"Girls' share, classes 1-12"
+Rajasthan,BUNDI,2024-25,other,girls_share,0.48,"Girls' share, classes 1-12"
+Rajasthan,BUNDI,2025-26,other,girls_share,0.482,"Girls' share, classes 1-12"
+Rajasthan,CHITTORGARH,2024-25,other,girls_share,0.484,"Girls' share, classes 1-12"
+Rajasthan,CHITTORGARH,2025-26,other,girls_share,0.483,"Girls' share, classes 1-12"
+Rajasthan,CHURU,2024-25,other,girls_share,0.478,"Girls' share, classes 1-12"
+Rajasthan,CHURU,2025-26,other,girls_share,0.481,"Girls' share, classes 1-12"
+Rajasthan,DAUSA,2024-25,other,girls_share,0.474,"Girls' share, classes 1-12"
+Rajasthan,DAUSA,2025-26,other,girls_share,0.476,"Girls' share, classes 1-12"
+Rajasthan,DEEG,2024-25,other,girls_share,0.465,"Girls' share, classes 1-12"
+Rajasthan,DEEG,2025-26,other,girls_share,0.468,"Girls' share, classes 1-12"
+Rajasthan,DHOLPUR,2024-25,other,girls_share,0.47,"Girls' share, classes 1-12"
+Rajasthan,DHOLPUR,2025-26,other,girls_share,0.475,"Girls' share, classes 1-12"
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,girls_share,0.478,"Girls' share, classes 1-12"
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,girls_share,0.479,"Girls' share, classes 1-12"
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),girls_share,0.487,"Girls' share, classes 1-12"
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),girls_share,0.487,"Girls' share, classes 1-12"
+Rajasthan,GANGANAGAR,2024-25,other,girls_share,0.48,"Girls' share, classes 1-12"
+Rajasthan,GANGANAGAR,2025-26,other,girls_share,0.481,"Girls' share, classes 1-12"
+Rajasthan,HANUMANGARH,2024-25,other,girls_share,0.48,"Girls' share, classes 1-12"
+Rajasthan,HANUMANGARH,2025-26,other,girls_share,0.482,"Girls' share, classes 1-12"
+Rajasthan,JAIPUR,2024-25,other,girls_share,0.464,"Girls' share, classes 1-12"
+Rajasthan,JAIPUR,2025-26,other,girls_share,0.465,"Girls' share, classes 1-12"
+Rajasthan,JAISALMER,2024-25,girls leaving,girls_share,0.452,"Girls' share, classes 1-12"
+Rajasthan,JAISALMER,2025-26,girls leaving,girls_share,0.455,"Girls' share, classes 1-12"
+Rajasthan,JALORE,2024-25,other,girls_share,0.469,"Girls' share, classes 1-12"
+Rajasthan,JALORE,2025-26,other,girls_share,0.471,"Girls' share, classes 1-12"
+Rajasthan,JHALAWAR,2024-25,other,girls_share,0.471,"Girls' share, classes 1-12"
+Rajasthan,JHALAWAR,2025-26,other,girls_share,0.472,"Girls' share, classes 1-12"
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,girls_share,0.463,"Girls' share, classes 1-12"
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,girls_share,0.466,"Girls' share, classes 1-12"
+Rajasthan,JODHPUR,2024-25,other,girls_share,0.47,"Girls' share, classes 1-12"
+Rajasthan,JODHPUR,2025-26,other,girls_share,0.472,"Girls' share, classes 1-12"
+Rajasthan,KARAULI,2024-25,other,girls_share,0.473,"Girls' share, classes 1-12"
+Rajasthan,KARAULI,2025-26,other,girls_share,0.478,"Girls' share, classes 1-12"
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,girls_share,0.457,"Girls' share, classes 1-12"
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,girls_share,0.458,"Girls' share, classes 1-12"
+Rajasthan,KOTA,2024-25,boys moving in,girls_share,0.463,"Girls' share, classes 1-12"
+Rajasthan,KOTA,2025-26,boys moving in,girls_share,0.467,"Girls' share, classes 1-12"
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,girls_share,0.466,"Girls' share, classes 1-12"
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,girls_share,0.47,"Girls' share, classes 1-12"
+Rajasthan,NAGAUR,2024-25,other,girls_share,0.477,"Girls' share, classes 1-12"
+Rajasthan,NAGAUR,2025-26,other,girls_share,0.478,"Girls' share, classes 1-12"
+Rajasthan,PALI,2024-25,other,girls_share,0.478,"Girls' share, classes 1-12"
+Rajasthan,PALI,2025-26,other,girls_share,0.479,"Girls' share, classes 1-12"
+Rajasthan,PHALODI,2024-25,other,girls_share,0.467,"Girls' share, classes 1-12"
+Rajasthan,PHALODI,2025-26,other,girls_share,0.469,"Girls' share, classes 1-12"
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),girls_share,0.489,"Girls' share, classes 1-12"
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),girls_share,0.49,"Girls' share, classes 1-12"
+Rajasthan,RAJSAMAND,2024-25,other,girls_share,0.485,"Girls' share, classes 1-12"
+Rajasthan,RAJSAMAND,2025-26,other,girls_share,0.486,"Girls' share, classes 1-12"
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),girls_share,0.489,"Girls' share, classes 1-12"
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),girls_share,0.491,"Girls' share, classes 1-12"
+Rajasthan,SAWAI MADHOPUR,2024-25,other,girls_share,0.47,"Girls' share, classes 1-12"
+Rajasthan,SAWAI MADHOPUR,2025-26,other,girls_share,0.473,"Girls' share, classes 1-12"
+Rajasthan,SIKAR,2024-25,boys moving in,girls_share,0.447,"Girls' share, classes 1-12"
+Rajasthan,SIKAR,2025-26,boys moving in,girls_share,0.447,"Girls' share, classes 1-12"
+Rajasthan,SIROHI,2024-25,other,girls_share,0.462,"Girls' share, classes 1-12"
+Rajasthan,SIROHI,2025-26,other,girls_share,0.464,"Girls' share, classes 1-12"
+Rajasthan,TONK,2024-25,other,girls_share,0.482,"Girls' share, classes 1-12"
+Rajasthan,TONK,2025-26,other,girls_share,0.49,"Girls' share, classes 1-12"
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),girls_share,0.479,"Girls' share, classes 1-12"
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),girls_share,0.48,"Girls' share, classes 1-12"
+Rajasthan,AJMER,2024-25,other,girls_share_primary,0.48,"Girls' share, classes 1-5"
+Rajasthan,AJMER,2025-26,other,girls_share_primary,0.481,"Girls' share, classes 1-5"
+Rajasthan,ALWAR,2024-25,other,girls_share_primary,0.47,"Girls' share, classes 1-5"
+Rajasthan,ALWAR,2025-26,other,girls_share_primary,0.469,"Girls' share, classes 1-5"
+Rajasthan,BALOTRA,2024-25,other,girls_share_primary,0.481,"Girls' share, classes 1-5"
+Rajasthan,BALOTRA,2025-26,other,girls_share_primary,0.482,"Girls' share, classes 1-5"
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),girls_share_primary,0.479,"Girls' share, classes 1-5"
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),girls_share_primary,0.477,"Girls' share, classes 1-5"
+Rajasthan,BARAN,2024-25,other,girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,BARAN,2025-26,other,girls_share_primary,0.476,"Girls' share, classes 1-5"
+Rajasthan,BARMER,2024-25,girls leaving,girls_share_primary,0.471,"Girls' share, classes 1-5"
+Rajasthan,BARMER,2025-26,girls leaving,girls_share_primary,0.471,"Girls' share, classes 1-5"
+Rajasthan,BEAWAR,2024-25,other,girls_share_primary,0.48,"Girls' share, classes 1-5"
+Rajasthan,BEAWAR,2025-26,other,girls_share_primary,0.481,"Girls' share, classes 1-5"
+Rajasthan,BHARATPUR,2024-25,other,girls_share_primary,0.466,"Girls' share, classes 1-5"
+Rajasthan,BHARATPUR,2025-26,other,girls_share_primary,0.467,"Girls' share, classes 1-5"
+Rajasthan,BHILWARA,2024-25,other,girls_share_primary,0.477,"Girls' share, classes 1-5"
+Rajasthan,BHILWARA,2025-26,other,girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,BIKANER,2024-25,other,girls_share_primary,0.476,"Girls' share, classes 1-5"
+Rajasthan,BIKANER,2025-26,other,girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,BUNDI,2024-25,other,girls_share_primary,0.481,"Girls' share, classes 1-5"
+Rajasthan,BUNDI,2025-26,other,girls_share_primary,0.481,"Girls' share, classes 1-5"
+Rajasthan,CHITTORGARH,2024-25,other,girls_share_primary,0.477,"Girls' share, classes 1-5"
+Rajasthan,CHITTORGARH,2025-26,other,girls_share_primary,0.476,"Girls' share, classes 1-5"
+Rajasthan,CHURU,2024-25,other,girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,CHURU,2025-26,other,girls_share_primary,0.48,"Girls' share, classes 1-5"
+Rajasthan,DAUSA,2024-25,other,girls_share_primary,0.472,"Girls' share, classes 1-5"
+Rajasthan,DAUSA,2025-26,other,girls_share_primary,0.473,"Girls' share, classes 1-5"
+Rajasthan,DEEG,2024-25,other,girls_share_primary,0.465,"Girls' share, classes 1-5"
+Rajasthan,DEEG,2025-26,other,girls_share_primary,0.464,"Girls' share, classes 1-5"
+Rajasthan,DHOLPUR,2024-25,other,girls_share_primary,0.463,"Girls' share, classes 1-5"
+Rajasthan,DHOLPUR,2025-26,other,girls_share_primary,0.465,"Girls' share, classes 1-5"
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,girls_share_primary,0.476,"Girls' share, classes 1-5"
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,girls_share_primary,0.477,"Girls' share, classes 1-5"
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),girls_share_primary,0.479,"Girls' share, classes 1-5"
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,GANGANAGAR,2024-25,other,girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,GANGANAGAR,2025-26,other,girls_share_primary,0.476,"Girls' share, classes 1-5"
+Rajasthan,HANUMANGARH,2024-25,other,girls_share_primary,0.476,"Girls' share, classes 1-5"
+Rajasthan,HANUMANGARH,2025-26,other,girls_share_primary,0.476,"Girls' share, classes 1-5"
+Rajasthan,JAIPUR,2024-25,other,girls_share_primary,0.467,"Girls' share, classes 1-5"
+Rajasthan,JAIPUR,2025-26,other,girls_share_primary,0.467,"Girls' share, classes 1-5"
+Rajasthan,JAISALMER,2024-25,girls leaving,girls_share_primary,0.467,"Girls' share, classes 1-5"
+Rajasthan,JAISALMER,2025-26,girls leaving,girls_share_primary,0.469,"Girls' share, classes 1-5"
+Rajasthan,JALORE,2024-25,other,girls_share_primary,0.474,"Girls' share, classes 1-5"
+Rajasthan,JALORE,2025-26,other,girls_share_primary,0.472,"Girls' share, classes 1-5"
+Rajasthan,JHALAWAR,2024-25,other,girls_share_primary,0.475,"Girls' share, classes 1-5"
+Rajasthan,JHALAWAR,2025-26,other,girls_share_primary,0.474,"Girls' share, classes 1-5"
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,girls_share_primary,0.468,"Girls' share, classes 1-5"
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,girls_share_primary,0.472,"Girls' share, classes 1-5"
+Rajasthan,JODHPUR,2024-25,other,girls_share_primary,0.473,"Girls' share, classes 1-5"
+Rajasthan,JODHPUR,2025-26,other,girls_share_primary,0.473,"Girls' share, classes 1-5"
+Rajasthan,KARAULI,2024-25,other,girls_share_primary,0.471,"Girls' share, classes 1-5"
+Rajasthan,KARAULI,2025-26,other,girls_share_primary,0.473,"Girls' share, classes 1-5"
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,girls_share_primary,0.46,"Girls' share, classes 1-5"
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,girls_share_primary,0.462,"Girls' share, classes 1-5"
+Rajasthan,KOTA,2024-25,boys moving in,girls_share_primary,0.472,"Girls' share, classes 1-5"
+Rajasthan,KOTA,2025-26,boys moving in,girls_share_primary,0.474,"Girls' share, classes 1-5"
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,girls_share_primary,0.458,"Girls' share, classes 1-5"
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,girls_share_primary,0.463,"Girls' share, classes 1-5"
+Rajasthan,NAGAUR,2024-25,other,girls_share_primary,0.476,"Girls' share, classes 1-5"
+Rajasthan,NAGAUR,2025-26,other,girls_share_primary,0.477,"Girls' share, classes 1-5"
+Rajasthan,PALI,2024-25,other,girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,PALI,2025-26,other,girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,PHALODI,2024-25,other,girls_share_primary,0.473,"Girls' share, classes 1-5"
+Rajasthan,PHALODI,2025-26,other,girls_share_primary,0.475,"Girls' share, classes 1-5"
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),girls_share_primary,0.481,"Girls' share, classes 1-5"
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),girls_share_primary,0.48,"Girls' share, classes 1-5"
+Rajasthan,RAJSAMAND,2024-25,other,girls_share_primary,0.479,"Girls' share, classes 1-5"
+Rajasthan,RAJSAMAND,2025-26,other,girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),girls_share_primary,0.483,"Girls' share, classes 1-5"
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),girls_share_primary,0.483,"Girls' share, classes 1-5"
+Rajasthan,SAWAI MADHOPUR,2024-25,other,girls_share_primary,0.471,"Girls' share, classes 1-5"
+Rajasthan,SAWAI MADHOPUR,2025-26,other,girls_share_primary,0.473,"Girls' share, classes 1-5"
+Rajasthan,SIKAR,2024-25,boys moving in,girls_share_primary,0.47,"Girls' share, classes 1-5"
+Rajasthan,SIKAR,2025-26,boys moving in,girls_share_primary,0.471,"Girls' share, classes 1-5"
+Rajasthan,SIROHI,2024-25,other,girls_share_primary,0.471,"Girls' share, classes 1-5"
+Rajasthan,SIROHI,2025-26,other,girls_share_primary,0.469,"Girls' share, classes 1-5"
+Rajasthan,TONK,2024-25,other,girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,TONK,2025-26,other,girls_share_primary,0.478,"Girls' share, classes 1-5"
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),girls_share_primary,0.476,"Girls' share, classes 1-5"
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),girls_share_primary,0.474,"Girls' share, classes 1-5"
+Rajasthan,AJMER,2024-25,other,girls_share_sec_plus,0.489,"Girls' share, classes 9-12"
+Rajasthan,AJMER,2025-26,other,girls_share_sec_plus,0.492,"Girls' share, classes 9-12"
+Rajasthan,ALWAR,2024-25,other,girls_share_sec_plus,0.474,"Girls' share, classes 9-12"
+Rajasthan,ALWAR,2025-26,other,girls_share_sec_plus,0.474,"Girls' share, classes 9-12"
+Rajasthan,BALOTRA,2024-25,other,girls_share_sec_plus,0.47,"Girls' share, classes 9-12"
+Rajasthan,BALOTRA,2025-26,other,girls_share_sec_plus,0.478,"Girls' share, classes 9-12"
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),girls_share_sec_plus,0.493,"Girls' share, classes 9-12"
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),girls_share_sec_plus,0.494,"Girls' share, classes 9-12"
+Rajasthan,BARAN,2024-25,other,girls_share_sec_plus,0.48,"Girls' share, classes 9-12"
+Rajasthan,BARAN,2025-26,other,girls_share_sec_plus,0.484,"Girls' share, classes 9-12"
+Rajasthan,BARMER,2024-25,girls leaving,girls_share_sec_plus,0.441,"Girls' share, classes 9-12"
+Rajasthan,BARMER,2025-26,girls leaving,girls_share_sec_plus,0.445,"Girls' share, classes 9-12"
+Rajasthan,BEAWAR,2024-25,other,girls_share_sec_plus,0.479,"Girls' share, classes 9-12"
+Rajasthan,BEAWAR,2025-26,other,girls_share_sec_plus,0.482,"Girls' share, classes 9-12"
+Rajasthan,BHARATPUR,2024-25,other,girls_share_sec_plus,0.46,"Girls' share, classes 9-12"
+Rajasthan,BHARATPUR,2025-26,other,girls_share_sec_plus,0.466,"Girls' share, classes 9-12"
+Rajasthan,BHILWARA,2024-25,other,girls_share_sec_plus,0.503,"Girls' share, classes 9-12"
+Rajasthan,BHILWARA,2025-26,other,girls_share_sec_plus,0.507,"Girls' share, classes 9-12"
+Rajasthan,BIKANER,2024-25,other,girls_share_sec_plus,0.477,"Girls' share, classes 9-12"
+Rajasthan,BIKANER,2025-26,other,girls_share_sec_plus,0.484,"Girls' share, classes 9-12"
+Rajasthan,BUNDI,2024-25,other,girls_share_sec_plus,0.475,"Girls' share, classes 9-12"
+Rajasthan,BUNDI,2025-26,other,girls_share_sec_plus,0.48,"Girls' share, classes 9-12"
+Rajasthan,CHITTORGARH,2024-25,other,girls_share_sec_plus,0.498,"Girls' share, classes 9-12"
+Rajasthan,CHITTORGARH,2025-26,other,girls_share_sec_plus,0.499,"Girls' share, classes 9-12"
+Rajasthan,CHURU,2024-25,other,girls_share_sec_plus,0.477,"Girls' share, classes 9-12"
+Rajasthan,CHURU,2025-26,other,girls_share_sec_plus,0.482,"Girls' share, classes 9-12"
+Rajasthan,DAUSA,2024-25,other,girls_share_sec_plus,0.474,"Girls' share, classes 9-12"
+Rajasthan,DAUSA,2025-26,other,girls_share_sec_plus,0.477,"Girls' share, classes 9-12"
+Rajasthan,DEEG,2024-25,other,girls_share_sec_plus,0.466,"Girls' share, classes 9-12"
+Rajasthan,DEEG,2025-26,other,girls_share_sec_plus,0.466,"Girls' share, classes 9-12"
+Rajasthan,DHOLPUR,2024-25,other,girls_share_sec_plus,0.472,"Girls' share, classes 9-12"
+Rajasthan,DHOLPUR,2025-26,other,girls_share_sec_plus,0.484,"Girls' share, classes 9-12"
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,girls_share_sec_plus,0.474,"Girls' share, classes 9-12"
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,girls_share_sec_plus,0.477,"Girls' share, classes 9-12"
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),girls_share_sec_plus,0.501,"Girls' share, classes 9-12"
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),girls_share_sec_plus,0.501,"Girls' share, classes 9-12"
+Rajasthan,GANGANAGAR,2024-25,other,girls_share_sec_plus,0.485,"Girls' share, classes 9-12"
+Rajasthan,GANGANAGAR,2025-26,other,girls_share_sec_plus,0.484,"Girls' share, classes 9-12"
+Rajasthan,HANUMANGARH,2024-25,other,girls_share_sec_plus,0.485,"Girls' share, classes 9-12"
+Rajasthan,HANUMANGARH,2025-26,other,girls_share_sec_plus,0.488,"Girls' share, classes 9-12"
+Rajasthan,JAIPUR,2024-25,other,girls_share_sec_plus,0.461,"Girls' share, classes 9-12"
+Rajasthan,JAIPUR,2025-26,other,girls_share_sec_plus,0.462,"Girls' share, classes 9-12"
+Rajasthan,JAISALMER,2024-25,girls leaving,girls_share_sec_plus,0.423,"Girls' share, classes 9-12"
+Rajasthan,JAISALMER,2025-26,girls leaving,girls_share_sec_plus,0.431,"Girls' share, classes 9-12"
+Rajasthan,JALORE,2024-25,other,girls_share_sec_plus,0.458,"Girls' share, classes 9-12"
+Rajasthan,JALORE,2025-26,other,girls_share_sec_plus,0.464,"Girls' share, classes 9-12"
+Rajasthan,JHALAWAR,2024-25,other,girls_share_sec_plus,0.462,"Girls' share, classes 9-12"
+Rajasthan,JHALAWAR,2025-26,other,girls_share_sec_plus,0.465,"Girls' share, classes 9-12"
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,girls_share_sec_plus,0.458,"Girls' share, classes 9-12"
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,girls_share_sec_plus,0.459,"Girls' share, classes 9-12"
+Rajasthan,JODHPUR,2024-25,other,girls_share_sec_plus,0.464,"Girls' share, classes 9-12"
+Rajasthan,JODHPUR,2025-26,other,girls_share_sec_plus,0.468,"Girls' share, classes 9-12"
+Rajasthan,KARAULI,2024-25,other,girls_share_sec_plus,0.471,"Girls' share, classes 9-12"
+Rajasthan,KARAULI,2025-26,other,girls_share_sec_plus,0.478,"Girls' share, classes 9-12"
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,girls_share_sec_plus,0.455,"Girls' share, classes 9-12"
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,girls_share_sec_plus,0.454,"Girls' share, classes 9-12"
+Rajasthan,KOTA,2024-25,boys moving in,girls_share_sec_plus,0.445,"Girls' share, classes 9-12"
+Rajasthan,KOTA,2025-26,boys moving in,girls_share_sec_plus,0.452,"Girls' share, classes 9-12"
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,girls_share_sec_plus,0.478,"Girls' share, classes 9-12"
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,girls_share_sec_plus,0.48,"Girls' share, classes 9-12"
+Rajasthan,NAGAUR,2024-25,other,girls_share_sec_plus,0.474,"Girls' share, classes 9-12"
+Rajasthan,NAGAUR,2025-26,other,girls_share_sec_plus,0.478,"Girls' share, classes 9-12"
+Rajasthan,PALI,2024-25,other,girls_share_sec_plus,0.477,"Girls' share, classes 9-12"
+Rajasthan,PALI,2025-26,other,girls_share_sec_plus,0.483,"Girls' share, classes 9-12"
+Rajasthan,PHALODI,2024-25,other,girls_share_sec_plus,0.452,"Girls' share, classes 9-12"
+Rajasthan,PHALODI,2025-26,other,girls_share_sec_plus,0.463,"Girls' share, classes 9-12"
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),girls_share_sec_plus,0.505,"Girls' share, classes 9-12"
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),girls_share_sec_plus,0.509,"Girls' share, classes 9-12"
+Rajasthan,RAJSAMAND,2024-25,other,girls_share_sec_plus,0.504,"Girls' share, classes 9-12"
+Rajasthan,RAJSAMAND,2025-26,other,girls_share_sec_plus,0.506,"Girls' share, classes 9-12"
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),girls_share_sec_plus,0.504,"Girls' share, classes 9-12"
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),girls_share_sec_plus,0.508,"Girls' share, classes 9-12"
+Rajasthan,SAWAI MADHOPUR,2024-25,other,girls_share_sec_plus,0.458,"Girls' share, classes 9-12"
+Rajasthan,SAWAI MADHOPUR,2025-26,other,girls_share_sec_plus,0.467,"Girls' share, classes 9-12"
+Rajasthan,SIKAR,2024-25,boys moving in,girls_share_sec_plus,0.418,"Girls' share, classes 9-12"
+Rajasthan,SIKAR,2025-26,boys moving in,girls_share_sec_plus,0.417,"Girls' share, classes 9-12"
+Rajasthan,SIROHI,2024-25,other,girls_share_sec_plus,0.445,"Girls' share, classes 9-12"
+Rajasthan,SIROHI,2025-26,other,girls_share_sec_plus,0.454,"Girls' share, classes 9-12"
+Rajasthan,TONK,2024-25,other,girls_share_sec_plus,0.486,"Girls' share, classes 9-12"
+Rajasthan,TONK,2025-26,other,girls_share_sec_plus,0.504,"Girls' share, classes 9-12"
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),girls_share_sec_plus,0.489,"Girls' share, classes 9-12"
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),girls_share_sec_plus,0.49,"Girls' share, classes 9-12"
+Rajasthan,AJMER,2024-25,other,girls_retention_gap,0.009,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,AJMER,2025-26,other,girls_retention_gap,0.011,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,ALWAR,2024-25,other,girls_retention_gap,0.004,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,ALWAR,2025-26,other,girls_retention_gap,0.005,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BALOTRA,2024-25,other,girls_retention_gap,-0.011,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BALOTRA,2025-26,other,girls_retention_gap,-0.003,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),girls_retention_gap,0.014,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),girls_retention_gap,0.018,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BARAN,2024-25,other,girls_retention_gap,0.002,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BARAN,2025-26,other,girls_retention_gap,0.008,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BARMER,2024-25,girls leaving,girls_retention_gap,-0.03,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BARMER,2025-26,girls leaving,girls_retention_gap,-0.026,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BEAWAR,2024-25,other,girls_retention_gap,-0.001,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BEAWAR,2025-26,other,girls_retention_gap,0.001,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BHARATPUR,2024-25,other,girls_retention_gap,-0.006,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BHARATPUR,2025-26,other,girls_retention_gap,-0.001,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BHILWARA,2024-25,other,girls_retention_gap,0.026,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BHILWARA,2025-26,other,girls_retention_gap,0.028,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BIKANER,2024-25,other,girls_retention_gap,0.001,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BIKANER,2025-26,other,girls_retention_gap,0.006,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BUNDI,2024-25,other,girls_retention_gap,-0.006,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,BUNDI,2025-26,other,girls_retention_gap,-0.001,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,CHITTORGARH,2024-25,other,girls_retention_gap,0.021,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,CHITTORGARH,2025-26,other,girls_retention_gap,0.022,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,CHURU,2024-25,other,girls_retention_gap,-0.0,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,CHURU,2025-26,other,girls_retention_gap,0.002,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,DAUSA,2024-25,other,girls_retention_gap,0.002,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,DAUSA,2025-26,other,girls_retention_gap,0.005,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,DEEG,2024-25,other,girls_retention_gap,0.001,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,DEEG,2025-26,other,girls_retention_gap,0.002,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,DHOLPUR,2024-25,other,girls_retention_gap,0.009,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,DHOLPUR,2025-26,other,girls_retention_gap,0.019,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,girls_retention_gap,-0.003,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,girls_retention_gap,-0.0,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),girls_retention_gap,0.022,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),girls_retention_gap,0.023,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,GANGANAGAR,2024-25,other,girls_retention_gap,0.007,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,GANGANAGAR,2025-26,other,girls_retention_gap,0.008,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,HANUMANGARH,2024-25,other,girls_retention_gap,0.009,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,HANUMANGARH,2025-26,other,girls_retention_gap,0.013,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JAIPUR,2024-25,other,girls_retention_gap,-0.006,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JAIPUR,2025-26,other,girls_retention_gap,-0.005,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JAISALMER,2024-25,girls leaving,girls_retention_gap,-0.044,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JAISALMER,2025-26,girls leaving,girls_retention_gap,-0.039,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JALORE,2024-25,other,girls_retention_gap,-0.015,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JALORE,2025-26,other,girls_retention_gap,-0.008,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JHALAWAR,2024-25,other,girls_retention_gap,-0.013,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JHALAWAR,2025-26,other,girls_retention_gap,-0.009,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,girls_retention_gap,-0.01,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,girls_retention_gap,-0.013,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JODHPUR,2024-25,other,girls_retention_gap,-0.009,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,JODHPUR,2025-26,other,girls_retention_gap,-0.005,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,KARAULI,2024-25,other,girls_retention_gap,0.0,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,KARAULI,2025-26,other,girls_retention_gap,0.005,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,girls_retention_gap,-0.005,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,girls_retention_gap,-0.008,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,KOTA,2024-25,boys moving in,girls_retention_gap,-0.028,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,KOTA,2025-26,boys moving in,girls_retention_gap,-0.022,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,girls_retention_gap,0.02,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,girls_retention_gap,0.017,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,NAGAUR,2024-25,other,girls_retention_gap,-0.001,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,NAGAUR,2025-26,other,girls_retention_gap,0.001,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,PALI,2024-25,other,girls_retention_gap,-0.001,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,PALI,2025-26,other,girls_retention_gap,0.005,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,PHALODI,2024-25,other,girls_retention_gap,-0.022,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,PHALODI,2025-26,other,girls_retention_gap,-0.012,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),girls_retention_gap,0.023,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),girls_retention_gap,0.029,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,RAJSAMAND,2024-25,other,girls_retention_gap,0.025,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,RAJSAMAND,2025-26,other,girls_retention_gap,0.027,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),girls_retention_gap,0.022,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),girls_retention_gap,0.025,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,girls_retention_gap,-0.013,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,girls_retention_gap,-0.005,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,SIKAR,2024-25,boys moving in,girls_retention_gap,-0.052,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,SIKAR,2025-26,boys moving in,girls_retention_gap,-0.054,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,SIROHI,2024-25,other,girls_retention_gap,-0.027,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,SIROHI,2025-26,other,girls_retention_gap,-0.015,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,TONK,2024-25,other,girls_retention_gap,0.007,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,TONK,2025-26,other,girls_retention_gap,0.026,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),girls_retention_gap,0.013,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),girls_retention_gap,0.016,Girls' retention gap (share 9-12 minus share 1-5)
+Rajasthan,AJMER,2024-25,other,boys_progression,0.783,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,AJMER,2025-26,other,boys_progression,0.839,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,ALWAR,2024-25,other,boys_progression,0.85,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,ALWAR,2025-26,other,boys_progression,0.882,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BALOTRA,2024-25,other,boys_progression,0.688,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BALOTRA,2025-26,other,boys_progression,0.714,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),boys_progression,0.706,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),boys_progression,0.742,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BARAN,2024-25,other,boys_progression,0.79,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BARAN,2025-26,other,boys_progression,0.823,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BARMER,2024-25,girls leaving,boys_progression,0.672,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BARMER,2025-26,girls leaving,boys_progression,0.725,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BEAWAR,2024-25,other,boys_progression,0.703,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BEAWAR,2025-26,other,boys_progression,0.753,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BHARATPUR,2024-25,other,boys_progression,0.96,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BHARATPUR,2025-26,other,boys_progression,1.015,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BHILWARA,2024-25,other,boys_progression,0.674,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BHILWARA,2025-26,other,boys_progression,0.708,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BIKANER,2024-25,other,boys_progression,0.791,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BIKANER,2025-26,other,boys_progression,0.828,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BUNDI,2024-25,other,boys_progression,0.844,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,BUNDI,2025-26,other,boys_progression,0.887,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,CHITTORGARH,2024-25,other,boys_progression,0.698,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,CHITTORGARH,2025-26,other,boys_progression,0.742,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,CHURU,2024-25,other,boys_progression,0.915,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,CHURU,2025-26,other,boys_progression,0.954,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,DAUSA,2024-25,other,boys_progression,1.041,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,DAUSA,2025-26,other,boys_progression,1.094,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,DEEG,2024-25,other,boys_progression,0.573,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,DEEG,2025-26,other,boys_progression,0.624,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,DHOLPUR,2024-25,other,boys_progression,0.68,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,DHOLPUR,2025-26,other,boys_progression,0.708,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,boys_progression,0.921,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,boys_progression,0.953,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),boys_progression,0.814,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),boys_progression,0.865,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,GANGANAGAR,2024-25,other,boys_progression,0.876,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,GANGANAGAR,2025-26,other,boys_progression,0.9,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,HANUMANGARH,2024-25,other,boys_progression,0.916,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,HANUMANGARH,2025-26,other,boys_progression,0.937,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JAIPUR,2024-25,other,boys_progression,0.907,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JAIPUR,2025-26,other,boys_progression,0.918,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JAISALMER,2024-25,girls leaving,boys_progression,0.548,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JAISALMER,2025-26,girls leaving,boys_progression,0.599,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JALORE,2024-25,other,boys_progression,0.701,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JALORE,2025-26,other,boys_progression,0.745,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JHALAWAR,2024-25,other,boys_progression,0.831,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JHALAWAR,2025-26,other,boys_progression,0.859,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,boys_progression,1.06,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,boys_progression,1.085,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JODHPUR,2024-25,other,boys_progression,0.84,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,JODHPUR,2025-26,other,boys_progression,0.876,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,KARAULI,2024-25,other,boys_progression,0.77,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,KARAULI,2025-26,other,boys_progression,0.801,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,boys_progression,0.689,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,boys_progression,0.738,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,KOTA,2024-25,boys moving in,boys_progression,1.021,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,KOTA,2025-26,boys moving in,boys_progression,1.019,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,boys_progression,0.933,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,boys_progression,0.962,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,NAGAUR,2024-25,other,boys_progression,0.804,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,NAGAUR,2025-26,other,boys_progression,0.845,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,PALI,2024-25,other,boys_progression,0.779,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,PALI,2025-26,other,boys_progression,0.818,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,PHALODI,2024-25,other,boys_progression,0.7,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,PHALODI,2025-26,other,boys_progression,0.737,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),boys_progression,0.701,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),boys_progression,0.733,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,RAJSAMAND,2024-25,other,boys_progression,0.703,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,RAJSAMAND,2025-26,other,boys_progression,0.749,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),boys_progression,0.718,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),boys_progression,0.764,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,boys_progression,0.848,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,boys_progression,0.912,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,SIKAR,2024-25,boys moving in,boys_progression,1.419,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,SIKAR,2025-26,boys moving in,boys_progression,1.494,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,SIROHI,2024-25,other,boys_progression,0.685,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,SIROHI,2025-26,other,boys_progression,0.725,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,TONK,2024-25,other,boys_progression,0.904,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,TONK,2025-26,other,boys_progression,0.943,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),boys_progression,0.675,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),boys_progression,0.711,Boys' progression ratio (9-12 vs 1-5)
+Rajasthan,AJMER,2024-25,other,girls_progression,0.814,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,AJMER,2025-26,other,girls_progression,0.876,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,ALWAR,2024-25,other,girls_progression,0.863,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,ALWAR,2025-26,other,girls_progression,0.901,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BALOTRA,2024-25,other,girls_progression,0.657,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BALOTRA,2025-26,other,girls_progression,0.705,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),girls_progression,0.746,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),girls_progression,0.795,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BARAN,2024-25,other,girls_progression,0.797,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BARAN,2025-26,other,girls_progression,0.849,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BARMER,2024-25,girls leaving,girls_progression,0.595,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BARMER,2025-26,girls leaving,girls_progression,0.652,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BEAWAR,2024-25,other,girls_progression,0.701,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BEAWAR,2025-26,other,girls_progression,0.757,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BHARATPUR,2024-25,other,girls_progression,0.938,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BHARATPUR,2025-26,other,girls_progression,1.011,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BHILWARA,2024-25,other,girls_progression,0.749,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BHILWARA,2025-26,other,girls_progression,0.794,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BIKANER,2024-25,other,girls_progression,0.795,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BIKANER,2025-26,other,girls_progression,0.848,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BUNDI,2024-25,other,girls_progression,0.823,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,BUNDI,2025-26,other,girls_progression,0.882,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,CHITTORGARH,2024-25,other,girls_progression,0.76,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,CHITTORGARH,2025-26,other,girls_progression,0.811,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,CHURU,2024-25,other,girls_progression,0.914,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,CHURU,2025-26,other,girls_progression,0.961,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,DAUSA,2024-25,other,girls_progression,1.048,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,DAUSA,2025-26,other,girls_progression,1.114,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,DEEG,2024-25,other,girls_progression,0.575,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,DEEG,2025-26,other,girls_progression,0.629,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,DHOLPUR,2024-25,other,girls_progression,0.705,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,DHOLPUR,2025-26,other,girls_progression,0.763,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,girls_progression,0.911,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,girls_progression,0.952,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),girls_progression,0.888,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),girls_progression,0.949,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,GANGANAGAR,2024-25,other,girls_progression,0.901,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,GANGANAGAR,2025-26,other,girls_progression,0.929,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,HANUMANGARH,2024-25,other,girls_progression,0.95,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,HANUMANGARH,2025-26,other,girls_progression,0.986,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JAIPUR,2024-25,other,girls_progression,0.886,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JAIPUR,2025-26,other,girls_progression,0.9,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JAISALMER,2024-25,girls leaving,girls_progression,0.459,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JAISALMER,2025-26,girls leaving,girls_progression,0.512,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JALORE,2024-25,other,girls_progression,0.659,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JALORE,2025-26,other,girls_progression,0.721,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JHALAWAR,2024-25,other,girls_progression,0.787,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JHALAWAR,2025-26,other,girls_progression,0.829,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,girls_progression,1.019,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,girls_progression,1.029,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JODHPUR,2024-25,other,girls_progression,0.81,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,JODHPUR,2025-26,other,girls_progression,0.858,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,KARAULI,2024-25,other,girls_progression,0.77,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,KARAULI,2025-26,other,girls_progression,0.817,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,girls_progression,0.674,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,girls_progression,0.714,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,KOTA,2024-25,boys moving in,girls_progression,0.913,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,KOTA,2025-26,boys moving in,girls_progression,0.933,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,girls_progression,1.012,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,girls_progression,1.03,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,NAGAUR,2024-25,other,girls_progression,0.799,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,NAGAUR,2025-26,other,girls_progression,0.849,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,PALI,2024-25,other,girls_progression,0.777,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,PALI,2025-26,other,girls_progression,0.835,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,PHALODI,2024-25,other,girls_progression,0.642,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,PHALODI,2025-26,other,girls_progression,0.702,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),girls_progression,0.77,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),girls_progression,0.825,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,RAJSAMAND,2024-25,other,girls_progression,0.777,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,RAJSAMAND,2025-26,other,girls_progression,0.836,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),girls_progression,0.783,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),girls_progression,0.842,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,girls_progression,0.805,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,girls_progression,0.893,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,SIKAR,2024-25,boys moving in,girls_progression,1.15,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,SIKAR,2025-26,boys moving in,girls_progression,1.201,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,SIROHI,2024-25,other,girls_progression,0.615,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,SIROHI,2025-26,other,girls_progression,0.683,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,TONK,2024-25,other,girls_progression,0.93,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,TONK,2025-26,other,girls_progression,1.045,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),girls_progression,0.712,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),girls_progression,0.759,Girls' progression ratio (9-12 vs 1-5)
+Rajasthan,AJMER,2024-25,other,sc_share,0.205,SC share of students
+Rajasthan,AJMER,2025-26,other,sc_share,0.204,SC share of students
+Rajasthan,ALWAR,2024-25,other,sc_share,0.201,SC share of students
+Rajasthan,ALWAR,2025-26,other,sc_share,0.205,SC share of students
+Rajasthan,BALOTRA,2024-25,other,sc_share,0.189,SC share of students
+Rajasthan,BALOTRA,2025-26,other,sc_share,0.19,SC share of students
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),sc_share,0.038,SC share of students
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),sc_share,0.038,SC share of students
+Rajasthan,BARAN,2024-25,other,sc_share,0.194,SC share of students
+Rajasthan,BARAN,2025-26,other,sc_share,0.194,SC share of students
+Rajasthan,BARMER,2024-25,girls leaving,sc_share,0.198,SC share of students
+Rajasthan,BARMER,2025-26,girls leaving,sc_share,0.199,SC share of students
+Rajasthan,BEAWAR,2024-25,other,sc_share,0.154,SC share of students
+Rajasthan,BEAWAR,2025-26,other,sc_share,0.155,SC share of students
+Rajasthan,BHARATPUR,2024-25,other,sc_share,0.307,SC share of students
+Rajasthan,BHARATPUR,2025-26,other,sc_share,0.309,SC share of students
+Rajasthan,BHILWARA,2024-25,other,sc_share,0.191,SC share of students
+Rajasthan,BHILWARA,2025-26,other,sc_share,0.192,SC share of students
+Rajasthan,BIKANER,2024-25,other,sc_share,0.246,SC share of students
+Rajasthan,BIKANER,2025-26,other,sc_share,0.252,SC share of students
+Rajasthan,BUNDI,2024-25,other,sc_share,0.207,SC share of students
+Rajasthan,BUNDI,2025-26,other,sc_share,0.207,SC share of students
+Rajasthan,CHITTORGARH,2024-25,other,sc_share,0.181,SC share of students
+Rajasthan,CHITTORGARH,2025-26,other,sc_share,0.181,SC share of students
+Rajasthan,CHURU,2024-25,other,sc_share,0.275,SC share of students
+Rajasthan,CHURU,2025-26,other,sc_share,0.28,SC share of students
+Rajasthan,DAUSA,2024-25,other,sc_share,0.232,SC share of students
+Rajasthan,DAUSA,2025-26,other,sc_share,0.233,SC share of students
+Rajasthan,DEEG,2024-25,other,sc_share,0.154,SC share of students
+Rajasthan,DEEG,2025-26,other,sc_share,0.153,SC share of students
+Rajasthan,DHOLPUR,2024-25,other,sc_share,0.215,SC share of students
+Rajasthan,DHOLPUR,2025-26,other,sc_share,0.217,SC share of students
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,sc_share,0.242,SC share of students
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,sc_share,0.245,SC share of students
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),sc_share,0.03,SC share of students
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),sc_share,0.03,SC share of students
+Rajasthan,GANGANAGAR,2024-25,other,sc_share,0.438,SC share of students
+Rajasthan,GANGANAGAR,2025-26,other,sc_share,0.436,SC share of students
+Rajasthan,HANUMANGARH,2024-25,other,sc_share,0.348,SC share of students
+Rajasthan,HANUMANGARH,2025-26,other,sc_share,0.35,SC share of students
+Rajasthan,JAIPUR,2024-25,other,sc_share,0.176,SC share of students
+Rajasthan,JAIPUR,2025-26,other,sc_share,0.177,SC share of students
+Rajasthan,JAISALMER,2024-25,girls leaving,sc_share,0.177,SC share of students
+Rajasthan,JAISALMER,2025-26,girls leaving,sc_share,0.176,SC share of students
+Rajasthan,JALORE,2024-25,other,sc_share,0.232,SC share of students
+Rajasthan,JALORE,2025-26,other,sc_share,0.236,SC share of students
+Rajasthan,JHALAWAR,2024-25,other,sc_share,0.185,SC share of students
+Rajasthan,JHALAWAR,2025-26,other,sc_share,0.185,SC share of students
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,sc_share,0.187,SC share of students
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,sc_share,0.188,SC share of students
+Rajasthan,JODHPUR,2024-25,other,sc_share,0.195,SC share of students
+Rajasthan,JODHPUR,2025-26,other,sc_share,0.196,SC share of students
+Rajasthan,KARAULI,2024-25,other,sc_share,0.289,SC share of students
+Rajasthan,KARAULI,2025-26,other,sc_share,0.292,SC share of students
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,sc_share,0.178,SC share of students
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,sc_share,0.177,SC share of students
+Rajasthan,KOTA,2024-25,boys moving in,sc_share,0.229,SC share of students
+Rajasthan,KOTA,2025-26,boys moving in,sc_share,0.232,SC share of students
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,sc_share,0.163,SC share of students
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,sc_share,0.16,SC share of students
+Rajasthan,NAGAUR,2024-25,other,sc_share,0.274,SC share of students
+Rajasthan,NAGAUR,2025-26,other,sc_share,0.279,SC share of students
+Rajasthan,PALI,2024-25,other,sc_share,0.219,SC share of students
+Rajasthan,PALI,2025-26,other,sc_share,0.22,SC share of students
+Rajasthan,PHALODI,2024-25,other,sc_share,0.218,SC share of students
+Rajasthan,PHALODI,2025-26,other,sc_share,0.223,SC share of students
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),sc_share,0.062,SC share of students
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),sc_share,0.062,SC share of students
+Rajasthan,RAJSAMAND,2024-25,other,sc_share,0.14,SC share of students
+Rajasthan,RAJSAMAND,2025-26,other,sc_share,0.139,SC share of students
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),sc_share,0.029,SC share of students
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),sc_share,0.028,SC share of students
+Rajasthan,SAWAI MADHOPUR,2024-25,other,sc_share,0.22,SC share of students
+Rajasthan,SAWAI MADHOPUR,2025-26,other,sc_share,0.221,SC share of students
+Rajasthan,SIKAR,2024-25,boys moving in,sc_share,0.176,SC share of students
+Rajasthan,SIKAR,2025-26,boys moving in,sc_share,0.175,SC share of students
+Rajasthan,SIROHI,2024-25,other,sc_share,0.202,SC share of students
+Rajasthan,SIROHI,2025-26,other,sc_share,0.203,SC share of students
+Rajasthan,TONK,2024-25,other,sc_share,0.208,SC share of students
+Rajasthan,TONK,2025-26,other,sc_share,0.205,SC share of students
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),sc_share,0.065,SC share of students
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),sc_share,0.065,SC share of students
+Rajasthan,AJMER,2024-25,other,st_share,0.029,ST share of students
+Rajasthan,AJMER,2025-26,other,st_share,0.029,ST share of students
+Rajasthan,ALWAR,2024-25,other,st_share,0.106,ST share of students
+Rajasthan,ALWAR,2025-26,other,st_share,0.107,ST share of students
+Rajasthan,BALOTRA,2024-25,other,st_share,0.075,ST share of students
+Rajasthan,BALOTRA,2025-26,other,st_share,0.075,ST share of students
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),st_share,0.829,ST share of students
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),st_share,0.829,ST share of students
+Rajasthan,BARAN,2024-25,other,st_share,0.249,ST share of students
+Rajasthan,BARAN,2025-26,other,st_share,0.249,ST share of students
+Rajasthan,BARMER,2024-25,girls leaving,st_share,0.059,ST share of students
+Rajasthan,BARMER,2025-26,girls leaving,st_share,0.059,ST share of students
+Rajasthan,BEAWAR,2024-25,other,st_share,0.012,ST share of students
+Rajasthan,BEAWAR,2025-26,other,st_share,0.012,ST share of students
+Rajasthan,BHARATPUR,2024-25,other,st_share,0.022,ST share of students
+Rajasthan,BHARATPUR,2025-26,other,st_share,0.022,ST share of students
+Rajasthan,BHILWARA,2024-25,other,st_share,0.099,ST share of students
+Rajasthan,BHILWARA,2025-26,other,st_share,0.098,ST share of students
+Rajasthan,BIKANER,2024-25,other,st_share,0.004,ST share of students
+Rajasthan,BIKANER,2025-26,other,st_share,0.004,ST share of students
+Rajasthan,BUNDI,2024-25,other,st_share,0.205,ST share of students
+Rajasthan,BUNDI,2025-26,other,st_share,0.203,ST share of students
+Rajasthan,CHITTORGARH,2024-25,other,st_share,0.15,ST share of students
+Rajasthan,CHITTORGARH,2025-26,other,st_share,0.153,ST share of students
+Rajasthan,CHURU,2024-25,other,st_share,0.005,ST share of students
+Rajasthan,CHURU,2025-26,other,st_share,0.005,ST share of students
+Rajasthan,DAUSA,2024-25,other,st_share,0.248,ST share of students
+Rajasthan,DAUSA,2025-26,other,st_share,0.244,ST share of students
+Rajasthan,DEEG,2024-25,other,st_share,0.006,ST share of students
+Rajasthan,DEEG,2025-26,other,st_share,0.006,ST share of students
+Rajasthan,DHOLPUR,2024-25,other,st_share,0.045,ST share of students
+Rajasthan,DHOLPUR,2025-26,other,st_share,0.045,ST share of students
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,st_share,0.005,ST share of students
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,st_share,0.005,ST share of students
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),st_share,0.802,ST share of students
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),st_share,0.804,ST share of students
+Rajasthan,GANGANAGAR,2024-25,other,st_share,0.006,ST share of students
+Rajasthan,GANGANAGAR,2025-26,other,st_share,0.006,ST share of students
+Rajasthan,HANUMANGARH,2024-25,other,st_share,0.005,ST share of students
+Rajasthan,HANUMANGARH,2025-26,other,st_share,0.005,ST share of students
+Rajasthan,JAIPUR,2024-25,other,st_share,0.085,ST share of students
+Rajasthan,JAIPUR,2025-26,other,st_share,0.084,ST share of students
+Rajasthan,JAISALMER,2024-25,girls leaving,st_share,0.078,ST share of students
+Rajasthan,JAISALMER,2025-26,girls leaving,st_share,0.078,ST share of students
+Rajasthan,JALORE,2024-25,other,st_share,0.103,ST share of students
+Rajasthan,JALORE,2025-26,other,st_share,0.106,ST share of students
+Rajasthan,JHALAWAR,2024-25,other,st_share,0.14,ST share of students
+Rajasthan,JHALAWAR,2025-26,other,st_share,0.14,ST share of students
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,st_share,0.022,ST share of students
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,st_share,0.022,ST share of students
+Rajasthan,JODHPUR,2024-25,other,st_share,0.035,ST share of students
+Rajasthan,JODHPUR,2025-26,other,st_share,0.035,ST share of students
+Rajasthan,KARAULI,2024-25,other,st_share,0.173,ST share of students
+Rajasthan,KARAULI,2025-26,other,st_share,0.169,ST share of students
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,st_share,0.007,ST share of students
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,st_share,0.007,ST share of students
+Rajasthan,KOTA,2024-25,boys moving in,st_share,0.097,ST share of students
+Rajasthan,KOTA,2025-26,boys moving in,st_share,0.097,ST share of students
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,st_share,0.049,ST share of students
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,st_share,0.049,ST share of students
+Rajasthan,NAGAUR,2024-25,other,st_share,0.002,ST share of students
+Rajasthan,NAGAUR,2025-26,other,st_share,0.002,ST share of students
+Rajasthan,PALI,2024-25,other,st_share,0.118,ST share of students
+Rajasthan,PALI,2025-26,other,st_share,0.122,ST share of students
+Rajasthan,PHALODI,2024-25,other,st_share,0.047,ST share of students
+Rajasthan,PHALODI,2025-26,other,st_share,0.047,ST share of students
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),st_share,0.733,ST share of students
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),st_share,0.73,ST share of students
+Rajasthan,RAJSAMAND,2024-25,other,st_share,0.179,ST share of students
+Rajasthan,RAJSAMAND,2025-26,other,st_share,0.181,ST share of students
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),st_share,0.78,ST share of students
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),st_share,0.785,ST share of students
+Rajasthan,SAWAI MADHOPUR,2024-25,other,st_share,0.191,ST share of students
+Rajasthan,SAWAI MADHOPUR,2025-26,other,st_share,0.187,ST share of students
+Rajasthan,SIKAR,2024-25,boys moving in,st_share,0.033,ST share of students
+Rajasthan,SIKAR,2025-26,boys moving in,st_share,0.034,ST share of students
+Rajasthan,SIROHI,2024-25,other,st_share,0.324,ST share of students
+Rajasthan,SIROHI,2025-26,other,st_share,0.326,ST share of students
+Rajasthan,TONK,2024-25,other,st_share,0.144,ST share of students
+Rajasthan,TONK,2025-26,other,st_share,0.142,ST share of students
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),st_share,0.543,ST share of students
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),st_share,0.542,ST share of students
+Rajasthan,AJMER,2024-25,other,pct_has_electricity,98.238,Schools with electricity (%)
+Rajasthan,AJMER,2025-26,other,pct_has_electricity,98.274,Schools with electricity (%)
+Rajasthan,ALWAR,2024-25,other,pct_has_electricity,94.452,Schools with electricity (%)
+Rajasthan,ALWAR,2025-26,other,pct_has_electricity,94.536,Schools with electricity (%)
+Rajasthan,BALOTRA,2024-25,other,pct_has_electricity,89.454,Schools with electricity (%)
+Rajasthan,BALOTRA,2025-26,other,pct_has_electricity,89.963,Schools with electricity (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_has_electricity,66.029,Schools with electricity (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_has_electricity,69.76,Schools with electricity (%)
+Rajasthan,BARAN,2024-25,other,pct_has_electricity,73.647,Schools with electricity (%)
+Rajasthan,BARAN,2025-26,other,pct_has_electricity,74.053,Schools with electricity (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_has_electricity,90.301,Schools with electricity (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_has_electricity,90.199,Schools with electricity (%)
+Rajasthan,BEAWAR,2024-25,other,pct_has_electricity,97.56,Schools with electricity (%)
+Rajasthan,BEAWAR,2025-26,other,pct_has_electricity,97.383,Schools with electricity (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_has_electricity,93.326,Schools with electricity (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_has_electricity,93.351,Schools with electricity (%)
+Rajasthan,BHILWARA,2024-25,other,pct_has_electricity,97.798,Schools with electricity (%)
+Rajasthan,BHILWARA,2025-26,other,pct_has_electricity,98.114,Schools with electricity (%)
+Rajasthan,BIKANER,2024-25,other,pct_has_electricity,95.053,Schools with electricity (%)
+Rajasthan,BIKANER,2025-26,other,pct_has_electricity,95.368,Schools with electricity (%)
+Rajasthan,BUNDI,2024-25,other,pct_has_electricity,94.426,Schools with electricity (%)
+Rajasthan,BUNDI,2025-26,other,pct_has_electricity,94.402,Schools with electricity (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_has_electricity,97.311,Schools with electricity (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_has_electricity,97.226,Schools with electricity (%)
+Rajasthan,CHURU,2024-25,other,pct_has_electricity,96.25,Schools with electricity (%)
+Rajasthan,CHURU,2025-26,other,pct_has_electricity,96.33,Schools with electricity (%)
+Rajasthan,DAUSA,2024-25,other,pct_has_electricity,92.218,Schools with electricity (%)
+Rajasthan,DAUSA,2025-26,other,pct_has_electricity,91.973,Schools with electricity (%)
+Rajasthan,DEEG,2024-25,other,pct_has_electricity,92.655,Schools with electricity (%)
+Rajasthan,DEEG,2025-26,other,pct_has_electricity,92.6,Schools with electricity (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_has_electricity,91.879,Schools with electricity (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_has_electricity,92.112,Schools with electricity (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_has_electricity,98.369,Schools with electricity (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_has_electricity,98.107,Schools with electricity (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_has_electricity,87.417,Schools with electricity (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_has_electricity,86.922,Schools with electricity (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_has_electricity,97.985,Schools with electricity (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_has_electricity,98.022,Schools with electricity (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_has_electricity,99.066,Schools with electricity (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_has_electricity,99.168,Schools with electricity (%)
+Rajasthan,JAIPUR,2024-25,other,pct_has_electricity,94.178,Schools with electricity (%)
+Rajasthan,JAIPUR,2025-26,other,pct_has_electricity,93.723,Schools with electricity (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_has_electricity,84.404,Schools with electricity (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_has_electricity,85.24,Schools with electricity (%)
+Rajasthan,JALORE,2024-25,other,pct_has_electricity,95.407,Schools with electricity (%)
+Rajasthan,JALORE,2025-26,other,pct_has_electricity,95.476,Schools with electricity (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_has_electricity,95.448,Schools with electricity (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_has_electricity,92.726,Schools with electricity (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_has_electricity,97.913,Schools with electricity (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_has_electricity,98.053,Schools with electricity (%)
+Rajasthan,JODHPUR,2024-25,other,pct_has_electricity,87.251,Schools with electricity (%)
+Rajasthan,JODHPUR,2025-26,other,pct_has_electricity,88.249,Schools with electricity (%)
+Rajasthan,KARAULI,2024-25,other,pct_has_electricity,92.2,Schools with electricity (%)
+Rajasthan,KARAULI,2025-26,other,pct_has_electricity,91.493,Schools with electricity (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_has_electricity,95.409,Schools with electricity (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_has_electricity,95.425,Schools with electricity (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_has_electricity,95.789,Schools with electricity (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_has_electricity,95.909,Schools with electricity (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_has_electricity,94.786,Schools with electricity (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_has_electricity,95.117,Schools with electricity (%)
+Rajasthan,NAGAUR,2024-25,other,pct_has_electricity,95.524,Schools with electricity (%)
+Rajasthan,NAGAUR,2025-26,other,pct_has_electricity,95.485,Schools with electricity (%)
+Rajasthan,PALI,2024-25,other,pct_has_electricity,95.356,Schools with electricity (%)
+Rajasthan,PALI,2025-26,other,pct_has_electricity,95.423,Schools with electricity (%)
+Rajasthan,PHALODI,2024-25,other,pct_has_electricity,71.808,Schools with electricity (%)
+Rajasthan,PHALODI,2025-26,other,pct_has_electricity,72.956,Schools with electricity (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_has_electricity,73.347,Schools with electricity (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_has_electricity,74.352,Schools with electricity (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_has_electricity,96.734,Schools with electricity (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_has_electricity,96.175,Schools with electricity (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_has_electricity,79.769,Schools with electricity (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_has_electricity,79.908,Schools with electricity (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_has_electricity,95.008,Schools with electricity (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_has_electricity,94.78,Schools with electricity (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_has_electricity,96.999,Schools with electricity (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_has_electricity,97.18,Schools with electricity (%)
+Rajasthan,SIROHI,2024-25,other,pct_has_electricity,90.562,Schools with electricity (%)
+Rajasthan,SIROHI,2025-26,other,pct_has_electricity,90.49,Schools with electricity (%)
+Rajasthan,TONK,2024-25,other,pct_has_electricity,96.867,Schools with electricity (%)
+Rajasthan,TONK,2025-26,other,pct_has_electricity,96.732,Schools with electricity (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_has_electricity,79.631,Schools with electricity (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_has_electricity,79.747,Schools with electricity (%)
+Rajasthan,AJMER,2024-25,other,pct_has_safe_water,99.508,Schools with safe water (%)
+Rajasthan,AJMER,2025-26,other,pct_has_safe_water,99.301,Schools with safe water (%)
+Rajasthan,ALWAR,2024-25,other,pct_has_safe_water,97.31,Schools with safe water (%)
+Rajasthan,ALWAR,2025-26,other,pct_has_safe_water,96.857,Schools with safe water (%)
+Rajasthan,BALOTRA,2024-25,other,pct_has_safe_water,98.693,Schools with safe water (%)
+Rajasthan,BALOTRA,2025-26,other,pct_has_safe_water,97.919,Schools with safe water (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_has_safe_water,97.499,Schools with safe water (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_has_safe_water,96.634,Schools with safe water (%)
+Rajasthan,BARAN,2024-25,other,pct_has_safe_water,94.118,Schools with safe water (%)
+Rajasthan,BARAN,2025-26,other,pct_has_safe_water,94.223,Schools with safe water (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_has_safe_water,97.682,Schools with safe water (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_has_safe_water,97.131,Schools with safe water (%)
+Rajasthan,BEAWAR,2024-25,other,pct_has_safe_water,99.524,Schools with safe water (%)
+Rajasthan,BEAWAR,2025-26,other,pct_has_safe_water,99.405,Schools with safe water (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_has_safe_water,98.825,Schools with safe water (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_has_safe_water,98.138,Schools with safe water (%)
+Rajasthan,BHILWARA,2024-25,other,pct_has_safe_water,99.534,Schools with safe water (%)
+Rajasthan,BHILWARA,2025-26,other,pct_has_safe_water,99.613,Schools with safe water (%)
+Rajasthan,BIKANER,2024-25,other,pct_has_safe_water,98.977,Schools with safe water (%)
+Rajasthan,BIKANER,2025-26,other,pct_has_safe_water,98.732,Schools with safe water (%)
+Rajasthan,BUNDI,2024-25,other,pct_has_safe_water,99.18,Schools with safe water (%)
+Rajasthan,BUNDI,2025-26,other,pct_has_safe_water,99.239,Schools with safe water (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_has_safe_water,99.117,Schools with safe water (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_has_safe_water,99.035,Schools with safe water (%)
+Rajasthan,CHURU,2024-25,other,pct_has_safe_water,98.956,Schools with safe water (%)
+Rajasthan,CHURU,2025-26,other,pct_has_safe_water,98.662,Schools with safe water (%)
+Rajasthan,DAUSA,2024-25,other,pct_has_safe_water,95.347,Schools with safe water (%)
+Rajasthan,DAUSA,2025-26,other,pct_has_safe_water,95.008,Schools with safe water (%)
+Rajasthan,DEEG,2024-25,other,pct_has_safe_water,97.316,Schools with safe water (%)
+Rajasthan,DEEG,2025-26,other,pct_has_safe_water,96.335,Schools with safe water (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_has_safe_water,97.78,Schools with safe water (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_has_safe_water,97.839,Schools with safe water (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_has_safe_water,99.471,Schools with safe water (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_has_safe_water,99.296,Schools with safe water (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_has_safe_water,98.238,Schools with safe water (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_has_safe_water,97.611,Schools with safe water (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_has_safe_water,99.792,Schools with safe water (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_has_safe_water,99.618,Schools with safe water (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_has_safe_water,99.853,Schools with safe water (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_has_safe_water,99.657,Schools with safe water (%)
+Rajasthan,JAIPUR,2024-25,other,pct_has_safe_water,98.725,Schools with safe water (%)
+Rajasthan,JAIPUR,2025-26,other,pct_has_safe_water,98.589,Schools with safe water (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_has_safe_water,97.993,Schools with safe water (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_has_safe_water,97.082,Schools with safe water (%)
+Rajasthan,JALORE,2024-25,other,pct_has_safe_water,98.915,Schools with safe water (%)
+Rajasthan,JALORE,2025-26,other,pct_has_safe_water,98.995,Schools with safe water (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_has_safe_water,98.783,Schools with safe water (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_has_safe_water,97.845,Schools with safe water (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_has_safe_water,99.739,Schools with safe water (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_has_safe_water,99.401,Schools with safe water (%)
+Rajasthan,JODHPUR,2024-25,other,pct_has_safe_water,98.67,Schools with safe water (%)
+Rajasthan,JODHPUR,2025-26,other,pct_has_safe_water,98.583,Schools with safe water (%)
+Rajasthan,KARAULI,2024-25,other,pct_has_safe_water,97.188,Schools with safe water (%)
+Rajasthan,KARAULI,2025-26,other,pct_has_safe_water,96.516,Schools with safe water (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_has_safe_water,98.852,Schools with safe water (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_has_safe_water,98.642,Schools with safe water (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_has_safe_water,99.424,Schools with safe water (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_has_safe_water,99.333,Schools with safe water (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_has_safe_water,98.386,Schools with safe water (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_has_safe_water,97.891,Schools with safe water (%)
+Rajasthan,NAGAUR,2024-25,other,pct_has_safe_water,99.607,Schools with safe water (%)
+Rajasthan,NAGAUR,2025-26,other,pct_has_safe_water,99.176,Schools with safe water (%)
+Rajasthan,PALI,2024-25,other,pct_has_safe_water,99.724,Schools with safe water (%)
+Rajasthan,PALI,2025-26,other,pct_has_safe_water,99.769,Schools with safe water (%)
+Rajasthan,PHALODI,2024-25,other,pct_has_safe_water,98.149,Schools with safe water (%)
+Rajasthan,PHALODI,2025-26,other,pct_has_safe_water,97.664,Schools with safe water (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_has_safe_water,97.779,Schools with safe water (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_has_safe_water,97.054,Schools with safe water (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_has_safe_water,99.356,Schools with safe water (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_has_safe_water,99.263,Schools with safe water (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_has_safe_water,96.308,Schools with safe water (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_has_safe_water,96.151,Schools with safe water (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_has_safe_water,98.559,Schools with safe water (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_has_safe_water,98.036,Schools with safe water (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_has_safe_water,99.192,Schools with safe water (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_has_safe_water,99.165,Schools with safe water (%)
+Rajasthan,SIROHI,2024-25,other,pct_has_safe_water,98.703,Schools with safe water (%)
+Rajasthan,SIROHI,2025-26,other,pct_has_safe_water,98.271,Schools with safe water (%)
+Rajasthan,TONK,2024-25,other,pct_has_safe_water,99.512,Schools with safe water (%)
+Rajasthan,TONK,2025-26,other,pct_has_safe_water,99.346,Schools with safe water (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_has_safe_water,97.083,Schools with safe water (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_has_safe_water,96.377,Schools with safe water (%)
+Rajasthan,AJMER,2024-25,other,pct_has_girls_toilet,92.705,Schools with a girls' toilet (%)
+Rajasthan,AJMER,2025-26,other,pct_has_girls_toilet,92.52,Schools with a girls' toilet (%)
+Rajasthan,ALWAR,2024-25,other,pct_has_girls_toilet,88.265,Schools with a girls' toilet (%)
+Rajasthan,ALWAR,2025-26,other,pct_has_girls_toilet,87.893,Schools with a girls' toilet (%)
+Rajasthan,BALOTRA,2024-25,other,pct_has_girls_toilet,86.981,Schools with a girls' toilet (%)
+Rajasthan,BALOTRA,2025-26,other,pct_has_girls_toilet,86.633,Schools with a girls' toilet (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_has_girls_toilet,77.029,Schools with a girls' toilet (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_has_girls_toilet,75.497,Schools with a girls' toilet (%)
+Rajasthan,BARAN,2024-25,other,pct_has_girls_toilet,73.835,Schools with a girls' toilet (%)
+Rajasthan,BARAN,2025-26,other,pct_has_girls_toilet,72.443,Schools with a girls' toilet (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_has_girls_toilet,85.638,Schools with a girls' toilet (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_has_girls_toilet,85.498,Schools with a girls' toilet (%)
+Rajasthan,BEAWAR,2024-25,other,pct_has_girls_toilet,91.131,Schools with a girls' toilet (%)
+Rajasthan,BEAWAR,2025-26,other,pct_has_girls_toilet,90.541,Schools with a girls' toilet (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_has_girls_toilet,87.453,Schools with a girls' toilet (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_has_girls_toilet,87.394,Schools with a girls' toilet (%)
+Rajasthan,BHILWARA,2024-25,other,pct_has_girls_toilet,90.466,Schools with a girls' toilet (%)
+Rajasthan,BHILWARA,2025-26,other,pct_has_girls_toilet,90.209,Schools with a girls' toilet (%)
+Rajasthan,BIKANER,2024-25,other,pct_has_girls_toilet,85.489,Schools with a girls' toilet (%)
+Rajasthan,BIKANER,2025-26,other,pct_has_girls_toilet,86.297,Schools with a girls' toilet (%)
+Rajasthan,BUNDI,2024-25,other,pct_has_girls_toilet,86.011,Schools with a girls' toilet (%)
+Rajasthan,BUNDI,2025-26,other,pct_has_girls_toilet,84.62,Schools with a girls' toilet (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_has_girls_toilet,88.042,Schools with a girls' toilet (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_has_girls_toilet,87.897,Schools with a girls' toilet (%)
+Rajasthan,CHURU,2024-25,other,pct_has_girls_toilet,88.52,Schools with a girls' toilet (%)
+Rajasthan,CHURU,2025-26,other,pct_has_girls_toilet,89.297,Schools with a girls' toilet (%)
+Rajasthan,DAUSA,2024-25,other,pct_has_girls_toilet,84.276,Schools with a girls' toilet (%)
+Rajasthan,DAUSA,2025-26,other,pct_has_girls_toilet,83.946,Schools with a girls' toilet (%)
+Rajasthan,DEEG,2024-25,other,pct_has_girls_toilet,85.381,Schools with a girls' toilet (%)
+Rajasthan,DEEG,2025-26,other,pct_has_girls_toilet,85.412,Schools with a girls' toilet (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_has_girls_toilet,87.764,Schools with a girls' toilet (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_has_girls_toilet,87.25,Schools with a girls' toilet (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_has_girls_toilet,92.769,Schools with a girls' toilet (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_has_girls_toilet,92.342,Schools with a girls' toilet (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_has_girls_toilet,78.515,Schools with a girls' toilet (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_has_girls_toilet,75.888,Schools with a girls' toilet (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_has_girls_toilet,91.591,Schools with a girls' toilet (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_has_girls_toilet,90.84,Schools with a girls' toilet (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_has_girls_toilet,96.658,Schools with a girls' toilet (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_has_girls_toilet,96.084,Schools with a girls' toilet (%)
+Rajasthan,JAIPUR,2024-25,other,pct_has_girls_toilet,89.337,Schools with a girls' toilet (%)
+Rajasthan,JAIPUR,2025-26,other,pct_has_girls_toilet,89.684,Schools with a girls' toilet (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_has_girls_toilet,78.498,Schools with a girls' toilet (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_has_girls_toilet,77.46,Schools with a girls' toilet (%)
+Rajasthan,JALORE,2024-25,other,pct_has_girls_toilet,88.571,Schools with a girls' toilet (%)
+Rajasthan,JALORE,2025-26,other,pct_has_girls_toilet,89.264,Schools with a girls' toilet (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_has_girls_toilet,90.131,Schools with a girls' toilet (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_has_girls_toilet,84.553,Schools with a girls' toilet (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_has_girls_toilet,93.291,Schools with a girls' toilet (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_has_girls_toilet,93.186,Schools with a girls' toilet (%)
+Rajasthan,JODHPUR,2024-25,other,pct_has_girls_toilet,90.094,Schools with a girls' toilet (%)
+Rajasthan,JODHPUR,2025-26,other,pct_has_girls_toilet,92.112,Schools with a girls' toilet (%)
+Rajasthan,KARAULI,2024-25,other,pct_has_girls_toilet,87.075,Schools with a girls' toilet (%)
+Rajasthan,KARAULI,2025-26,other,pct_has_girls_toilet,85.792,Schools with a girls' toilet (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_has_girls_toilet,91.392,Schools with a girls' toilet (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_has_girls_toilet,91.137,Schools with a girls' toilet (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_has_girls_toilet,90.027,Schools with a girls' toilet (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_has_girls_toilet,88.706,Schools with a girls' toilet (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_has_girls_toilet,91.93,Schools with a girls' toilet (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_has_girls_toilet,92.508,Schools with a girls' toilet (%)
+Rajasthan,NAGAUR,2024-25,other,pct_has_girls_toilet,90.891,Schools with a girls' toilet (%)
+Rajasthan,NAGAUR,2025-26,other,pct_has_girls_toilet,91.166,Schools with a girls' toilet (%)
+Rajasthan,PALI,2024-25,other,pct_has_girls_toilet,86.483,Schools with a girls' toilet (%)
+Rajasthan,PALI,2025-26,other,pct_has_girls_toilet,87.194,Schools with a girls' toilet (%)
+Rajasthan,PHALODI,2024-25,other,pct_has_girls_toilet,83.837,Schools with a girls' toilet (%)
+Rajasthan,PHALODI,2025-26,other,pct_has_girls_toilet,84.266,Schools with a girls' toilet (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_has_girls_toilet,77.133,Schools with a girls' toilet (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_has_girls_toilet,75.368,Schools with a girls' toilet (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_has_girls_toilet,90.294,Schools with a girls' toilet (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_has_girls_toilet,90.369,Schools with a girls' toilet (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_has_girls_toilet,76.077,Schools with a girls' toilet (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_has_girls_toilet,74.904,Schools with a girls' toilet (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_has_girls_toilet,81.523,Schools with a girls' toilet (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_has_girls_toilet,81.55,Schools with a girls' toilet (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_has_girls_toilet,88.719,Schools with a girls' toilet (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_has_girls_toilet,89.612,Schools with a girls' toilet (%)
+Rajasthan,SIROHI,2024-25,other,pct_has_girls_toilet,85.807,Schools with a girls' toilet (%)
+Rajasthan,SIROHI,2025-26,other,pct_has_girls_toilet,85.014,Schools with a girls' toilet (%)
+Rajasthan,TONK,2024-25,other,pct_has_girls_toilet,91.538,Schools with a girls' toilet (%)
+Rajasthan,TONK,2025-26,other,pct_has_girls_toilet,89.175,Schools with a girls' toilet (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_has_girls_toilet,87.53,Schools with a girls' toilet (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_has_girls_toilet,84.537,Schools with a girls' toilet (%)
+Rajasthan,AJMER,2024-25,other,pct_has_boys_toilet,88.279,Schools with a boys' toilet (%)
+Rajasthan,AJMER,2025-26,other,pct_has_boys_toilet,87.3,Schools with a boys' toilet (%)
+Rajasthan,ALWAR,2024-25,other,pct_has_boys_toilet,85.945,Schools with a boys' toilet (%)
+Rajasthan,ALWAR,2025-26,other,pct_has_boys_toilet,85.286,Schools with a boys' toilet (%)
+Rajasthan,BALOTRA,2024-25,other,pct_has_boys_toilet,84.834,Schools with a boys' toilet (%)
+Rajasthan,BALOTRA,2025-26,other,pct_has_boys_toilet,84.459,Schools with a boys' toilet (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_has_boys_toilet,75.421,Schools with a boys' toilet (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_has_boys_toilet,73.712,Schools with a boys' toilet (%)
+Rajasthan,BARAN,2024-25,other,pct_has_boys_toilet,71.012,Schools with a boys' toilet (%)
+Rajasthan,BARAN,2025-26,other,pct_has_boys_toilet,69.366,Schools with a boys' toilet (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_has_boys_toilet,84.226,Schools with a boys' toilet (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_has_boys_toilet,83.665,Schools with a boys' toilet (%)
+Rajasthan,BEAWAR,2024-25,other,pct_has_boys_toilet,89.048,Schools with a boys' toilet (%)
+Rajasthan,BEAWAR,2025-26,other,pct_has_boys_toilet,88.162,Schools with a boys' toilet (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_has_boys_toilet,84.891,Schools with a boys' toilet (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_has_boys_toilet,84.415,Schools with a boys' toilet (%)
+Rajasthan,BHILWARA,2024-25,other,pct_has_boys_toilet,85.363,Schools with a boys' toilet (%)
+Rajasthan,BHILWARA,2025-26,other,pct_has_boys_toilet,84.293,Schools with a boys' toilet (%)
+Rajasthan,BIKANER,2024-25,other,pct_has_boys_toilet,82.283,Schools with a boys' toilet (%)
+Rajasthan,BIKANER,2025-26,other,pct_has_boys_toilet,81.362,Schools with a boys' toilet (%)
+Rajasthan,BUNDI,2024-25,other,pct_has_boys_toilet,83.443,Schools with a boys' toilet (%)
+Rajasthan,BUNDI,2025-26,other,pct_has_boys_toilet,81.902,Schools with a boys' toilet (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_has_boys_toilet,85.433,Schools with a boys' toilet (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_has_boys_toilet,84.841,Schools with a boys' toilet (%)
+Rajasthan,CHURU,2024-25,other,pct_has_boys_toilet,83.61,Schools with a boys' toilet (%)
+Rajasthan,CHURU,2025-26,other,pct_has_boys_toilet,82.76,Schools with a boys' toilet (%)
+Rajasthan,DAUSA,2024-25,other,pct_has_boys_toilet,83.313,Schools with a boys' toilet (%)
+Rajasthan,DAUSA,2025-26,other,pct_has_boys_toilet,82.668,Schools with a boys' toilet (%)
+Rajasthan,DEEG,2024-25,other,pct_has_boys_toilet,83.192,Schools with a boys' toilet (%)
+Rajasthan,DEEG,2025-26,other,pct_has_boys_toilet,82.1,Schools with a boys' toilet (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_has_boys_toilet,86.789,Schools with a boys' toilet (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_has_boys_toilet,85.737,Schools with a boys' toilet (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_has_boys_toilet,89.065,Schools with a boys' toilet (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_has_boys_toilet,87.896,Schools with a boys' toilet (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_has_boys_toilet,76.502,Schools with a boys' toilet (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_has_boys_toilet,73.908,Schools with a boys' toilet (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_has_boys_toilet,88.221,Schools with a boys' toilet (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_has_boys_toilet,86.572,Schools with a boys' toilet (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_has_boys_toilet,93.022,Schools with a boys' toilet (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_has_boys_toilet,91.092,Schools with a boys' toilet (%)
+Rajasthan,JAIPUR,2024-25,other,pct_has_boys_toilet,88.467,Schools with a boys' toilet (%)
+Rajasthan,JAIPUR,2025-26,other,pct_has_boys_toilet,88.078,Schools with a boys' toilet (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_has_boys_toilet,74.197,Schools with a boys' toilet (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_has_boys_toilet,72.941,Schools with a boys' toilet (%)
+Rajasthan,JALORE,2024-25,other,pct_has_boys_toilet,87.342,Schools with a boys' toilet (%)
+Rajasthan,JALORE,2025-26,other,pct_has_boys_toilet,87.397,Schools with a boys' toilet (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_has_boys_toilet,87.877,Schools with a boys' toilet (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_has_boys_toilet,81.59,Schools with a boys' toilet (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_has_boys_toilet,89.638,Schools with a boys' toilet (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_has_boys_toilet,88.656,Schools with a boys' toilet (%)
+Rajasthan,JODHPUR,2024-25,other,pct_has_boys_toilet,87.251,Schools with a boys' toilet (%)
+Rajasthan,JODHPUR,2025-26,other,pct_has_boys_toilet,88.729,Schools with a boys' toilet (%)
+Rajasthan,KARAULI,2024-25,other,pct_has_boys_toilet,84.58,Schools with a boys' toilet (%)
+Rajasthan,KARAULI,2025-26,other,pct_has_boys_toilet,83.077,Schools with a boys' toilet (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_has_boys_toilet,89.527,Schools with a boys' toilet (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_has_boys_toilet,88.778,Schools with a boys' toilet (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_has_boys_toilet,86.924,Schools with a boys' toilet (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_has_boys_toilet,85.638,Schools with a boys' toilet (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_has_boys_toilet,89.385,Schools with a boys' toilet (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_has_boys_toilet,88.346,Schools with a boys' toilet (%)
+Rajasthan,NAGAUR,2024-25,other,pct_has_boys_toilet,87.711,Schools with a boys' toilet (%)
+Rajasthan,NAGAUR,2025-26,other,pct_has_boys_toilet,86.808,Schools with a boys' toilet (%)
+Rajasthan,PALI,2024-25,other,pct_has_boys_toilet,83.816,Schools with a boys' toilet (%)
+Rajasthan,PALI,2025-26,other,pct_has_boys_toilet,83.172,Schools with a boys' toilet (%)
+Rajasthan,PHALODI,2024-25,other,pct_has_boys_toilet,81.616,Schools with a boys' toilet (%)
+Rajasthan,PHALODI,2025-26,other,pct_has_boys_toilet,81.684,Schools with a boys' toilet (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_has_boys_toilet,76.729,Schools with a boys' toilet (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_has_boys_toilet,73.845,Schools with a boys' toilet (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_has_boys_toilet,87.167,Schools with a boys' toilet (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_has_boys_toilet,86.498,Schools with a boys' toilet (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_has_boys_toilet,78.077,Schools with a boys' toilet (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_has_boys_toilet,75.828,Schools with a boys' toilet (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_has_boys_toilet,79.774,Schools with a boys' toilet (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_has_boys_toilet,79.432,Schools with a boys' toilet (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_has_boys_toilet,85.718,Schools with a boys' toilet (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_has_boys_toilet,85.784,Schools with a boys' toilet (%)
+Rajasthan,SIROHI,2024-25,other,pct_has_boys_toilet,82.565,Schools with a boys' toilet (%)
+Rajasthan,SIROHI,2025-26,other,pct_has_boys_toilet,81.916,Schools with a boys' toilet (%)
+Rajasthan,TONK,2024-25,other,pct_has_boys_toilet,87.714,Schools with a boys' toilet (%)
+Rajasthan,TONK,2025-26,other,pct_has_boys_toilet,84.395,Schools with a boys' toilet (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_has_boys_toilet,85.683,Schools with a boys' toilet (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_has_boys_toilet,82.106,Schools with a boys' toilet (%)
+Rajasthan,AJMER,2024-25,other,pct_has_handwash,96.557,Schools with handwash (%)
+Rajasthan,AJMER,2025-26,other,pct_has_handwash,97.08,Schools with handwash (%)
+Rajasthan,ALWAR,2024-25,other,pct_has_handwash,91.762,Schools with handwash (%)
+Rajasthan,ALWAR,2025-26,other,pct_has_handwash,93.223,Schools with handwash (%)
+Rajasthan,BALOTRA,2024-25,other,pct_has_handwash,93.794,Schools with handwash (%)
+Rajasthan,BALOTRA,2025-26,other,pct_has_handwash,94.957,Schools with handwash (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_has_handwash,83.818,Schools with handwash (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_has_handwash,87.971,Schools with handwash (%)
+Rajasthan,BARAN,2024-25,other,pct_has_handwash,79.153,Schools with handwash (%)
+Rajasthan,BARAN,2025-26,other,pct_has_handwash,86.774,Schools with handwash (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_has_handwash,92.992,Schools with handwash (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_has_handwash,95.119,Schools with handwash (%)
+Rajasthan,BEAWAR,2024-25,other,pct_has_handwash,96.012,Schools with handwash (%)
+Rajasthan,BEAWAR,2025-26,other,pct_has_handwash,96.394,Schools with handwash (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_has_handwash,92.045,Schools with handwash (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_has_handwash,92.822,Schools with handwash (%)
+Rajasthan,BHILWARA,2024-25,other,pct_has_handwash,95.285,Schools with handwash (%)
+Rajasthan,BHILWARA,2025-26,other,pct_has_handwash,95.936,Schools with handwash (%)
+Rajasthan,BIKANER,2024-25,other,pct_has_handwash,93.256,Schools with handwash (%)
+Rajasthan,BIKANER,2025-26,other,pct_has_handwash,95.487,Schools with handwash (%)
+Rajasthan,BUNDI,2024-25,other,pct_has_handwash,92.131,Schools with handwash (%)
+Rajasthan,BUNDI,2025-26,other,pct_has_handwash,95.037,Schools with handwash (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_has_handwash,95.425,Schools with handwash (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_has_handwash,95.808,Schools with handwash (%)
+Rajasthan,CHURU,2024-25,other,pct_has_handwash,93.777,Schools with handwash (%)
+Rajasthan,CHURU,2025-26,other,pct_has_handwash,95.357,Schools with handwash (%)
+Rajasthan,DAUSA,2024-25,other,pct_has_handwash,87.164,Schools with handwash (%)
+Rajasthan,DAUSA,2025-26,other,pct_has_handwash,89.38,Schools with handwash (%)
+Rajasthan,DEEG,2024-25,other,pct_has_handwash,88.701,Schools with handwash (%)
+Rajasthan,DEEG,2025-26,other,pct_has_handwash,90.543,Schools with handwash (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_has_handwash,94.099,Schools with handwash (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_has_handwash,95.455,Schools with handwash (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_has_handwash,96.693,Schools with handwash (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_has_handwash,97.12,Schools with handwash (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_has_handwash,89.053,Schools with handwash (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_has_handwash,92.108,Schools with handwash (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_has_handwash,97.603,Schools with handwash (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_has_handwash,97.932,Schools with handwash (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_has_handwash,97.445,Schools with handwash (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_has_handwash,97.635,Schools with handwash (%)
+Rajasthan,JAIPUR,2024-25,other,pct_has_handwash,95.392,Schools with handwash (%)
+Rajasthan,JAIPUR,2025-26,other,pct_has_handwash,96.805,Schools with handwash (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_has_handwash,90.195,Schools with handwash (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_has_handwash,94.085,Schools with handwash (%)
+Rajasthan,JALORE,2024-25,other,pct_has_handwash,94.72,Schools with handwash (%)
+Rajasthan,JALORE,2025-26,other,pct_has_handwash,95.638,Schools with handwash (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_has_handwash,95.403,Schools with handwash (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_has_handwash,95.205,Schools with handwash (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_has_handwash,97.577,Schools with handwash (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_has_handwash,97.925,Schools with handwash (%)
+Rajasthan,JODHPUR,2024-25,other,pct_has_handwash,95.414,Schools with handwash (%)
+Rajasthan,JODHPUR,2025-26,other,pct_has_handwash,96.93,Schools with handwash (%)
+Rajasthan,KARAULI,2024-25,other,pct_has_handwash,88.073,Schools with handwash (%)
+Rajasthan,KARAULI,2025-26,other,pct_has_handwash,89.944,Schools with handwash (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_has_handwash,96.198,Schools with handwash (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_has_handwash,96.652,Schools with handwash (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_has_handwash,95.213,Schools with handwash (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_has_handwash,96.583,Schools with handwash (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_has_handwash,96.648,Schools with handwash (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_has_handwash,96.959,Schools with handwash (%)
+Rajasthan,NAGAUR,2024-25,other,pct_has_handwash,96.349,Schools with handwash (%)
+Rajasthan,NAGAUR,2025-26,other,pct_has_handwash,96.876,Schools with handwash (%)
+Rajasthan,PALI,2024-25,other,pct_has_handwash,94.713,Schools with handwash (%)
+Rajasthan,PALI,2025-26,other,pct_has_handwash,95.519,Schools with handwash (%)
+Rajasthan,PHALODI,2024-25,other,pct_has_handwash,91.795,Schools with handwash (%)
+Rajasthan,PHALODI,2025-26,other,pct_has_handwash,95.019,Schools with handwash (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_has_handwash,88.289,Schools with handwash (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_has_handwash,91.361,Schools with handwash (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_has_handwash,95.538,Schools with handwash (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_has_handwash,96.038,Schools with handwash (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_has_handwash,86.231,Schools with handwash (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_has_handwash,89.874,Schools with handwash (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_has_handwash,92.229,Schools with handwash (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_has_handwash,93.557,Schools with handwash (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_has_handwash,95.615,Schools with handwash (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_has_handwash,96.55,Schools with handwash (%)
+Rajasthan,SIROHI,2024-25,other,pct_has_handwash,89.986,Schools with handwash (%)
+Rajasthan,SIROHI,2025-26,other,pct_has_handwash,92.89,Schools with handwash (%)
+Rajasthan,TONK,2024-25,other,pct_has_handwash,93.653,Schools with handwash (%)
+Rajasthan,TONK,2025-26,other,pct_has_handwash,93.405,Schools with handwash (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_has_handwash,90.739,Schools with handwash (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_has_handwash,92.31,Schools with handwash (%)
+Rajasthan,AJMER,2024-25,other,pct_has_library,77.992,Schools with a library (%)
+Rajasthan,AJMER,2025-26,other,pct_has_library,78.792,Schools with a library (%)
+Rajasthan,ALWAR,2024-25,other,pct_has_library,79.321,Schools with a library (%)
+Rajasthan,ALWAR,2025-26,other,pct_has_library,79.75,Schools with a library (%)
+Rajasthan,BALOTRA,2024-25,other,pct_has_library,70.369,Schools with a library (%)
+Rajasthan,BALOTRA,2025-26,other,pct_has_library,72.155,Schools with a library (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_has_library,49.438,Schools with a library (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_has_library,50.433,Schools with a library (%)
+Rajasthan,BARAN,2024-25,other,pct_has_library,67.529,Schools with a library (%)
+Rajasthan,BARAN,2025-26,other,pct_has_library,68.419,Schools with a library (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_has_library,72.582,Schools with a library (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_has_library,74.422,Schools with a library (%)
+Rajasthan,BEAWAR,2024-25,other,pct_has_library,78.155,Schools with a library (%)
+Rajasthan,BEAWAR,2025-26,other,pct_has_library,79.001,Schools with a library (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_has_library,80.566,Schools with a library (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_has_library,80.851,Schools with a library (%)
+Rajasthan,BHILWARA,2024-25,other,pct_has_library,72.513,Schools with a library (%)
+Rajasthan,BHILWARA,2025-26,other,pct_has_library,74.348,Schools with a library (%)
+Rajasthan,BIKANER,2024-25,other,pct_has_library,66.473,Schools with a library (%)
+Rajasthan,BIKANER,2025-26,other,pct_has_library,68.569,Schools with a library (%)
+Rajasthan,BUNDI,2024-25,other,pct_has_library,76.12,Schools with a library (%)
+Rajasthan,BUNDI,2025-26,other,pct_has_library,76.087,Schools with a library (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_has_library,77.287,Schools with a library (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_has_library,78.93,Schools with a library (%)
+Rajasthan,CHURU,2024-25,other,pct_has_library,79.938,Schools with a library (%)
+Rajasthan,CHURU,2025-26,other,pct_has_library,81.269,Schools with a library (%)
+Rajasthan,DAUSA,2024-25,other,pct_has_library,76.053,Schools with a library (%)
+Rajasthan,DAUSA,2025-26,other,pct_has_library,76.637,Schools with a library (%)
+Rajasthan,DEEG,2024-25,other,pct_has_library,73.517,Schools with a library (%)
+Rajasthan,DEEG,2025-26,other,pct_has_library,74.63,Schools with a library (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_has_library,72.929,Schools with a library (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_has_library,74.23,Schools with a library (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_has_library,79.541,Schools with a library (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_has_library,80.458,Schools with a library (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_has_library,61.655,Schools with a library (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_has_library,61.49,Schools with a library (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_has_library,76.789,Schools with a library (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_has_library,77.967,Schools with a library (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_has_library,82.752,Schools with a library (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_has_library,84.435,Schools with a library (%)
+Rajasthan,JAIPUR,2024-25,other,pct_has_library,79.397,Schools with a library (%)
+Rajasthan,JAIPUR,2025-26,other,pct_has_library,80.146,Schools with a library (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_has_library,67.603,Schools with a library (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_has_library,69.908,Schools with a library (%)
+Rajasthan,JALORE,2024-25,other,pct_has_library,77.432,Schools with a library (%)
+Rajasthan,JALORE,2025-26,other,pct_has_library,78.779,Schools with a library (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_has_library,81.027,Schools with a library (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_has_library,81.769,Schools with a library (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_has_library,84.644,Schools with a library (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_has_library,85.848,Schools with a library (%)
+Rajasthan,JODHPUR,2024-25,other,pct_has_library,78.904,Schools with a library (%)
+Rajasthan,JODHPUR,2025-26,other,pct_has_library,79.995,Schools with a library (%)
+Rajasthan,KARAULI,2024-25,other,pct_has_library,75.283,Schools with a library (%)
+Rajasthan,KARAULI,2025-26,other,pct_has_library,76.335,Schools with a library (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_has_library,78.981,Schools with a library (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_has_library,79.271,Schools with a library (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_has_library,77.748,Schools with a library (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_has_library,78.479,Schools with a library (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_has_library,86.53,Schools with a library (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_has_library,87.181,Schools with a library (%)
+Rajasthan,NAGAUR,2024-25,other,pct_has_library,78.288,Schools with a library (%)
+Rajasthan,NAGAUR,2025-26,other,pct_has_library,79.309,Schools with a library (%)
+Rajasthan,PALI,2024-25,other,pct_has_library,80.368,Schools with a library (%)
+Rajasthan,PALI,2025-26,other,pct_has_library,81.045,Schools with a library (%)
+Rajasthan,PHALODI,2024-25,other,pct_has_library,73.103,Schools with a library (%)
+Rajasthan,PHALODI,2025-26,other,pct_has_library,74.493,Schools with a library (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_has_library,58.758,Schools with a library (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_has_library,60.081,Schools with a library (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_has_library,75.069,Schools with a library (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_has_library,76.498,Schools with a library (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_has_library,56.0,Schools with a library (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_has_library,57.968,Schools with a library (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_has_library,73.598,Schools with a library (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_has_library,74.625,Schools with a library (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_has_library,81.823,Schools with a library (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_has_library,83.165,Schools with a library (%)
+Rajasthan,SIROHI,2024-25,other,pct_has_library,79.755,Schools with a library (%)
+Rajasthan,SIROHI,2025-26,other,pct_has_library,81.484,Schools with a library (%)
+Rajasthan,TONK,2024-25,other,pct_has_library,72.295,Schools with a library (%)
+Rajasthan,TONK,2025-26,other,pct_has_library,73.856,Schools with a library (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_has_library,63.442,Schools with a library (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_has_library,64.697,Schools with a library (%)
+Rajasthan,AJMER,2024-25,other,pct_has_playground,80.82,Schools with a playground (%)
+Rajasthan,AJMER,2025-26,other,pct_has_playground,76.531,Schools with a playground (%)
+Rajasthan,ALWAR,2024-25,other,pct_has_playground,72.024,Schools with a playground (%)
+Rajasthan,ALWAR,2025-26,other,pct_has_playground,67.0,Schools with a playground (%)
+Rajasthan,BALOTRA,2024-25,other,pct_has_playground,84.648,Schools with a playground (%)
+Rajasthan,BALOTRA,2025-26,other,pct_has_playground,77.058,Schools with a playground (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_has_playground,58.729,Schools with a playground (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_has_playground,52.83,Schools with a playground (%)
+Rajasthan,BARAN,2024-25,other,pct_has_playground,62.447,Schools with a playground (%)
+Rajasthan,BARAN,2025-26,other,pct_has_playground,58.807,Schools with a playground (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_has_playground,85.212,Schools with a playground (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_has_playground,79.336,Schools with a playground (%)
+Rajasthan,BEAWAR,2024-25,other,pct_has_playground,84.405,Schools with a playground (%)
+Rajasthan,BEAWAR,2025-26,other,pct_has_playground,79.833,Schools with a playground (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_has_playground,74.693,Schools with a playground (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_has_playground,70.851,Schools with a playground (%)
+Rajasthan,BHILWARA,2024-25,other,pct_has_playground,80.052,Schools with a playground (%)
+Rajasthan,BHILWARA,2025-26,other,pct_has_playground,74.813,Schools with a playground (%)
+Rajasthan,BIKANER,2024-25,other,pct_has_playground,72.167,Schools with a playground (%)
+Rajasthan,BIKANER,2025-26,other,pct_has_playground,67.108,Schools with a playground (%)
+Rajasthan,BUNDI,2024-25,other,pct_has_playground,75.027,Schools with a playground (%)
+Rajasthan,BUNDI,2025-26,other,pct_has_playground,70.924,Schools with a playground (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_has_playground,82.143,Schools with a playground (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_has_playground,76.92,Schools with a playground (%)
+Rajasthan,CHURU,2024-25,other,pct_has_playground,73.367,Schools with a playground (%)
+Rajasthan,CHURU,2025-26,other,pct_has_playground,68.196,Schools with a playground (%)
+Rajasthan,DAUSA,2024-25,other,pct_has_playground,73.406,Schools with a playground (%)
+Rajasthan,DAUSA,2025-26,other,pct_has_playground,68.85,Schools with a playground (%)
+Rajasthan,DEEG,2024-25,other,pct_has_playground,74.576,Schools with a playground (%)
+Rajasthan,DEEG,2025-26,other,pct_has_playground,68.076,Schools with a playground (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_has_playground,65.079,Schools with a playground (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_has_playground,59.265,Schools with a playground (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_has_playground,73.898,Schools with a playground (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_has_playground,67.077,Schools with a playground (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_has_playground,70.431,Schools with a playground (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_has_playground,61.522,Schools with a playground (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_has_playground,83.287,Schools with a playground (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_has_playground,75.954,Schools with a playground (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_has_playground,83.096,Schools with a playground (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_has_playground,79.834,Schools with a playground (%)
+Rajasthan,JAIPUR,2024-25,other,pct_has_playground,74.74,Schools with a playground (%)
+Rajasthan,JAIPUR,2025-26,other,pct_has_playground,69.1,Schools with a playground (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_has_playground,77.294,Schools with a playground (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_has_playground,69.108,Schools with a playground (%)
+Rajasthan,JALORE,2024-25,other,pct_has_playground,80.904,Schools with a playground (%)
+Rajasthan,JALORE,2025-26,other,pct_has_playground,74.973,Schools with a playground (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_has_playground,82.875,Schools with a playground (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_has_playground,78.177,Schools with a playground (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_has_playground,83.563,Schools with a playground (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_has_playground,79.259,Schools with a playground (%)
+Rajasthan,JODHPUR,2024-25,other,pct_has_playground,81.977,Schools with a playground (%)
+Rajasthan,JODHPUR,2025-26,other,pct_has_playground,77.046,Schools with a playground (%)
+Rajasthan,KARAULI,2024-25,other,pct_has_playground,78.776,Schools with a playground (%)
+Rajasthan,KARAULI,2025-26,other,pct_has_playground,72.941,Schools with a playground (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_has_playground,77.547,Schools with a playground (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_has_playground,75.411,Schools with a playground (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_has_playground,66.489,Schools with a playground (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_has_playground,58.07,Schools with a playground (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_has_playground,85.413,Schools with a playground (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_has_playground,81.576,Schools with a playground (%)
+Rajasthan,NAGAUR,2024-25,other,pct_has_playground,76.09,Schools with a playground (%)
+Rajasthan,NAGAUR,2025-26,other,pct_has_playground,70.985,Schools with a playground (%)
+Rajasthan,PALI,2024-25,other,pct_has_playground,74.253,Schools with a playground (%)
+Rajasthan,PALI,2025-26,other,pct_has_playground,69.626,Schools with a playground (%)
+Rajasthan,PHALODI,2024-25,other,pct_has_playground,80.568,Schools with a playground (%)
+Rajasthan,PHALODI,2025-26,other,pct_has_playground,76.03,Schools with a playground (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_has_playground,77.082,Schools with a playground (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_has_playground,69.426,Schools with a playground (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_has_playground,81.509,Schools with a playground (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_has_playground,75.991,Schools with a playground (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_has_playground,65.231,Schools with a playground (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_has_playground,56.967,Schools with a playground (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_has_playground,67.37,Schools with a playground (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_has_playground,62.429,Schools with a playground (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_has_playground,81.304,Schools with a playground (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_has_playground,77.583,Schools with a playground (%)
+Rajasthan,SIROHI,2024-25,other,pct_has_playground,66.931,Schools with a playground (%)
+Rajasthan,SIROHI,2025-26,other,pct_has_playground,61.095,Schools with a playground (%)
+Rajasthan,TONK,2024-25,other,pct_has_playground,64.687,Schools with a playground (%)
+Rajasthan,TONK,2025-26,other,pct_has_playground,59.314,Schools with a playground (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_has_playground,67.526,Schools with a playground (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_has_playground,60.467,Schools with a playground (%)
+Rajasthan,AJMER,2024-25,other,pct_has_ramp,74.631,Schools with a ramp (%)
+Rajasthan,AJMER,2025-26,other,pct_has_ramp,74.805,Schools with a ramp (%)
+Rajasthan,ALWAR,2024-25,other,pct_has_ramp,62.34,Schools with a ramp (%)
+Rajasthan,ALWAR,2025-26,other,pct_has_ramp,61.429,Schools with a ramp (%)
+Rajasthan,BALOTRA,2024-25,other,pct_has_ramp,74.848,Schools with a ramp (%)
+Rajasthan,BALOTRA,2025-26,other,pct_has_ramp,75.069,Schools with a ramp (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_has_ramp,55.845,Schools with a ramp (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_has_ramp,55.992,Schools with a ramp (%)
+Rajasthan,BARAN,2024-25,other,pct_has_ramp,63.859,Schools with a ramp (%)
+Rajasthan,BARAN,2025-26,other,pct_has_ramp,63.778,Schools with a ramp (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_has_ramp,69.731,Schools with a ramp (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_has_ramp,69.96,Schools with a ramp (%)
+Rajasthan,BEAWAR,2024-25,other,pct_has_ramp,82.857,Schools with a ramp (%)
+Rajasthan,BEAWAR,2025-26,other,pct_has_ramp,83.046,Schools with a ramp (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_has_ramp,60.972,Schools with a ramp (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_has_ramp,61.755,Schools with a ramp (%)
+Rajasthan,BHILWARA,2024-25,other,pct_has_ramp,82.073,Schools with a ramp (%)
+Rajasthan,BHILWARA,2025-26,other,pct_has_ramp,82.382,Schools with a ramp (%)
+Rajasthan,BIKANER,2024-25,other,pct_has_ramp,71.808,Schools with a ramp (%)
+Rajasthan,BIKANER,2025-26,other,pct_has_ramp,72.153,Schools with a ramp (%)
+Rajasthan,BUNDI,2024-25,other,pct_has_ramp,73.115,Schools with a ramp (%)
+Rajasthan,BUNDI,2025-26,other,pct_has_ramp,73.152,Schools with a ramp (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_has_ramp,77.368,Schools with a ramp (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_has_ramp,77.724,Schools with a ramp (%)
+Rajasthan,CHURU,2024-25,other,pct_has_ramp,70.932,Schools with a ramp (%)
+Rajasthan,CHURU,2025-26,other,pct_has_ramp,71.254,Schools with a ramp (%)
+Rajasthan,DAUSA,2024-25,other,pct_has_ramp,69.876,Schools with a ramp (%)
+Rajasthan,DAUSA,2025-26,other,pct_has_ramp,69.928,Schools with a ramp (%)
+Rajasthan,DEEG,2024-25,other,pct_has_ramp,60.946,Schools with a ramp (%)
+Rajasthan,DEEG,2025-26,other,pct_has_ramp,60.817,Schools with a ramp (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_has_ramp,72.009,Schools with a ramp (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_has_ramp,72.285,Schools with a ramp (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_has_ramp,71.914,Schools with a ramp (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_has_ramp,72.227,Schools with a ramp (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_has_ramp,48.726,Schools with a ramp (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_has_ramp,48.821,Schools with a ramp (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_has_ramp,75.643,Schools with a ramp (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_has_ramp,75.85,Schools with a ramp (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_has_ramp,76.02,Schools with a ramp (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_has_ramp,75.771,Schools with a ramp (%)
+Rajasthan,JAIPUR,2024-25,other,pct_has_ramp,64.787,Schools with a ramp (%)
+Rajasthan,JAIPUR,2025-26,other,pct_has_ramp,65.073,Schools with a ramp (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_has_ramp,69.553,Schools with a ramp (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_has_ramp,69.165,Schools with a ramp (%)
+Rajasthan,JALORE,2024-25,other,pct_has_ramp,71.79,Schools with a ramp (%)
+Rajasthan,JALORE,2025-26,other,pct_has_ramp,71.957,Schools with a ramp (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_has_ramp,79.405,Schools with a ramp (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_has_ramp,77.548,Schools with a ramp (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_has_ramp,69.027,Schools with a ramp (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_has_ramp,69.637,Schools with a ramp (%)
+Rajasthan,JODHPUR,2024-25,other,pct_has_ramp,72.185,Schools with a ramp (%)
+Rajasthan,JODHPUR,2025-26,other,pct_has_ramp,72.908,Schools with a ramp (%)
+Rajasthan,KARAULI,2024-25,other,pct_has_ramp,69.796,Schools with a ramp (%)
+Rajasthan,KARAULI,2025-26,other,pct_has_ramp,70.452,Schools with a ramp (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_has_ramp,62.267,Schools with a ramp (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_has_ramp,62.974,Schools with a ramp (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_has_ramp,67.332,Schools with a ramp (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_has_ramp,67.185,Schools with a ramp (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_has_ramp,70.639,Schools with a ramp (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_has_ramp,71.643,Schools with a ramp (%)
+Rajasthan,NAGAUR,2024-25,other,pct_has_ramp,78.249,Schools with a ramp (%)
+Rajasthan,NAGAUR,2025-26,other,pct_has_ramp,78.563,Schools with a ramp (%)
+Rajasthan,PALI,2024-25,other,pct_has_ramp,72.598,Schools with a ramp (%)
+Rajasthan,PALI,2025-26,other,pct_has_ramp,73.417,Schools with a ramp (%)
+Rajasthan,PHALODI,2024-25,other,pct_has_ramp,71.376,Schools with a ramp (%)
+Rajasthan,PHALODI,2025-26,other,pct_has_ramp,71.727,Schools with a ramp (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_has_ramp,54.568,Schools with a ramp (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_has_ramp,55.104,Schools with a ramp (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_has_ramp,70.653,Schools with a ramp (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_has_ramp,70.599,Schools with a ramp (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_has_ramp,51.385,Schools with a ramp (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_has_ramp,51.116,Schools with a ramp (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_has_ramp,69.789,Schools with a ramp (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_has_ramp,70.439,Schools with a ramp (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_has_ramp,67.715,Schools with a ramp (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_has_ramp,68.604,Schools with a ramp (%)
+Rajasthan,SIROHI,2024-25,other,pct_has_ramp,65.562,Schools with a ramp (%)
+Rajasthan,SIROHI,2025-26,other,pct_has_ramp,66.138,Schools with a ramp (%)
+Rajasthan,TONK,2024-25,other,pct_has_ramp,65.704,Schools with a ramp (%)
+Rajasthan,TONK,2025-26,other,pct_has_ramp,66.299,Schools with a ramp (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_has_ramp,55.566,Schools with a ramp (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_has_ramp,55.726,Schools with a ramp (%)
+Rajasthan,AJMER,2024-25,other,pct_has_internet,79.18,Schools with internet (%)
+Rajasthan,AJMER,2025-26,other,pct_has_internet,79.326,Schools with internet (%)
+Rajasthan,ALWAR,2024-25,other,pct_has_internet,68.594,Schools with internet (%)
+Rajasthan,ALWAR,2025-26,other,pct_has_internet,68.571,Schools with internet (%)
+Rajasthan,BALOTRA,2024-25,other,pct_has_internet,65.889,Schools with internet (%)
+Rajasthan,BALOTRA,2025-26,other,pct_has_internet,67.16,Schools with internet (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_has_internet,55.539,Schools with internet (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_has_internet,56.502,Schools with internet (%)
+Rajasthan,BARAN,2024-25,other,pct_has_internet,53.647,Schools with internet (%)
+Rajasthan,BARAN,2025-26,other,pct_has_internet,54.119,Schools with internet (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_has_internet,71.889,Schools with internet (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_has_internet,72.191,Schools with internet (%)
+Rajasthan,BEAWAR,2024-25,other,pct_has_internet,76.31,Schools with internet (%)
+Rajasthan,BEAWAR,2025-26,other,pct_has_internet,77.275,Schools with internet (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_has_internet,67.645,Schools with internet (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_has_internet,67.979,Schools with internet (%)
+Rajasthan,BHILWARA,2024-25,other,pct_has_internet,76.166,Schools with internet (%)
+Rajasthan,BHILWARA,2025-26,other,pct_has_internet,76.079,Schools with internet (%)
+Rajasthan,BIKANER,2024-25,other,pct_has_internet,67.468,Schools with internet (%)
+Rajasthan,BIKANER,2025-26,other,pct_has_internet,68.266,Schools with internet (%)
+Rajasthan,BUNDI,2024-25,other,pct_has_internet,73.443,Schools with internet (%)
+Rajasthan,BUNDI,2025-26,other,pct_has_internet,72.989,Schools with internet (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_has_internet,73.917,Schools with internet (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_has_internet,74.548,Schools with internet (%)
+Rajasthan,CHURU,2024-25,other,pct_has_internet,70.7,Schools with internet (%)
+Rajasthan,CHURU,2025-26,other,pct_has_internet,71.942,Schools with internet (%)
+Rajasthan,DAUSA,2024-25,other,pct_has_internet,60.69,Schools with internet (%)
+Rajasthan,DAUSA,2025-26,other,pct_has_internet,61.621,Schools with internet (%)
+Rajasthan,DEEG,2024-25,other,pct_has_internet,65.113,Schools with internet (%)
+Rajasthan,DEEG,2025-26,other,pct_has_internet,64.834,Schools with internet (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_has_internet,69.897,Schools with internet (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_has_internet,70.719,Schools with internet (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_has_internet,73.501,Schools with internet (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_has_internet,73.988,Schools with internet (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_has_internet,65.492,Schools with internet (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_has_internet,65.608,Schools with internet (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_has_internet,75.678,Schools with internet (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_has_internet,76.405,Schools with internet (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_has_internet,78.624,Schools with internet (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_has_internet,81.596,Schools with internet (%)
+Rajasthan,JAIPUR,2024-25,other,pct_has_internet,76.933,Schools with internet (%)
+Rajasthan,JAIPUR,2025-26,other,pct_has_internet,77.482,Schools with internet (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_has_internet,68.635,Schools with internet (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_has_internet,69.565,Schools with internet (%)
+Rajasthan,JALORE,2024-25,other,pct_has_internet,74.213,Schools with internet (%)
+Rajasthan,JALORE,2025-26,other,pct_has_internet,75.224,Schools with internet (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_has_internet,69.851,Schools with internet (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_has_internet,70.903,Schools with internet (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_has_internet,69.4,Schools with internet (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_has_internet,70.61,Schools with internet (%)
+Rajasthan,JODHPUR,2024-25,other,pct_has_internet,73.378,Schools with internet (%)
+Rajasthan,JODHPUR,2025-26,other,pct_has_internet,74.417,Schools with internet (%)
+Rajasthan,KARAULI,2024-25,other,pct_has_internet,68.027,Schools with internet (%)
+Rajasthan,KARAULI,2025-26,other,pct_has_internet,68.19,Schools with internet (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_has_internet,75.108,Schools with internet (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_has_internet,75.554,Schools with internet (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_has_internet,74.911,Schools with internet (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_has_internet,74.922,Schools with internet (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_has_internet,78.088,Schools with internet (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_has_internet,78.801,Schools with internet (%)
+Rajasthan,NAGAUR,2024-25,other,pct_has_internet,71.182,Schools with internet (%)
+Rajasthan,NAGAUR,2025-26,other,pct_has_internet,72.792,Schools with internet (%)
+Rajasthan,PALI,2024-25,other,pct_has_internet,74.253,Schools with internet (%)
+Rajasthan,PALI,2025-26,other,pct_has_internet,75.127,Schools with internet (%)
+Rajasthan,PHALODI,2024-25,other,pct_has_internet,62.184,Schools with internet (%)
+Rajasthan,PHALODI,2025-26,other,pct_has_internet,63.184,Schools with internet (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_has_internet,68.753,Schools with internet (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_has_internet,68.41,Schools with internet (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_has_internet,76.081,Schools with internet (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_has_internet,75.991,Schools with internet (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_has_internet,59.462,Schools with internet (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_has_internet,59.353,Schools with internet (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_has_internet,60.113,Schools with internet (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_has_internet,61.085,Schools with internet (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_has_internet,66.907,Schools with internet (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_has_internet,68.604,Schools with internet (%)
+Rajasthan,SIROHI,2024-25,other,pct_has_internet,64.121,Schools with internet (%)
+Rajasthan,SIROHI,2025-26,other,pct_has_internet,64.769,Schools with internet (%)
+Rajasthan,TONK,2024-25,other,pct_has_internet,64.361,Schools with internet (%)
+Rajasthan,TONK,2025-26,other,pct_has_internet,64.91,Schools with internet (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_has_internet,67.38,Schools with internet (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_has_internet,67.493,Schools with internet (%)
+Rajasthan,AJMER,2024-25,other,pct_has_computer,66.844,Schools with a computer (%)
+Rajasthan,AJMER,2025-26,other,pct_has_computer,68.968,Schools with a computer (%)
+Rajasthan,ALWAR,2024-25,other,pct_has_computer,49.866,Schools with a computer (%)
+Rajasthan,ALWAR,2025-26,other,pct_has_computer,51.821,Schools with a computer (%)
+Rajasthan,BALOTRA,2024-25,other,pct_has_computer,40.177,Schools with a computer (%)
+Rajasthan,BALOTRA,2025-26,other,pct_has_computer,42.831,Schools with a computer (%)
+Rajasthan,BANSWARA,2024-25,boys leaving (tribal south),pct_has_computer,27.54,Schools with a computer (%)
+Rajasthan,BANSWARA,2025-26,boys leaving (tribal south),pct_has_computer,28.735,Schools with a computer (%)
+Rajasthan,BARAN,2024-25,other,pct_has_computer,40.424,Schools with a computer (%)
+Rajasthan,BARAN,2025-26,other,pct_has_computer,41.856,Schools with a computer (%)
+Rajasthan,BARMER,2024-25,girls leaving,pct_has_computer,33.52,Schools with a computer (%)
+Rajasthan,BARMER,2025-26,girls leaving,pct_has_computer,37.344,Schools with a computer (%)
+Rajasthan,BEAWAR,2024-25,other,pct_has_computer,57.262,Schools with a computer (%)
+Rajasthan,BEAWAR,2025-26,other,pct_has_computer,59.31,Schools with a computer (%)
+Rajasthan,BHARATPUR,2024-25,other,pct_has_computer,48.372,Schools with a computer (%)
+Rajasthan,BHARATPUR,2025-26,other,pct_has_computer,49.787,Schools with a computer (%)
+Rajasthan,BHILWARA,2024-25,other,pct_has_computer,48.031,Schools with a computer (%)
+Rajasthan,BHILWARA,2025-26,other,pct_has_computer,49.729,Schools with a computer (%)
+Rajasthan,BIKANER,2024-25,other,pct_has_computer,54.588,Schools with a computer (%)
+Rajasthan,BIKANER,2025-26,other,pct_has_computer,57.072,Schools with a computer (%)
+Rajasthan,BUNDI,2024-25,other,pct_has_computer,46.667,Schools with a computer (%)
+Rajasthan,BUNDI,2025-26,other,pct_has_computer,47.989,Schools with a computer (%)
+Rajasthan,CHITTORGARH,2024-25,other,pct_has_computer,52.568,Schools with a computer (%)
+Rajasthan,CHITTORGARH,2025-26,other,pct_has_computer,53.559,Schools with a computer (%)
+Rajasthan,CHURU,2024-25,other,pct_has_computer,74.372,Schools with a computer (%)
+Rajasthan,CHURU,2025-26,other,pct_has_computer,76.453,Schools with a computer (%)
+Rajasthan,DAUSA,2024-25,other,pct_has_computer,45.728,Schools with a computer (%)
+Rajasthan,DAUSA,2025-26,other,pct_has_computer,47.444,Schools with a computer (%)
+Rajasthan,DEEG,2024-25,other,pct_has_computer,44.068,Schools with a computer (%)
+Rajasthan,DEEG,2025-26,other,pct_has_computer,46.018,Schools with a computer (%)
+Rajasthan,DHOLPUR,2024-25,other,pct_has_computer,46.779,Schools with a computer (%)
+Rajasthan,DHOLPUR,2025-26,other,pct_has_computer,47.434,Schools with a computer (%)
+Rajasthan,DIDWANA-KUCHAMAN,2024-25,other,pct_has_computer,66.843,Schools with a computer (%)
+Rajasthan,DIDWANA-KUCHAMAN,2025-26,other,pct_has_computer,68.794,Schools with a computer (%)
+Rajasthan,DUNGARPUR,2024-25,boys leaving (tribal south),pct_has_computer,33.061,Schools with a computer (%)
+Rajasthan,DUNGARPUR,2025-26,boys leaving (tribal south),pct_has_computer,36.152,Schools with a computer (%)
+Rajasthan,GANGANAGAR,2024-25,other,pct_has_computer,56.88,Schools with a computer (%)
+Rajasthan,GANGANAGAR,2025-26,other,pct_has_computer,58.675,Schools with a computer (%)
+Rajasthan,HANUMANGARH,2024-25,other,pct_has_computer,75.971,Schools with a computer (%)
+Rajasthan,HANUMANGARH,2025-26,other,pct_has_computer,78.169,Schools with a computer (%)
+Rajasthan,JAIPUR,2024-25,other,pct_has_computer,69.592,Schools with a computer (%)
+Rajasthan,JAIPUR,2025-26,other,pct_has_computer,70.742,Schools with a computer (%)
+Rajasthan,JAISALMER,2024-25,girls leaving,pct_has_computer,38.819,Schools with a computer (%)
+Rajasthan,JAISALMER,2025-26,girls leaving,pct_has_computer,40.217,Schools with a computer (%)
+Rajasthan,JALORE,2024-25,other,pct_has_computer,57.794,Schools with a computer (%)
+Rajasthan,JALORE,2025-26,other,pct_has_computer,61.257,Schools with a computer (%)
+Rajasthan,JHALAWAR,2024-25,other,pct_has_computer,39.027,Schools with a computer (%)
+Rajasthan,JHALAWAR,2025-26,other,pct_has_computer,40.997,Schools with a computer (%)
+Rajasthan,JHUNJHUNU,2024-25,boys moving in,pct_has_computer,67.35,Schools with a computer (%)
+Rajasthan,JHUNJHUNU,2025-26,boys moving in,pct_has_computer,69.15,Schools with a computer (%)
+Rajasthan,JODHPUR,2024-25,other,pct_has_computer,61.156,Schools with a computer (%)
+Rajasthan,JODHPUR,2025-26,other,pct_has_computer,63.809,Schools with a computer (%)
+Rajasthan,KARAULI,2024-25,other,pct_has_computer,42.676,Schools with a computer (%)
+Rajasthan,KARAULI,2025-26,other,pct_has_computer,44.389,Schools with a computer (%)
+Rajasthan,KHAIRTHAL-TIJARA,2024-25,other,pct_has_computer,60.115,Schools with a computer (%)
+Rajasthan,KHAIRTHAL-TIJARA,2025-26,other,pct_has_computer,62.259,Schools with a computer (%)
+Rajasthan,KOTA,2024-25,boys moving in,pct_has_computer,60.86,Schools with a computer (%)
+Rajasthan,KOTA,2025-26,boys moving in,pct_has_computer,62.472,Schools with a computer (%)
+Rajasthan,KOTPUTLI-BEHROR,2024-25,other,pct_has_computer,69.46,Schools with a computer (%)
+Rajasthan,KOTPUTLI-BEHROR,2025-26,other,pct_has_computer,69.423,Schools with a computer (%)
+Rajasthan,NAGAUR,2024-25,other,pct_has_computer,56.184,Schools with a computer (%)
+Rajasthan,NAGAUR,2025-26,other,pct_has_computer,58.382,Schools with a computer (%)
+Rajasthan,PALI,2024-25,other,pct_has_computer,69.977,Schools with a computer (%)
+Rajasthan,PALI,2025-26,other,pct_has_computer,71.66,Schools with a computer (%)
+Rajasthan,PHALODI,2024-25,other,pct_has_computer,41.888,Schools with a computer (%)
+Rajasthan,PHALODI,2025-26,other,pct_has_computer,44.622,Schools with a computer (%)
+Rajasthan,PRATAPGARH,2024-25,boys leaving (tribal south),pct_has_computer,27.713,Schools with a computer (%)
+Rajasthan,PRATAPGARH,2025-26,boys leaving (tribal south),pct_has_computer,28.695,Schools with a computer (%)
+Rajasthan,RAJSAMAND,2024-25,other,pct_has_computer,49.218,Schools with a computer (%)
+Rajasthan,RAJSAMAND,2025-26,other,pct_has_computer,50.876,Schools with a computer (%)
+Rajasthan,SALUMBAR,2024-25,boys leaving (tribal south),pct_has_computer,28.385,Schools with a computer (%)
+Rajasthan,SALUMBAR,2025-26,boys leaving (tribal south),pct_has_computer,30.331,Schools with a computer (%)
+Rajasthan,SAWAI MADHOPUR,2024-25,other,pct_has_computer,50.489,Schools with a computer (%)
+Rajasthan,SAWAI MADHOPUR,2025-26,other,pct_has_computer,51.938,Schools with a computer (%)
+Rajasthan,SIKAR,2024-25,boys moving in,pct_has_computer,67.167,Schools with a computer (%)
+Rajasthan,SIKAR,2025-26,boys moving in,pct_has_computer,69.41,Schools with a computer (%)
+Rajasthan,SIROHI,2024-25,other,pct_has_computer,52.882,Schools with a computer (%)
+Rajasthan,SIROHI,2025-26,other,pct_has_computer,54.971,Schools with a computer (%)
+Rajasthan,TONK,2024-25,other,pct_has_computer,43.735,Schools with a computer (%)
+Rajasthan,TONK,2025-26,other,pct_has_computer,45.67,Schools with a computer (%)
+Rajasthan,UDAIPUR,2024-25,boys leaving (tribal south),pct_has_computer,37.725,Schools with a computer (%)
+Rajasthan,UDAIPUR,2025-26,boys leaving (tribal south),pct_has_computer,39.071,Schools with a computer (%)

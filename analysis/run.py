@@ -9,6 +9,7 @@ from pipeline import config as C
 
 from . import charts as Ch
 from . import data as D
+from . import exports as E
 from . import models as M
 
 TABLE_DIR = C.REPORTS_DIR / "analysis"
@@ -71,6 +72,7 @@ def build() -> dict:
             "western_desert": desert[["district", "pct_single_teacher_2024", "pct_single_teacher_2025",
                                       "change_pp", "teachers_change_pct"]].round(2).to_dict("records")},
     }
+    numbers["exports"] = E.build()  # A5: Tableau CSVs and the Excel workbook
     (TABLE_DIR / "numbers.json").write_text(json.dumps(numbers, indent=2, default=str), encoding="utf-8")
     return numbers
 

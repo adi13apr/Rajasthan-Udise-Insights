@@ -55,6 +55,7 @@ python -m pytest                       # tests (synthetic data; real-data checks
 python scripts/benchmark.py            # raw CSV vs bronze vs gold timings -> reports/benchmark.md
 python scripts/make_data_dictionary.py # docs/data_dictionary.md from the gold database
 python -m pipeline.rules               # docs/quality_rules.md from pipeline/rules.py
+python -m analysis.run                 # analysis: figures, tables, Tableau CSVs, Excel workbook
 ```
 
 The real data is not in this repository (see below). To run on it, download the files from the
@@ -68,6 +69,9 @@ synthetic files; CI does exactly that on every push.
 | Output | What | In git? |
 |---|---|---|
 | `data/gold/exports/mart_district_year.csv`, `mart_district_year_management.csv` | district summaries for Tableau / Excel | yes (district aggregates) |
+| `data/gold/exports/tableau_district_indicators.csv` (+ `_long.csv`) | every indicator by district and year, with pattern groups and ranks, for the Tableau dashboard | yes |
+| `excel/rajasthan_udise_district_summary.xlsx` | summary sheets and a Data table for PivotTables | yes |
+| `notebooks/analysis.ipynb`, `reports/figures/`, `reports/analysis/` | the analysis, its charts and district-level result tables | yes |
 | `reports/validation.md` | gold vs official UDISE+ figures | yes |
 | `reports/profiling/` | per-column profile of every bronze and silver table; `README.md` lists the problems | yes |
 | `reports/qa_report.md` | automated QA report (coverage, schema drift, logic checks, district moves) | yes |

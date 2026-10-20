@@ -147,5 +147,9 @@
         "teachers_change_pct": -3.54
       }
     ]
+  },
+  "exports": {
+    "tableau_rows": 82,
+    "excel": "excel/rajasthan_udise_district_summary.xlsx"
   }
 }
