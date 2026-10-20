@@ -111,6 +111,14 @@ then the Sattva analysis (phases A1-A6).
 - `pipeline/rules.py` (P3): rules as data; errors -> `data/quarantine/<table>.parquet`
   (`_rule`, `_reason`, `_run_id`), warnings -> `flag_<rule>` columns.
   `docs/quality_rules.md` is generated from it (`python -m pipeline.rules`).
+- `pipeline/gold.py` + `sql/` (P4): DuckDB star schema in `data/gold/udise.duckdb`, built by
+  numbered SQL files from temp views `src_<silver table>` and `ref_*` tables. dim_year,
+  dim_district (41), dim_management (key 0 = unmapped), dim_grade, dim_gender,
+  dim_social_category, dim_school (SCD2 on district/block/management/rural-urban/category/
+  type; 1,708 schools have 2 versions, 189 changed district), fact_enrolment (zero rows
+  omitted), fact_teachers, fact_school_facilities (one row per school-year). `sql/tests/`
+  checks (RI, grain, SCD2, totals) must all return 0 or the old database is kept.
+  Exported to `data/gold/parquet/`.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

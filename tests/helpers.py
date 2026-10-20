@@ -61,10 +61,14 @@ def csv(header, rows):
     return "\n".join([header] + rows) + "\n"
 
 
-def write_sample_raw(raw):
-    y = raw / "2024-25"
-    make_zip(y / "profile_data_1_RAJASTHAN_2024-25.zip", csv(PROFILE_COLS, PROFILE_ROWS))
-    make_zip(y / "profile_data_1_KOTA_2024-25.zip", csv(PROFILE_COLS, PROFILE_ROWS[:1]))
-    make_zip(y / "facility_data_RAJASTHAN_2024-25.zip", csv(FACILITY_COLS, FACILITY_ROWS))
-    make_zip(y / "teacher_data_RAJASTHAN_2024-25.zip", csv(TEACHER_COLS, TEACHER_ROWS))
-    make_zip(y / "enrolment_data_1_KOTA_2024-25.zip", csv(ENROL_COLS, ENROL_ROWS))
+def write_sample_raw(raw, year="2024-25", profile_rows=PROFILE_ROWS):
+    y = raw / year
+    make_zip(y / f"profile_data_1_RAJASTHAN_{year}.zip", csv(PROFILE_COLS, profile_rows))
+    make_zip(y / f"profile_data_1_KOTA_{year}.zip", csv(PROFILE_COLS, profile_rows[:1]))
+    make_zip(y / f"facility_data_RAJASTHAN_{year}.zip", csv(FACILITY_COLS, FACILITY_ROWS))
+    make_zip(y / f"teacher_data_RAJASTHAN_{year}.zip", csv(TEACHER_COLS, TEACHER_ROWS))
+    make_zip(y / f"enrolment_data_1_KOTA_{year}.zip", csv(ENROL_COLS, ENROL_ROWS))
+
+
+# Second year: school 101 moves from KOTA to BUNDI (like the ALWAR -> KOTPUTLI-BEHROR change).
+PROFILE_ROWS_NEXT = [PROFILE_ROWS[0].replace(",KOTA,", ",BUNDI,")] + PROFILE_ROWS[1:]

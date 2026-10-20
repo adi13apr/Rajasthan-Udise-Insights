@@ -1,9 +1,9 @@
 {
-  "run_id": "20261020T181959Z",
-  "started_at": "2026-10-20T18:19:59+00:00",
+  "run_id": "20261020T182726Z",
+  "started_at": "2026-10-20T18:27:26+00:00",
   "stages": {
     "bronze": {
-      "seconds": 0.13,
+      "seconds": 0.14,
       "files_total": 94,
       "files_loaded": 0,
       "files_skipped": 94,
@@ -1346,7 +1346,7 @@
       ]
     },
     "silver": {
-      "seconds": 17.72,
+      "seconds": 16.26,
       "tables": {
         "schools": {
           "source": "profile1",
@@ -1433,11 +1433,11 @@
         }
       },
       "reconciled": {
-        "profile1": {
+        "teacher": {
           "bronze": 217267,
           "silver_plus_quarantine": 217267
         },
-        "teacher": {
+        "profile1": {
           "bronze": 217267,
           "silver_plus_quarantine": 217267
         },
@@ -1451,8 +1451,177 @@
         }
       }
     },
+    "gold": {
+      "seconds": 3.98,
+      "tables": {
+        "dim_district": 41,
+        "dim_gender": 3,
+        "dim_grade": 13,
+        "dim_management": 14,
+        "dim_school": 109037,
+        "dim_social_category": 4,
+        "dim_year": 2,
+        "fact_enrolment": 6403516,
+        "fact_school_facilities": 212747,
+        "fact_teachers": 212747
+      },
+      "sql_seconds": {
+        "01_dim_year.sql": 0.017,
+        "02_dim_district.sql": 0.011,
+        "03_dim_management.sql": 0.014,
+        "04_dim_lookups.sql": 0.009,
+        "05_dim_school.sql": 0.483,
+        "06_fact_enrolment.sql": 1.558,
+        "07_fact_teachers.sql": 0.272,
+        "08_fact_school_facilities.sql": 0.331
+      },
+      "tests": [
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_enrolment.school_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_enrolment.year_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_enrolment.grade_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_enrolment.gender_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_enrolment.social_category_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_teachers.school_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_teachers.year_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_school_facilities.school_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_school_facilities.year_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "dim_school.district_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "dim_school.management_key",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "fact_enrolment grain unique",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "fact_teachers one row per school-year",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "fact_school_facilities one row per school-year",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "fact_enrolment has no zero rows",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "dim_school one current version per school",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "dim_school versions do not overlap",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "dim_school versions numbered 1..n without gaps",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "dim_school keys unique",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "dim_district has 41 districts",
+          "failures": 0
+        },
+        {
+          "file": "03_totals_preserved.sql",
+          "check": "enrolment total silver = gold",
+          "failures": 0
+        },
+        {
+          "file": "03_totals_preserved.sql",
+          "check": "teachers total silver = gold",
+          "failures": 0
+        },
+        {
+          "file": "03_totals_preserved.sql",
+          "check": "school-years silver = gold",
+          "failures": 0
+        },
+        {
+          "file": "03_totals_preserved.sql",
+          "check": "teacher rows silver = gold",
+          "failures": 0
+        },
+        {
+          "file": "03_totals_preserved.sql",
+          "check": "schools silver = current versions in dim_school",
+          "failures": 0
+        }
+      ],
+      "tests_passed": 25,
+      "tests_failed": 0,
+      "dim_school": {
+        "schools_with_more_than_one_version": 1708,
+        "schools_changing_district": 189,
+        "district_moves": {
+          "ALWAR -> KOTPUTLI-BEHROR": 180,
+          "JAISALMER -> PHALODI": 2,
+          "BALOTRA -> BARMER": 1,
+          "BARMER -> BALOTRA": 1,
+          "BEAWAR -> AJMER": 1,
+          "DIDWANA-KUCHAMAN -> NAGAUR": 1,
+          "JAIPUR -> KOTPUTLI-BEHROR": 1,
+          "KHAIRTHAL-TIJARA -> ALWAR": 1,
+          "KOTPUTLI-BEHROR -> JAIPUR": 1
+        }
+      }
+    },
     "profile": {
-      "seconds": 9.44,
+      "seconds": 9.52,
       "columns_with_problems": {
         "bronze__enrolment1": 1,
         "bronze__facility": 6,
@@ -1504,7 +1673,7 @@
       }
     },
     "build": {
-      "seconds": 12.8,
+      "seconds": 11.83,
       "rows_loaded": {
         "profile1": 212747,
         "enrolment1": 1068886,
@@ -1520,5 +1689,5 @@
     "facilities: 4,520 rows quarantined (duplicate_school_year: 4,520) -> data/quarantine/facilities.parquet",
     "teachers: 4,520 rows quarantined (duplicate_school_year: 4,520) -> data/quarantine/teachers.parquet"
   ],
-  "finished_at": "2026-10-20T18:20:39+00:00"
+  "finished_at": "2026-10-20T18:28:08+00:00"
 }

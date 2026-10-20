@@ -81,7 +81,7 @@ bronze,facility,2024-25,math_lab_cond,True,True,VARCHAR,smallint,dcf,108567,0,0.
 bronze,facility,2025-26,math_lab_cond,True,True,VARCHAR,smallint,dcf,108700,0,0.0,5,0,0.0,4.0,0,,,0,,"0 (78,815); 4 (21,840); 3 (3,810); 1 (2,957); 2 (1,278)",72.51,
 bronze,facility,2024-25,medical_checkups,True,True,VARCHAR,smallint,yes_no,108567,0,0.0,2,0,1.0,2.0,0,"1, 2, 9","schema (Yes=1, No=2) + 9 = not applicable",0,,"1 (72,137); 2 (36,430)",66.44,
 bronze,facility,2025-26,medical_checkups,True,True,VARCHAR,smallint,yes_no,108700,0,0.0,2,0,1.0,2.0,0,"1, 2, 9","schema (Yes=1, No=2) + 9 = not applicable",0,,"1 (75,490); 2 (33,210)",69.45,
-bronze,facility,2024-25,no_building_blocks,True,True,VARCHAR,smallint,numeric,108567,0,0.0,5,0,0.0,16.0,0,,,0,,"0 (108,561); 1 (3); 16 (1); 10 (1); 3 (1)",99.99,
+bronze,facility,2024-25,no_building_blocks,True,True,VARCHAR,smallint,numeric,108567,0,0.0,5,0,0.0,16.0,0,,,0,,"0 (108,561); 1 (3); 10 (1); 16 (1); 3 (1)",99.99,
 bronze,facility,2025-26,no_building_blocks,True,True,VARCHAR,smallint,numeric,108700,0,0.0,70,0,0.0,84.0,0,,,0,,"1 (73,186); 2 (14,642); 3 (4,960); 4 (2,551); 0 (1,966)",67.33,
 bronze,facility,2024-25,other_rooms,True,True,VARCHAR,smallint,numeric,108567,0,0.0,98,0,0.0,800.0,0,,,0,,"1 (25,014); 2 (20,832); 0 (12,718); 3 (11,082); 4 (7,190)",23.04,
 bronze,facility,2025-26,other_rooms,True,True,VARCHAR,smallint,numeric,108700,0,0.0,104,0,0.0,800.0,0,,,0,,"1 (24,970); 2 (20,689); 0 (13,109); 3 (10,810); 4 (7,127)",22.97,

@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 
 from pipeline import config as C
 from pipeline.bronze import load_bronze, new_run_id, summarise_bronze
+from pipeline.gold import build_gold
 from pipeline.build import build_school_year, summarise
 from pipeline.checks import run_checks
 from pipeline.profiling import bronze_tables, profile_layer, write_readme
@@ -48,7 +49,12 @@ def main():
                             + ", ".join(f"{r}: {n:,}" for r, n in rules.items())
                             + f") -> data/quarantine/{table}.parquet")
 
-    # Stage 3: profiling of bronze and silver (per-column statistics and invalid codes)
+    # Stage 3: gold (DuckDB star schema from sql/, tested by sql/tests/)
+    t0 = time.perf_counter()
+    gold = build_gold()
+    manifest["stages"]["gold"] = {"seconds": round(time.perf_counter() - t0, 2), **gold}
+
+    # Stage 4: profiling of bronze and silver (per-column statistics and invalid codes)
     t0 = time.perf_counter()
     profiles = {"bronze": profile_layer("bronze", bronze_tables()),
                 "silver": profile_layer("silver", silver_tables(),
@@ -62,7 +68,7 @@ def main():
             for layer, res in profiles.items() for table, r in res.items() if "duplicate_rows" in r["checks"]},
     }
 
-    # Stage 4: build (pandas, from silver): school-year table, district summaries, QA report
+    # Stage 5: build (pandas, from silver): school-year table, district summaries, QA report
     t0 = time.perf_counter()
     tables = tables_for_build()
     school = build_school_year(tables)
@@ -92,6 +98,9 @@ def main():
     print(f"Silver: {sum(s['rows_silver'] for s in sv['tables'].values()):,} rows in "
           f"{len(sv['tables'])} tables, {sum(s['rows_quarantined'] for s in sv['tables'].values()):,} "
           f"quarantined, bronze = silver + quarantine for every dataset, {sv['seconds']} s")
+    g = manifest["stages"]["gold"]
+    print(f"Gold: {len(g['tables'])} tables in {C.GOLD_DB.name}, {g['tests_passed']} data tests passed, "
+          f"{g['dim_school']['schools_changing_district']} schools changed district (SCD2), {g['seconds']} s")
     pr = manifest["stages"]["profile"]
     print(f"Profiling: {len(pr['columns_with_problems'])} tables, "
           f"{sum(pr['columns_with_problems'].values())} column-years with problems, {pr['seconds']} s "

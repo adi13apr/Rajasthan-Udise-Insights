@@ -15,6 +15,9 @@ PROFILING_DIR = REPORTS_DIR / "profiling"
 BRONZE_DIR = ROOT / "data" / "bronze"
 SILVER_DIR = ROOT / "data" / "silver"
 QUARANTINE_DIR = ROOT / "data" / "quarantine"
+GOLD_DIR = ROOT / "data" / "gold"
+GOLD_DB = GOLD_DIR / "udise.duckdb"
+GOLD_PARQUET_DIR = GOLD_DIR / "parquet"
 # Bronze keeps its own state (checksum of each source zip) next to the data, so
 # deleting data/bronze/ also resets incremental loading.
 BRONZE_STATE = BRONZE_DIR / "_state.json"

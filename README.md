@@ -33,6 +33,8 @@ Outputs:
   `enrolment_other`, `facilities`, `teachers`) with `flag_<rule>` columns for warnings. Not committed.
 - `data/quarantine/<table>.parquet`: rows that failed an error rule, with `_rule` and `_reason`
   (see `docs/quality_rules.md`). Not committed.
+- `data/gold/udise.duckdb`: star schema (dimensions + facts, SQL in `sql/`, data tests in
+  `sql/tests/`), also exported to `data/gold/parquet/`. Not committed.
 - `reports/profiling/`: per-column profile of every table (`<layer>__<table>.csv`) and a
   `README.md` listing only the columns with problems (invalid codes, schema differences, ...)
 - `reports/run_manifest.json`: what the last run did (files loaded/skipped with
@@ -53,10 +55,12 @@ pipeline/
   silver.py   bronze -> cleaned, typed silver tables; failures -> quarantine
   rules.py    data quality rules (errors quarantine, warnings flag)
   profiling.py  column profiles and invalid-code checks for each layer
+  gold.py     runs sql/*.sql into DuckDB, runs sql/tests/, exports Parquet
   build.py    school-year table + district summaries (reads silver)
   checks.py   automated data quality report
 reference/            lookup data as JSON: districts, management codes, official totals,
                       schema columns and codes (from the PDFs via scripts/extract_schema.py)
+sql/                  star schema SQL (numbered, run in order) and data tests (sql/tests/)
 scripts/
 run_pipeline.py
 tests/                pytest, on synthetic data
