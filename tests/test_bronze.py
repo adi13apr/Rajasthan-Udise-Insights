@@ -1,9 +1,8 @@
 """Bronze layer tests on tiny synthetic zips (no real UDISE+ data)."""
-import zipfile
-
 import pandas as pd
 import pytest
 
+from helpers import make_zip
 from pipeline.bronze import load_bronze, summarise_bronze
 from pipeline.ingest import parse_name
 
@@ -15,12 +14,6 @@ PROFILE = (
     "0002,KOTA,9,\n"         # empty cell -> null
     "0003,KOTA,NA,x\n"       # literal text must survive as text
 )
-
-
-def make_zip(path, csv_text, inner="data.csv"):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with zipfile.ZipFile(path, "w") as z:
-        z.writestr(inner, csv_text)
 
 
 @pytest.fixture

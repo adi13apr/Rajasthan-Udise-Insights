@@ -1,0 +1,15 @@
+{
+  "source": "UDISE+ 2024-25 report (Table 2.2) and Lok Sabha / Rajya Sabha answers citing UDISE+ for government schools. Enrolment figures include pre-primary.",
+  "totals": {
+    "2024-25": {
+      "schools": 106302,
+      "enrolment": 16364187,
+      "teachers": 792265,
+      "zero_enrolment_schools": 215,
+      "single_teacher_schools": 6117,
+      "govt_schools": 70155,
+      "govt_enrolment": 7782390,
+      "govt_teachers": 445073
+    }
+  }
+}

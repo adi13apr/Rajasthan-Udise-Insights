@@ -1,0 +1,5397 @@
+{
+ "source": "UDISE+ Data Sharing Portal schema PDFs (docs/DSP_Schema_<year>.pdf), Ministry of Education, Government of India",
+ "generated_by": "scripts/extract_schema.py",
+ "datasets": {
+  "profile1": {
+   "2024-25": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "state",
+     "description": "State Name",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "district",
+     "description": "District Name as per U-DISE +",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "block",
+     "description": "Block Name as per U-DISE +",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "rural_urban",
+     "description": "School Location",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "lgd_urban_local_body_name",
+     "description": "Urban Local Body as Per LGD",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "lgd_ward_name",
+     "description": "Ward Name as Per LGD",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "lgd_vill_name",
+     "description": "Village Name as Per LGD",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "lgd_vill_panchayat_name",
+     "description": "Panchyet Name as Per LGD",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "lgd_block_name",
+     "description": "Lgd Block Name as Per LGD",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "school_category",
+     "description": "School Category of School",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "school_type",
+     "description": "Type of School",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "lowclass",
+     "description": "Lowest Class in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "highclass",
+     "description": "Highest Class in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "managment",
+     "description": "Management of the school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "pincode",
+     "description": "Pin Code",
+     "type": "integer",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "special_school_for_cwsn",
+     "description": "Is this a Special School for CWSN?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "shift_school",
+     "description": "Is this a Shift School?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "resi_school",
+     "description": "Is this a Residential School?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "1-Completely Residential, 2-Partially Residential, 3-Non-Residential",
+     "kind": "enum",
+     "codes": {
+      "1": "Completely Residential",
+      "2": "Partially Residential",
+      "3": "Non-Residential"
+     }
+    },
+    {
+     "column": "resi_type",
+     "description": "Type of residential school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "minority_school",
+     "description": "Is this a minority managed school?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "medium_instr1",
+     "description": "School medium of instruction 1",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "medium_of_instr2",
+     "description": "School medium of instruction 2",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "medium_of_instr3",
+     "description": "School medium of instruction 3",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "medium_of_instr4",
+     "description": "School medium of instruction 4",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "aff_board_sec",
+     "description": "School affiliation Board of the school for Secondary",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "aff_board_hsec",
+     "description": "School affiliation Board of the school for Higher Secondary",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "approachable_road",
+     "description": "School approachable by all-weather roads",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "pre_primary",
+     "description": "Whether Pre-Primary section (other than Anganwadi) attached to school?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "anganwadi_yn",
+     "description": "Anganwadi Centre is located inside school premises",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "avg_instr_days",
+     "description": "Avearge Instructional days in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cce_yn",
+     "description": "CCE being implemented in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "same_sch_b",
+     "description": "New admission of students in class 1 who have pre-school experience same school boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "same_sch_g",
+     "description": "New admission of students in class 1 who have pre-school experience same school girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "other_sch_b",
+     "description": "New admission of students in class 1 who have pre-school experience Other school boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "other_sch_g",
+     "description": "New admission of students in class 1 who have pre-school experience other school girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "anganwadi_ecce_b",
+     "description": "New admission of students in class 1 who have pre-school experience anganwadi ecce centres boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "anganwadi_ecce_g",
+     "description": "New admission of students in class 1 who have pre-school experience anganwadi ecce centres girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    }
+   ],
+   "2025-26": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code (Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "state",
+     "description": "State Name",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "district",
+     "description": "District Name as per U-DISE +",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "block",
+     "description": "Block Name as per U-DISE +",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "rural_urban",
+     "description": "School Location",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "lgd_urban_local_body_name",
+     "description": "Urban Local Body as Per LGD",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "lgd_ward_name",
+     "description": "Ward Name as Per LGD",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "lgd_vill_name",
+     "description": "Village Name as Per LGD",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "lgd_vill_panchayat_name",
+     "description": "Panchyet Name as Per LGD",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "lgd_block_name",
+     "description": "Lgd Block Name as Per LGD",
+     "type": "varchar",
+     "numeric": false,
+     "remarks": "",
+     "kind": "text",
+     "codes": null
+    },
+    {
+     "column": "school_category",
+     "description": "School Category of School",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "school_type",
+     "description": "Type of School",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "lowclass",
+     "description": "Lowest Class in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "highclass",
+     "description": "Highest Class in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "managment",
+     "description": "Management of the school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "pincode",
+     "description": "Pin Code",
+     "type": "integer",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "special_school_for_cwsn",
+     "description": "Is this a Special School for CWSN?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "shift_school",
+     "description": "Is this a Shift School?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "resi_school",
+     "description": "Is this a Residential School?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "1-Completely Residential, 2-Partially Residential, 3-Non-Residential",
+     "kind": "enum",
+     "codes": {
+      "1": "Completely Residential",
+      "2": "Partially Residential",
+      "3": "Non-Residential"
+     }
+    },
+    {
+     "column": "resi_type",
+     "description": "Type of residential school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "minority_school",
+     "description": "Is this a minority managed school?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "medium_instr1",
+     "description": "School medium of instruction 1",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "medium_of_instr2",
+     "description": "School medium of instruction 2",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "medium_of_instr3",
+     "description": "School medium of instruction 3",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "medium_of_instr4",
+     "description": "School medium of instruction 4",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "aff_board_sec",
+     "description": "School affiliation Board of the school for Secondary",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "aff_board_hsec",
+     "description": "School affiliation Board of the school for Higher Secondary",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "approachable_road",
+     "description": "School approachable by all-weather roads",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "pre_primary",
+     "description": "Whether Pre-Primary section (other than Anganwadi) attached to school?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "anganwadi_yn",
+     "description": "Anganwadi Centre is located inside school premises",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "avg_instr_days",
+     "description": "Avearge Instructional days in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cce_yn",
+     "description": "CCE being implemented in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "same_sch_b",
+     "description": "New admission of students in class 1 who have pre-school experience same school boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "same_sch_g",
+     "description": "New admission of students in class 1 who have pre-school experience same school girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "other_sch_b",
+     "description": "New admission of students in class 1 who have pre-school experience Other school boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "other_sch_g",
+     "description": "New admission of students in class 1 who have pre-school experience other school girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "anganwadi_ecce_b",
+     "description": "New admission of students in class 1 who have pre-school experience anganwadi ecce centres boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "anganwadi_ecce_g",
+     "description": "New admission of students in class 1 who have pre-school experience anganwadi ecce centres girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cwsn_sch_type",
+     "description": "Type of Special School",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "rte_25p_admission_yn",
+     "description": "Does the School take admission under Section 12 of the RTE Act (applicable for private unaided schools",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "estd_year",
+     "description": "Year of Establishment of school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "certified_fit_india_yn",
+     "description": "School certified as Fit India School",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "is_nsqf",
+     "description": "School provides any vocational training under NSQF",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "prevoc_yn",
+     "description": "School offers any pre-vocational exposure at Upper-Primary stage",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "stc_yn",
+     "description": "School run any skill training center after school hours",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "smdc_pta_yn",
+     "description": "School has constituted its Parent-Teacher Association (PTA)",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "smdc_pta_meeting",
+     "description": "If 1-Yes, Number of PTA meetings held during the last academic year",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "remedial_tch_enrol",
+     "description": "Number of students attending Remedial Teaching/Extra Classes in current year",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "learner_holistic_rptcard_yn",
+     "description": "School providing Holistic Report Card for every Learner based on peer/self/teacher assessment",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    }
+   ]
+  },
+  "profile2": {
+   "2024-25": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "balavatika_located_yn",
+     "description": "Whether Balavatika is started in the Co- located Anganwadi/school?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "special_training",
+     "description": "Whether school providing Special Training to out of school children",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "material_training",
+     "description": "Graded Supplementary Material in previous academic year",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "free_text_books_pr",
+     "description": "Free Textbook Facility provided to school childrens in Primary Grade",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "free_uniform_pr",
+     "description": "Free Uniform Facility provided to school childrens in Primary Grade",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "free_text_books_up",
+     "description": "Free Textbook Facility provided to school childrens in Upper Primary Grade",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "free_uniform_up",
+     "description": "Free Uniform Facility provided to school childrens in Upper Primary Grade",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "acad_inspections",
+     "description": "No. of academic inspections in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "crc_coordinator",
+     "description": "No. of visits by CRC Co- ordinator in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "block_level_officers",
+     "description": "No. of visits by Block Level officers (BRC/BEO) in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "district_officers",
+     "description": "No. of visits by District/State Level officers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "smc_exists",
+     "description": "Whether School Management Committee (SMC) has been constituted as per RTE norms?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "smc_smdc_same",
+     "description": "Whether School Development and Management Committee have been Constituted as per Samagra Shiksha guidelines?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "1- Yes, 2-No, 3- Same as SMC",
+     "kind": "enum",
+     "codes": {
+      "1": "Yes",
+      "2": "No",
+      "3": "Same as SMC"
+     }
+    },
+    {
+     "column": "smc_smdc_meetings",
+     "description": "No. of SMC/SDMC Meetings Conducted in previous Academic year in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "grants_receipt",
+     "description": "Total Grants Recieved(In Rs.) in school",
+     "type": "double precision",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "grants_expenditure",
+     "description": "Total Grants Expenditure(In Rs.) in school",
+     "type": "double precision",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    }
+   ],
+   "2025-26": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code (Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "balavatika_located_yn",
+     "description": "Whether Balavatika is started in the Co- located Anganwadi/school?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "special_training",
+     "description": "Whether school providing Special Training to out of school children",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "material_training",
+     "description": "Graded Supplementary Material in previous academic year",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "free_text_books_pr",
+     "description": "Free Textbook Facility provided to school childrens in Primary Grade",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "free_uniform_pr",
+     "description": "Free Uniform Facility provided to school childrens in Primary Grade",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "free_text_books_up",
+     "description": "Free Textbook Facility provided to school childrens in Upper Primary Grade",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "free_uniform_up",
+     "description": "Free Uniform Facility provided to school childrens in Upper Primary Grade",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "acad_inspections",
+     "description": "No. of academic inspections in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "crc_coordinator",
+     "description": "No. of visits by CRC Co- ordinator in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "block_level_officers",
+     "description": "No. of visits by Block Level officers (BRC/BEO) in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "district_officers",
+     "description": "No. of visits by District/State Level officers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "smc_exists",
+     "description": "Whether School Management Committee (SMC) has been constituted as per RTE norms?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "smc_smdc_same",
+     "description": "Whether School Development and Management Committee have been Constituted as per Samagra Shiksha guidelines?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "1- Yes, 2-No, 3- Same as SMC",
+     "kind": "enum",
+     "codes": {
+      "1": "Yes",
+      "2": "No",
+      "3": "Same as SMC"
+     }
+    },
+    {
+     "column": "smc_smdc_meetings",
+     "description": "No. of SMC/SDMC Meetings Conducted in previous Academic year in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "grants_receipt",
+     "description": "Total Grants Recieved(In Rs.) in school",
+     "type": "double precision",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "grants_expenditure",
+     "description": "Total Grants Expenditure (In Rs.) in school",
+     "type": "double precision",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    }
+   ]
+  },
+  "facility": {
+   "2024-25": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "building_status",
+     "description": "Status of the school building",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "no_building_blocks",
+     "description": "No. of building blocks of the school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "pucca_building_blocks",
+     "description": "No. of Pucca building blocks of the school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "boundary_wall",
+     "description": "Type of boundary wall in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_class_rooms",
+     "description": "No. of Classrooms used for instructional purpose in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "other_rooms",
+     "description": "No. of rooms other than classrooms in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "classrooms_in_good_condition",
+     "description": "No. of classrooms in Good condition in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "classrooms_needs_minor_repair",
+     "description": "No. of classrooms Need Minor repair in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "classrooms_needs_major_repair",
+     "description": "No. of classrooms Need Major repair in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "separate_room_for_hm",
+     "description": "Separate room for Head teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "total_boys_toilet",
+     "description": "No. of toilet seats available excluding CWSN friendly toilets for Total Boys in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_boys_func_toilet",
+     "description": "No. of Functional toilet seats available excluding CWSN friendly toilets for Boys in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_girls_toilet",
+     "description": "No. of toilet seats available excluding CWSN friendly toilets for Total Girls in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_girls_func_toilet",
+     "description": "No. of Functional toilet seats available excluding CWSN friendly toilets for Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_boys_cwsn_toilet",
+     "description": "No. of CWSN friendly toilet seats for Boys in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "func_boys_cwsn_friendly",
+     "description": "No. of Functional CWSN friendly toilet seats for Boys in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_girls_cwsn_toilet",
+     "description": "No. of CWSN friendly toilet seats for Girls in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "func_girls_cwsn_friendly",
+     "description": "No. of Functional CWSN friendly toilet seats for Girls in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "urinal_boys",
+     "description": "No. of urinals available for Boys in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "urinal_girls",
+     "description": "No. of urinals available for Girls in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "handwash_near_toilet",
+     "description": "Hand washing facility with soap available near toilets in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "hand_pump_yn",
+     "description": "Availablity of Hand Pump in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "well_prot_yn",
+     "description": "Availablity of Protected Well in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "tap_yn",
+     "description": "Availablity of Tap water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "othsrc_yn",
+     "description": "Availablity of Other sources water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "well_unprot_yn",
+     "description": "Availablity of Unprotected Well in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "pack_water_yn",
+     "description": "Availablity of Packaged/Bottled Water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "hand_pump_fun_yn",
+     "description": "Availablity of Functional Hand Pump in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "well_prot_fun_yn",
+     "description": "Availablity of Functional Protected Well in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "tap_fun_yn",
+     "description": "Availablity of Functional Tap water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "othsrc_fun_yn",
+     "description": "Availablity of Functional Other sources of water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "well_unprot_fun_yn",
+     "description": "Availablity of Functional Unprotected Well in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "pack_water_fun_yn",
+     "description": "Availablity of Functional Packaged/Bottled Water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "rain_water_harvesting",
+     "description": "School have provision for rain water harvesting",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "handwash_facility_for_meal",
+     "description": "Handwashing facility with soap available for washing hands before and after meal in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "electricity_availability",
+     "description": "Electricity connection available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "1:Yes,2:No, 3:Yes, but not functional",
+     "kind": "enum",
+     "codes": {
+      "1": "Yes",
+      "2": "No",
+      "3": "Yes, but not functional"
+     }
+    },
+    {
+     "column": "solar_panel",
+     "description": "Solar panel available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "library_availability",
+     "description": "Library Available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "book_bank",
+     "description": "Book bank available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "reading_corner",
+     "description": "Reading corner available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "playground_available",
+     "description": "Playground facility available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "playground_alt_yn",
+     "description": "Whether school has made adequate arrangements for children to Play outdoor games and other physical activities in an adjoining playground /municipal park etc",
+     "type": "",
+     "numeric": false,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "medical_checkups",
+     "description": "Medical check-up of students conducted in last academic year in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "availability_ramps",
+     "description": "Available Ramp for disabled children to access school building in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "availability_of_handrails",
+     "description": "Hand-rails for ramp is available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "furniture_availability",
+     "description": "No. of students for whom Furniture available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "1-Yes for all, 2-Partial, 3-No Furniture Available",
+     "kind": "enum",
+     "codes": {
+      "1": "Yes for all",
+      "2": "Partial",
+      "3": "No Furniture Available"
+     }
+    },
+    {
+     "column": "phy_lab_cond",
+     "description": "Availability with Present Condition Physics Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "chem_lab_cond",
+     "description": "Availability with Present Condition Chemistry Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "bio_lab_cond",
+     "description": "Availability with Present Condition Biology Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "math_lab_cond",
+     "description": "Availability with Present Condition of Mathematics Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "lang_lab_cond",
+     "description": "Availability with Present Condition of Language Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "geo_lab_cond",
+     "description": "Availability with Present Condition of Geography Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "home_sc_lab_cond",
+     "description": "Availability with Present Condition of Home Science Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "psycho_lab_cond",
+     "description": "Availability with Present Condition of Psychology Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "comp_lab_cond",
+     "description": "Availability with Present Condition of Computer Science Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "comp_ict_lab_yn",
+     "description": "Computer/ICT Lab available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "ict_lab_yn",
+     "description": "ICT Lab available in school under Samagra Siksha",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "laptop",
+     "description": "No. of Laptops in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "tablet",
+     "description": "No. of Tablets in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "desktop",
+     "description": "No. of Desktops in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "digiboard",
+     "description": "No. of Digital Boards with Content Management Systems in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "teachdev_tot",
+     "description": "No. of PCs with Integrated Teaching Learning Devices in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "server_tot",
+     "description": "No. of servers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "smart_class_tv_tot",
+     "description": "No. of Smart Class rooms used for teaching with Digital boards/ Smart boards/ Virtual classrooms/ Smart TV in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "projector",
+     "description": "No. of Projector",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "printer",
+     "description": "No. of Printer in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "internet",
+     "description": "Internet Availablity in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "dth",
+     "description": "Access to DTH/TV channels in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1,No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "spl_educator_yn",
+     "description": "Whether School has special educator",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "1-Dedicated, 2-At cluster level, 3-No",
+     "kind": "enum",
+     "codes": {
+      "1": "Dedicated",
+      "2": "At cluster level",
+      "3": "No"
+     }
+    }
+   ],
+   "2025-26": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "building_status",
+     "description": "Status of the school building",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "no_building_blocks",
+     "description": "No. of building blocks of the school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "pucca_building_blocks",
+     "description": "No. of Pucca building blocks of the school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "boundary_wall",
+     "description": "Type of boundary wall in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_class_rooms",
+     "description": "No. of Classrooms used for instructional purpose in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "other_rooms",
+     "description": "No. of rooms other than classrooms in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "classrooms_in_good_condition",
+     "description": "No. of classrooms in Good condition in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "classrooms_needs_minor_repair",
+     "description": "No. of classrooms Need Minor repair in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "classrooms_needs_major_repair",
+     "description": "No. of classrooms Need Major repair in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "separate_room_for_hm",
+     "description": "Separate room for Head teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "total_boys_toilet",
+     "description": "No. of toilet seats available excluding CWSN friendly toilets for Total Boys in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_boys_func_toilet",
+     "description": "No. of Functional toilet seats available excluding CWSN friendly toilets for Boys in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_girls_toilet",
+     "description": "No. of toilet seats available excluding CWSN friendly toilets for Total Girls in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_girls_func_toilet",
+     "description": "No. of Functional toilet seats available excluding CWSN friendly toilets for Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_boys_cwsn_toilet",
+     "description": "No. of CWSN friendly toilet seats for Boys in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "func_boys_cwsn_friendly",
+     "description": "No. of Functional CWSN friendly toilet seats for Boys in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_girls_cwsn_toilet",
+     "description": "No. of CWSN friendly toilet seats for Girls in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "func_girls_cwsn_friendly",
+     "description": "No. of Functional CWSN friendly toilet seats for Girls in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "urinal_boys",
+     "description": "No. of urinals available for Boys in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "urinal_girls",
+     "description": "No. of urinals available for Girls in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "handwash_near_toilet",
+     "description": "Hand washing facility with soap available near toilets in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "hand_pump_yn",
+     "description": "Availablity of Hand Pump in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "well_prot_yn",
+     "description": "Availablity of Protected Well in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "tap_yn",
+     "description": "Availablity of Tap water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "othsrc_yn",
+     "description": "Availablity of Other sources water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "well_unprot_yn",
+     "description": "Availablity of Unprotected Well in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "pack_water_yn",
+     "description": "Availablity of Packaged/Bottled Water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "hand_pump_fun_yn",
+     "description": "Availablity of Functional Hand Pump in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "well_prot_fun_yn",
+     "description": "Availablity of Functional Protected Well in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "tap_fun_yn",
+     "description": "Availablity of Functional Tap water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "othsrc_fun_yn",
+     "description": "Availablity of Functional Other sources of water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "well_unprot_fun_yn",
+     "description": "Availablity of Functional Unprotected Well in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "pack_water_fun_yn",
+     "description": "Availablity of Functional Packaged/Bottled Water in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "rain_water_harvesting",
+     "description": "School have provision for rain water harvesting",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "handwash_facility_for_meal",
+     "description": "Handwashing facility with soap available for washing hands before and after meal in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "electricity_availability",
+     "description": "Electricity connection available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "1:Yes,2:No, 3:Yes, but not functional",
+     "kind": "enum",
+     "codes": {
+      "1": "Yes",
+      "2": "No",
+      "3": "Yes, but not functional"
+     }
+    },
+    {
+     "column": "solar_panel",
+     "description": "Solar panel available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "library_availability",
+     "description": "Library Available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "book_bank",
+     "description": "Book bank available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "reading_corner",
+     "description": "Reading corner available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "playground_available",
+     "description": "Playground facility available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "playground_alt_yn",
+     "description": "Whether school has made adequate arrangements for children to Play outdoor games and other physical activities in an adjoining playground /municipal park etc",
+     "type": "",
+     "numeric": false,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "medical_checkups",
+     "description": "Medical check-up of students conducted in last academic year in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "availability_ramps",
+     "description": "Available Ramp for disabled children to access school building in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "availability_of_handrails",
+     "description": "Hand-rails for ramp is available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "furniture_availability",
+     "description": "No. of students for whom Furniture available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "1-Yes for all, 2-Partial, 3-No Furniture Available",
+     "kind": "enum",
+     "codes": {
+      "1": "Yes for all",
+      "2": "Partial",
+      "3": "No Furniture Available"
+     }
+    },
+    {
+     "column": "phy_lab_cond",
+     "description": "Availability with Present Condition Physics Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "chem_lab_cond",
+     "description": "Availability with Present Condition Chemistry Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "bio_lab_cond",
+     "description": "Availability with Present Condition Biology Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "math_lab_cond",
+     "description": "Availability with Present Condition of Mathematics Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "lang_lab_cond",
+     "description": "Availability with Present Condition of Language Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "geo_lab_cond",
+     "description": "Availability with Present Condition of Geography Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "home_sc_lab_cond",
+     "description": "Availability with Present Condition of Home Science Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "psycho_lab_cond",
+     "description": "Availability with Present Condition of Psychology Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "comp_lab_cond",
+     "description": "Availability with Present Condition of Computer Science Laboratory in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "comp_ict_lab_yn",
+     "description": "Computer/ICT Lab available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "ict_lab_yn",
+     "description": "ICT Lab available in school under Samagra Siksha",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "As per UDISE DCF",
+     "kind": "dcf",
+     "codes": null
+    },
+    {
+     "column": "laptop",
+     "description": "No. of Laptops in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "tablet",
+     "description": "No. of Tablets in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "desktop",
+     "description": "No. of Desktops in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "digiboard",
+     "description": "No. of Digital Boards with Content Management Systems in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "teachdev_tot",
+     "description": "No. of PCs with Integrated Teaching Learning Devices in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "server_tot",
+     "description": "No. of servers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "smart_class_tv_tot",
+     "description": "No. of Smart Class rooms used for teaching with Digital boards/ Smart boards/ Virtual classrooms/ Smart TV in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "projector",
+     "description": "No. of Projector",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "printer",
+     "description": "No. of Printer in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "internet",
+     "description": "Internet Availability in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "dth",
+     "description": "Access to DTH/TV channels in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "spl_educator_yn",
+     "description": "Whether School has special educator",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "1-Dedicated, 2-At cluster level, 3-No",
+     "kind": "enum",
+     "codes": {
+      "1": "Dedicated",
+      "2": "At cluster level",
+      "3": "No"
+     }
+    },
+    {
+     "column": "librarian_yn",
+     "description": "Does the school have a full-time librarian?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "land_avl_yn",
+     "description": "Whether land is available for expansion of school facilities",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "kitchen_garden_yn",
+     "description": "Whether Kitchen Garden is available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "staff_qtr_yn",
+     "description": "Whether schools have staff quarters",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "tinkering_lab_yn",
+     "description": "Whether schools have Tinkering Labs",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "boarding_pri_yn",
+     "description": "Whether hostel/ boarding available at Primary",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "boarding_upr_yn",
+     "description": "Whether hostel/ boarding available at Upper Primary",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "boarding_sec_yn",
+     "description": "Whether hostel/ boarding available at Secondary",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "boarding_hsec_yn",
+     "description": "Whether hostel/ boarding available at Higher Secondary",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Yes=1, No=2",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     }
+    },
+    {
+     "column": "cyber_safety",
+     "description": "Number of students received orientation on cyber safety",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "psycho_social",
+     "description": "Number of students received training on psycho-social aspects",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "enrichment_activities",
+     "description": "Whether the school actively undertakes academic enrichment activities",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    }
+   ]
+  },
+  "enrolment1": {
+   "2024-25": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "item_id",
+     "description": "General, SC, ST, OBC, Muslims, Christians, Sikh, Buddhist,Parsi, Jain BPL, EWS and CWSN Enrolment with disability type,Repeater",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cpp_b",
+     "description": "Enrolment in Class Pre-Primary Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "(pp3_b+pp2_b+pp1_b+ pp3_t+pp2_t+pp1_t) as cpp_b",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cpp_g",
+     "description": "Enrolment in Class Pre-Primary Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "(pp3_g+pp2_g+pp1_g) as cpp_g",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c1_b",
+     "description": "Class-1 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c1_g",
+     "description": "Class-1 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c2_b",
+     "description": "Class-2 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c2_g",
+     "description": "Class-2 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c3_b",
+     "description": "Class-3 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c3_g",
+     "description": "Class-3 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c4_b",
+     "description": "Class-4 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c4_g",
+     "description": "Class-4 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c5_b",
+     "description": "Class-5 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c5_g",
+     "description": "Class-5 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c6_b",
+     "description": "Class-6 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c6_g",
+     "description": "Class-6 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c7_b",
+     "description": "Class-7 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c7_g",
+     "description": "Class-7 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c8_b",
+     "description": "Class-8 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c8_g",
+     "description": "Class-8 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c9_b",
+     "description": "Class-9 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c9_g",
+     "description": "Class-9 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c10_b",
+     "description": "Class-10 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c10_g",
+     "description": "Class-10 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c11_b",
+     "description": "Class-11 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c11_g",
+     "description": "Class-11 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c12_b",
+     "description": "Class-12 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c12_g",
+     "description": "Class-12 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    }
+   ],
+   "2025-26": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "item_group",
+     "column_in_pdf": "Item_group",
+     "description": "Item Group =1,Item Id = 1 Then General Item Group =1,Item Id = 2 Then SC Item Group =1,Item Id = 3 Then ST Item Group =1,Item Id = 4 Then OBC Item Group =2,Item Id = 5 Then Muslim Item Group =2,Item Id = 6 Then Christian Item Group =2,Item Id = 7 Then Sikh Item Group =2,Item Id = 8 Then Buddhist Item Group =2,Item Id = 9 Then Parsi Item Group =2,Item Id = 10 Then Jain Item Group =3,Item Id = 13 Then BPL item group =4, item_id = 1 then Blindness item group =4, item_id = 2 then Low-Vision item group =4, item_id = 3 then Hearing impairment (deaf and hard of hearing) item group =4, item_id = 4 then Speech and Language item group =4, item_id = 5 then Locomotor Disability item group =4, item_id = 6 then Mental illness item group =4, item_id = 7 then Specific Learning Disabilities item group =4, item_id = 8 then Cerabral palsy",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "item_id",
+     "description": "General, SC, ST, OBC, Muslims, Christians, Sikh, Buddhist,Parsi, Jain BPL, EWS and CWSN Enrolment with disability type,Repeater",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cpp_b",
+     "description": "Enrolment in Class Pre-Primary Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "(pp3_b+pp2_b+pp1_b)",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cpp_g",
+     "description": "Enrolment in Class Pre-Primary Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "(pp3_g+pp2_g+pp1_g)",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cpp_t",
+     "description": "Age Wise Enrolment in Class Pre-Primary Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "(pp3_t+pp2_t+pp1_t)",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c1_b",
+     "description": "Class-1 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c1_g",
+     "description": "Class-1 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c1_t",
+     "description": "Class-1 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c2_b",
+     "description": "Class-2 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c2_g",
+     "description": "Class-2 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c2_t",
+     "description": "Class-2 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c3_b",
+     "description": "Class-3 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c3_g",
+     "description": "Class-3 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c3_t",
+     "description": "Class-3 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c4_b",
+     "description": "Class-4 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c4_g",
+     "description": "Class-4 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c4_t",
+     "description": "Class-4 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c5_b",
+     "description": "Class-5 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c5_g",
+     "description": "Class-5 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c5_t",
+     "description": "Class-5 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c6_b",
+     "description": "Class-6 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c6_g",
+     "description": "Class-6 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c6_t",
+     "description": "Class-6 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c7_b",
+     "description": "Class-7 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c7_g",
+     "description": "Class-7 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c7_t",
+     "description": "Class-7 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c8_b",
+     "description": "Class-8 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c8_g",
+     "description": "Class-8 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c8_t",
+     "description": "Class-8 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c9_b",
+     "description": "Class-9 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c9_g",
+     "description": "Class-9 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c9_t",
+     "description": "Class-9 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c10_b",
+     "description": "Class-10 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c10_g",
+     "description": "Class-10 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c10_t",
+     "description": "Class-10 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c11_b",
+     "description": "Class-11 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c11_g",
+     "description": "Class-11 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c11_t",
+     "description": "Class-11 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c12_b",
+     "description": "Class-12 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c12_g",
+     "description": "Class-12 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c12_t",
+     "description": "Class-12 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    }
+   ]
+  },
+  "enrolment2": {
+   "2024-25": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "item_group",
+     "description": "item_group=8",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "item_id",
+     "description": "Age id (2 to 22)",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Age id (2 to 22)",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cpp_b",
+     "description": "Age Wise Enrolment in Class Pre-Primary Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "(pp3_b+pp2_b+pp1_b+ pp3_t+pp2_t+pp1_t) as cpp_b",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cpp_g",
+     "description": "Age Wise Enrolment in Class Pre-Primary Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "(pp3_g+pp2_g+pp1_g)",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c1_b",
+     "description": "Age Wise Class-1 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c1_g",
+     "description": "Age Wise Class-1 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c2_b",
+     "description": "Age Wise Class-2 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c2_g",
+     "description": "Age Wise Class-2 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c3_b",
+     "description": "Age Wise Class-3 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c3_g",
+     "description": "Age Wise Class-3 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c4_b",
+     "description": "Age Wise Class-4 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c4_g",
+     "description": "Age Wise Class-4 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c5_b",
+     "description": "Age Wise Class-5 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c5_g",
+     "description": "Age Wise Class-5 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c6_b",
+     "description": "Age Wise Class-6 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c6_g",
+     "description": "Age Wise Class-6 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c7_b",
+     "description": "Age Wise Class-7 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c7_g",
+     "description": "Age Wise Class-7 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c8_b",
+     "description": "Age Wise Class-8 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c8_g",
+     "description": "Age Wise Class-8 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c9_b",
+     "description": "Age Wise Class-9 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c9_g",
+     "description": "Age Wise Class-9 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c10_b",
+     "description": "Age Wise Class-10 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c10_g",
+     "description": "Age Wise Class-10 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c11_b",
+     "description": "Age Wise Class-11 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c11_g",
+     "description": "Age Wise Class-11 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c12_b",
+     "description": "Age Wise Class-12 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Boys +Transgenders",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c12_g",
+     "description": "Age Wise Class-12 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    }
+   ],
+   "2025-26": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "item_group",
+     "description": "item_group=8",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "item_id",
+     "description": "Age id (2 to 22)",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "Age id (2 to 22)",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cpp_b",
+     "description": "Age Wise Enrolment in Class Pre-Primary Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "(pp3_b+pp2_b+pp1_b)",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cpp_g",
+     "description": "Age Wise Enrolment in Class Pre-Primary Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "(pp3_g+pp2_g+pp1_g)",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "cpp_t",
+     "description": "Age Wise Enrolment in Class Pre-Primary Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "(pp3_t+pp2_t+pp1_t)",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c1_b",
+     "description": "Class-1 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c1_g",
+     "description": "Class-1 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c1_t",
+     "description": "Class-1 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c2_b",
+     "description": "Class-2 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c2_g",
+     "description": "Class-2 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c2_t",
+     "description": "Class-2 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c3_b",
+     "description": "Class-3 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c3_g",
+     "description": "Class-3 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c3_t",
+     "description": "Class-3 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c4_b",
+     "description": "Class-4 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c4_g",
+     "description": "Class-4 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c4_t",
+     "description": "Class-4 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c5_b",
+     "description": "Class-5 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c5_g",
+     "description": "Class-5 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c5_t",
+     "description": "Class-5 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c6_b",
+     "description": "Class-6 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c6_g",
+     "description": "Class-6 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c6_t",
+     "description": "Class-6 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c7_b",
+     "description": "Class-7 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c7_g",
+     "description": "Class-7 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c7_t",
+     "description": "Class-7 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c8_b",
+     "description": "Class-8 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c8_g",
+     "description": "Class-8 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c8_t",
+     "description": "Class-8 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c9_b",
+     "description": "Class-9 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c9_g",
+     "description": "Class-9 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c9_t",
+     "description": "Class-9 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c10_b",
+     "description": "Class-10 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c10_g",
+     "description": "Class-10 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c10_t",
+     "description": "Class-10 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c11_b",
+     "description": "Class-11 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c11_g",
+     "description": "Class-11 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c11_t",
+     "description": "Class-11 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c12_b",
+     "description": "Class-12 Boys",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c12_g",
+     "description": "Class-12 Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "c12_t",
+     "description": "Class-12 Transgender",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    }
+   ]
+  },
+  "teacher": {
+   "2024-25": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_tch",
+     "description": "No. of teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "male",
+     "description": "No. of Male teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "female",
+     "description": "No. of Female teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "transgender",
+     "description": "No. of Transgenders teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "gen_tch",
+     "description": "No. General teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "sc_tch",
+     "description": "No. SC teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "st_tch",
+     "description": "No. ST teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "obc_tch",
+     "description": "No. OBC teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "regular",
+     "description": "No. of Regular teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "contract",
+     "description": "No. of Contract teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "part_time",
+     "description": "No. of Part Time teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "below_graduate",
+     "description": "No. of teachers whose Highest Academic Qualification is Below Graduate (Include Below Secondary, Secondary and Higher Secondary) in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "graduate",
+     "description": "No. of teachers whose Highest Academic Qualification is Graduate in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "post_graduate_and_above",
+     "description": "Academic Qualification is Post Graduate and Above (Include Post Graduate, M.Phil., Ph.D. and Post Doctoral) in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "trained_comp",
+     "description": "Total teachers trained in use of computer in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_pr",
+     "description": "No. of teachers whose Class Taught is Primary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_upr",
+     "description": "No. of teachers whose Class Taught is Upper Primary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_pr_upr",
+     "description": "No. of teachers whose Class Taught is Primary and Upper Primary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_sec_only",
+     "description": "No. of teachers whose Class Taught is Secondary Only in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_hsec_only",
+     "description": "No. of teachers whose Class Taught is Higher Secondary Only in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_upr_sec",
+     "description": "No. of teachers whose Class Taught is Upper Primary and Secondary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_sec_hsec",
+     "description": "No. of teachers whose Class Taught is Secondary and Higher Secondary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taugt_pre_primary_only",
+     "description": "No. of teachers whose Class Taught is Pre- Primary Only in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_pr_and_pre_pri",
+     "description": "No. of teachers whose Class Taught is Pre- Primary and Primary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "teacher_involve_non_training_assignment",
+     "column_in_pdf": "teachers_involve_non_training_assignmen",
+     "description": "Nt o. of teachers who Involve in Non Training Assignment in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "diploma_certificate",
+     "description": "No. of teachers whose Highest Professional Qualification is Diploma or certificate in basic teachers training of a duration not less than two years in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "bachelor_of_ee",
+     "description": "No. of teachers whose Highest Professional Qualification is Bachelor of Elementary Education(B.EI.Ed) in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "bed_equivalent",
+     "description": "No. of teachers whose Highest Professional Qualification is B.ED or Equivalent in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "med_equivalent",
+     "description": "No. of teachers whose Highest Professional Qualification is M.ED or Equivalent in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "other",
+     "description": "No. of teachers whose Highest Professional Qualification is Others in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "none",
+     "description": "No. of teachers whose Highest Professional Qualification is None in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "diploma_special_edu",
+     "description": "No. of teachers whose Highest Professional Qualification is Diploma / Degree in Special Education in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "pursuing_rpc",
+     "description": "No. of teachers whose Highest Professional Qualification is Pursuing any Relevant Professional Course in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "diploma_ele_edu",
+     "description": "No. of teachers whose Highest Professional Qualification is Diploma in Elementary Education (D.El.Ed.) in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "early_childhood_tch",
+     "description": "No. of teachers whose Highest Professional Qualification is Diploma in Nursery teachers Education/ Pre-school education/ Early Childhood Education Program of a duration not less than two years from NCTE recognized institution in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "bed_nursery",
+     "description": "No. of teachers whose Highest Professional Qualification is B. Ed (Nursery) from NCTE recognized institution in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "trained_cwsn",
+     "description": "No. of teachers trained for teaching CWSN in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    }
+   ],
+   "2025-26": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "total_tch",
+     "description": "No. of teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "male",
+     "description": "No. of Male teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "female",
+     "description": "No. of Female teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "transgender",
+     "description": "No. of Transgenders teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "gen_tch",
+     "description": "No. General teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "sc_tch",
+     "description": "No. SC teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "st_tch",
+     "description": "No. ST teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "obc_tch",
+     "description": "No. OBC teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "regular",
+     "description": "No. of Regular teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "contract",
+     "description": "No. of Contract teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "part_time",
+     "description": "No. of Part Time teachers in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "below_graduate",
+     "description": "No. of teachers whose Highest Academic Qualification is Below Graduate (Include Below Secondary, Secondary and Higher Secondary) in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "graduate",
+     "description": "No. of teachers whose Highest Academic Qualification is Graduate in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "post_graduate_and_above",
+     "description": "Academic Qualification is Post Graduate and Above (Include Post Graduate, M.Phil., Ph.D. and Post Doctoral) in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "trained_comp",
+     "description": "Total teachers trained in use of computer in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_pr",
+     "description": "No. of teachers whose Class Taught is Primary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_upr",
+     "description": "No. of teachers whose Class Taught is Upper Primary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_pr_upr",
+     "description": "No. of teachers whose Class Taught is Primary and Upper Primary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_sec_only",
+     "description": "No. of teachers whose Class Taught is Secondary Only in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_hsec_only",
+     "description": "No. of teachers whose Class Taught is Higher Secondary Only in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_upr_sec",
+     "description": "No. of teachers whose Class Taught is Upper Primary and Secondary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_sec_hsec",
+     "description": "No. of teachers whose Class Taught is Secondary and Higher Secondary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taugt_pre_primary_only",
+     "description": "No. of teachers whose Class Taught is Pre- Primary Only in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "class_taught_pr_and_pre_pri",
+     "description": "No. of teachers whose Class Taught is Pre- Primary and Primary in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "teacher_involve_non_training_assignment",
+     "column_in_pdf": "teachers_involve_non_training_assignmen",
+     "description": "No. of teachers who Involve in Non Training Assignment in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "diploma_certificate",
+     "description": "No. of teachers whose Highest Professional Qualification is Diploma or certificate in basic teachers training of a duration not less than two years in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "bachelor_of_ee",
+     "description": "No. of teachers whose Highest Professional Qualification is Bachelor of Elementary Education(B.EI.Ed) in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "bed_equivalent",
+     "description": "No. of teachers whose Highest Professional Qualification is B.ED or Equivalent in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "med_equivalent",
+     "description": "No. of teachers whose Highest Professional Qualification is M.ED or Equivalent in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "other",
+     "description": "No. of teachers whose Highest Professional Qualification is Others in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "none",
+     "description": "No. of teachers whose Highest Professional Qualification is None in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "diploma_special_edu",
+     "description": "No. of teachers whose Highest Professional Qualification is Diploma / Degree in Special Education in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "pursuing_rpc",
+     "description": "No. of teachers whose Highest Professional Qualification is Pursuing any Relevant Professional Course in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "diploma_ele_edu",
+     "description": "No. of teachers whose Highest Professional Qualification is Diploma in Elementary Education (D.El.Ed.) in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "early_childhood_tch",
+     "description": "No. of teachers whose Highest Professional Qualification is Diploma in Nursery teachers Education/ Pre-school education/ Early Childhood Education Program of a duration not less than two years from NCTE recognized institution in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "bed_nursery",
+     "description": "No. of teachers whose Highest Professional Qualification is B. Ed (Nursery) from NCTE recognized institution in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "trained_cwsn",
+     "description": "No. of teachers trained for teaching CWSN in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    }
+   ]
+  },
+  "safety": {
+   "2025-26": [
+    {
+     "column": "pseudocode",
+     "description": "pseudocode Code(Unique Identity No. of school)",
+     "type": "bigint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "sdmp_plan_yn",
+     "description": "Whether the School Disaster Management Plan (SDMP) has been developed",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "struct_safaud_yn",
+     "description": "Whether Structural Safety Audit has been conducted",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "nonstr_safaud_yn",
+     "description": "Whether Non-Structural Safety Audit has been conducted",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "cctv_cam_yn",
+     "description": "Whether CCTV Cameras are available in school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "fire_ext_yn",
+     "description": "Whether Fire Extinguishers are installed",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "nodal_tch_yn",
+     "description": "Does the school have a nodal teacher for school safety",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "safty_trng_yn",
+     "description": "Whether students and teachers undergo regular training in school safety and disaster preparedness",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "dismgmt_taug_yn",
+     "description": "Whether disaster management is being taught as part of the curriculum",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "slfdef_grt_yn",
+     "description": "Whether school has received grant for Self Defense Training for Girls",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "slfdef_trained",
+     "description": "Mention Number of Girls Student provided Self Defence training.",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "guide_display_yn",
+     "description": "Whether the school has displayed safety guidelines on Display Board?",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "tch_first_level_counsellor",
+     "description": "Whether the school has appointed any teacher as a first level counselor",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "safe_sec_audit",
+     "description": "Frequency of safety and security audit of schools for ensuring child safety by involving all stakeholders",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "teacher_displaying_photo",
+     "description": "Is the school displaying photographs of all teachers in a school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "vidya_pravesh",
+     "description": "Has the school adopted/initiated Vidya Pravesh Module",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "numeric",
+     "codes": null
+    },
+    {
+     "column": "stu_atndnc_yn",
+     "description": "Students’ attendance captured",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "tch_atndnc_yn",
+     "description": "Teachers’ attendance captured",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "sch_youth_club_yn",
+     "description": "Whether the school has constituted Youth Club",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "sch_eco_club_yn",
+     "description": "Whether the school has constituted Eco Club for Mission Life",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "tch_icard_yn",
+     "description": "Whether Teacher Identity Cards are issued to all teachers in the school",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    },
+    {
+     "column": "self_cert_obtained_yn",
+     "description": "State School Standard Authority (SSSA) self-certification obtained",
+     "type": "smallint",
+     "numeric": true,
+     "remarks": "",
+     "kind": "yes_no",
+     "codes": {
+      "1": "Yes",
+      "2": "No"
+     },
+     "codes_source": "column name ends in _yn; no remark in schema"
+    }
+   ]
+  }
+ },
+ "enrolment1_items": {
+  "2024-25": [
+   {
+    "item_group": 1,
+    "item_id": 1,
+    "label": "General"
+   },
+   {
+    "item_group": 1,
+    "item_id": 2,
+    "label": "SC"
+   },
+   {
+    "item_group": 1,
+    "item_id": 3,
+    "label": "ST"
+   },
+   {
+    "item_group": 1,
+    "item_id": 4,
+    "label": "OBC"
+   },
+   {
+    "item_group": 2,
+    "item_id": 5,
+    "label": "Muslim"
+   },
+   {
+    "item_group": 2,
+    "item_id": 6,
+    "label": "Christian"
+   },
+   {
+    "item_group": 2,
+    "item_id": 7,
+    "label": "Sikh"
+   },
+   {
+    "item_group": 2,
+    "item_id": 8,
+    "label": "Buddhist"
+   },
+   {
+    "item_group": 2,
+    "item_id": 9,
+    "label": "Parsi"
+   },
+   {
+    "item_group": 2,
+    "item_id": 10,
+    "label": "Jain"
+   },
+   {
+    "item_group": 3,
+    "item_id": 13,
+    "label": "BPL"
+   },
+   {
+    "item_group": 4,
+    "item_id": 1,
+    "label": "Blindness"
+   },
+   {
+    "item_group": 4,
+    "item_id": 2,
+    "label": "Low-Vision"
+   },
+   {
+    "item_group": 4,
+    "item_id": 3,
+    "label": "Hearing impairment (deaf and hard of hearing)"
+   },
+   {
+    "item_group": 4,
+    "item_id": 4,
+    "label": "Speech and Language"
+   },
+   {
+    "item_group": 4,
+    "item_id": 5,
+    "label": "Locomotor Disability"
+   },
+   {
+    "item_group": 4,
+    "item_id": 6,
+    "label": "Mental illness"
+   },
+   {
+    "item_group": 4,
+    "item_id": 7,
+    "label": "Specific Learning Disabilities"
+   },
+   {
+    "item_group": 4,
+    "item_id": 8,
+    "label": "Cerabral palsy"
+   },
+   {
+    "item_group": 4,
+    "item_id": 9,
+    "label": "Autism Spectrum Disorder"
+   },
+   {
+    "item_group": 4,
+    "item_id": 10,
+    "label": "Multiple Disability including deaf, blindness"
+   },
+   {
+    "item_group": 4,
+    "item_id": 11,
+    "label": "Leprosy Cured students"
+   },
+   {
+    "item_group": 4,
+    "item_id": 12,
+    "label": "Dwarfism"
+   },
+   {
+    "item_group": 4,
+    "item_id": 13,
+    "label": "Intellectual Disability"
+   },
+   {
+    "item_group": 4,
+    "item_id": 14,
+    "label": "Muscular Dystrophy"
+   },
+   {
+    "item_group": 4,
+    "item_id": 15,
+    "label": "Chronic Neurological conditions"
+   },
+   {
+    "item_group": 4,
+    "item_id": 16,
+    "label": "Multiple Sclerosis"
+   },
+   {
+    "item_group": 4,
+    "item_id": 17,
+    "label": "Thalassemia"
+   },
+   {
+    "item_group": 4,
+    "item_id": 18,
+    "label": "Hemophilia"
+   },
+   {
+    "item_group": 4,
+    "item_id": 19,
+    "label": "Sickle Cell disease"
+   },
+   {
+    "item_group": 4,
+    "item_id": 20,
+    "label": "Acid Attack victim"
+   },
+   {
+    "item_group": 5,
+    "item_id": 0,
+    "label": "Repeater student"
+   },
+   {
+    "item_group": 10,
+    "item_id": 32,
+    "label": "EWS enrolment in the school. General, SC, ST, OBC, Muslims, Christians, Sikh, 2item_id"
+   }
+  ],
+  "2025-26": [
+   {
+    "item_group": 1,
+    "item_id": 1,
+    "label": "General"
+   },
+   {
+    "item_group": 1,
+    "item_id": 2,
+    "label": "SC"
+   },
+   {
+    "item_group": 1,
+    "item_id": 3,
+    "label": "ST"
+   },
+   {
+    "item_group": 1,
+    "item_id": 4,
+    "label": "OBC"
+   },
+   {
+    "item_group": 2,
+    "item_id": 5,
+    "label": "Muslim"
+   },
+   {
+    "item_group": 2,
+    "item_id": 6,
+    "label": "Christian"
+   },
+   {
+    "item_group": 2,
+    "item_id": 7,
+    "label": "Sikh"
+   },
+   {
+    "item_group": 2,
+    "item_id": 8,
+    "label": "Buddhist"
+   },
+   {
+    "item_group": 2,
+    "item_id": 9,
+    "label": "Parsi"
+   },
+   {
+    "item_group": 2,
+    "item_id": 10,
+    "label": "Jain"
+   },
+   {
+    "item_group": 3,
+    "item_id": 13,
+    "label": "BPL"
+   },
+   {
+    "item_group": 4,
+    "item_id": 1,
+    "label": "Blindness"
+   },
+   {
+    "item_group": 4,
+    "item_id": 2,
+    "label": "Low-Vision"
+   },
+   {
+    "item_group": 4,
+    "item_id": 3,
+    "label": "Hearing impairment (deaf and hard of hearing)"
+   },
+   {
+    "item_group": 4,
+    "item_id": 4,
+    "label": "Speech and Language"
+   },
+   {
+    "item_group": 4,
+    "item_id": 5,
+    "label": "Locomotor Disability"
+   },
+   {
+    "item_group": 4,
+    "item_id": 6,
+    "label": "Mental illness"
+   },
+   {
+    "item_group": 4,
+    "item_id": 7,
+    "label": "Specific Learning Disabilities"
+   },
+   {
+    "item_group": 4,
+    "item_id": 8,
+    "label": "Cerabral palsy"
+   },
+   {
+    "item_group": 4,
+    "item_id": 9,
+    "label": "Autism Spectrum Disorder"
+   },
+   {
+    "item_group": 4,
+    "item_id": 10,
+    "label": "Multiple Disability including deaf, blindness"
+   },
+   {
+    "item_group": 4,
+    "item_id": 11,
+    "label": "Leprosy Cured students"
+   },
+   {
+    "item_group": 4,
+    "item_id": 12,
+    "label": "Dwarfism"
+   },
+   {
+    "item_group": 4,
+    "item_id": 13,
+    "label": "Intellectual Disability"
+   },
+   {
+    "item_group": 4,
+    "item_id": 14,
+    "label": "Muscular Dystrophy"
+   },
+   {
+    "item_group": 4,
+    "item_id": 15,
+    "label": "Chronic Neurological conditions"
+   },
+   {
+    "item_group": 4,
+    "item_id": 16,
+    "label": "Multiple Sclerosis"
+   },
+   {
+    "item_group": 4,
+    "item_id": 17,
+    "label": "Thalassemia"
+   },
+   {
+    "item_group": 4,
+    "item_id": 18,
+    "label": "Hemophilia"
+   },
+   {
+    "item_group": 4,
+    "item_id": 19,
+    "label": "Sickle Cell disease"
+   },
+   {
+    "item_group": 4,
+    "item_id": 20,
+    "label": "Acid Attack victim"
+   },
+   {
+    "item_group": 5,
+    "item_id": 0,
+    "label": "Repeater student"
+   },
+   {
+    "item_group": 10,
+    "item_id": 32,
+    "label": "EWS enrolment in the school. General, SC, ST, OBC, Muslims, Christians, Sikh,"
+   }
+  ]
+ }
+}

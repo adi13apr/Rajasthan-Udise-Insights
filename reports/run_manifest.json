@@ -1,9 +1,9 @@
 {
-  "run_id": "20261020T172320Z",
-  "started_at": "2026-10-20T17:23:20+00:00",
+  "run_id": "20261020T174436Z",
+  "started_at": "2026-10-20T17:44:36+00:00",
   "stages": {
     "bronze": {
-      "seconds": 0.14,
+      "seconds": 0.13,
       "files_total": 94,
       "files_loaded": 0,
       "files_skipped": 94,
@@ -1345,8 +1345,35 @@
         }
       ]
     },
+    "profile": {
+      "seconds": 3.74,
+      "columns_with_problems": {
+        "bronze__enrolment1": 1,
+        "bronze__facility": 6,
+        "bronze__profile1": 1,
+        "bronze__teacher": 0
+      },
+      "duplicate_rows_on_natural_key": {
+        "bronze__enrolment1": {
+          "2024-25": 0,
+          "2025-26": 0
+        },
+        "bronze__facility": {
+          "2024-25": 2265,
+          "2025-26": 2255
+        },
+        "bronze__profile1": {
+          "2024-25": 2265,
+          "2025-26": 2255
+        },
+        "bronze__teacher": {
+          "2024-25": 2265,
+          "2025-26": 2255
+        }
+      }
+    },
     "build": {
-      "seconds": 16.4,
+      "seconds": 20.23,
       "rows_loaded": {
         "enrolment1": 1068886,
         "facility": 212747,
@@ -1362,5 +1389,5 @@
     "profile1: dropped 4,520 duplicate rows (same school in more than one file)",
     "teacher: dropped 4,520 duplicate rows (same school in more than one file)"
   ],
-  "finished_at": "2026-10-20T17:23:36+00:00"
+  "finished_at": "2026-10-20T17:45:00+00:00"
 }

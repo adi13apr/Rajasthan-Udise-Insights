@@ -59,10 +59,12 @@ then the Sattva analysis (phases A1-A6).
 - Yes/No columns: 1 = Yes, 2 = No, **9 = not applicable** (treat as missing, never No).
 - `rural_urban`: 1 = Rural, 2 = Urban (checked against village/urban-body names).
 - `electricity_availability`: 1 = Yes, 2 = No, 3 = Yes but not functional.
-- `total_class_rooms` is 0 for every school in 2024-25. Rebuild classrooms as
+- `total_class_rooms` is 0 for all but 6 schools in 2024-25. Rebuild classrooms as
   good + minor repair + major repair (matches exactly where the field is filled in).
+- Undocumented codes found by profiling (DATA_QUALITY_LOG #23-27): `solar_panel` and
+  `rain_water_harvesting` use 3; `anganwadi_yn` uses 0 (2024-25); `spl_educator_yn` uses 9.
 - Management codes (column `managment`, spelled like this in the data): grouping in
-  `pipeline/config.py`, **validated against official totals** (codes 94, 95, 101 are
+  `reference/management_codes.json`, **validated against official totals** (codes 94, 95, 101 are
   government; with them, government teachers match the official 4,45,073 exactly).
   97 and 98 are non-government. Exact names still to confirm with the UDISE+ DCF.
 - District spellings differ by year: BALOTARA/BALOTRA, CHITTAURGARH/CHITTORGARH,
@@ -83,7 +85,10 @@ then the Sattva analysis (phases A1-A6).
 
 ## Current code (as of the hand-off)
 - `run_pipeline.py`: entry point.
-- `pipeline/config.py`: paths, code mappings, district aliases, official totals.
+- `pipeline/config.py`: paths and code mappings; loads `reference/*.json` (districts and
+  aliases, management codes, official totals) under the same names as before.
+- `reference/schema_columns.json`: every column of every dataset and year with type and
+  documented codes, parsed from the schema PDFs by `scripts/extract_schema.py` (pdfplumber).
 - `pipeline/ingest.py`: finds zips, reads CSV inside each zip in place, parses
   dataset/district/year from the file name, stacks files, drops duplicate
   school-years with a warning (to change: quarantine instead).
@@ -92,6 +97,10 @@ then the Sattva analysis (phases A1-A6).
   `_district_file`, `_year`, `_ingested_at`, `_run_id`. Incremental: SHA-256 per zip in
   `data/bronze/_state.json`; unchanged zips are skipped (`--full-refresh` to reload).
   Keeps duplicates. `build.py` still reads the raw zips until silver exists (P3).
+- `pipeline/profiling.py` (P2): per column and year: dtype, null %, distinct, min/max,
+  top values, invalid codes vs the reference JSON; duplicates on the natural key; schema
+  vs data; year-to-year reporting changes. `reports/profiling/<layer>__<table>.csv` +
+  `README.md` (problems only). School codes are never written to reports.
 - `reports/run_manifest.json`: per-run record (files, checksums, rows, timings).
 - `tests/`: pytest on synthetic zips built in a temp folder.
 - `pipeline/build.py`: school-year table (enrolment by stage and sex, SC/ST/CWSN,

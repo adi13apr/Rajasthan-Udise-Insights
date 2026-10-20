@@ -1,0 +1,62 @@
+{
+  "notes": "UDISE+ management codes ('managment' column) are 'as per UDISE DCF' and not listed in the schema PDFs. Grouping validated against official 2024-25 totals: with 94, 95 and 101 counted as government, government teachers match the official 4,45,073 exactly. 97 and 98 are non-government. Exact names of 94, 95, 101, 97, 98 still to confirm with the DCF.",
+  "government_groups": [
+    "State Government",
+    "Central Government",
+    "Other Government"
+  ],
+  "codes": {
+    "1": {
+      "group": "State Government",
+      "is_government": true
+    },
+    "2": {
+      "group": "State Government",
+      "is_government": true
+    },
+    "3": {
+      "group": "State Government",
+      "is_government": true
+    },
+    "6": {
+      "group": "State Government",
+      "is_government": true
+    },
+    "90": {
+      "group": "State Government",
+      "is_government": true
+    },
+    "92": {
+      "group": "Central Government",
+      "is_government": true
+    },
+    "93": {
+      "group": "Central Government",
+      "is_government": true
+    },
+    "94": {
+      "group": "Other Government",
+      "is_government": true
+    },
+    "95": {
+      "group": "Other Government",
+      "is_government": true
+    },
+    "101": {
+      "group": "Other Government",
+      "is_government": true
+    },
+    "5": {
+      "group": "Private Unaided",
+      "is_government": false
+    },
+    "97": {
+      "group": "Other Non-Government",
+      "is_government": false
+    },
+    "98": {
+      "group": "Other Non-Government",
+      "is_government": false
+    }
+  }
+}

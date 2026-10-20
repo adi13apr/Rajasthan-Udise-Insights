@@ -1,4 +1,4 @@
-"""Run the full pipeline: raw zips -> bronze Parquet -> cleaned tables + data quality report.
+"""Run the full pipeline: raw zips -> bronze Parquet -> profiling -> cleaned tables + QA report.
 
 Usage:  python run_pipeline.py                 (incremental: unchanged zips are skipped in bronze)
         python run_pipeline.py --full-refresh  (reload every zip into bronze)
@@ -13,6 +13,7 @@ from pipeline.bronze import load_bronze, new_run_id, summarise_bronze
 from pipeline.build import build_school_year, summarise
 from pipeline.checks import run_checks
 from pipeline.ingest import load_all
+from pipeline.profiling import bronze_tables, profile_layer, write_readme
 
 
 def main():
@@ -35,7 +36,19 @@ def main():
                                     **summarise_bronze(bronze),
                                     "files": bronze["files"]}
 
-    # Stage 2: build (pandas; still reads the raw zips until silver exists, see docs/PLAN.md P3)
+    # Stage 2: profiling (per-column statistics and invalid codes)
+    t0 = time.perf_counter()
+    profiles = {"bronze": profile_layer("bronze", bronze_tables())}
+    problems = write_readme(profiles)
+    manifest["stages"]["profile"] = {
+        "seconds": round(time.perf_counter() - t0, 2),
+        "columns_with_problems": problems,
+        "duplicate_rows_on_natural_key": {
+            f"{layer}__{table}": r["checks"]["duplicate_rows"]
+            for layer, res in profiles.items() for table, r in res.items() if "duplicate_rows" in r["checks"]},
+    }
+
+    # Stage 3: build (pandas; still reads the raw zips until silver exists, see docs/PLAN.md P3)
     t0 = time.perf_counter()
     tables, warnings = load_all()
     school = build_school_year(tables)
@@ -62,6 +75,10 @@ def main():
     print(f"Run {run_id}")
     print(f"Bronze: {b['files_loaded']} files loaded, {b['files_skipped']} unchanged (skipped), "
           f"{b['bronze_bytes'] / 1e6:.1f} MB, {b['seconds']} s")
+    pr = manifest["stages"]["profile"]
+    print(f"Profiling: {len(pr['columns_with_problems'])} tables, "
+          f"{sum(pr['columns_with_problems'].values())} column-years with problems, {pr['seconds']} s "
+          f"-> {C.PROFILING_DIR / 'README.md'}")
     print(f"Loaded: {', '.join(f'{k} ({len(v):,} rows)' for k, v in tables.items())}")
     print(f"School-year rows: {len(school):,} | districts: {school['district'].nunique()} | "
           f"years: {', '.join(sorted(school['year'].unique()))}")

@@ -29,6 +29,8 @@ Outputs:
 - `data/bronze/<dataset>/year=<YYYY-YY>/*.parquet`: faithful Parquet copy of each raw
   zip (values as text, plus load metadata `_source_file`, `_source_row`,
   `_district_file`, `_year`, `_ingested_at`, `_run_id`). Not committed.
+- `reports/profiling/`: per-column profile of every table (`<layer>__<table>.csv`) and a
+  `README.md` listing only the columns with problems (invalid codes, schema differences, ...)
 - `reports/run_manifest.json`: what the last run did (files loaded/skipped with
   SHA-256 checksums, rows per dataset and year, timings per stage)
 - `data/processed/school_year.csv`: one row per school per year
@@ -44,8 +46,12 @@ pipeline/
   config.py   paths, code mappings, indicator definitions
   ingest.py   finds raw zips, reads them in place, stacks years/districts
   bronze.py   raw zips -> bronze Parquet (as-is, incremental by checksum)
+  profiling.py  column profiles and invalid-code checks for each layer
   build.py    school-year table + district summaries
   checks.py   automated data quality report
+reference/            lookup data as JSON: districts, management codes, official totals,
+                      schema columns and codes (from the PDFs via scripts/extract_schema.py)
+scripts/
 run_pipeline.py
 tests/                pytest, on synthetic data
 DATA_QUALITY_LOG.md   issues found and decisions taken
