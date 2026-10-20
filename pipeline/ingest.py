@@ -73,5 +73,16 @@ def load_all(raw_dir: Path = RAW_DIR) -> tuple[dict[str, pd.DataFrame], list[str
         df.insert(0, "year", rf.year)
         df.insert(1, "district_file", rf.district)
         frames.setdefault(rf.dataset, []).append(df)
-    tables = {k: pd.concat(v, ignore_index=True) for k, v in frames.items()}
+    tables = {}
+    for k, v in frames.items():
+        df = pd.concat(v, ignore_index=True)
+        # The same school can arrive twice (e.g. a single-district file plus the
+        # whole-state "All" file). Keep one copy and report it.
+        key = ["year", "pseudocode"] + (["item_group", "item_id"] if k.startswith("enrolment") else [])
+        dup = df.duplicated(key)
+        if dup.any():
+            warnings.append(f"{k}: dropped {int(dup.sum()):,} duplicate rows "
+                            f"(same school in more than one file)")
+            df = df[~dup].reset_index(drop=True)
+        tables[k] = df
     return tables, warnings

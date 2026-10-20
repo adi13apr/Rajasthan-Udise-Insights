@@ -19,23 +19,46 @@ def run_checks(t: dict[str, pd.DataFrame], school: pd.DataFrame, warnings: list[
     lines.append(counts.to_markdown())
 
     section("Duplicate school codes")
-    for k in ["profile1", "profile2", "facility", "teacher", "safety"]:
+    for k in ["profile1", "profile2", "facility", "teacher", "safety"]:  # skips files not downloaded
         if k in t:
             d = t[k].duplicated(["year", "pseudocode"]).sum()
             lines.append(f"- {k}: {d} duplicate school-year rows")
 
     section("Do all school-level files cover the same schools?")
-    for (dist, yr), grp in t["profile1"].groupby(["district_file", "year"]):
+    lines.append("Compared per year across all files, so state-level and district-level downloads can be mixed.")
+    lines.append("")
+    required = ["facility", "teacher", "enrolment1"]
+    prof = t["profile1"]
+    for yr, grp in prof.groupby("year"):
         base = set(grp["pseudocode"])
-        for k in ["profile2", "facility", "teacher", "enrolment1"]:
-            other = set(t[k].query("district_file == @dist and year == @yr")["pseudocode"])
-            missing, extra = len(base - other), len(other - base)
+        for k in required + [k for k in ["profile2"] if k in t]:
+            sub = t[k][t[k]["year"] == yr] if k in t else None
+            if sub is None or sub.empty:
+                if k in required:
+                    lines.append(f"- MISSING FILE: {yr} has no {k} data at all")
+                continue
+            other = set(sub["pseudocode"])
+            missing, extra = base - other, other - base
             if missing or extra:
-                lines.append(f"- {dist} {yr} {k}: {missing} schools missing, {extra} unknown schools")
-    lines.append("- (no line above = everything matches)")
+                lines.append(f"- {yr} {k}: {len(missing):,} schools missing, {len(extra):,} unknown schools")
+            if len(missing) > 10:  # many missing -> probably whole districts not downloaded
+                by_dist = (grp[grp["pseudocode"].isin(missing)]["district"].str.strip().str.upper()
+                           .value_counts())
+                full = grp["district"].str.strip().str.upper().value_counts()
+                whole = [d for d, n in by_dist.items() if n == full[d]]
+                if whole:
+                    lines.append(f"  - districts with NO {k} rows (download these): {', '.join(sorted(whole))}")
+    lines.append("- (only the lines above are problems; small numbers of missing schools are normal)")
+
+    section("Schools per district (from the data itself)")
+    lines.append("Use this to spot districts missing in a year, or districts created/abolished between years.")
+    lines.append("")
+    lines.append(school.pivot_table(index="district", columns="year", values="pseudocode",
+                                    aggfunc="count", fill_value=0).to_markdown())
 
     section("District name in file name vs inside the data")
-    mism = school[school["district_file"] != school["district"]]
+    single = school[school["district_file"] != school["state"].str.strip().str.upper()]
+    mism = single[single["district_file"] != single["district"]]
     lines.append(f"- {len(mism)} rows where they differ")
     if len(mism):
         lines.append(mism.groupby(["district_file", "district"]).size().to_markdown())

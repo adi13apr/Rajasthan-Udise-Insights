@@ -23,6 +23,16 @@ DATASETS = {
 # schema PDF says `teachers_involve_...`. We keep the name used in the data.
 COLUMN_RENAMES: dict[str, str] = {}
 
+# The portal spells some districts differently in different years.
+# Map every variant to one name so years can be compared.
+DISTRICT_ALIASES = {
+    "BALOTARA": "BALOTRA",
+    "CHITTAURGARH": "CHITTORGARH",
+    "DHAULPUR": "DHOLPUR",
+    "JALOR": "JALORE",
+    "PRATAPGARH (RAJ.)": "PRATAPGARH",
+}
+
 # --- Code mappings (from the DSP schema PDF unless marked VERIFY) ---------
 
 # Yes/No columns: 1 = Yes, 2 = No. 9 appears in the data for questions that

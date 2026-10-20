@@ -7,6 +7,11 @@ from . import config as C
 KEY = ["year", "pseudocode"]
 
 
+def normalise_district(s: pd.Series) -> pd.Series:
+    s = s.astype(str).str.strip().str.upper().str.replace(r"\s+", " ", regex=True)
+    return s.replace(C.DISTRICT_ALIASES)
+
+
 def yes_no(s: pd.Series) -> pd.Series:
     """1 -> 1, 2 -> 0, anything else (e.g. 9 = not applicable) -> missing."""
     return s.map(C.YES_NO).astype("Float64")
@@ -99,7 +104,8 @@ def build_school_year(t: dict[str, pd.DataFrame]) -> pd.DataFrame:
     prof = t["profile1"][KEY + ["district_file", "state", "district", "block", "rural_urban",
                                 "school_category", "school_type", "lowclass", "highclass",
                                 "managment", "lgd_block_name"]].copy()
-    prof["district"] = prof["district"].str.strip().str.upper()
+    prof["district"] = normalise_district(prof["district"])
+    prof["district_file"] = normalise_district(prof["district_file"])
     prof["block"] = prof["block"].str.strip().str.upper()
     # Some central-govt schools list an admin region (e.g. "JAIPUR REGION") as their block.
     prof["block_is_admin_region"] = prof["block"].str.contains("REGION", na=False)
