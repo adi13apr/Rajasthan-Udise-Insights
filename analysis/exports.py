@@ -4,6 +4,10 @@
     data/gold/exports/tableau_district_indicators_long.csv  one row per district, year and indicator
     excel/rajasthan_udise_district_summary.xlsx             summary sheets + a Data table for PivotTables
 """
+import re
+import zipfile
+from datetime import datetime
+
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
@@ -66,6 +70,22 @@ def write_tableau(exports_dir=C.GOLD_EXPORTS_DIR) -> pd.DataFrame:
 # --- Excel ------------------------------------------------------------------
 
 HEADER_FILL = PatternFill("solid", fgColor="E8EEF8")
+FIXED_TIME = datetime(2026, 1, 1)  # timestamps fixed so the file only changes when the data does
+
+
+def _normalise_zip(path) -> None:
+    """An .xlsx is a zip; rewrite it with a fixed timestamp on every entry and in its
+    properties (openpyxl stamps 'modified' with the save time)."""
+    with zipfile.ZipFile(path) as z:
+        entries = [(info, z.read(info)) for info in z.infolist()]
+    stamp = FIXED_TIME.strftime("%Y-%m-%dT%H:%M:%SZ").encode()
+    entries = [(info, re.sub(rb"(<dcterms:modified[^>]*>)[^<]*", rb"\g<1>" + stamp, data)
+                if info.filename == "docProps/core.xml" else data) for info, data in entries]
+    with zipfile.ZipFile(path, "w") as z:
+        for info, data in entries:
+            fixed = zipfile.ZipInfo(info.filename, date_time=FIXED_TIME.timetuple()[:6])
+            fixed.compress_type = zipfile.ZIP_DEFLATED
+            z.writestr(fixed, data)
 NOTE = ("Summary sheets are pivot tables computed in Python (openpyxl cannot create native Excel "
         "PivotTables). To explore further: select any cell in the 'Data' sheet's table, then "
         "Insert > PivotTable.")
@@ -148,7 +168,9 @@ def write_excel(path=EXCEL_PATH) -> None:
 
     _write_sheet(wb, "Data", mgmt, as_table="tblDistrictManagement")
     path.parent.mkdir(parents=True, exist_ok=True)
+    wb.properties.created = wb.properties.modified = FIXED_TIME
     wb.save(path)
+    _normalise_zip(path)
 
 
 def build() -> dict:
