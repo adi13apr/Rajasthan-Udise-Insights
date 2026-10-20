@@ -1,0 +1,151 @@
+{
+  "state_2025_26": {
+    "schools": 106167.0,
+    "enrolment": 14954579.0,
+    "teachers": 792524.0,
+    "pct_single_teacher": 6.724,
+    "avg_infra_index": 79.764,
+    "ptr": 18.87
+  },
+  "patterns": {
+    "boys leaving (tribal south)": [
+      "BANSWARA",
+      "DUNGARPUR",
+      "PRATAPGARH",
+      "SALUMBAR",
+      "UDAIPUR"
+    ],
+    "boys moving in": [
+      "JHUNJHUNU",
+      "KOTA",
+      "SIKAR"
+    ],
+    "girls leaving": [
+      "BARMER",
+      "JAISALMER"
+    ],
+    "other": [
+      "AJMER",
+      "ALWAR",
+      "BALOTRA",
+      "BARAN",
+      "BEAWAR",
+      "BHARATPUR",
+      "BHILWARA",
+      "BIKANER",
+      "BUNDI",
+      "CHITTORGARH",
+      "CHURU",
+      "DAUSA",
+      "DEEG",
+      "DHOLPUR",
+      "DIDWANA-KUCHAMAN",
+      "GANGANAGAR",
+      "HANUMANGARH",
+      "JAIPUR",
+      "JALORE",
+      "JHALAWAR",
+      "JODHPUR",
+      "KARAULI",
+      "KHAIRTHAL-TIJARA",
+      "KOTPUTLI-BEHROR",
+      "NAGAUR",
+      "PALI",
+      "PHALODI",
+      "RAJSAMAND",
+      "SAWAI MADHOPUR",
+      "SIROHI",
+      "TONK"
+    ]
+  },
+  "regression": {
+    "facts": {
+      "main": {
+        "n_schools": 29479,
+        "r_squared": 0.229,
+        "clusters": 41
+      },
+      "with school category": {
+        "n_schools": 29479,
+        "r_squared": 0.238,
+        "clusters": 41
+      }
+    },
+    "main": [
+      {
+        "spec": "main",
+        "term": "Functional girls' toilet (yes vs no)",
+        "coef_pp": 1.714,
+        "ci_low_pp": 1.152,
+        "ci_high_pp": 2.276,
+        "p_value": 0.0
+      },
+      {
+        "spec": "main",
+        "term": "Teachers (log; +1 = about 2.7x as many)",
+        "coef_pp": -1.888,
+        "ci_low_pp": -2.505,
+        "ci_high_pp": -1.272,
+        "p_value": 0.0
+      },
+      {
+        "spec": "main",
+        "term": "Other facilities index (+10 points)",
+        "coef_pp": -0.097,
+        "ci_low_pp": -0.235,
+        "ci_high_pp": 0.04,
+        "p_value": 0.166
+      },
+      {
+        "spec": "main",
+        "term": "Urban (vs rural)",
+        "coef_pp": -1.528,
+        "ci_low_pp": -2.076,
+        "ci_high_pp": -0.979,
+        "p_value": 0.0
+      },
+      {
+        "spec": "main",
+        "term": "Private unaided (vs state govt)",
+        "coef_pp": -13.265,
+        "ci_low_pp": -14.709,
+        "ci_high_pp": -11.82,
+        "p_value": 0.0
+      }
+    ]
+  },
+  "matched_single_teacher": {
+    "schools": 105418,
+    "state_change_pp": 1.047,
+    "western_desert": [
+      {
+        "district": "JAISALMER",
+        "pct_single_teacher_2024": 12.27,
+        "pct_single_teacher_2025": 16.71,
+        "change_pp": 4.44,
+        "teachers_change_pct": -2.64
+      },
+      {
+        "district": "BARMER",
+        "pct_single_teacher_2024": 8.44,
+        "pct_single_teacher_2025": 12.79,
+        "change_pp": 4.35,
+        "teachers_change_pct": -2.75
+      },
+      {
+        "district": "PHALODI",
+        "pct_single_teacher_2024": 6.26,
+        "pct_single_teacher_2025": 10.6,
+        "change_pp": 4.34,
+        "teachers_change_pct": -1.14
+      },
+      {
+        "district": "BALOTRA",
+        "pct_single_teacher_2024": 7.17,
+        "pct_single_teacher_2025": 9.96,
+        "change_pp": 2.79,
+        "teachers_change_pct": -3.54
+      }
+    ]
+  }
+}

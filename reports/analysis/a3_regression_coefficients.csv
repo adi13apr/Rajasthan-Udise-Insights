@@ -1,0 +1,11 @@
+spec,term,coef_pp,ci_low_pp,ci_high_pp,p_value
+main,Functional girls' toilet (yes vs no),1.7136,1.1515,2.2757,0.0
+main,Teachers (log; +1 = about 2.7x as many),-1.8885,-2.5053,-1.2716,0.0
+main,Other facilities index (+10 points),-0.0973,-0.235,0.0404,0.166
+main,Urban (vs rural),-1.5276,-2.0757,-0.9794,0.0
+main,Private unaided (vs state govt),-13.2647,-14.709,-11.8204,0.0
+with school category,Functional girls' toilet (yes vs no),1.5701,1.0491,2.091,0.0
+with school category,Teachers (log; +1 = about 2.7x as many),-2.0801,-2.7234,-1.4369,0.0
+with school category,Other facilities index (+10 points),-0.0882,-0.2234,0.0471,0.2013
+with school category,Urban (vs rural),-1.2681,-1.7916,-0.7445,0.0
+with school category,Private unaided (vs state govt),-13.0331,-14.4074,-11.6587,0.0

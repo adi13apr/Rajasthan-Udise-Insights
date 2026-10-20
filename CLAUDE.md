@@ -138,6 +138,10 @@ then the Sattva analysis (phases A1-A6).
   (generated: `python scripts/make_data_dictionary.py`), `docs/quality_rules.md` (generated).
 - `requirements.txt` pins exact tested versions: unpinned installs pull pandas 3.x, which breaks
   the pipeline (string dtype). Upgrade deliberately.
+- Analysis (A1-A4): `analysis/` (data.py reads gold read-only; models.py statsmodels OLS with
+  district FE, SE clustered by district; charts.py matplotlib with the dataviz reference palette;
+  run.py builds `reports/figures/*.png`, `reports/analysis/*.csv`, `numbers.json`).
+  `notebooks/analysis.ipynb` calls them (re-execute with nbconvert). School-level rows stay in memory.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).
