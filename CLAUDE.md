@@ -119,6 +119,10 @@ then the Sattva analysis (phases A1-A6).
   omitted), fact_teachers, fact_school_facilities (one row per school-year). `sql/tests/`
   checks (RI, grain, SCD2, totals) must all return 0 or the old database is kept.
   Exported to `data/gold/parquet/`.
+- Marts (P5): `sql/10_int_school_year.sql` (school-year intermediate, never exported) and
+  `sql/11_marts_district.sql` (`mart_district_year`, `mart_district_year_management`, one
+  GROUPING SETS query). Exported to `data/gold/exports/*.csv` (committed). They replace the
+  pandas `summarise()` (kept only as the test reference); old outputs frozen in `tests/regression/`.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

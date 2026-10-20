@@ -1,9 +1,9 @@
 {
-  "run_id": "20261020T182726Z",
-  "started_at": "2026-10-20T18:27:26+00:00",
+  "run_id": "20261020T183214Z",
+  "started_at": "2026-10-20T18:32:14+00:00",
   "stages": {
     "bronze": {
-      "seconds": 0.14,
+      "seconds": 0.41,
       "files_total": 94,
       "files_loaded": 0,
       "files_skipped": 94,
@@ -1346,7 +1346,7 @@
       ]
     },
     "silver": {
-      "seconds": 16.26,
+      "seconds": 15.55,
       "tables": {
         "schools": {
           "source": "profile1",
@@ -1433,10 +1433,6 @@
         }
       },
       "reconciled": {
-        "teacher": {
-          "bronze": 217267,
-          "silver_plus_quarantine": 217267
-        },
         "profile1": {
           "bronze": 217267,
           "silver_plus_quarantine": 217267
@@ -1445,6 +1441,10 @@
           "bronze": 1068886,
           "silver_plus_quarantine": 1068886
         },
+        "teacher": {
+          "bronze": 217267,
+          "silver_plus_quarantine": 217267
+        },
         "facility": {
           "bronze": 217267,
           "silver_plus_quarantine": 217267
@@ -1452,7 +1452,7 @@
       }
     },
     "gold": {
-      "seconds": 3.98,
+      "seconds": 5.61,
       "tables": {
         "dim_district": 41,
         "dim_gender": 3,
@@ -1463,17 +1463,22 @@
         "dim_year": 2,
         "fact_enrolment": 6403516,
         "fact_school_facilities": 212747,
-        "fact_teachers": 212747
+        "fact_teachers": 212747,
+        "int_school_year": 212747,
+        "mart_district_year": 82,
+        "mart_district_year_management": 330
       },
       "sql_seconds": {
-        "01_dim_year.sql": 0.017,
-        "02_dim_district.sql": 0.011,
-        "03_dim_management.sql": 0.014,
-        "04_dim_lookups.sql": 0.009,
-        "05_dim_school.sql": 0.483,
-        "06_fact_enrolment.sql": 1.558,
-        "07_fact_teachers.sql": 0.272,
-        "08_fact_school_facilities.sql": 0.331
+        "01_dim_year.sql": 0.008,
+        "02_dim_district.sql": 0.008,
+        "03_dim_management.sql": 0.003,
+        "04_dim_lookups.sql": 0.005,
+        "05_dim_school.sql": 0.505,
+        "06_fact_enrolment.sql": 1.452,
+        "07_fact_teachers.sql": 0.269,
+        "08_fact_school_facilities.sql": 0.231,
+        "10_int_school_year.sql": 0.812,
+        "11_marts_district.sql": 0.325
       },
       "tests": [
         {
@@ -1600,9 +1605,49 @@
           "file": "03_totals_preserved.sql",
           "check": "schools silver = current versions in dim_school",
           "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "int_school_year one row per school-year",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "mart_district_year one row per district-year",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "mart_district_year covers every district-year with students",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "mart enrolment = fact enrolment classes 1-12",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "management mart adds up to district mart: schools",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "management mart adds up to district mart: enrolment",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "management mart adds up to district mart: teachers",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "shares between 0 and 1",
+          "failures": 0
         }
       ],
-      "tests_passed": 25,
+      "tests_passed": 33,
       "tests_failed": 0,
       "dim_school": {
         "schools_with_more_than_one_version": 1708,
@@ -1618,10 +1663,14 @@
           "KHAIRTHAL-TIJARA -> ALWAR": 1,
           "KOTPUTLI-BEHROR -> JAIPUR": 1
         }
-      }
+      },
+      "exports": [
+        "mart_district_year.csv",
+        "mart_district_year_management.csv"
+      ]
     },
     "profile": {
-      "seconds": 9.52,
+      "seconds": 11.43,
       "columns_with_problems": {
         "bronze__enrolment1": 1,
         "bronze__facility": 6,
@@ -1673,15 +1722,14 @@
       }
     },
     "build": {
-      "seconds": 11.83,
+      "seconds": 11.94,
       "rows_loaded": {
         "profile1": 212747,
         "enrolment1": 1068886,
         "facility": 212747,
         "teacher": 212747
       },
-      "school_year_rows": 212747,
-      "district_year_rows": 82
+      "school_year_rows": 212747
     }
   },
   "warnings": [
@@ -1689,5 +1737,5 @@
     "facilities: 4,520 rows quarantined (duplicate_school_year: 4,520) -> data/quarantine/facilities.parquet",
     "teachers: 4,520 rows quarantined (duplicate_school_year: 4,520) -> data/quarantine/teachers.parquet"
   ],
-  "finished_at": "2026-10-20T18:28:08+00:00"
+  "finished_at": "2026-10-20T18:32:59+00:00"
 }

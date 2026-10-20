@@ -4,7 +4,9 @@ data/raw/
 data/processed/school_year.csv
 data/bronze/
 data/silver/
-data/gold/
+data/gold/*
+# ...except the district-level marts, which are fine to publish
+!data/gold/exports/
 data/quarantine/
 data/tmp/
 *.duckdb

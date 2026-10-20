@@ -39,9 +39,15 @@ Outputs:
   `README.md` listing only the columns with problems (invalid codes, schema differences, ...)
 - `reports/run_manifest.json`: what the last run did (files loaded/skipped with
   SHA-256 checksums, rows per dataset and year, timings per stage)
-- `data/processed/school_year.csv`: one row per school per year
-- `data/processed/district_year.csv`: district summaries
-- `data/processed/district_year_by_management.csv`: district summaries by management type
+- `data/gold/exports/mart_district_year.csv` and `mart_district_year_management.csv`: district
+  summaries for Tableau / Excel, built in SQL (`sql/11_marts_district.sql`). Committed: district
+  aggregates may be published.
+- `data/processed/school_year.csv`: one row per school per year (school-level, not committed)
+
+The district summaries used to be computed in pandas (`build.summarise`). Since P5 they come from
+the SQL marts, which reproduce the pandas output exactly except 6 of 9,888 cells that differ by
+0.001 (a value ending in 5 at the 4th decimal: SQL rounds it up, pandas rounds to even). The old
+pandas output is kept in `tests/regression/` and `tests/test_marts.py` checks the marts against it.
 - `reports/qa_report.md`: automated data quality checks
 
 New districts or years need no code changes: drop the zips into `data/raw/<year>/` and re-run.

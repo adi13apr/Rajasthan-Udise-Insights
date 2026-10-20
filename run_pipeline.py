@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pipeline import config as C
 from pipeline.bronze import load_bronze, new_run_id, summarise_bronze
 from pipeline.gold import build_gold
-from pipeline.build import build_school_year, summarise
+from pipeline.build import build_school_year
 from pipeline.checks import run_checks
 from pipeline.profiling import bronze_tables, profile_layer, write_readme
 from pipeline.silver import TABLES as SILVER_TABLES, build_silver, silver_tables, tables_for_build
@@ -68,23 +68,19 @@ def main():
             for layer, res in profiles.items() for table, r in res.items() if "duplicate_rows" in r["checks"]},
     }
 
-    # Stage 5: build (pandas, from silver): school-year table, district summaries, QA report
+    # Stage 5: QA report (pandas school-year table from silver). District summaries now come
+    # from the SQL marts in gold (data/gold/exports/); the pandas summary is retired (see README).
     t0 = time.perf_counter()
     tables = tables_for_build()
     school = build_school_year(tables)
-    district = summarise(school, ["district", "year"])
-    district_mgmt = summarise(school, ["district", "year", "management_group"])
 
     C.PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     C.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     school.to_csv(C.PROCESSED_DIR / "school_year.csv", index=False)
-    district.to_csv(C.PROCESSED_DIR / "district_year.csv", index=False)
-    district_mgmt.to_csv(C.PROCESSED_DIR / "district_year_by_management.csv", index=False)
     (C.REPORTS_DIR / "qa_report.md").write_text(run_checks(tables, school, warnings), encoding="utf-8")
     manifest["stages"]["build"] = {"seconds": round(time.perf_counter() - t0, 2),
                                    "rows_loaded": {k: len(v) for k, v in tables.items()},
-                                   "school_year_rows": len(school),
-                                   "district_year_rows": len(district)}
+                                   "school_year_rows": len(school)}
 
     manifest["warnings"] = warnings
     manifest["finished_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -110,8 +106,8 @@ def main():
           f"years: {', '.join(sorted(school['year'].unique()))}")
     for w in warnings:
         print("WARNING:", w)
-    print(f"Outputs written to {C.PROCESSED_DIR}, {C.REPORTS_DIR / 'qa_report.md'} "
-          f"and {C.RUN_MANIFEST}")
+    print(f"Outputs: {C.GOLD_EXPORTS_DIR} (district marts), {C.GOLD_DB}, "
+          f"{C.REPORTS_DIR / 'qa_report.md'}, {C.RUN_MANIFEST}")
 
 
 if __name__ == "__main__":

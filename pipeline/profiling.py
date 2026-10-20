@@ -95,6 +95,11 @@ def is_valid(values: pd.Series, numbers: pd.Series, allowed: set) -> pd.Series:
     return values.isin(allowed)
 
 
+def top(df: pd.DataFrame, n: int = TOP_N) -> pd.DataFrame:
+    """Most common values; ties broken by value so reports only change when the data does."""
+    return df.sort_values(["n", "val"], ascending=[False, True], na_position="first").head(n)
+
+
 def fmt_counts(df: pd.DataFrame) -> str:
     return "; ".join(f"{v} ({n:,})" for v, n in zip(df["val"], df["n"]))
 
@@ -153,8 +158,8 @@ def profile_table(con, layer: str, table: str, folder: str, schema: dict,
                               else (f"{len(allowed)} values" if allowed else ""),
             "allowed_source": allowed_src,
             "invalid_count": int(invalid["n"].sum()),
-            "invalid_values": fmt_counts(invalid.nlargest(TOP_N, "n")),
-            "top_values": fmt_counts(g.nlargest(TOP_N, "n").fillna({"val": "<null>"})),
+            "invalid_values": fmt_counts(top(invalid)),
+            "top_values": fmt_counts(top(g).fillna({"val": "<null>"})),
             "top_value_share_pct": round(notnull["n"].max() / (n_rows - n_null) * 100, 2)
                                    if n_rows > n_null else None,
         }

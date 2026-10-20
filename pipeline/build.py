@@ -112,6 +112,8 @@ def build_school_year(t: dict[str, pd.DataFrame]) -> pd.DataFrame:
 # --- District-year summary --------------------------------------------------
 
 def summarise(df: pd.DataFrame, by: list[str]) -> pd.DataFrame:
+    """Retired from the pipeline (P5): the SQL marts in sql/11_marts_district.sql replace it.
+    Kept as the reference implementation that tests/test_marts.py compares the marts with."""
     usable = df[df["flag_no_enrolment"] == 0]
     g = usable.groupby(by)
     out = pd.DataFrame({

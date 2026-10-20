@@ -18,6 +18,9 @@ QUARANTINE_DIR = ROOT / "data" / "quarantine"
 GOLD_DIR = ROOT / "data" / "gold"
 GOLD_DB = GOLD_DIR / "udise.duckdb"
 GOLD_PARQUET_DIR = GOLD_DIR / "parquet"
+# District-level marts as CSV for Tableau / Excel (aggregates: fine to publish and committed).
+GOLD_EXPORTS_DIR = GOLD_DIR / "exports"
+SOURCE_NOTE = "Source: UDISE+, Ministry of Education, Government of India"
 # Bronze keeps its own state (checksum of each source zip) next to the data, so
 # deleting data/bronze/ also resets incremental loading.
 BRONZE_STATE = BRONZE_DIR / "_state.json"

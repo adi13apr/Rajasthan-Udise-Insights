@@ -15,7 +15,8 @@ def gold(tmp_path_factory):
     write_sample_raw(d / "raw", "2025-26", PROFILE_ROWS_NEXT)
     load_bronze(d / "raw", d / "bronze", run_id="r1")
     build_silver(d / "bronze", d / "silver", d / "quarantine", run_id="r1")
-    summary = build_gold(d / "silver", d / "gold" / "udise.duckdb", d / "gold" / "parquet")
+    summary = build_gold(d / "silver", d / "gold" / "udise.duckdb", d / "gold" / "parquet",
+                         d / "gold" / "exports")
     con = duckdb.connect(str(d / "gold" / "udise.duckdb"), read_only=True)
     yield summary, con, d
     con.close()
@@ -49,7 +50,7 @@ def test_facts_point_to_the_version_valid_that_year(gold):
 
 def test_surrogate_keys_are_deterministic(gold, tmp_path):
     _, con, d = gold
-    again = build_gold(d / "silver", tmp_path / "udise.duckdb", tmp_path / "parquet")
+    again = build_gold(d / "silver", tmp_path / "udise.duckdb", tmp_path / "parquet", tmp_path / "exports")
     con2 = duckdb.connect(str(tmp_path / "udise.duckdb"), read_only=True)
     q = "select school_key, pseudocode, version from dim_school order by school_key"
     assert con.execute(q).fetchall() == con2.execute(q).fetchall()
@@ -60,6 +61,13 @@ def test_surrogate_keys_are_deterministic(gold, tmp_path):
 def test_unknown_management_gets_key_0(gold):
     _, con, _ = gold
     assert con.execute("select management_key from dim_school where pseudocode = 104").fetchall() == [(0,)]
+
+
+def test_only_district_marts_exported_as_csv(gold):
+    summary, _, d = gold
+    csvs = sorted(p.name for p in (d / "gold" / "exports").glob("*.csv"))
+    assert csvs == ["mart_district_year.csv", "mart_district_year_management.csv"]
+    assert "UDISE+" in (d / "gold" / "exports" / "README.md").read_text(encoding="utf-8")
 
 
 def test_parquet_exports(gold):
