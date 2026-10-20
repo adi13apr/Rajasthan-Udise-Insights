@@ -55,7 +55,8 @@ select
     sf.has_computer,
     -- Infrastructure index: share of 8 basic facilities present (0-100), over the facilities
     -- reported. Playground left out (reporting change, DATA_QUALITY_LOG #17).
-    round(100.0 * (coalesce(sf.has_electricity, 0) + coalesce(sf.has_safe_water, 0)
+    -- Stored as an exact decimal so district averages do not depend on summation order.
+    cast(round(100.0 * (coalesce(sf.has_electricity, 0) + coalesce(sf.has_safe_water, 0)
                    + coalesce(sf.has_girls_toilet, 0) + coalesce(sf.has_handwash, 0)
                    + coalesce(sf.has_library, 0) + coalesce(sf.has_ramp, 0)
                    + coalesce(sf.has_internet, 0) + coalesce(sf.has_computer, 0))
@@ -63,7 +64,7 @@ select
                    + (sf.has_girls_toilet is not null)::int + (sf.has_handwash is not null)::int
                    + (sf.has_library is not null)::int + (sf.has_ramp is not null)::int
                    + (sf.has_internet is not null)::int + (sf.has_computer is not null)::int, 0),
-          1) as infra_index
+          1) as decimal(4, 1)) as infra_index
 from fact_school_facilities sf
 join dim_year y        using (year_key)
 join dim_school s      using (school_key)

@@ -102,6 +102,7 @@ def build_gold(silver_dir: Path = C.SILVER_DIR, gold_path: Path = C.GOLD_DB,
     tmp = gold_path.with_name(gold_path.stem + ".building.duckdb")
     tmp.unlink(missing_ok=True)
     con = duckdb.connect(str(tmp))
+    con.execute("set enable_progress_bar = false")
     try:
         attach_sources(con, silver_dir)
         timings = {}

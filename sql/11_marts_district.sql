@@ -25,7 +25,9 @@ with sums as (
         sum(enr_st)                                      as enr_st,
         sum(total_tch)                                   as teachers,
         avg(single_teacher) * 100                        as pct_single_teacher,
-        avg(infra_index)                                 as avg_infra_index,
+        -- exact decimal sum, then one division: same result on every run (avg() over doubles
+        -- in parallel can differ in the last bit and flip a .xxx5 rounding)
+        sum(infra_index)::double / count(infra_index)    as avg_infra_index,
         avg(has_electricity) * 100  as pct_has_electricity,
         avg(has_safe_water) * 100   as pct_has_safe_water,
         avg(has_girls_toilet) * 100 as pct_has_girls_toilet,

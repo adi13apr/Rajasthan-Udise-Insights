@@ -1,9 +1,9 @@
 {
-  "run_id": "20261020T183435Z",
-  "started_at": "2026-10-20T18:34:35+00:00",
+  "run_id": "20261020T183735Z",
+  "started_at": "2026-10-20T18:37:35+00:00",
   "stages": {
     "bronze": {
-      "seconds": 0.15,
+      "seconds": 0.14,
       "files_total": 94,
       "files_loaded": 0,
       "files_skipped": 94,
@@ -1346,7 +1346,7 @@
       ]
     },
     "silver": {
-      "seconds": 14.77,
+      "seconds": 29.71,
       "tables": {
         "schools": {
           "source": "profile1",
@@ -1433,7 +1433,11 @@
         }
       },
       "reconciled": {
-        "teacher": {
+        "profile1": {
+          "bronze": 217267,
+          "silver_plus_quarantine": 217267
+        },
+        "facility": {
           "bronze": 217267,
           "silver_plus_quarantine": 217267
         },
@@ -1441,18 +1445,14 @@
           "bronze": 1068886,
           "silver_plus_quarantine": 1068886
         },
-        "facility": {
-          "bronze": 217267,
-          "silver_plus_quarantine": 217267
-        },
-        "profile1": {
+        "teacher": {
           "bronze": 217267,
           "silver_plus_quarantine": 217267
         }
       }
     },
     "gold": {
-      "seconds": 5.48,
+      "seconds": 8.48,
       "tables": {
         "dim_district": 41,
         "dim_gender": 3,
@@ -1469,16 +1469,16 @@
         "mart_district_year_management": 330
       },
       "sql_seconds": {
-        "01_dim_year.sql": 0.011,
-        "02_dim_district.sql": 0.013,
-        "03_dim_management.sql": 0.003,
-        "04_dim_lookups.sql": 0.004,
-        "05_dim_school.sql": 0.422,
-        "06_fact_enrolment.sql": 1.422,
-        "07_fact_teachers.sql": 0.258,
-        "08_fact_school_facilities.sql": 0.222,
-        "10_int_school_year.sql": 0.897,
-        "11_marts_district.sql": 0.341
+        "01_dim_year.sql": 0.016,
+        "02_dim_district.sql": 0.017,
+        "03_dim_management.sql": 0.006,
+        "04_dim_lookups.sql": 0.007,
+        "05_dim_school.sql": 0.564,
+        "06_fact_enrolment.sql": 2.178,
+        "07_fact_teachers.sql": 0.577,
+        "08_fact_school_facilities.sql": 0.445,
+        "10_int_school_year.sql": 1.743,
+        "11_marts_district.sql": 0.564
       },
       "tests": [
         {
@@ -1673,10 +1673,10 @@
       "indicators_checked": 8,
       "exact_matches": 8,
       "max_abs_pct_difference": 0.0,
-      "seconds": 0.11
+      "seconds": 0.19
     },
     "profile": {
-      "seconds": 10.75,
+      "seconds": 15.2,
       "columns_with_problems": {
         "bronze__enrolment1": 1,
         "bronze__facility": 6,
@@ -1728,7 +1728,7 @@
       }
     },
     "build": {
-      "seconds": 12.87,
+      "seconds": 16.88,
       "rows_loaded": {
         "profile1": 212747,
         "enrolment1": 1068886,
@@ -1743,5 +1743,5 @@
     "facilities: 4,520 rows quarantined (duplicate_school_year: 4,520) -> data/quarantine/facilities.parquet",
     "teachers: 4,520 rows quarantined (duplicate_school_year: 4,520) -> data/quarantine/teachers.parquet"
   ],
-  "finished_at": "2026-10-20T18:35:19+00:00"
+  "finished_at": "2026-10-20T18:38:45+00:00"
 }
