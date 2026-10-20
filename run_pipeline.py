@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pipeline import config as C
 from pipeline.bronze import load_bronze, new_run_id, summarise_bronze
 from pipeline.gold import build_gold
+from pipeline.validation import validate
 from pipeline.build import build_school_year
 from pipeline.checks import run_checks
 from pipeline.profiling import bronze_tables, profile_layer, write_readme
@@ -54,7 +55,11 @@ def main():
     gold = build_gold()
     manifest["stages"]["gold"] = {"seconds": round(time.perf_counter() - t0, 2), **gold}
 
-    # Stage 4: profiling of bronze and silver (per-column statistics and invalid codes)
+    # Stage 4: validation of gold against official published figures
+    t0 = time.perf_counter()
+    manifest["stages"]["validation"] = {**validate(), "seconds": round(time.perf_counter() - t0, 2)}
+
+    # Stage 5: profiling of bronze and silver (per-column statistics and invalid codes)
     t0 = time.perf_counter()
     profiles = {"bronze": profile_layer("bronze", bronze_tables()),
                 "silver": profile_layer("silver", silver_tables(),
@@ -68,7 +73,7 @@ def main():
             for layer, res in profiles.items() for table, r in res.items() if "duplicate_rows" in r["checks"]},
     }
 
-    # Stage 5: QA report (pandas school-year table from silver). District summaries now come
+    # Stage 6: QA report (pandas school-year table from silver). District summaries now come
     # from the SQL marts in gold (data/gold/exports/); the pandas summary is retired (see README).
     t0 = time.perf_counter()
     tables = tables_for_build()
@@ -97,6 +102,9 @@ def main():
     g = manifest["stages"]["gold"]
     print(f"Gold: {len(g['tables'])} tables in {C.GOLD_DB.name}, {g['tests_passed']} data tests passed, "
           f"{g['dim_school']['schools_changing_district']} schools changed district (SCD2), {g['seconds']} s")
+    v = manifest["stages"]["validation"]
+    print(f"Validation: {v['exact_matches']} of {v['indicators_checked']} official indicators match exactly "
+          f"-> {C.REPORTS_DIR / 'validation.md'}")
     pr = manifest["stages"]["profile"]
     print(f"Profiling: {len(pr['columns_with_problems'])} tables, "
           f"{sum(pr['columns_with_problems'].values())} column-years with problems, {pr['seconds']} s "

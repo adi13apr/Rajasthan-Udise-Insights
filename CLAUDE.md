@@ -123,6 +123,8 @@ then the Sattva analysis (phases A1-A6).
   `sql/11_marts_district.sql` (`mart_district_year`, `mart_district_year_management`, one
   GROUPING SETS query). Exported to `data/gold/exports/*.csv` (committed). They replace the
   pandas `summarise()` (kept only as the test reference); old outputs frozen in `tests/regression/`.
+- `pipeline/validation.py` + `sql/validation/` (P6): official indicators from gold vs
+  `reference/official_totals.json` -> `reports/validation.md/.csv`. 8/8 exact for 2024-25.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

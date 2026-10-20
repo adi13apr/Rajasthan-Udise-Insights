@@ -1,0 +1,19 @@
+year,indicator,official,ours,difference,pct_difference,result
+2024-25,enrolment,16364187.0,16364187.0,0.0,0.0,exact match
+2024-25,enrolment_classes_1_12,,15340387.0,,,no official figure
+2024-25,govt_enrolment,7782390.0,7782390.0,0.0,0.0,exact match
+2024-25,govt_schools,70155.0,70155.0,0.0,0.0,exact match
+2024-25,govt_teachers,445073.0,445073.0,0.0,0.0,exact match
+2024-25,schools,106302.0,106302.0,0.0,0.0,exact match
+2024-25,single_teacher_schools,6117.0,6117.0,0.0,0.0,exact match
+2024-25,teachers,792265.0,792265.0,0.0,0.0,exact match
+2024-25,zero_enrolment_schools,215.0,215.0,0.0,0.0,exact match
+2025-26,enrolment,,15945455.0,,,no official figure
+2025-26,enrolment_classes_1_12,,14954579.0,,,no official figure
+2025-26,govt_enrolment,,7449532.0,,,no official figure
+2025-26,govt_schools,,69983.0,,,no official figure
+2025-26,govt_teachers,,441070.0,,,no official figure
+2025-26,schools,,106445.0,,,no official figure
+2025-26,single_teacher_schools,,7200.0,,,no official figure
+2025-26,teachers,,793158.0,,,no official figure
+2025-26,zero_enrolment_schools,,140.0,,,no official figure

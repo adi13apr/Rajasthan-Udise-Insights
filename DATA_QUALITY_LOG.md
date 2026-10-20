@@ -20,7 +20,7 @@ Schemas: `docs/DSP_Schema_2024-25.pdf`, `docs/DSP_Schema_2025-26.pdf`.
 
 ## Validation against published figures
 
-All 2024-25 checks below are run automatically in `reports/qa_report.md`.
+All 2024-25 checks below are run automatically twice, by independent routes: in pandas from silver (`reports/qa_report.md`) and in SQL from the gold star schema (`reports/validation.md`, P6). Both give an exact match on all 8 published indicators.
 
 | # | Check | Official | Pipeline | Result |
 |---|---|---|---|---|

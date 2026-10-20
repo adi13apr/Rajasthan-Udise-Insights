@@ -37,6 +37,7 @@ Outputs:
   `sql/tests/`), also exported to `data/gold/parquet/`. Not committed.
 - `reports/profiling/`: per-column profile of every table (`<layer>__<table>.csv`) and a
   `README.md` listing only the columns with problems (invalid codes, schema differences, ...)
+- `reports/validation.md` / `.csv`: gold vs official UDISE+ figures (official, ours, difference, %)
 - `reports/run_manifest.json`: what the last run did (files loaded/skipped with
   SHA-256 checksums, rows per dataset and year, timings per stage)
 - `data/gold/exports/mart_district_year.csv` and `mart_district_year_management.csv`: district
@@ -62,6 +63,7 @@ pipeline/
   rules.py    data quality rules (errors quarantine, warnings flag)
   profiling.py  column profiles and invalid-code checks for each layer
   gold.py     runs sql/*.sql into DuckDB, runs sql/tests/, exports Parquet
+  validation.py  gold vs official figures (SQL in sql/validation/)
   build.py    school-year table + district summaries (reads silver)
   checks.py   automated data quality report
 reference/            lookup data as JSON: districts, management codes, official totals,
