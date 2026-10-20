@@ -56,6 +56,7 @@ python scripts/benchmark.py            # raw CSV vs bronze vs gold timings -> re
 python scripts/make_data_dictionary.py # docs/data_dictionary.md from the gold database
 python -m pipeline.rules               # docs/quality_rules.md from pipeline/rules.py
 python -m analysis.run                 # analysis: figures, tables, Tableau CSVs, Excel workbook
+python scripts/make_brief_pdf.py       # docs/policy_brief.md -> two-page PDF (uses Microsoft Edge)
 ```
 
 The real data is not in this repository (see below). To run on it, download the files from the
@@ -80,6 +81,9 @@ synthetic files; CI does exactly that on every push.
 | `data/bronze/`, `data/silver/`, `data/quarantine/`, `data/gold/udise.duckdb`, `data/gold/parquet/` | the data layers | no (school-level) |
 
 ## Documentation
+
+- **`docs/policy_brief.pdf`** (source: `policy_brief.md`): two-page brief for funders and NGOs,
+  three findings with charts. `docs/resume_bullets.md`: project bullets with real numbers.
 
 - `docs/design_decisions.md`: why ELT, a star schema, Parquet by year, DuckDB, SCD2,
   synthetic data in CI, and how the management codes were validated.

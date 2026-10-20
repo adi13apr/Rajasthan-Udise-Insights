@@ -17,3 +17,4 @@ statsmodels==0.15.0
 patsy==1.0.3
 openpyxl==3.1.5
 # To re-execute the notebook: pip install nbconvert==7.16.6 ipykernel==6.30.0
+# To render the brief PDF: pip install markdown==3.9 pypdf==6.6.0 (and Microsoft Edge)

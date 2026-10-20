@@ -142,6 +142,9 @@ then the Sattva analysis (phases A1-A6).
   district FE, SE clustered by district; charts.py matplotlib with the dataviz reference palette;
   run.py builds `reports/figures/*.png`, `reports/analysis/*.csv`, `numbers.json`).
   `notebooks/analysis.ipynb` calls them (re-execute with nbconvert). School-level rows stay in memory.
+- A5/A6: `analysis/exports.py` (Tableau CSVs in data/gold/exports, `excel/` workbook);
+  `docs/policy_brief.md` -> `docs/policy_brief.pdf` via `scripts/make_brief_pdf.py` (headless Edge,
+  must be 2 pages); `docs/resume_bullets.md`. Brief claims were checked against the data.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

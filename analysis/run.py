@@ -62,6 +62,10 @@ def build() -> dict:
     matched.round(3).to_csv(TABLE_DIR / "a4_single_teacher_change_matched.csv", index=False)
     Ch.change_bars(matched, D.WESTERN_DESERT, state_change, Ch.FIG_DIR / "a4_single_teacher_change.png")
 
+    # Compact versions for the two-page policy brief
+    Ch.progression_scatter(dy, Ch.FIG_DIR / "brief_patterns.png", height=4.3)
+    Ch.change_bars(matched, D.WESTERN_DESERT, state_change, Ch.FIG_DIR / "brief_desert.png", top=12)
+
     desert = matched[matched["district"].isin(D.WESTERN_DESERT)]
     numbers = {
         "state_2025_26": {k: round(float(v), 3) for k, v in state.items()},

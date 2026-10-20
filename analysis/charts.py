@@ -75,10 +75,10 @@ def ranking(df: pd.DataFrame, value: str, title: str, subtitle: str, path: Path,
     return _finish(fig, title, subtitle, path, label_above=True)
 
 
-def progression_scatter(df: pd.DataFrame, path: Path) -> Path:
+def progression_scatter(df: pd.DataFrame, path: Path, height: float = 5.6) -> Path:
     """Boys' vs girls' progression ratio by district; the line marks equal progression."""
     groups = {"girls leaving": ORANGE, "boys moving in": BLUE, "boys leaving (tribal south)": AQUA}
-    fig, ax = _axes(5.6)
+    fig, ax = _axes(height)
     lo, hi = 0.45, 1.55
     ax.plot([lo, hi], [lo, hi], color=AXIS, lw=1, zorder=1)
     ax.text(1.13, 1.16, "equal for girls and boys", rotation=33, color=MUTED, fontsize=7.5)
@@ -149,10 +149,14 @@ def coefficients(table: pd.DataFrame, facts: dict, path: Path) -> Path:
                    note="Association, not cause. OLS with district fixed effects, errors clustered by district.")
 
 
-def change_bars(df: pd.DataFrame, highlight: list[str], state_change: float, path: Path) -> Path:
-    """Change in % single-teacher schools among matched schools, by district."""
+def change_bars(df: pd.DataFrame, highlight: list[str], state_change: float, path: Path,
+                top: int | None = None) -> Path:
+    """Change in % single-teacher schools among matched schools, by district (all, or the top n)."""
     d = df.sort_values("change_pp")
-    fig, ax = _axes(8.6)
+    total_schools = int(d["schools_2025"].sum())
+    if top:
+        d = d.tail(top)
+    fig, ax = _axes(8.6 if not top else 1.4 + 0.2 * top)
     colors = [ORANGE if x in highlight else CONTEXT for x in d["district"]]
     ax.barh(d["district"].str.title(), d["change_pp"], height=0.62, color=colors)
     for y, (name, v) in enumerate(zip(d["district"], d["change_pp"])):
@@ -167,5 +171,7 @@ def change_bars(df: pd.DataFrame, highlight: list[str], state_change: float, pat
     ax.tick_params(axis="y", labelsize=7.5)
     ax.set_xlabel("Change in single-teacher schools, 2024-25 to 2025-26 (percentage points)")
     return _finish(fig, "Single-teacher schools rose fastest in the western desert",
-                   f"Same schools in both years ({int(d['schools_2025'].sum()):,}), each counted in its "
-                   "2025-26 district. Western desert districts in orange.", path, label_above=True)
+                   f"Same schools in both years ({total_schools:,}), each counted in its "
+                   "2025-26 district. Western desert districts in orange."
+                   + (f" The {top} of 41 districts with the largest rise." if top else ""),
+                   path, label_above=True)
