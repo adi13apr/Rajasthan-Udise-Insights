@@ -141,12 +141,19 @@ def summarise(df: pd.DataFrame, by: list[str]) -> pd.DataFrame:
         "schools": g.size(),
         "enrolment": g["enr_total"].sum(),
         "girls_share": g["enr_girls"].sum() / g["enr_total"].sum(),
+        "girls_share_primary": g["enr_primary_g"].sum() / g["enr_primary"].sum(),
         "girls_share_sec_plus": g["enr_secondary_plus_girls"].sum() / g["enr_secondary_plus"].sum(),
+        "st_share": g["enr_st"].sum() / g["enr_total"].sum(),
+        "sc_share": g["enr_sc"].sum() / g["enr_total"].sum(),
         "teachers": g["total_tch"].sum(),
         "ptr": g["enr_total"].sum() / g["total_tch"].sum(),
         "pct_single_teacher": g["single_teacher"].mean() * 100,
         "avg_infra_index": g["infra_index"].mean(),
     })
+    # Girls' share at secondary+ minus their share at primary. This cancels out
+    # differences in the child sex ratio between districts: negative = girls
+    # drop out more than boys after class 8; positive = boys leave more.
+    out["girls_retention_gap"] = out["girls_share_sec_plus"] - out["girls_share_primary"]
     for col in [c for c in df.columns if c.startswith("has_")]:
         out[f"pct_{col}"] = g[col].mean() * 100
     return out.round(3).reset_index()

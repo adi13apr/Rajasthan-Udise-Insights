@@ -108,6 +108,55 @@ def run_checks(t: dict[str, pd.DataFrame], school: pd.DataFrame, warnings: list[
     lines.append(by_year[["flag_no_enrolment", "flag_no_teachers_with_students", "flag_high_ptr"]]
                  .sum().to_markdown())
 
+    section("Validation against official UDISE+ totals")
+    lines.append("Differences under ~1% are expected (definitions, rounding, late corrections).")
+    lines.append("")
+    rows = []
+    gov = school["management_group"].isin(["State Government", "Central Government"])
+    for yr, off in C.OFFICIAL.items():
+        s_ = school[school["year"] == yr]
+        if s_.empty:
+            continue
+        ours = {
+            "schools": len(s_),
+            "enrolment": s_["enr_total"].sum(),
+            "teachers": s_["total_tch"].sum(),
+            "zero_enrolment_schools": int(s_["flag_no_enrolment"].sum()),
+            "single_teacher_schools": int(s_["single_teacher"].sum()),
+            "govt_schools": int(gov[s_.index].sum()),
+            "govt_enrolment": s_.loc[gov[s_.index], "enr_total"].sum(),
+            "govt_teachers": s_.loc[gov[s_.index], "total_tch"].sum(),
+        }
+        for k, v in off.items():
+            o = ours[k]
+            rows.append({"year": yr, "indicator": k, "official": v, "ours": int(o),
+                         "diff_%": round((o - v) / v * 100, 2)})
+        rows.append({"year": yr, "indicator": "enrolment incl. pre-primary", "official": off["enrolment"],
+                     "ours": int(s_["enr_total"].sum() + s_["enr_pre_primary"].sum()),
+                     "diff_%": round((s_["enr_total"].sum() + s_["enr_pre_primary"].sum()
+                                      - off["enrolment"]) / off["enrolment"] * 100, 2)})
+    lines.append(pd.DataFrame(rows).to_markdown(index=False) if rows else "- no official figures for these years")
+    lines.append("")
+    lines.append("Schools, enrolment and teachers by management code (to check the management mapping):")
+    lines.append("")
+    lines.append(school.pivot_table(index=["managment", "management_group"], columns="year",
+                                    values=["pseudocode", "enr_total", "total_tch"],
+                                    aggfunc={"pseudocode": "count", "enr_total": "sum", "total_tch": "sum"})
+                 .rename(columns={"pseudocode": "schools"}).to_markdown())
+
+    section("Schools that moved to a different district between years")
+    yrs = sorted(school["year"].unique())
+    for a, b in zip(yrs, yrs[1:]):
+        m = (school.loc[school["year"] == a, ["pseudocode", "district"]]
+             .merge(school.loc[school["year"] == b, ["pseudocode", "district"]],
+                    on="pseudocode", suffixes=(f"_{a}", f"_{b}")))
+        moved = m[m[f"district_{a}"] != m[f"district_{b}"]]
+        lines.append(f"- {a} -> {b}: {len(moved):,} schools changed district")
+        if len(moved):
+            lines.append("")
+            lines.append(moved.groupby([f"district_{a}", f"district_{b}"]).size()
+                         .rename("schools").sort_values(ascending=False).to_markdown())
+
     section("Schools present in only one year")
     yrs = sorted(school["year"].unique())
     for a, b in zip(yrs, yrs[1:]):

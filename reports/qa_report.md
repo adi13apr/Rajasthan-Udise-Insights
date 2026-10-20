@@ -193,6 +193,56 @@ Use this to spot districts missing in a year, or districts created/abolished bet
 | 2024-25 |                 329 |                              268 |            1224 |
 | 2025-26 |                 278 |                              366 |            1165 |
 
+## Validation against official UDISE+ totals
+
+Differences under ~1% are expected (definitions, rounding, late corrections).
+
+| year    | indicator                   |   official |     ours |   diff_% |
+|:--------|:----------------------------|-----------:|---------:|---------:|
+| 2024-25 | schools                     |     106302 |   106302 |     0    |
+| 2024-25 | enrolment                   |   16364187 | 15340387 |    -6.26 |
+| 2024-25 | teachers                    |     792265 |   792265 |     0    |
+| 2024-25 | zero_enrolment_schools      |        215 |      329 |    53.02 |
+| 2024-25 | single_teacher_schools      |       6117 |     6117 |     0    |
+| 2024-25 | govt_schools                |      70155 |    70148 |    -0.01 |
+| 2024-25 | govt_enrolment              |    7782390 |  7736803 |    -0.59 |
+| 2024-25 | govt_teachers               |     445073 |   444903 |    -0.04 |
+| 2024-25 | enrolment incl. pre-primary |   16364187 | 16364187 |     0    |
+
+Schools, enrolment and teachers by management code (to check the management mapping):
+
+|                             |   ('enr_total', '2024-25') |   ('enr_total', '2025-26') |   ('schools', '2024-25') |   ('schools', '2025-26') |   ('total_tch', '2024-25') |   ('total_tch', '2025-26') |
+|:----------------------------|---------------------------:|---------------------------:|-------------------------:|-------------------------:|---------------------------:|---------------------------:|
+| (1, 'State Government')     |                6.70379e+06 |                6.40889e+06 |                    38973 |                    38981 |                     375720 |                     373669 |
+| (2, 'State Government')     |            91680           |            88327           |                     3055 |                     3051 |                       4809 |                       4831 |
+| (3, 'State Government')     |           844508           |           797700           |                    27941 |                    27766 |                      60278 |                      58139 |
+| (5, 'Private Unaided')      |                7.47222e+06 |                7.43925e+06 |                    33548 |                    33903 |                     339793 |                     344762 |
+| (6, 'State Government')     |             3355           |             3551           |                       33 |                       33 |                        179 |                        174 |
+| (90, 'State Government')    |             7652           |             8224           |                       34 |                       30 |                        326 |                        299 |
+| (92, 'Central Government')  |            68112           |            70469           |                       77 |                       79 |                       2697 |                       2823 |
+| (93, 'Central Government')  |            17706           |            18838           |                       35 |                       35 |                        894 |                        922 |
+| (94, 'Other / Unverified')  |             1665           |             1623           |                        4 |                        4 |                         77 |                         86 |
+| (95, 'Other / Unverified')  |              405           |              369           |                        2 |                        2 |                         36 |                         34 |
+| (97, 'Other / Unverified')  |           126964           |           114819           |                     2573 |                     2533 |                       7323 |                       7258 |
+| (98, 'Other / Unverified')  |             1638           |             1203           |                       26 |                       26 |                         76 |                         68 |
+| (101, 'Other / Unverified') |              689           |             1317           |                        1 |                        2 |                         57 |                         93 |
+
+## Schools that moved to a different district between years
+
+- 2024-25 -> 2025-26: 189 schools changed district
+
+|                                |   schools |
+|:-------------------------------|----------:|
+| ('ALWAR', 'KOTPUTLI-BEHROR')   |       180 |
+| ('JAISALMER', 'PHALODI')       |         2 |
+| ('BALOTRA', 'BARMER')          |         1 |
+| ('BEAWAR', 'AJMER')            |         1 |
+| ('BARMER', 'BALOTRA')          |         1 |
+| ('DIDWANA-KUCHAMAN', 'NAGAUR') |         1 |
+| ('JAIPUR', 'KOTPUTLI-BEHROR')  |         1 |
+| ('KHAIRTHAL-TIJARA', 'ALWAR')  |         1 |
+| ('KOTPUTLI-BEHROR', 'JAIPUR')  |         1 |
+
 ## Schools present in only one year
 
 - 2024-25 -> 2025-26: 105418 in both, 884 only in 2024-25, 1027 only in 2025-26

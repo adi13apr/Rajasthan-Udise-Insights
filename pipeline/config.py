@@ -84,5 +84,20 @@ SAFE_WATER_COLS = [
     "othsrc_fun_yn", "pack_water_fun_yn",
 ]
 
+# Published state totals used to validate the pipeline (UDISE+ 2024-25 report,
+# Table 2.2, and Lok Sabha/Rajya Sabha answers citing UDISE+ for govt schools).
+OFFICIAL = {
+    "2024-25": {
+        "schools": 106_302,
+        "enrolment": 16_364_187,
+        "teachers": 792_265,
+        "zero_enrolment_schools": 215,
+        "single_teacher_schools": 6_117,
+        "govt_schools": 70_155,
+        "govt_enrolment": 7_782_390,
+        "govt_teachers": 445_073,
+    },
+}
+
 # Pupil-teacher ratio above this is flagged (RTE norm is 30:1 at primary).
 PTR_FLAG = 60
