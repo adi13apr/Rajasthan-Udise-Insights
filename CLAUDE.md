@@ -125,6 +125,10 @@ then the Sattva analysis (phases A1-A6).
   pandas `summarise()` (kept only as the test reference); old outputs frozen in `tests/regression/`.
 - `pipeline/validation.py` + `sql/validation/` (P6): official indicators from gold vs
   `reference/official_totals.json` -> `reports/validation.md/.csv`. 8/8 exact for 2024-25.
+- `scripts/benchmark.py` (P7): Kota enrolment by grade x gender 2025-26 on raw CSV (extracted
+  to data/tmp), bronze (with/without partition filter) and gold; checks all answers are equal
+  first. `reports/benchmark.md/.json`. Lesson: multi-year Parquet must be read with
+  `union_by_name = true` (else the first file's columns are used and 2025-26-only columns vanish).
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

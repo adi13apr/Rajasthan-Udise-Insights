@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-10-20T18:44:11+00:00",
+  "machine": {
+    "cpu": "12th Gen Intel(R) Core(TM) i5-1240P",
+    "logical_cores": 16,
+    "ram_gb": 15.7,
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.13.0",
+    "duckdb": "1.5.6",
+    "duckdb_threads": 16
+  },
+  "query": "KOTA enrolment by grade and gender, 2025-26",
+  "result_rows": 27,
+  "result_total_students": 456300,
+  "cold_runs": 5,
+  "warm_runs": 10,
+  "results": {
+    "1. raw CSV (read_csv_auto)": {
+      "cold_median_ms": 885.4,
+      "cold_min_ms": 852.9,
+      "warm_median_ms": 875.1,
+      "warm_min_ms": 845.3
+    },
+    "2. bronze Parquet, no partition pruning": {
+      "cold_median_ms": 136.6,
+      "cold_min_ms": 134.1,
+      "warm_median_ms": 187.2,
+      "warm_min_ms": 151.8
+    },
+    "3. bronze Parquet, partition pruning (year=)": {
+      "cold_median_ms": 199.3,
+      "cold_min_ms": 176.6,
+      "warm_median_ms": 222.1,
+      "warm_min_ms": 201.7
+    },
+    "4. gold star schema": {
+      "cold_median_ms": 26.7,
+      "cold_min_ms": 19.5,
+      "warm_median_ms": 15.1,
+      "warm_min_ms": 12.1
+    }
+  },
+  "data_read": {
+    "1": "67.9 MB of CSV (2025-26 profile + enrolment)",
+    "2": "21.9 MB of Parquet (both years)",
+    "3": "11.2 MB of Parquet in the 2025-26 partition",
+    "4": "33.8 MB DuckDB file (all gold tables)"
+  },
+  "bronze_scans": {
+    "only the year=2025-26 folder (path points at the partition)": {
+      "cold_median_ms": 13.7,
+      "p25_ms": 12.6,
+      "p75_ms": 15.3,
+      "rows": 533892
+    },
+    "all files, filter on the _year column inside the files": {
+      "cold_median_ms": 22.1,
+      "p25_ms": 19.7,
+      "p75_ms": 23.4,
+      "rows": 533892
+    },
+    "all files, partition filter year = (no union_by_name: loses columns)": {
+      "cold_median_ms": 13.5,
+      "p25_ms": 9.9,
+      "p75_ms": 15.0,
+      "rows": 533892
+    },
+    "all files, partition filter year = + union_by_name": {
+      "cold_median_ms": 17.3,
+      "p25_ms": 15.1,
+      "p75_ms": 20.0,
+      "rows": 533892
+    }
+  }
+}

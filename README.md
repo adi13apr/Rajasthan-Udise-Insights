@@ -24,6 +24,7 @@ pip install -r requirements.txt
 python run_pipeline.py                 # incremental: unchanged zips are skipped
 python run_pipeline.py --full-refresh  # reload every zip into bronze
 python -m pytest                       # tests (synthetic data only)
+python scripts/benchmark.py            # raw CSV vs bronze vs gold timings -> reports/benchmark.md
 ```
 Outputs:
 - `data/bronze/<dataset>/year=<YYYY-YY>/*.parquet`: faithful Parquet copy of each raw
