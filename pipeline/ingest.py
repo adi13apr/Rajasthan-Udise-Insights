@@ -49,13 +49,21 @@ def discover(raw_dir: Path = RAW_DIR) -> tuple[list[RawFile], list[str]]:
     return files, warnings
 
 
-def read_zip_csv(path: Path) -> pd.DataFrame:
+def read_zip_csv(path: Path, as_text: bool = False) -> pd.DataFrame:
+    """Read the single CSV inside a zip without extracting it.
+
+    as_text=True keeps every value exactly as written in the file (no type
+    guessing; only empty cells become null). The bronze layer uses this.
+    """
     with zipfile.ZipFile(path) as z:
         csvs = [n for n in z.namelist() if n.lower().endswith(".csv")]
         if len(csvs) != 1:
             raise ValueError(f"{path.name}: expected 1 CSV inside, found {csvs}")
         with z.open(csvs[0]) as fh:
-            df = pd.read_csv(fh, low_memory=False)
+            if as_text:
+                df = pd.read_csv(fh, dtype=str, keep_default_na=False, na_values=[""])
+            else:
+                df = pd.read_csv(fh, low_memory=False)
     df.columns = [c.strip().lower() for c in df.columns]
     return df.rename(columns=COLUMN_RENAMES)
 

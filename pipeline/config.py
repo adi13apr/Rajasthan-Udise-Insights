@@ -5,6 +5,11 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW_DIR = ROOT / "data" / "raw"
 PROCESSED_DIR = ROOT / "data" / "processed"
 REPORTS_DIR = ROOT / "reports"
+BRONZE_DIR = ROOT / "data" / "bronze"
+# Bronze keeps its own state (checksum of each source zip) next to the data, so
+# deleting data/bronze/ also resets incremental loading.
+BRONZE_STATE = BRONZE_DIR / "_state.json"
+RUN_MANIFEST = REPORTS_DIR / "run_manifest.json"
 
 # Zip file-name prefix (as downloaded from microdata.udiseplus.gov.in) -> dataset key.
 # File names look like: facility_data_KOTA_2024-25.zip

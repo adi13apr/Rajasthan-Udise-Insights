@@ -19,11 +19,18 @@ teachers, and is that linked to girls staying in secondary school?
   (e.g. `data/raw/2024-25/facility_data_KOTA_2024-25.zip`). Do not unzip them.
 
 ## How to run
-```bash
+```powershell
 pip install -r requirements.txt
-python run_pipeline.py
+python run_pipeline.py                 # incremental: unchanged zips are skipped
+python run_pipeline.py --full-refresh  # reload every zip into bronze
+python -m pytest                       # tests (synthetic data only)
 ```
 Outputs:
+- `data/bronze/<dataset>/year=<YYYY-YY>/*.parquet`: faithful Parquet copy of each raw
+  zip (values as text, plus load metadata `_source_file`, `_source_row`,
+  `_district_file`, `_year`, `_ingested_at`, `_run_id`). Not committed.
+- `reports/run_manifest.json`: what the last run did (files loaded/skipped with
+  SHA-256 checksums, rows per dataset and year, timings per stage)
 - `data/processed/school_year.csv`: one row per school per year
 - `data/processed/district_year.csv`: district summaries
 - `data/processed/district_year_by_management.csv`: district summaries by management type
@@ -36,9 +43,11 @@ New districts or years need no code changes: drop the zips into `data/raw/<year>
 pipeline/
   config.py   paths, code mappings, indicator definitions
   ingest.py   finds raw zips, reads them in place, stacks years/districts
+  bronze.py   raw zips -> bronze Parquet (as-is, incremental by checksum)
   build.py    school-year table + district summaries
   checks.py   automated data quality report
 run_pipeline.py
+tests/                pytest, on synthetic data
 DATA_QUALITY_LOG.md   issues found and decisions taken
 docs/                 UDISE+ schema PDFs
 ```

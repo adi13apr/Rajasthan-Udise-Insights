@@ -87,6 +87,13 @@ then the Sattva analysis (phases A1-A6).
 - `pipeline/ingest.py`: finds zips, reads CSV inside each zip in place, parses
   dataset/district/year from the file name, stacks files, drops duplicate
   school-years with a warning (to change: quarantine instead).
+- `pipeline/bronze.py` (P1): each raw zip -> `data/bronze/<dataset>/year=<YYYY-YY>/
+  <stem>.parquet`, all values as text, plus `_source_file`, `_source_row`,
+  `_district_file`, `_year`, `_ingested_at`, `_run_id`. Incremental: SHA-256 per zip in
+  `data/bronze/_state.json`; unchanged zips are skipped (`--full-refresh` to reload).
+  Keeps duplicates. `build.py` still reads the raw zips until silver exists (P3).
+- `reports/run_manifest.json`: per-run record (files, checksums, rows, timings).
+- `tests/`: pytest on synthetic zips built in a temp folder.
 - `pipeline/build.py`: school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

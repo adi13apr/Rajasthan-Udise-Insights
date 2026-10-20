@@ -15,7 +15,7 @@ Schemas: `docs/DSP_Schema_2024-25.pdf`, `docs/DSP_Schema_2025-26.pdf`.
 | # | Issue | Evidence | Decision |
 |---|---|---|---|
 | 1 | No state-level enrolment file | The portal's "All districts" option works for profile, facility and teacher files, but returns "File Not Found" for Enrollment-1 in both years | Enrollment-1 downloaded for each of the 41 districts separately (`download_udise.py --by-district`); other files downloaded state-wide. The pipeline joins them on school code. |
-| 2 | Same schools in two files | Kota was downloaded on its own for testing and again inside the state files (4,520 duplicate rows) | Pipeline keeps one copy of each school-year and reports how many duplicates it dropped. |
+| 2 | Same schools in two files | Kota was downloaded on its own for testing and again inside the state files (4,520 duplicate rows) | Bronze keeps both copies (it is a faithful copy of the sources: 217,267 profile rows over both years, 4,520 of them extra copies of a school-year). The build step keeps one copy and reports how many it dropped; from P3 the extra copies go to quarantine with reason `duplicate_school_year`. |
 | 3 | District spelled differently across years | BALOTARA/BALOTRA, CHITTAURGARH/CHITTORGARH, DHAULPUR/DHOLPUR, JALOR/JALORE, PRATAPGARH (RAJ.)/PRATAPGARH | Mapped to one spelling (`DISTRICT_ALIASES` in `config.py`). Both years then have the same 41 districts. |
 
 ## Validation against published figures
