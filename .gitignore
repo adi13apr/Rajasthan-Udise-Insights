@@ -8,6 +8,7 @@ data/gold/*
 # ...except the district-level marts, which are fine to publish
 !data/gold/exports/
 data/quarantine/
+data/delta/
 data/tmp/
 *.duckdb
 *.duckdb.wal

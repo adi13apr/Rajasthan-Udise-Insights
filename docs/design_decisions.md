@@ -147,7 +147,18 @@ error rule. The same seed always gives byte-identical zips, so incremental loadi
 that each planted problem lands in quarantine under the right rule. CI runs pytest and the
 sample pipeline on every push.
 
-## 11. Reproducible outputs
+## 11. Lakehouse copy in Delta Lake (optional)
+
+`python run_pipeline.py --delta` also writes every silver table (partitioned by year) and every gold
+table as a Delta Lake table under `data/delta/`. Delta is Parquet plus a transaction log: each run
+commits a new version tagged with its run id, readers never see a half-written table, the schema is
+enforced, and earlier versions stay readable (time travel). The same tables can be read by Spark,
+Databricks, DuckDB or Polars, which is how this project would move to a lakehouse platform.
+On the full data the 18 tables take 4.7 s to write (about 69 MB per version; unreferenced files are
+vacuumed after 7 days). It is opt-in because DuckDB + Parquet already serve this project; MERGE-based
+incremental upserts would be the next step if loads became incremental.
+
+## 12. Reproducible outputs
 
 Re-running on the same data gives the same files: deterministic surrogate keys, top values
 ordered by count then value, exact decimals where averages are rounded. Committed reports

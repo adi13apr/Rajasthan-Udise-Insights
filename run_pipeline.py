@@ -5,6 +5,7 @@ Usage:  python run_pipeline.py                 (incremental: unchanged zips are 
         python run_pipeline.py --full-refresh  (reload every zip into bronze)
         python run_pipeline.py --sample        (synthetic data from scripts/make_sample_data.py;
                                                 all outputs under data/sample/, used by CI)
+        python run_pipeline.py --delta         (also write silver and gold as Delta Lake tables)
 """
 import argparse
 import json
@@ -19,6 +20,8 @@ def main():
                         help="reload every raw zip into bronze, even if unchanged")
     parser.add_argument("--sample", action="store_true",
                         help="run on synthetic sample data (outputs in data/sample/)")
+    parser.add_argument("--delta", action="store_true",
+                        help="also write silver and gold as Delta Lake tables (data/delta/)")
     args = parser.parse_args()
     if args.sample:
         os.environ["UDISE_SAMPLE"] = "1"  # must be set before pipeline.config is imported
@@ -68,6 +71,14 @@ def main():
     t0 = time.perf_counter()
     gold = build_gold()
     manifest["stages"]["gold"] = {"seconds": round(time.perf_counter() - t0, 2), **gold}
+
+    if args.delta:  # optional lakehouse copy (P10)
+        from pipeline.lakehouse import DELTA_DIR, write_lakehouse
+        t0 = time.perf_counter()
+        manifest["stages"]["lakehouse"] = {**write_lakehouse(run_id=run_id),
+                                           "seconds": round(time.perf_counter() - t0, 2)}
+        print(f"Lakehouse: {sum(len(v) for k, v in manifest['stages']['lakehouse'].items() if k != 'seconds')} "
+              f"Delta tables in {DELTA_DIR}, {manifest['stages']['lakehouse']['seconds']} s")
 
     # Stage 4: validation of gold against official published figures
     t0 = time.perf_counter()

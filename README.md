@@ -51,6 +51,7 @@ pip install -r requirements.txt
 python run_pipeline.py                 # whole pipeline; unchanged zips are skipped in bronze
 python run_pipeline.py --full-refresh  # reload every zip into bronze
 python run_pipeline.py --sample        # whole pipeline on synthetic data (outputs in data/sample/)
+python run_pipeline.py --delta         # also write silver and gold as Delta Lake tables (data/delta/)
 python -m pytest                       # tests (synthetic data; real-data checks run only if gold exists)
 python scripts/benchmark.py            # raw CSV vs bronze vs gold timings -> reports/benchmark.md
 python scripts/make_data_dictionary.py # docs/data_dictionary.md from the gold database

@@ -145,6 +145,8 @@ then the Sattva analysis (phases A1-A6).
 - A5/A6: `analysis/exports.py` (Tableau CSVs in data/gold/exports, `excel/` workbook);
   `docs/policy_brief.md` -> `docs/policy_brief.pdf` via `scripts/make_brief_pdf.py` (headless Edge,
   must be 2 pages); `docs/resume_bullets.md`. Brief claims were checked against the data.
+- P10: `pipeline/lakehouse.py`, `--delta`: silver (by year) and gold as Delta tables in `data/delta/`,
+  one version per run (run id in history), row counts checked, vacuum after 7 days. Opt-in.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).
