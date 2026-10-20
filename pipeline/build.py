@@ -112,7 +112,8 @@ def build_school_year(t: dict[str, pd.DataFrame]) -> pd.DataFrame:
     prof["block_clean"] = prof["block"].where(~prof["block_is_admin_region"])
     prof["location"] = prof["rural_urban"].map(C.RURAL_URBAN)
     prof["school_type_label"] = prof["school_type"].map(C.SCHOOL_TYPE)
-    prof["management_group"] = prof["managment"].map(C.MANAGEMENT_GROUP).fillna("Other / Unverified")
+    prof["management_group"] = prof["managment"].map(C.MANAGEMENT_GROUP).fillna("Unmapped")
+    prof["is_govt"] = prof["management_group"].isin(C.GOVT_GROUPS).astype(int)
 
     df = (prof
           .merge(enrolment_per_school(t["enrolment1"]), on=KEY, how="left")
@@ -154,6 +155,12 @@ def summarise(df: pd.DataFrame, by: list[str]) -> pd.DataFrame:
     # differences in the child sex ratio between districts: negative = girls
     # drop out more than boys after class 8; positive = boys leave more.
     out["girls_retention_gap"] = out["girls_share_sec_plus"] - out["girls_share_primary"]
+    # Progression ratio: average enrolment per grade in classes 9-12 relative to
+    # classes 1-5, for boys and girls separately. Lower = more students lost
+    # after primary; a high boys' ratio can also mean boys moving IN (e.g. coaching hubs).
+    for sex, label in (("b", "boys"), ("g", "girls")):
+        sec = g[f"enr_secondary_{sex}"].sum() + g[f"enr_higher_secondary_{sex}"].sum()
+        out[f"{label}_progression"] = (sec / 4) / (g[f"enr_primary_{sex}"].sum() / 5)
     for col in [c for c in df.columns if c.startswith("has_")]:
         out[f"pct_{col}"] = g[col].mean() * 100
     return out.round(3).reset_index()

@@ -47,10 +47,11 @@ RURAL_URBAN = {1: "Rural", 2: "Urban"}
 SCHOOL_TYPE = {1: "Boys", 2: "Girls", 3: "Co-educational"}
 
 # Management codes are "as per UDISE DCF" and not listed in the schema.
-# Groups below are provisional, inferred from the data (e.g. code 5 and 97
-# schools never have an SMC, which only govt/aided schools must have;
-# 92/93 schools are recorded under "JAIPUR REGION" instead of a block,
-# which matches central-government school systems). VERIFY against the DCF.
+# Grouping validated against official 2024-25 government-school totals: with
+# 94, 95 and 101 counted as government, our government teacher count matches
+# the official figure exactly (445,073) and the school count is within 0
+# (see reports/qa_report.md). Codes 97 and 98 are not government.
+# Exact names of codes 94, 95, 101, 97, 98 still to confirm with the UDISE+ DCF.
 MANAGEMENT_GROUP = {
     1: "State Government",
     2: "State Government",
@@ -59,9 +60,14 @@ MANAGEMENT_GROUP = {
     90: "State Government",
     92: "Central Government",
     93: "Central Government",
+    94: "Other Government",
+    95: "Other Government",
+    101: "Other Government",
     5: "Private Unaided",
-    97: "Other / Unverified",
+    97: "Other Non-Government",
+    98: "Other Non-Government",
 }
+GOVT_GROUPS = ["State Government", "Central Government", "Other Government"]
 
 # Class bands used throughout the analysis.
 STAGES = {
@@ -89,12 +95,12 @@ SAFE_WATER_COLS = [
 OFFICIAL = {
     "2024-25": {
         "schools": 106_302,
-        "enrolment": 16_364_187,
+        "enrolment": 16_364_187,  # includes pre-primary
         "teachers": 792_265,
         "zero_enrolment_schools": 215,
         "single_teacher_schools": 6_117,
         "govt_schools": 70_155,
-        "govt_enrolment": 7_782_390,
+        "govt_enrolment": 7_782_390,  # includes pre-primary
         "govt_teachers": 445_073,
     },
 }

@@ -81,7 +81,7 @@ def run_checks(t: dict[str, pd.DataFrame], school: pd.DataFrame, warnings: list[
     enr = t["enrolment1"]
     extra = sorted(set(enr.loc[enr["item_group"] == C.CWSN_GROUP, "item_id"]) - C.CWSN_DOCUMENTED_IDS)
     lines.append(f"- CWSN item_ids not in schema: {extra or 'none'}")
-    unknown_mgmt = sorted(set(school["managment"]) - set(C.MANAGEMENT_GROUP))
+    unknown_mgmt = sorted(set(school["managment"].dropna()) - set(C.MANAGEMENT_GROUP))
     lines.append(f"- Management codes without a group mapping: {unknown_mgmt or 'none'}")
 
     section("Blocks that look like admin regions, not blocks")
@@ -112,30 +112,36 @@ def run_checks(t: dict[str, pd.DataFrame], school: pd.DataFrame, warnings: list[
     lines.append("Differences under ~1% are expected (definitions, rounding, late corrections).")
     lines.append("")
     rows = []
-    gov = school["management_group"].isin(["State Government", "Central Government"])
+    gov = school["management_group"].isin(C.GOVT_GROUPS)
+    all_enr = school["enr_total"] + school["enr_pre_primary"]  # official totals include pre-primary
     for yr, off in C.OFFICIAL.items():
         s_ = school[school["year"] == yr]
         if s_.empty:
             continue
         ours = {
             "schools": len(s_),
-            "enrolment": s_["enr_total"].sum(),
+            "enrolment": all_enr[s_.index].sum(),
             "teachers": s_["total_tch"].sum(),
-            "zero_enrolment_schools": int(s_["flag_no_enrolment"].sum()),
+            "zero_enrolment_schools": int((all_enr[s_.index] == 0).sum()),
             "single_teacher_schools": int(s_["single_teacher"].sum()),
             "govt_schools": int(gov[s_.index].sum()),
-            "govt_enrolment": s_.loc[gov[s_.index], "enr_total"].sum(),
+            "govt_enrolment": all_enr[s_.index][gov[s_.index]].sum(),
             "govt_teachers": s_.loc[gov[s_.index], "total_tch"].sum(),
         }
         for k, v in off.items():
             o = ours[k]
             rows.append({"year": yr, "indicator": k, "official": v, "ours": int(o),
                          "diff_%": round((o - v) / v * 100, 2)})
-        rows.append({"year": yr, "indicator": "enrolment incl. pre-primary", "official": off["enrolment"],
-                     "ours": int(s_["enr_total"].sum() + s_["enr_pre_primary"].sum()),
-                     "diff_%": round((s_["enr_total"].sum() + s_["enr_pre_primary"].sum()
-                                      - off["enrolment"]) / off["enrolment"] * 100, 2)})
-    lines.append(pd.DataFrame(rows).to_markdown(index=False) if rows else "- no official figures for these years")
+        rows.append({"year": yr, "indicator": "(info) enrolment classes 1-12 only", "official": None,
+                     "ours": int(s_["enr_total"].sum()), "diff_%": None})
+    if rows:
+        vt = pd.DataFrame(rows)
+        for c in ("official", "ours"):
+            vt[c] = vt[c].map(lambda v: "" if pd.isna(v) else f"{int(v):,}")
+        vt["diff_%"] = vt["diff_%"].map(lambda v: "" if pd.isna(v) else f"{v:+.2f}")
+        lines.append(vt.to_markdown(index=False))
+    else:
+        lines.append("- no official figures for these years")
     lines.append("")
     lines.append("Schools, enrolment and teachers by management code (to check the management mapping):")
     lines.append("")
