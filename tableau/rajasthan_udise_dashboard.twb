@@ -1,0 +1,1266 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<workbook xmlns:user="http://www.tableausoftware.com/xml/user" original-version="18.1" source-build="2018.1.0 (20181.18.0404.1112)" source-platform="win" version="18.1">
+  <preferences>
+    <color-palette custom="true" name="Rajasthan Gender patterns" type="regular">
+      <color>#1baf7a</color>
+      <color>#2a78d6</color>
+      <color>#eb6834</color>
+      <color>#d3d2cb</color>
+    </color-palette>
+    <color-palette custom="true" name="Rajasthan Government vs private" type="regular">
+      <color>#2a78d6</color>
+      <color>#eb6834</color>
+    </color-palette>
+  </preferences>
+  <datasources>
+    <datasource hasconnection="false" inline="true" name="Parameters" version="18.1">
+      <aliases enabled="yes" />
+      <column caption="Year" datatype="string" name="[Parameter 1]" param-domain-type="list" role="measure" type="nominal" value="&quot;2025-26&quot;">
+        <calculation class="tableau" formula="&quot;2025-26&quot;" />
+        <members>
+          <member value="&quot;2024-25&quot;" />
+          <member value="&quot;2025-26&quot;" />
+        </members>
+      </column>
+      <column caption="Indicator" datatype="string" name="[Parameter 2]" param-domain-type="list" role="measure" type="nominal" value="&quot;Infrastructure index&quot;">
+        <calculation class="tableau" formula="&quot;Infrastructure index&quot;" />
+        <members>
+          <member value="&quot;Infrastructure index&quot;" />
+          <member value="&quot;Single-teacher schools (%)&quot;" />
+          <member value="&quot;Students per teacher&quot;" />
+          <member value="&quot;Girls' retention gap (points)&quot;" />
+        </members>
+      </column>
+    </datasource>
+    <datasource caption="District indicators" inline="true" name="federated.b3k8z3indoove3bikohnzselorje" version="18.1">
+      <connection class="federated">
+        <named-connections>
+          <named-connection caption="tableau_district_indicators" name="textscan.districts">
+            <connection class="textscan" directory="Data/Datasources" filename="tableau_district_indicators.csv" password="" server="" />
+          </named-connection>
+        </named-connections>
+        <relation connection="textscan.districts" name="tableau_district_indicators.csv" table="[tableau_district_indicators#csv]" type="table">
+          <columns character-set="UTF-8" header="yes" locale="en_US" separator=",">
+            <column datatype="string" name="district" ordinal="0" />
+            <column datatype="string" name="district_label" ordinal="1" />
+            <column datatype="string" name="year" ordinal="2" />
+            <column datatype="integer" name="schools" ordinal="3" />
+            <column datatype="integer" name="enrolment" ordinal="4" />
+            <column datatype="real" name="girls_share" ordinal="5" />
+            <column datatype="real" name="girls_share_primary" ordinal="6" />
+            <column datatype="real" name="girls_share_sec_plus" ordinal="7" />
+            <column datatype="real" name="st_share" ordinal="8" />
+            <column datatype="real" name="sc_share" ordinal="9" />
+            <column datatype="integer" name="teachers" ordinal="10" />
+            <column datatype="real" name="ptr" ordinal="11" />
+            <column datatype="real" name="pct_single_teacher" ordinal="12" />
+            <column datatype="real" name="avg_infra_index" ordinal="13" />
+            <column datatype="real" name="girls_retention_gap" ordinal="14" />
+            <column datatype="real" name="boys_progression" ordinal="15" />
+            <column datatype="real" name="girls_progression" ordinal="16" />
+            <column datatype="real" name="pct_has_electricity" ordinal="17" />
+            <column datatype="real" name="pct_has_safe_water" ordinal="18" />
+            <column datatype="real" name="pct_has_girls_toilet" ordinal="19" />
+            <column datatype="real" name="pct_has_boys_toilet" ordinal="20" />
+            <column datatype="real" name="pct_has_handwash" ordinal="21" />
+            <column datatype="real" name="pct_has_library" ordinal="22" />
+            <column datatype="real" name="pct_has_playground" ordinal="23" />
+            <column datatype="real" name="pct_has_ramp" ordinal="24" />
+            <column datatype="real" name="pct_has_internet" ordinal="25" />
+            <column datatype="real" name="pct_has_computer" ordinal="26" />
+            <column datatype="string" name="pattern" ordinal="27" />
+            <column datatype="real" name="single_teacher_change_matched_pp" ordinal="28" />
+            <column datatype="real" name="teachers_change_matched_pct" ordinal="29" />
+            <column datatype="integer" name="rank_avg_infra_index" ordinal="30" />
+            <column datatype="integer" name="rank_pct_single_teacher" ordinal="31" />
+            <column datatype="integer" name="rank_ptr" ordinal="32" />
+            <column datatype="integer" name="rank_girls_retention_gap" ordinal="33" />
+            <column datatype="string" name="state" ordinal="34" />
+          </columns>
+        </relation>
+      </connection>
+      <aliases enabled="yes" />
+      <column datatype="string" name="[district]" role="dimension" type="nominal" />
+      <column caption="District" datatype="string" name="[district_label]" role="dimension" type="nominal" />
+      <column datatype="string" name="[year]" role="dimension" type="nominal" />
+      <column caption="Schools" datatype="integer" name="[schools]" role="measure" type="quantitative" />
+      <column caption="Students (classes 1-12)" datatype="integer" name="[enrolment]" role="measure" type="quantitative" />
+      <column datatype="real" name="[girls_share]" role="measure" type="quantitative" />
+      <column datatype="real" name="[girls_share_primary]" role="measure" type="quantitative" />
+      <column datatype="real" name="[girls_share_sec_plus]" role="measure" type="quantitative" />
+      <column datatype="real" name="[st_share]" role="measure" type="quantitative" />
+      <column datatype="real" name="[sc_share]" role="measure" type="quantitative" />
+      <column caption="Teachers" datatype="integer" name="[teachers]" role="measure" type="quantitative" />
+      <column caption="Students per teacher" datatype="real" name="[ptr]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0" />
+      <column caption="Single-teacher schools (%)" datatype="real" name="[pct_single_teacher]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0" />
+      <column caption="Infrastructure index" datatype="real" name="[avg_infra_index]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0" />
+      <column datatype="real" name="[girls_retention_gap]" role="measure" type="quantitative" />
+      <column caption="Boys' progression ratio" datatype="real" name="[boys_progression]" role="measure" type="quantitative" default-format="n#,##0.00;-#,##0.00" />
+      <column caption="Girls' progression ratio" datatype="real" name="[girls_progression]" role="measure" type="quantitative" default-format="n#,##0.00;-#,##0.00" />
+      <column datatype="real" name="[pct_has_electricity]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_has_safe_water]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_has_girls_toilet]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_has_boys_toilet]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_has_handwash]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_has_library]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_has_playground]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_has_ramp]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_has_internet]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_has_computer]" role="measure" type="quantitative" />
+      <column caption="Gender pattern" datatype="string" name="[pattern]" role="dimension" type="nominal" />
+      <column datatype="real" name="[single_teacher_change_matched_pp]" role="measure" type="quantitative" />
+      <column datatype="real" name="[teachers_change_matched_pct]" role="measure" type="quantitative" />
+      <column datatype="integer" name="[rank_avg_infra_index]" role="measure" type="quantitative" />
+      <column datatype="integer" name="[rank_pct_single_teacher]" role="measure" type="quantitative" />
+      <column datatype="integer" name="[rank_ptr]" role="measure" type="quantitative" />
+      <column datatype="integer" name="[rank_girls_retention_gap]" role="measure" type="quantitative" />
+      <column datatype="string" name="[state]" role="dimension" type="nominal" />
+      <column caption="Selected year" datatype="boolean" name="[Calc_SelectedYear]" role="dimension" type="nominal">
+        <calculation class="tableau" formula="[year] = [Parameters].[Parameter 1]" />
+      </column>
+      <column caption="Indicator value" datatype="real" name="[Calc_Indicator]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0">
+        <calculation class="tableau" formula="CASE [Parameters].[Parameter 2] WHEN &quot;Infrastructure index&quot; THEN [avg_infra_index] WHEN &quot;Single-teacher schools (%)&quot; THEN [pct_single_teacher] WHEN &quot;Students per teacher&quot; THEN [ptr] WHEN &quot;Girls' retention gap (points)&quot; THEN [girls_retention_gap] * 100 END" />
+      </column>
+      <column caption="Rank (1 = worst)" datatype="integer" name="[Calc_Rank]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="CASE [Parameters].[Parameter 2] WHEN &quot;Infrastructure index&quot; THEN [rank_avg_infra_index] WHEN &quot;Single-teacher schools (%)&quot; THEN [rank_pct_single_teacher] WHEN &quot;Students per teacher&quot; THEN [rank_ptr] WHEN &quot;Girls' retention gap (points)&quot; THEN [rank_girls_retention_gap] END" />
+      </column>
+      <column caption="Highlight" datatype="string" name="[Calc_Worst10]" role="dimension" type="nominal">
+        <calculation class="tableau" formula="IF CASE [Parameters].[Parameter 2] WHEN &quot;Infrastructure index&quot; THEN [rank_avg_infra_index] WHEN &quot;Single-teacher schools (%)&quot; THEN [rank_pct_single_teacher] WHEN &quot;Students per teacher&quot; THEN [rank_ptr] WHEN &quot;Girls' retention gap (points)&quot; THEN [rank_girls_retention_gap] END &lt;= 10 THEN &quot;Worst 10&quot; ELSE &quot;Other districts&quot; END" />
+      </column>
+      <column caption="Among the worst 10" datatype="integer" name="[Calc_Worst10Flag]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="IF CASE [Parameters].[Parameter 2] WHEN &quot;Infrastructure index&quot; THEN [rank_avg_infra_index] WHEN &quot;Single-teacher schools (%)&quot; THEN [rank_pct_single_teacher] WHEN &quot;Students per teacher&quot; THEN [rank_ptr] WHEN &quot;Girls' retention gap (points)&quot; THEN [rank_girls_retention_gap] END &lt;= 10 THEN 1 ELSE 0 END" />
+      </column>
+      <column caption="Tribal-majority south" datatype="integer" name="[Calc_TribalFlag]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="IF [district] = &quot;BANSWARA&quot; OR [district] = &quot;DUNGARPUR&quot; OR [district] = &quot;PRATAPGARH&quot; OR [district] = &quot;SALUMBAR&quot; OR [district] = &quot;UDAIPUR&quot; THEN 1 ELSE 0 END" />
+      </column>
+      <column caption="Students (crore)" datatype="real" name="[Calc_StudentsCrore]" role="measure" type="quantitative" default-format="n#,##0.00;-#,##0.00">
+        <calculation class="tableau" formula="SUM([enrolment]) / 10000000" />
+      </column>
+      <column caption="Teachers (lakh)" datatype="real" name="[Calc_TeachersLakh]" role="measure" type="quantitative" default-format="n#,##0.00;-#,##0.00">
+        <calculation class="tableau" formula="SUM([teachers]) / 100000" />
+      </column>
+      <column caption="Students per teacher (state)" datatype="real" name="[Calc_StatePTR]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0">
+        <calculation class="tableau" formula="SUM([enrolment]) / SUM([teachers])" />
+      </column>
+      <column caption="Single-teacher schools % (state)" datatype="real" name="[Calc_StateSingle]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0">
+        <calculation class="tableau" formula="SUM([pct_single_teacher] * [schools]) / SUM([schools])" />
+      </column>
+      <column caption="Infrastructure index (state)" datatype="real" name="[Calc_StateInfra]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0">
+        <calculation class="tableau" formula="SUM([avg_infra_index] * [schools]) / SUM([schools])" />
+      </column>
+      <column caption="Region" datatype="string" name="[Calc_TribalSouth]" role="dimension" type="nominal">
+        <calculation class="tableau" formula="IF [district] = &quot;BANSWARA&quot; OR [district] = &quot;DUNGARPUR&quot; OR [district] = &quot;PRATAPGARH&quot; OR [district] = &quot;SALUMBAR&quot; OR [district] = &quot;UDAIPUR&quot; THEN &quot;Tribal-majority south&quot; ELSE &quot;Other districts&quot; END" />
+      </column>
+      <column caption="Label" datatype="string" name="[Calc_TribalLabel]" role="dimension" type="nominal">
+        <calculation class="tableau" formula="IF [district] = &quot;BANSWARA&quot; OR [district] = &quot;DUNGARPUR&quot; OR [district] = &quot;PRATAPGARH&quot; OR [district] = &quot;SALUMBAR&quot; OR [district] = &quot;UDAIPUR&quot; THEN [district_label] END" />
+      </column>
+      <column caption="Label" datatype="string" name="[Calc_PatternLabel]" role="dimension" type="nominal">
+        <calculation class="tableau" formula="IF [pattern] &lt;&gt; &quot;other&quot; THEN [district_label] END" />
+      </column>
+      <extract count="-1" enabled="true" units="records">
+        <connection class="hyper" dbname="Data/Extracts/districts.hyper" default-settings="yes" schema="Extract" tablename="Extract" update-time="10/21/2026 10:00:00 AM">
+          <relation name="Extract" table="[Extract].[Extract]" type="table" />
+        </connection>
+      </extract>
+      <layout dim-ordering="alphabetic" dim-percentage="0.5" measure-ordering="alphabetic" measure-percentage="0.4" show-structure="true" />
+    </datasource>
+    <datasource caption="Single-teacher change (same schools)" inline="true" name="federated.2d12l1a5lr43rm5ux3u8wzmznjz1" version="18.1">
+      <connection class="federated">
+        <named-connections>
+          <named-connection caption="a4_single_teacher_change_matched" name="textscan.matched">
+            <connection class="textscan" directory="Data/Datasources" filename="a4_single_teacher_change_matched.csv" password="" server="" />
+          </named-connection>
+        </named-connections>
+        <relation connection="textscan.matched" name="a4_single_teacher_change_matched.csv" table="[a4_single_teacher_change_matched#csv]" type="table">
+          <columns character-set="UTF-8" header="yes" locale="en_US" separator=",">
+            <column datatype="string" name="district" ordinal="0" />
+            <column datatype="string" name="district_label" ordinal="1" />
+            <column datatype="integer" name="schools_2024" ordinal="2" />
+            <column datatype="integer" name="schools_2025" ordinal="3" />
+            <column datatype="integer" name="single_teacher_schools_2024" ordinal="4" />
+            <column datatype="integer" name="single_teacher_schools_2025" ordinal="5" />
+            <column datatype="real" name="pct_single_teacher_2024" ordinal="6" />
+            <column datatype="real" name="pct_single_teacher_2025" ordinal="7" />
+            <column datatype="integer" name="teachers_2024" ordinal="8" />
+            <column datatype="integer" name="teachers_2025" ordinal="9" />
+            <column datatype="real" name="change_pp" ordinal="10" />
+            <column datatype="real" name="teachers_change_pct" ordinal="11" />
+          </columns>
+        </relation>
+      </connection>
+      <aliases enabled="yes" />
+      <column datatype="string" name="[district]" role="dimension" type="nominal" />
+      <column caption="District" datatype="string" name="[district_label]" role="dimension" type="nominal" />
+      <column datatype="integer" name="[schools_2024]" role="measure" type="quantitative" />
+      <column datatype="integer" name="[schools_2025]" role="measure" type="quantitative" />
+      <column datatype="integer" name="[single_teacher_schools_2024]" role="measure" type="quantitative" />
+      <column datatype="integer" name="[single_teacher_schools_2025]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_single_teacher_2024]" role="measure" type="quantitative" />
+      <column datatype="real" name="[pct_single_teacher_2025]" role="measure" type="quantitative" />
+      <column datatype="integer" name="[teachers_2024]" role="measure" type="quantitative" />
+      <column datatype="integer" name="[teachers_2025]" role="measure" type="quantitative" />
+      <column caption="Change in single-teacher schools (points)" datatype="real" name="[change_pp]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0" />
+      <column datatype="real" name="[teachers_change_pct]" role="measure" type="quantitative" />
+      <column caption="Western desert" datatype="integer" name="[Calc_DesertFlag]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="IF [district] = &quot;JAISALMER&quot; OR [district] = &quot;BARMER&quot; OR [district] = &quot;PHALODI&quot; OR [district] = &quot;BALOTRA&quot; THEN 1 ELSE 0 END" />
+      </column>
+      <column caption="Region" datatype="string" name="[Calc_Desert]" role="dimension" type="nominal">
+        <calculation class="tableau" formula="IF [district] = &quot;JAISALMER&quot; OR [district] = &quot;BARMER&quot; OR [district] = &quot;PHALODI&quot; OR [district] = &quot;BALOTRA&quot; THEN &quot;Western desert&quot; ELSE &quot;Other districts&quot; END" />
+      </column>
+      <extract count="-1" enabled="true" units="records">
+        <connection class="hyper" dbname="Data/Extracts/matched.hyper" default-settings="yes" schema="Extract" tablename="Extract" update-time="10/21/2026 10:00:00 AM">
+          <relation name="Extract" table="[Extract].[Extract]" type="table" />
+        </connection>
+      </extract>
+      <layout dim-ordering="alphabetic" dim-percentage="0.5" measure-ordering="alphabetic" measure-percentage="0.4" show-structure="true" />
+    </datasource>
+    <datasource caption="Girls by school sector" inline="true" name="federated.msd8puvw8b585n81xq8t3mmpjtfc" version="18.1">
+      <connection class="federated">
+        <named-connections>
+          <named-connection caption="a2_girls_share_by_sector_2025-26" name="textscan.sector">
+            <connection class="textscan" directory="Data/Datasources" filename="a2_girls_share_by_sector_2025-26.csv" password="" server="" />
+          </named-connection>
+        </named-connections>
+        <relation connection="textscan.sector" name="a2_girls_share_by_sector_2025-26.csv" table="[a2_girls_share_by_sector_2025-26#csv]" type="table">
+          <columns character-set="UTF-8" header="yes" locale="en_US" separator=",">
+            <column datatype="string" name="district" ordinal="0" />
+            <column datatype="string" name="district_label" ordinal="1" />
+            <column datatype="string" name="sector" ordinal="2" />
+            <column datatype="real" name="girls_share_primary" ordinal="3" />
+            <column datatype="real" name="girls_share_sec_plus" ordinal="4" />
+            <column datatype="integer" name="enr_secondary_plus" ordinal="5" />
+            <column datatype="real" name="girls_retention_gap" ordinal="6" />
+          </columns>
+        </relation>
+      </connection>
+      <aliases enabled="yes" />
+      <column datatype="string" name="[district]" role="dimension" type="nominal" />
+      <column caption="District" datatype="string" name="[district_label]" role="dimension" type="nominal" />
+      <column caption="School sector" datatype="string" name="[sector]" role="dimension" type="nominal" />
+      <column datatype="real" name="[girls_share_primary]" role="measure" type="quantitative" />
+      <column datatype="real" name="[girls_share_sec_plus]" role="measure" type="quantitative" />
+      <column datatype="integer" name="[enr_secondary_plus]" role="measure" type="quantitative" />
+      <column datatype="real" name="[girls_retention_gap]" role="measure" type="quantitative" />
+      <column caption="Girls' retention gap (points)" datatype="real" name="[Calc_GapPts]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0">
+        <calculation class="tableau" formula="[girls_retention_gap] * 100" />
+      </column>
+      <extract count="-1" enabled="true" units="records">
+        <connection class="hyper" dbname="Data/Extracts/sector.hyper" default-settings="yes" schema="Extract" tablename="Extract" update-time="10/21/2026 10:00:00 AM">
+          <relation name="Extract" table="[Extract].[Extract]" type="table" />
+        </connection>
+      </extract>
+      <layout dim-ordering="alphabetic" dim-percentage="0.5" measure-ordering="alphabetic" measure-percentage="0.4" show-structure="true" />
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name="KPI Schools">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" fontsize="9" fontcolor="#52514e">Schools with students</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="District indicators" name="federated.b3k8z3indoove3bikohnzselorje" />
+          </datasources>
+          <datasource-dependencies datasource="federated.b3k8z3indoove3bikohnzselorje">
+            <column datatype="integer" name="[schools]" role="measure" type="quantitative" />
+            <column datatype="boolean" name="[Calc_SelectedYear]" role="dimension" type="nominal" caption="Selected year">
+              <calculation class="tableau" formula="[year] = [Parameters].[Parameter 1]" />
+            </column>
+            <column-instance column="[schools]" derivation="Sum" name="[sum:schools:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[Calc_SelectedYear]" derivation="None" name="[none:Calc_SelectedYear:nk]" pivot="key" type="nominal" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_SelectedYear:nk]">
+            <groupfilter function="member" level="[none:Calc_SelectedYear:nk]" member="true" user:ui-domain="database" user:ui-enumeration="inclusive" user:ui-marker="enumerate" />
+          </filter>
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Text" />
+            <mark-sizing mark-sizing-setting="marks-scaling-off" />
+            <encodings>
+              <text column="[federated.b3k8z3indoove3bikohnzselorje].[sum:schools:qk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true" />
+                <format attr="font-size" value="26" />
+                <format attr="font-family" value="Segoe UI" />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+    </worksheet>
+    <worksheet name="KPI Students">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" fontsize="9" fontcolor="#52514e">Students, classes 1-12 (crore)</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="District indicators" name="federated.b3k8z3indoove3bikohnzselorje" />
+          </datasources>
+          <datasource-dependencies datasource="federated.b3k8z3indoove3bikohnzselorje">
+            <column datatype="real" name="[Calc_StudentsCrore]" role="measure" type="quantitative" caption="Students (crore)" default-format="n#,##0.00;-#,##0.00">
+              <calculation class="tableau" formula="SUM([enrolment]) / 10000000" />
+            </column>
+            <column datatype="boolean" name="[Calc_SelectedYear]" role="dimension" type="nominal" caption="Selected year">
+              <calculation class="tableau" formula="[year] = [Parameters].[Parameter 1]" />
+            </column>
+            <column-instance column="[Calc_StudentsCrore]" derivation="User" name="[usr:Calc_StudentsCrore:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[Calc_SelectedYear]" derivation="None" name="[none:Calc_SelectedYear:nk]" pivot="key" type="nominal" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_SelectedYear:nk]">
+            <groupfilter function="member" level="[none:Calc_SelectedYear:nk]" member="true" user:ui-domain="database" user:ui-enumeration="inclusive" user:ui-marker="enumerate" />
+          </filter>
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Text" />
+            <mark-sizing mark-sizing-setting="marks-scaling-off" />
+            <encodings>
+              <text column="[federated.b3k8z3indoove3bikohnzselorje].[usr:Calc_StudentsCrore:qk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true" />
+                <format attr="font-size" value="26" />
+                <format attr="font-family" value="Segoe UI" />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+    </worksheet>
+    <worksheet name="KPI Teachers">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" fontsize="9" fontcolor="#52514e">Teachers (lakh)</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="District indicators" name="federated.b3k8z3indoove3bikohnzselorje" />
+          </datasources>
+          <datasource-dependencies datasource="federated.b3k8z3indoove3bikohnzselorje">
+            <column datatype="real" name="[Calc_TeachersLakh]" role="measure" type="quantitative" caption="Teachers (lakh)" default-format="n#,##0.00;-#,##0.00">
+              <calculation class="tableau" formula="SUM([teachers]) / 100000" />
+            </column>
+            <column datatype="boolean" name="[Calc_SelectedYear]" role="dimension" type="nominal" caption="Selected year">
+              <calculation class="tableau" formula="[year] = [Parameters].[Parameter 1]" />
+            </column>
+            <column-instance column="[Calc_TeachersLakh]" derivation="User" name="[usr:Calc_TeachersLakh:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[Calc_SelectedYear]" derivation="None" name="[none:Calc_SelectedYear:nk]" pivot="key" type="nominal" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_SelectedYear:nk]">
+            <groupfilter function="member" level="[none:Calc_SelectedYear:nk]" member="true" user:ui-domain="database" user:ui-enumeration="inclusive" user:ui-marker="enumerate" />
+          </filter>
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Text" />
+            <mark-sizing mark-sizing-setting="marks-scaling-off" />
+            <encodings>
+              <text column="[federated.b3k8z3indoove3bikohnzselorje].[usr:Calc_TeachersLakh:qk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true" />
+                <format attr="font-size" value="26" />
+                <format attr="font-family" value="Segoe UI" />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+    </worksheet>
+    <worksheet name="KPI PTR">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" fontsize="9" fontcolor="#52514e">Students per teacher</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="District indicators" name="federated.b3k8z3indoove3bikohnzselorje" />
+          </datasources>
+          <datasource-dependencies datasource="federated.b3k8z3indoove3bikohnzselorje">
+            <column datatype="real" name="[Calc_StatePTR]" role="measure" type="quantitative" caption="Students per teacher (state)" default-format="n#,##0.0;-#,##0.0">
+              <calculation class="tableau" formula="SUM([enrolment]) / SUM([teachers])" />
+            </column>
+            <column datatype="boolean" name="[Calc_SelectedYear]" role="dimension" type="nominal" caption="Selected year">
+              <calculation class="tableau" formula="[year] = [Parameters].[Parameter 1]" />
+            </column>
+            <column-instance column="[Calc_StatePTR]" derivation="User" name="[usr:Calc_StatePTR:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[Calc_SelectedYear]" derivation="None" name="[none:Calc_SelectedYear:nk]" pivot="key" type="nominal" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_SelectedYear:nk]">
+            <groupfilter function="member" level="[none:Calc_SelectedYear:nk]" member="true" user:ui-domain="database" user:ui-enumeration="inclusive" user:ui-marker="enumerate" />
+          </filter>
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Text" />
+            <mark-sizing mark-sizing-setting="marks-scaling-off" />
+            <encodings>
+              <text column="[federated.b3k8z3indoove3bikohnzselorje].[usr:Calc_StatePTR:qk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true" />
+                <format attr="font-size" value="26" />
+                <format attr="font-family" value="Segoe UI" />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+    </worksheet>
+    <worksheet name="KPI Single">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" fontsize="9" fontcolor="#52514e">Single-teacher schools (%)</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="District indicators" name="federated.b3k8z3indoove3bikohnzselorje" />
+          </datasources>
+          <datasource-dependencies datasource="federated.b3k8z3indoove3bikohnzselorje">
+            <column datatype="real" name="[Calc_StateSingle]" role="measure" type="quantitative" caption="Single-teacher schools % (state)" default-format="n#,##0.0;-#,##0.0">
+              <calculation class="tableau" formula="SUM([pct_single_teacher] * [schools]) / SUM([schools])" />
+            </column>
+            <column datatype="boolean" name="[Calc_SelectedYear]" role="dimension" type="nominal" caption="Selected year">
+              <calculation class="tableau" formula="[year] = [Parameters].[Parameter 1]" />
+            </column>
+            <column-instance column="[Calc_StateSingle]" derivation="User" name="[usr:Calc_StateSingle:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[Calc_SelectedYear]" derivation="None" name="[none:Calc_SelectedYear:nk]" pivot="key" type="nominal" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_SelectedYear:nk]">
+            <groupfilter function="member" level="[none:Calc_SelectedYear:nk]" member="true" user:ui-domain="database" user:ui-enumeration="inclusive" user:ui-marker="enumerate" />
+          </filter>
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Text" />
+            <mark-sizing mark-sizing-setting="marks-scaling-off" />
+            <encodings>
+              <text column="[federated.b3k8z3indoove3bikohnzselorje].[usr:Calc_StateSingle:qk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true" />
+                <format attr="font-size" value="26" />
+                <format attr="font-family" value="Segoe UI" />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+    </worksheet>
+    <worksheet name="KPI Infra">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" fontsize="9" fontcolor="#52514e">Infrastructure index (0-100)</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="District indicators" name="federated.b3k8z3indoove3bikohnzselorje" />
+          </datasources>
+          <datasource-dependencies datasource="federated.b3k8z3indoove3bikohnzselorje">
+            <column datatype="real" name="[Calc_StateInfra]" role="measure" type="quantitative" caption="Infrastructure index (state)" default-format="n#,##0.0;-#,##0.0">
+              <calculation class="tableau" formula="SUM([avg_infra_index] * [schools]) / SUM([schools])" />
+            </column>
+            <column datatype="boolean" name="[Calc_SelectedYear]" role="dimension" type="nominal" caption="Selected year">
+              <calculation class="tableau" formula="[year] = [Parameters].[Parameter 1]" />
+            </column>
+            <column-instance column="[Calc_StateInfra]" derivation="User" name="[usr:Calc_StateInfra:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[Calc_SelectedYear]" derivation="None" name="[none:Calc_SelectedYear:nk]" pivot="key" type="nominal" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_SelectedYear:nk]">
+            <groupfilter function="member" level="[none:Calc_SelectedYear:nk]" member="true" user:ui-domain="database" user:ui-enumeration="inclusive" user:ui-marker="enumerate" />
+          </filter>
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Text" />
+            <mark-sizing mark-sizing-setting="marks-scaling-off" />
+            <encodings>
+              <text column="[federated.b3k8z3indoove3bikohnzselorje].[usr:Calc_StateInfra:qk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true" />
+                <format attr="font-size" value="26" />
+                <format attr="font-family" value="Segoe UI" />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+    </worksheet>
+    <worksheet name="District ranking">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" bold="true" fontsize="13">&lt;[Parameters].[Parameter 2]&gt;, &lt;[Parameters].[Parameter 1]&gt;</run>
+            <run fontname="Segoe UI" fontsize="10" fontcolor="#52514e">  worst 10 in dark blue; rank 1 at the top</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="District indicators" name="federated.b3k8z3indoove3bikohnzselorje" />
+          </datasources>
+          <datasource-dependencies datasource="federated.b3k8z3indoove3bikohnzselorje">
+            <column datatype="string" name="[district_label]" role="dimension" type="nominal" />
+            <column datatype="real" name="[Calc_Indicator]" role="measure" type="quantitative" caption="Indicator value" default-format="n#,##0.0;-#,##0.0">
+              <calculation class="tableau" formula="CASE [Parameters].[Parameter 2] WHEN &quot;Infrastructure index&quot; THEN [avg_infra_index] WHEN &quot;Single-teacher schools (%)&quot; THEN [pct_single_teacher] WHEN &quot;Students per teacher&quot; THEN [ptr] WHEN &quot;Girls' retention gap (points)&quot; THEN [girls_retention_gap] * 100 END" />
+            </column>
+            <column datatype="integer" name="[Calc_Worst10Flag]" role="measure" type="quantitative" caption="Among the worst 10">
+              <calculation class="tableau" formula="IF CASE [Parameters].[Parameter 2] WHEN &quot;Infrastructure index&quot; THEN [rank_avg_infra_index] WHEN &quot;Single-teacher schools (%)&quot; THEN [rank_pct_single_teacher] WHEN &quot;Students per teacher&quot; THEN [rank_ptr] WHEN &quot;Girls' retention gap (points)&quot; THEN [rank_girls_retention_gap] END &lt;= 10 THEN 1 ELSE 0 END" />
+            </column>
+            <column datatype="boolean" name="[Calc_SelectedYear]" role="dimension" type="nominal" caption="Selected year">
+              <calculation class="tableau" formula="[year] = [Parameters].[Parameter 1]" />
+            </column>
+            <column datatype="integer" name="[Calc_Rank]" role="measure" type="quantitative" caption="Rank (1 = worst)">
+              <calculation class="tableau" formula="CASE [Parameters].[Parameter 2] WHEN &quot;Infrastructure index&quot; THEN [rank_avg_infra_index] WHEN &quot;Single-teacher schools (%)&quot; THEN [rank_pct_single_teacher] WHEN &quot;Students per teacher&quot; THEN [rank_ptr] WHEN &quot;Girls' retention gap (points)&quot; THEN [rank_girls_retention_gap] END" />
+            </column>
+            <column-instance column="[district_label]" derivation="None" name="[none:district_label:nk]" pivot="key" type="nominal" />
+            <column-instance column="[Calc_Indicator]" derivation="Sum" name="[sum:Calc_Indicator:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[Calc_Worst10Flag]" derivation="Max" name="[max:Calc_Worst10Flag:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[Calc_SelectedYear]" derivation="None" name="[none:Calc_SelectedYear:nk]" pivot="key" type="nominal" />
+            <column-instance column="[Calc_Rank]" derivation="Sum" name="[sum:Calc_Rank:qk]" pivot="key" type="quantitative" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_SelectedYear:nk]">
+            <groupfilter function="member" level="[none:Calc_SelectedYear:nk]" member="true" user:ui-domain="database" user:ui-enumeration="inclusive" user:ui-marker="enumerate" />
+          </filter>
+          <sort class="computed" column="[federated.b3k8z3indoove3bikohnzselorje].[none:district_label:nk]" direction="ASC" using="[federated.b3k8z3indoove3bikohnzselorje].[sum:Calc_Rank:qk]" />
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Bar" />
+            <encodings>
+              <color column="[federated.b3k8z3indoove3bikohnzselorje].[max:Calc_Worst10Flag:qk]" />
+              <text column="[federated.b3k8z3indoove3bikohnzselorje].[sum:Calc_Indicator:qk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true" />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.b3k8z3indoove3bikohnzselorje].[none:district_label:nk]</rows>
+        <cols>[federated.b3k8z3indoove3bikohnzselorje].[sum:Calc_Indicator:qk]</cols>
+      </table>
+    </worksheet>
+    <worksheet name="Gender patterns">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" bold="true" fontsize="13">Boys' vs girls' progression ratio, &lt;[Parameters].[Parameter 1]&gt;</run>
+            <run fontname="Segoe UI" fontsize="10" fontcolor="#52514e">  students per grade in classes 9-12 / classes 1-5</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="District indicators" name="federated.b3k8z3indoove3bikohnzselorje" />
+          </datasources>
+          <datasource-dependencies datasource="federated.b3k8z3indoove3bikohnzselorje">
+            <column datatype="real" name="[girls_progression]" role="measure" type="quantitative" default-format="n#,##0.00;-#,##0.00" />
+            <column datatype="real" name="[boys_progression]" role="measure" type="quantitative" default-format="n#,##0.00;-#,##0.00" />
+            <column datatype="string" name="[district_label]" role="dimension" type="nominal" />
+            <column datatype="string" name="[pattern]" role="dimension" type="nominal" />
+            <column datatype="string" name="[Calc_PatternLabel]" role="dimension" type="nominal" caption="Label">
+              <calculation class="tableau" formula="IF [pattern] &lt;&gt; &quot;other&quot; THEN [district_label] END" />
+            </column>
+            <column datatype="boolean" name="[Calc_SelectedYear]" role="dimension" type="nominal" caption="Selected year">
+              <calculation class="tableau" formula="[year] = [Parameters].[Parameter 1]" />
+            </column>
+            <column-instance column="[girls_progression]" derivation="Sum" name="[sum:girls_progression:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[boys_progression]" derivation="Sum" name="[sum:boys_progression:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[district_label]" derivation="None" name="[none:district_label:nk]" pivot="key" type="nominal" />
+            <column-instance column="[pattern]" derivation="None" name="[none:pattern:nk]" pivot="key" type="nominal" />
+            <column-instance column="[Calc_PatternLabel]" derivation="None" name="[none:Calc_PatternLabel:nk]" pivot="key" type="nominal" />
+            <column-instance column="[Calc_SelectedYear]" derivation="None" name="[none:Calc_SelectedYear:nk]" pivot="key" type="nominal" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_SelectedYear:nk]">
+            <groupfilter function="member" level="[none:Calc_SelectedYear:nk]" member="true" user:ui-domain="database" user:ui-enumeration="inclusive" user:ui-marker="enumerate" />
+          </filter>
+          <aggregation value="true" />
+        </view>
+        <style>
+          <style-rule element="mark">
+            <encoding attr="color" field="[federated.b3k8z3indoove3bikohnzselorje].[none:pattern:nk]" palette="Rajasthan Gender patterns" type="palette">
+              <color-palette custom="true" name="Rajasthan Gender patterns" type="regular">
+                <color>#1baf7a</color>
+                <color>#2a78d6</color>
+                <color>#eb6834</color>
+                <color>#d3d2cb</color>
+              </color-palette>
+              <map to="#eb6834">
+                <bucket>"girls leaving"</bucket>
+              </map>
+              <map to="#2a78d6">
+                <bucket>"boys moving in"</bucket>
+              </map>
+              <map to="#1baf7a">
+                <bucket>"boys leaving (tribal south)"</bucket>
+              </map>
+              <map to="#d3d2cb">
+                <bucket>"other"</bucket>
+              </map>
+            </encoding>
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Circle" />
+            <encodings>
+              <color column="[federated.b3k8z3indoove3bikohnzselorje].[none:pattern:nk]" />
+              <text column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_PatternLabel:nk]" />
+              <lod column="[federated.b3k8z3indoove3bikohnzselorje].[none:district_label:nk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true" />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.b3k8z3indoove3bikohnzselorje].[sum:girls_progression:qk]</rows>
+        <cols>[federated.b3k8z3indoove3bikohnzselorje].[sum:boys_progression:qk]</cols>
+      </table>
+    </worksheet>
+    <worksheet name="Government vs private">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" bold="true" fontsize="13">Girls' retention gap by school sector, 2025-26 (points)</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="Girls by school sector" name="federated.msd8puvw8b585n81xq8t3mmpjtfc" />
+          </datasources>
+          <datasource-dependencies datasource="federated.msd8puvw8b585n81xq8t3mmpjtfc">
+            <column datatype="string" name="[district_label]" role="dimension" type="nominal" />
+            <column datatype="real" name="[Calc_GapPts]" role="measure" type="quantitative" caption="Girls' retention gap (points)" default-format="n#,##0.0;-#,##0.0">
+              <calculation class="tableau" formula="[girls_retention_gap] * 100" />
+            </column>
+            <column datatype="string" name="[sector]" role="dimension" type="nominal" />
+            <column-instance column="[district_label]" derivation="None" name="[none:district_label:nk]" pivot="key" type="nominal" />
+            <column-instance column="[Calc_GapPts]" derivation="Sum" name="[sum:Calc_GapPts:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[sector]" derivation="None" name="[none:sector:nk]" pivot="key" type="nominal" />
+          </datasource-dependencies>
+          <sort class="computed" column="[federated.msd8puvw8b585n81xq8t3mmpjtfc].[none:district_label:nk]" direction="ASC" using="[federated.msd8puvw8b585n81xq8t3mmpjtfc].[sum:Calc_GapPts:qk]" />
+          <aggregation value="true" />
+        </view>
+        <style>
+          <style-rule element="mark">
+            <encoding attr="color" field="[federated.msd8puvw8b585n81xq8t3mmpjtfc].[none:sector:nk]" palette="Rajasthan Government vs private" type="palette">
+              <color-palette custom="true" name="Rajasthan Government vs private" type="regular">
+                <color>#2a78d6</color>
+                <color>#eb6834</color>
+              </color-palette>
+              <map to="#2a78d6">
+                <bucket>"Government"</bucket>
+              </map>
+              <map to="#eb6834">
+                <bucket>"Non-government"</bucket>
+              </map>
+            </encoding>
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Circle" />
+            <encodings>
+              <color column="[federated.msd8puvw8b585n81xq8t3mmpjtfc].[none:sector:nk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark" />
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.msd8puvw8b585n81xq8t3mmpjtfc].[none:district_label:nk]</rows>
+        <cols>[federated.msd8puvw8b585n81xq8t3mmpjtfc].[sum:Calc_GapPts:qk]</cols>
+      </table>
+    </worksheet>
+    <worksheet name="Single-teacher change">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" bold="true" fontsize="13">Change in single-teacher schools, 2024-25 to 2025-26 (points)</run>
+            <run fontname="Segoe UI" fontsize="10" fontcolor="#52514e">  same schools in both years; western desert in dark blue</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="Single-teacher change (same schools)" name="federated.2d12l1a5lr43rm5ux3u8wzmznjz1" />
+          </datasources>
+          <datasource-dependencies datasource="federated.2d12l1a5lr43rm5ux3u8wzmznjz1">
+            <column datatype="string" name="[district_label]" role="dimension" type="nominal" />
+            <column datatype="real" name="[change_pp]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0" />
+            <column datatype="integer" name="[Calc_DesertFlag]" role="measure" type="quantitative" caption="Western desert">
+              <calculation class="tableau" formula="IF [district] = &quot;JAISALMER&quot; OR [district] = &quot;BARMER&quot; OR [district] = &quot;PHALODI&quot; OR [district] = &quot;BALOTRA&quot; THEN 1 ELSE 0 END" />
+            </column>
+            <column-instance column="[district_label]" derivation="None" name="[none:district_label:nk]" pivot="key" type="nominal" />
+            <column-instance column="[change_pp]" derivation="Sum" name="[sum:change_pp:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[Calc_DesertFlag]" derivation="Max" name="[max:Calc_DesertFlag:qk]" pivot="key" type="quantitative" />
+          </datasource-dependencies>
+          <sort class="computed" column="[federated.2d12l1a5lr43rm5ux3u8wzmznjz1].[none:district_label:nk]" direction="DESC" using="[federated.2d12l1a5lr43rm5ux3u8wzmznjz1].[sum:change_pp:qk]" />
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Bar" />
+            <encodings>
+              <color column="[federated.2d12l1a5lr43rm5ux3u8wzmznjz1].[max:Calc_DesertFlag:qk]" />
+              <text column="[federated.2d12l1a5lr43rm5ux3u8wzmznjz1].[sum:change_pp:qk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true" />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.2d12l1a5lr43rm5ux3u8wzmznjz1].[none:district_label:nk]</rows>
+        <cols>[federated.2d12l1a5lr43rm5ux3u8wzmznjz1].[sum:change_pp:qk]</cols>
+      </table>
+    </worksheet>
+    <worksheet name="Infrastructure vs single-teacher">
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontname="Segoe UI" bold="true" fontsize="13">Infrastructure vs single-teacher schools, &lt;[Parameters].[Parameter 1]&gt;</run>
+            <run fontname="Segoe UI" fontsize="10" fontcolor="#52514e">  tribal-majority south in dark blue</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="District indicators" name="federated.b3k8z3indoove3bikohnzselorje" />
+          </datasources>
+          <datasource-dependencies datasource="federated.b3k8z3indoove3bikohnzselorje">
+            <column datatype="real" name="[avg_infra_index]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0" />
+            <column datatype="real" name="[pct_single_teacher]" role="measure" type="quantitative" default-format="n#,##0.0;-#,##0.0" />
+            <column datatype="string" name="[district_label]" role="dimension" type="nominal" />
+            <column datatype="integer" name="[Calc_TribalFlag]" role="measure" type="quantitative" caption="Tribal-majority south">
+              <calculation class="tableau" formula="IF [district] = &quot;BANSWARA&quot; OR [district] = &quot;DUNGARPUR&quot; OR [district] = &quot;PRATAPGARH&quot; OR [district] = &quot;SALUMBAR&quot; OR [district] = &quot;UDAIPUR&quot; THEN 1 ELSE 0 END" />
+            </column>
+            <column datatype="string" name="[Calc_TribalLabel]" role="dimension" type="nominal" caption="Label">
+              <calculation class="tableau" formula="IF [district] = &quot;BANSWARA&quot; OR [district] = &quot;DUNGARPUR&quot; OR [district] = &quot;PRATAPGARH&quot; OR [district] = &quot;SALUMBAR&quot; OR [district] = &quot;UDAIPUR&quot; THEN [district_label] END" />
+            </column>
+            <column datatype="boolean" name="[Calc_SelectedYear]" role="dimension" type="nominal" caption="Selected year">
+              <calculation class="tableau" formula="[year] = [Parameters].[Parameter 1]" />
+            </column>
+            <column-instance column="[avg_infra_index]" derivation="Sum" name="[sum:avg_infra_index:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[pct_single_teacher]" derivation="Sum" name="[sum:pct_single_teacher:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[district_label]" derivation="None" name="[none:district_label:nk]" pivot="key" type="nominal" />
+            <column-instance column="[Calc_TribalFlag]" derivation="Max" name="[max:Calc_TribalFlag:qk]" pivot="key" type="quantitative" />
+            <column-instance column="[Calc_TribalLabel]" derivation="None" name="[none:Calc_TribalLabel:nk]" pivot="key" type="nominal" />
+            <column-instance column="[Calc_SelectedYear]" derivation="None" name="[none:Calc_SelectedYear:nk]" pivot="key" type="nominal" />
+          </datasource-dependencies>
+          <filter class="categorical" column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_SelectedYear:nk]">
+            <groupfilter function="member" level="[none:Calc_SelectedYear:nk]" member="true" user:ui-domain="database" user:ui-enumeration="inclusive" user:ui-marker="enumerate" />
+          </filter>
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option="selection-relaxation-allow">
+            <view>
+              <breakdown value="auto" />
+            </view>
+            <mark class="Circle" />
+            <encodings>
+              <color column="[federated.b3k8z3indoove3bikohnzselorje].[max:Calc_TribalFlag:qk]" />
+              <text column="[federated.b3k8z3indoove3bikohnzselorje].[none:Calc_TribalLabel:nk]" />
+              <lod column="[federated.b3k8z3indoove3bikohnzselorje].[none:district_label:nk]" />
+            </encodings>
+            <style>
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true" />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.b3k8z3indoove3bikohnzselorje].[sum:avg_infra_index:qk]</rows>
+        <cols>[federated.b3k8z3indoove3bikohnzselorje].[sum:pct_single_teacher:qk]</cols>
+      </table>
+    </worksheet>
+  </worksheets>
+  <dashboards>
+    <dashboard name="Overview">
+      <style />
+      <size maxheight="900" maxwidth="1200" minheight="900" minwidth="1200" />
+      <zones>
+        <zone h="100000" id="1" w="100000" x="0" y="0" type-v2="layout-basic">
+          <zone h="10000" id="2" w="68000" x="1500" y="800" type-v2="text">
+            <formatted-text>
+              <run fontname="Segoe UI" bold="true" fontsize="22" fontcolor="#0b0b0b">Rajasthan schools, district by district
+</run>
+              <run fontname="Segoe UI" fontsize="11" fontcolor="#52514e">Schools, teachers and infrastructure in all 41 districts. Worst 10 in dark blue.</run>
+            </formatted-text>
+          </zone>
+          <zone h="6500" id="3" w="13500" x="70500" y="2000" mode="compact" param="[Parameters].[Parameter 1]" type-v2="paramctrl" />
+          <zone h="3200" id="4" w="97000" x="1500" y="96200" type-v2="text">
+            <formatted-text>
+              <run fontname="Segoe UI" fontsize="8" fontcolor="#52514e">Source: UDISE+, Ministry of Education, Government of India. District aggregates; patterns are associations, not causes.</run>
+            </formatted-text>
+          </zone>
+          <zone h="6500" id="5" w="14000" x="84500" y="2000" mode="compact" param="[Parameters].[Parameter 2]" type-v2="paramctrl" />
+          <zone h="11000" id="6" w="16000" x="1500" y="12000" name="KPI Schools" />
+          <zone h="11000" id="7" w="16000" x="17900" y="12000" name="KPI Students" />
+          <zone h="11000" id="8" w="16000" x="34300" y="12000" name="KPI Teachers" />
+          <zone h="11000" id="9" w="16000" x="50700" y="12000" name="KPI PTR" />
+          <zone h="11000" id="10" w="16000" x="67100" y="12000" name="KPI Single" />
+          <zone h="11000" id="11" w="16000" x="83500" y="12000" name="KPI Infra" />
+          <zone h="71000" id="12" w="97000" x="1500" y="24500" name="District ranking" />
+          <zone-style>
+            <format attr="background-color" value="#f7f6f2" />
+          </zone-style>
+        </zone>
+      </zones>
+    </dashboard>
+    <dashboard name="Girls in secondary">
+      <style />
+      <size maxheight="900" maxwidth="1200" minheight="900" minwidth="1200" />
+      <zones>
+        <zone h="100000" id="13" w="100000" x="0" y="0" type-v2="layout-basic">
+          <zone h="10000" id="14" w="68000" x="1500" y="800" type-v2="text">
+            <formatted-text>
+              <run fontname="Segoe UI" bold="true" fontsize="22" fontcolor="#0b0b0b">Rajasthan schools, district by district
+</run>
+              <run fontname="Segoe UI" fontsize="11" fontcolor="#52514e">One gender gap, three problems: girls leaving, boys moving in, boys leaving.</run>
+            </formatted-text>
+          </zone>
+          <zone h="6500" id="15" w="13500" x="70500" y="2000" mode="compact" param="[Parameters].[Parameter 1]" type-v2="paramctrl" />
+          <zone h="3200" id="16" w="97000" x="1500" y="96200" type-v2="text">
+            <formatted-text>
+              <run fontname="Segoe UI" fontsize="8" fontcolor="#52514e">Source: UDISE+, Ministry of Education, Government of India. District aggregates; patterns are associations, not causes.</run>
+            </formatted-text>
+          </zone>
+          <zone h="74000" id="17" w="50000" x="1500" y="12000" name="Gender patterns" />
+          <zone h="74000" id="18" w="46000" x="52500" y="12000" name="Government vs private" />
+          <zone h="9300" id="19" w="50000" x="1500" y="86500" name="Gender patterns" param="[federated.b3k8z3indoove3bikohnzselorje].[none:pattern:nk]" type-v2="color" />
+          <zone h="9300" id="20" w="46000" x="52500" y="86500" name="Government vs private" param="[federated.msd8puvw8b585n81xq8t3mmpjtfc].[none:sector:nk]" type-v2="color" />
+          <zone-style>
+            <format attr="background-color" value="#f7f6f2" />
+          </zone-style>
+        </zone>
+      </zones>
+    </dashboard>
+    <dashboard name="Teachers">
+      <style />
+      <size maxheight="900" maxwidth="1200" minheight="900" minwidth="1200" />
+      <zones>
+        <zone h="100000" id="21" w="100000" x="0" y="0" type-v2="layout-basic">
+          <zone h="10000" id="22" w="68000" x="1500" y="800" type-v2="text">
+            <formatted-text>
+              <run fontname="Segoe UI" bold="true" fontsize="22" fontcolor="#0b0b0b">Rajasthan schools, district by district
+</run>
+              <run fontname="Segoe UI" fontsize="11" fontcolor="#52514e">Teachers are thinning out in the desert; the tribal south lags on both counts.</run>
+            </formatted-text>
+          </zone>
+          <zone h="6500" id="23" w="13500" x="70500" y="2000" mode="compact" param="[Parameters].[Parameter 1]" type-v2="paramctrl" />
+          <zone h="3200" id="24" w="97000" x="1500" y="96200" type-v2="text">
+            <formatted-text>
+              <run fontname="Segoe UI" fontsize="8" fontcolor="#52514e">Source: UDISE+, Ministry of Education, Government of India. District aggregates; patterns are associations, not causes.</run>
+            </formatted-text>
+          </zone>
+          <zone h="83500" id="25" w="50000" x="1500" y="12000" name="Single-teacher change" />
+          <zone h="83500" id="26" w="46000" x="52500" y="12000" name="Infrastructure vs single-teacher" />
+          <zone-style>
+            <format attr="background-color" value="#f7f6f2" />
+          </zone-style>
+        </zone>
+      </zones>
+    </dashboard>
+  </dashboards>
+  <windows source-height="30">
+    <window class="worksheet" name="KPI Schools">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="worksheet" name="KPI Students">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="worksheet" name="KPI Teachers">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="worksheet" name="KPI PTR">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="worksheet" name="KPI Single">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="worksheet" name="KPI Infra">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="worksheet" name="District ranking">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="worksheet" name="Gender patterns">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="worksheet" name="Government vs private">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="worksheet" name="Single-teacher change">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="worksheet" name="Infrastructure vs single-teacher">
+      <cards>
+        <edge name="left">
+          <strip size="160">
+            <card type="pages" />
+            <card type="filters" />
+            <card type="marks" />
+          </strip>
+        </edge>
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns" />
+          </strip>
+          <strip size="2147483647">
+            <card type="rows" />
+          </strip>
+          <strip size="31">
+            <card type="title" />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+    <window class="dashboard" maximized="true" name="Overview">
+      <viewpoints>
+        <viewpoint name="KPI Schools">
+          <zoom type="entire-view" />
+        </viewpoint>
+        <viewpoint name="KPI Students">
+          <zoom type="entire-view" />
+        </viewpoint>
+        <viewpoint name="KPI Teachers">
+          <zoom type="entire-view" />
+        </viewpoint>
+        <viewpoint name="KPI PTR">
+          <zoom type="entire-view" />
+        </viewpoint>
+        <viewpoint name="KPI Single">
+          <zoom type="entire-view" />
+        </viewpoint>
+        <viewpoint name="KPI Infra">
+          <zoom type="entire-view" />
+        </viewpoint>
+        <viewpoint name="District ranking">
+          <zoom type="entire-view" />
+        </viewpoint>
+      </viewpoints>
+      <active id="-1" />
+      <device-preview />
+    </window>
+    <window class="dashboard" name="Girls in secondary">
+      <viewpoints>
+        <viewpoint name="Gender patterns">
+          <zoom type="entire-view" />
+        </viewpoint>
+        <viewpoint name="Government vs private">
+          <zoom type="entire-view" />
+        </viewpoint>
+      </viewpoints>
+      <active id="-1" />
+      <device-preview />
+    </window>
+    <window class="dashboard" name="Teachers">
+      <viewpoints>
+        <viewpoint name="Single-teacher change">
+          <zoom type="entire-view" />
+        </viewpoint>
+        <viewpoint name="Infrastructure vs single-teacher">
+          <zoom type="entire-view" />
+        </viewpoint>
+      </viewpoints>
+      <active id="-1" />
+      <device-preview />
+    </window>
+  </windows>
+</workbook>

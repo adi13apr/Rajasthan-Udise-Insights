@@ -51,7 +51,9 @@ def tableau_frame() -> pd.DataFrame:
                  "teachers_change_pct": "teachers_change_matched_pct"})
     out = dy.merge(latest[["district", "pattern"]], on="district", how="left").merge(matched, on="district",
                                                                                       how="left")
-    for col, worst_high in (("avg_infra_index", False), ("pct_single_teacher", True), ("ptr", True)):
+    # rank 1 = worst; for the retention gap, the most negative (girls' share falls most after class 8)
+    for col, worst_high in (("avg_infra_index", False), ("pct_single_teacher", True), ("ptr", True),
+                            ("girls_retention_gap", False)):
         out[f"rank_{col}"] = out.groupby("year")[col].rank(ascending=not worst_high, method="min").astype(int)
     out["state"] = "Rajasthan"  # helps Tableau's geocoding
     return out

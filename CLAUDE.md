@@ -147,6 +147,11 @@ then the Sattva analysis (phases A1-A6).
   must be 2 pages); `docs/resume_bullets.md`. Brief claims were checked against the data.
 - P10: `pipeline/lakehouse.py`, `--delta`: silver (by year) and gold as Delta tables in `data/delta/`,
   one version per run (run id in history), row counts checked, vacuum after 7 days. Opt-in.
+- Tableau: `scripts/make_tableau_workbook.py` writes `tableau/rajasthan_udise_dashboard.twbx` (+ readable
+  `.twb`) from the committed district CSVs, with `.hyper` extracts (Tableau Public refuses live files).
+  Verified by opening it in Tableau Public 2026.3. Lessons: use document format 18.1 (Tableau's loader
+  rejects the published 26.x XSD layout); colour-by-category maps in the XML are ignored, so highlights
+  are 0/1 measures on Tableau's default blue ramp; categorical charts use the default palette.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).
