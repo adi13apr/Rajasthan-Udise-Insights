@@ -182,3 +182,34 @@ helper module). Findings must be written as correlations, not causes.
   by Aditya), an Excel workbook with pivot-table summaries (`excel/`).
 - **A6. Two-page policy brief** (three findings, each with a chart and a
   "so what" for funders and NGOs) and resume bullets for both applications.
+
+---
+
+## Statistical analysis & regression track (Mico, Data Science Intern)
+
+An addition to the two tracks above, not a replacement. Lives in
+`notebooks/statistical_analysis.ipynb` (data from `analysis/school_frame.py`, gold layer only;
+school-level rows stay in memory). One row per school, 2025-26.
+
+- **M1. EDA:** distributions, school categories, districts and trend, blocks, relationships, anomalies
+  (Matplotlib/Seaborn).
+- **M2. Preprocessing:** missing values treated by cause (missing-indicators, structural zeros, labels),
+  rows with zero denominators excluded and counted, outliers by IQR and z-score with keep / cap / drop
+  rules, one-hot encoding with the largest group as reference, rare categories merged.
+- **M3. Feature engineering:** PTR, students per classroom, teacher composition shares, building quality,
+  girls' toilets per 100 girls, grade span, school age.
+- **M4. Correlation:** Pearson/Spearman; chi-square + Cramér's V; point-biserial and ANOVA (eta squared).
+- **M5. Hypothesis tests:** rural vs urban PTR, government vs non-government girls' share in classes
+  9-12, single-teacher status vs location, infrastructure across levels (ANOVA + Tukey), and one test at
+  district level (n = 41). Each with H0/H1, p-value and effect size.
+- **M6. Linear regression:** simple then multiple on log(PTR) with district fixed effects; assumption
+  checks (residuals, Q-Q, Breusch-Pagan, VIF); R², adjusted R², MAE, MSE, RMSE on a test set; 5-fold CV;
+  coefficients as % changes with robust errors.
+- **M7. Logistic regression** on single-teacher schools (imbalanced: stratified split, class weights,
+  PR-AUC), compared with a decision tree and a random forest.
+- **M8. Overfitting check:** train vs test for every model, unconstrained tree, depth curve.
+- **M9. Write-up** for non-technical readers, generated from the computed results.
+
+Results are saved to `reports/analysis/stats_module_results.json` when the notebook runs. Resume
+bullets and interview answers are written only from Aditya's own run of the notebook.
+

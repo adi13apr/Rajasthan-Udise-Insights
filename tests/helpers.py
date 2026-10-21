@@ -31,12 +31,12 @@ FACILITY_ROWS = [
     "103,1,1,2,2,2,2,1,1,0,1,1,0,1,1,1,1,1,1,0,0,0,1,0,0,2",   # school quarantined -> orphan
     "104,1,1,2,2,2,2,1,1,0,1,1,0,1,1,1,1,1,x,0,0,0,1,0,0,2",   # laptop 'x' -> not_a_number
 ]
-TEACHER_COLS = "pseudocode,total_tch,female,regular,contract,trained_cwsn"
+TEACHER_COLS = "pseudocode,total_tch,female,regular,contract,trained_cwsn,graduate,post_graduate_and_above"
 TEACHER_ROWS = [
-    "101,1,1,1,0,0",
-    "102,0,0,0,0,0",   # 0 teachers, has students -> flag
-    "104,1,0,1,0,0",   # 100 students per teacher -> flag high_ptr
-    "106,-2,0,0,0,0",  # negative count -> quarantine (checked before orphan)
+    "101,1,1,1,0,0,1,0",
+    "102,0,0,0,0,0,0,0",   # 0 teachers, has students -> flag
+    "104,1,0,1,0,0,0,1",   # 100 students per teacher -> flag high_ptr
+    "106,-2,0,0,0,0,0,0",  # negative count -> quarantine (checked before orphan)
 ]
 ENROL_COLS = "pseudocode,item_group,item_id,cpp_b,cpp_g," + ",".join(
     f"c{k}_{s}" for k in range(1, 13) for s in "bg")

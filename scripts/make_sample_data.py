@@ -44,7 +44,7 @@ FIXED_TIME = (2025, 1, 1, 0, 0, 0)
 
 PROFILE_COLS = ["pseudocode", "state", "district", "block", "rural_urban", "lgd_urban_local_body_name",
                 "lgd_vill_name", "lgd_block_name", "school_category", "school_type", "lowclass",
-                "highclass", "managment", "pincode", "anganwadi_yn", "approachable_road"]
+                "highclass", "managment", "pincode", "anganwadi_yn", "approachable_road", "estd_year"]
 FACILITY_COLS = ["pseudocode", "electricity_availability", "hand_pump_fun_yn", "well_prot_fun_yn",
                  "tap_fun_yn", "othsrc_fun_yn", "pack_water_fun_yn", "total_girls_toilet",
                  "total_girls_func_toilet", "func_girls_cwsn_friendly", "total_boys_toilet",
@@ -52,7 +52,8 @@ FACILITY_COLS = ["pseudocode", "electricity_availability", "hand_pump_fun_yn", "
                  "library_availability", "playground_available", "availability_ramps", "internet",
                  "laptop", "desktop", "tablet", "total_class_rooms", "classrooms_in_good_condition",
                  "classrooms_needs_minor_repair", "classrooms_needs_major_repair", "solar_panel"]
-TEACHER_COLS = ["pseudocode", "total_tch", "male", "female", "regular", "contract", "trained_cwsn"]
+TEACHER_COLS = ["pseudocode", "total_tch", "male", "female", "regular", "contract", "trained_cwsn",
+                "graduate", "post_graduate_and_above"]
 
 EXPECTED_QUARANTINE = {
     "schools": {"missing_required": 1, "unknown_district": 1, "duplicate_school_year": 2 * SCHOOLS_PER_DISTRICT},
@@ -102,7 +103,8 @@ def profile_row(rng, s, year):
     return [s["pseudocode"], "RAJASTHAN", district_in(s, year), s["block"], s["rural_urban"],
             "Sample Municipal Body" if urban else "", "" if urban else "Sample Village",
             s["block"].title(), s["school_category"], s["school_type"], s["lowclass"], s["highclass"],
-            s["managment"], 300000 + s["pseudocode"] % 1000, yn(rng), yn(rng)]
+            s["managment"], 300000 + s["pseudocode"] % 1000, yn(rng), yn(rng),
+            1950 + s["pseudocode"] % 70]
 
 
 def facility_row(rng, s):
@@ -118,7 +120,9 @@ def teacher_row(rng, s):
     total = rng.choice([1, 2, 3, 5, 8, 12, 20])
     female = rng.randint(0, total)
     regular = rng.randint(0, total)
-    return [s["pseudocode"], total, total - female, female, regular, total - regular, rng.randint(0, 1)]
+    graduate = rng.randint(0, total)
+    return [s["pseudocode"], total, total - female, female, regular, total - regular, rng.randint(0, 1),
+            graduate, total - graduate]
 
 
 def enrolment_rows(rng, s, year):

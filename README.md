@@ -14,6 +14,9 @@ Two parts:
    SQL data marts, validation against official figures, tests and CI.
 2. **Analysis:** district rankings, girls' secondary enrolment, a school-level regression and
    year-on-year changes, read from the gold marts (`notebooks/`, `docs/policy_brief.md`).
+3. **Statistical analysis & regression modelling:** EDA, preprocessing, feature engineering,
+   correlation analysis, hypothesis tests, linear and logistic regression with assumption and
+   overfitting checks (`notebooks/statistical_analysis.ipynb`).
 
 ## Architecture
 

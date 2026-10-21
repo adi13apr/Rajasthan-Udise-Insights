@@ -13,7 +13,12 @@ Aditya (final-year CSE student) is building one portfolio project that must serv
    (warehouse / marts / lakehouse), testing, performance, documentation, Python,
    SQL, Pandas, Git.
 
-Nothing from either goal may be dropped. Data engineering comes first (phases P0-P10),
+3. **Data Science Intern (Mico)** (added later, an addition not a replacement): EDA, preprocessing,
+   feature engineering, correlation analysis, hypothesis testing, linear/logistic regression with
+   assumption checks, overfitting checks. Module: `notebooks/statistical_analysis.ipynb`
+   (`analysis/school_frame.py`). Resume bullets only from Aditya's own run of the notebook.
+
+Nothing from any goal may be dropped. Data engineering comes first (phases P0-P10),
 then the Sattva analysis (phases A1-A6).
 
 ## How to work with Aditya
