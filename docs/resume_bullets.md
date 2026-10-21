@@ -8,6 +8,29 @@ Pick 3-4 per application; each one can be defended line by line in an interview.
 analysis on UDISE+ school-level data (41 districts, 2 years, 1.06 lakh schools, 1.5 crore students).
 Python, SQL, DuckDB, Parquet, pandas, statsmodels, pytest, GitHub Actions.
 
+## Combined: Sattva + Data Engineering + Mico (Data Science)
+
+From the statistical module run of 21 Oct 2026 (`reports/analysis/stats_module_results.json`) and the
+pipeline runs above.
+
+- Built a tested ELT pipeline in Python, SQL and DuckDB that ingests 94 UDISE+ files (1.72 million
+  rows) into a star schema with a 6.4-million-row fact table and an SCD Type 2 school dimension; 15
+  data-quality rules quarantine bad rows with reasons, and 33 SQL data tests plus 52 pytest tests run in
+  GitHub Actions CI. Queries run 33x faster than on raw CSV (885 ms to 27 ms).
+- Analysed 1.06 lakh schools across all 41 districts of Rajasthan after matching all 8 official 2024-25
+  UDISE+ totals exactly; found three distinct causes of the secondary-school gender gap and wrote a
+  two-page policy brief for funders and NGOs, with a Tableau dashboard (say "published" once it is on
+  Tableau Public).
+- Ran EDA, missing-value treatment, IQR/z-score outlier detection and feature engineering (14 ratio and
+  per-student features) on 105,801 schools, then correlation analysis (Pearson/Spearman, chi-square with
+  Cramer's V) and 5 hypothesis tests with p-values and effect sizes: girls are 52.7% of class 9-12
+  students in government vs 40.3% in non-government co-ed schools (Welch t-test, p < 0.001, Cohen's d = 0.95).
+- Modelled pupil-teacher ratio with multiple linear regression and district fixed effects (test R² = 0.755,
+  Adjusted R² = 0.755, RMSE = 0.373 on log scale, 5-fold CV R² = 0.760; all VIF < 5) and compared logistic
+  regression, a decision tree and a random forest for flagging single-teacher schools under 6.7% class
+  imbalance (random forest ROC-AUC 0.926, PR-AUC 0.605 vs 0.067 baseline, recall 92%), with train-test
+  gaps under 0.005.
+
 ## Sattva Consulting: Data Intern (India Data Insights)
 
 - Analysed UDISE+ microdata for all 41 districts of Rajasthan (1.06 lakh schools, 1.5 crore
