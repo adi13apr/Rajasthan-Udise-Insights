@@ -86,6 +86,8 @@ synthetic files; CI does exactly that on every push.
 - **`docs/policy_brief.pdf`** (source: `policy_brief.md`): two-page brief for funders and NGOs,
   three findings with charts. `docs/resume_bullets.md`: project bullets with real numbers.
 
+- **Interactive dashboard** (web version: Overview, Girls in secondary, Teachers, the school-level
+  model and a sortable table of all districts) built from the same district files; `docs/tableau_guide.md` rebuilds it in Tableau Public step by step.
 - `docs/design_decisions.md`: why ELT, a star schema, Parquet by year, DuckDB, SCD2,
   synthetic data in CI, and how the management codes were validated.
 - `docs/data_dictionary.md`: every gold table and column (generated from the database).
