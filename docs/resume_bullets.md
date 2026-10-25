@@ -19,8 +19,8 @@ pipeline runs above.
   GitHub Actions CI. Queries run 33x faster than on raw CSV (885 ms to 27 ms).
 - Analysed 1.06 lakh schools across all 41 districts of Rajasthan after matching all 8 official 2024-25
   UDISE+ totals exactly; found three distinct causes of the secondary-school gender gap and wrote a
-  two-page policy brief for funders and NGOs, with a Tableau dashboard (say "published" once it is on
-  Tableau Public).
+  two-page policy brief for funders and NGOs, with an interactive Tableau dashboard published on
+  Tableau Public (public.tableau.com/app/profile/aditya.chauhan4106).
 - Ran EDA, missing-value treatment, IQR/z-score outlier detection and feature engineering (14 ratio and
   per-student features) on 105,801 schools, then correlation analysis (Pearson/Spearman, chi-square with
   Cramer's V) and 5 hypothesis tests with p-values and effect sizes: girls are 52.7% of class 9-12
