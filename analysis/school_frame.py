@@ -40,6 +40,8 @@ left join fact_teachers t       using (school_key, year_key)
 left join read_parquet('{silver}/*/*.parquet', hive_partitioning = true, union_by_name = true) sv
        on sv.pseudocode = s.pseudocode and sv.year = i.academic_year
 where i.academic_year = ?
+order by s.pseudocode                                        -- fixed row order: a parallel join returns rows in
+                                                             -- any order, which would change the seeded train/test split
 """
 
 

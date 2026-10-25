@@ -10,7 +10,7 @@ Python, SQL, DuckDB, Parquet, pandas, statsmodels, pytest, GitHub Actions.
 
 ## Combined: Sattva + Data Engineering + Mico (Data Science)
 
-From the statistical module run of 21 Oct 2026 (`reports/analysis/stats_module_results.json`) and the
+From the statistical module run of 25 Oct 2026 (`reports/analysis/stats_module_results.json`) and the
 pipeline runs above.
 
 - Built a tested ELT pipeline in Python, SQL and DuckDB that ingests 94 UDISE+ files (1.72 million
@@ -25,11 +25,11 @@ pipeline runs above.
   per-student features) on 105,801 schools, then correlation analysis (Pearson/Spearman, chi-square with
   Cramer's V) and 5 hypothesis tests with p-values and effect sizes: girls are 52.7% of class 9-12
   students in government vs 40.3% in non-government co-ed schools (Welch t-test, p < 0.001, Cohen's d = 0.95).
-- Modelled pupil-teacher ratio with multiple linear regression and district fixed effects (test R² = 0.755,
+- Modelled pupil-teacher ratio with multiple linear regression and district fixed effects (test R² = 0.756,
   Adjusted R² = 0.755, RMSE = 0.373 on log scale, 5-fold CV R² = 0.760; all VIF < 5) and compared logistic
   regression, a decision tree and a random forest for flagging single-teacher schools under 6.7% class
-  imbalance (random forest ROC-AUC 0.926, PR-AUC 0.605 vs 0.067 baseline, recall 92%), with train-test
-  gaps under 0.005.
+  imbalance (random forest ROC-AUC 0.927, PR-AUC 0.616 vs 0.067 baseline, recall 92%), with train-test
+  gaps of 0.015 or less (0.76 for an unconstrained tree).
 
 ## Sattva Consulting: Data Intern (India Data Insights)
 
@@ -62,6 +62,6 @@ pipeline runs above.
 - Wrote 33 SQL data tests (referential integrity, grain, SCD2, totals) that gate each gold build, and
   replaced a pandas summary with SQL marts reproducing it cell for cell (9,882 of 9,888 identical,
   6 differing only in rounding).
-- Benchmarked raw CSV vs Parquet vs the star schema (885 ms -> 27 ms for the same query); added 45
+- Benchmarked raw CSV vs Parquet vs the star schema (885 ms -> 27 ms for the same query); added 52
   pytest tests and GitHub Actions CI on synthetic data (the source data cannot be redistributed),
   which caught a dependency break (pandas 3) that was then fixed by pinning versions.

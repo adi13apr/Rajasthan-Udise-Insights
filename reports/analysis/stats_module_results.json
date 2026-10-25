@@ -79,14 +79,14 @@
     "location vs students_per_classroom": 0.001
   },
   "test_rural_urban": {
-    "p": 0.0,
+    "p": 2.27e-30,
     "d": 0.103329,
     "median_ptr_urban": 16.25,
     "median_ptr_rural": 14.5,
-    "p_mann_whitney": 0.0
+    "p_mann_whitney": 7.45e-89
   },
   "test_govt_girls": {
-    "p": 0.0,
+    "p": "< 1e-300",
     "d": 0.953142,
     "mean_govt": 0.526958,
     "mean_non_govt": 0.403166,
@@ -94,13 +94,13 @@
     "n_non_govt": 12786
   },
   "test_single_location": {
-    "p": 0.0,
+    "p": 1.38e-49,
     "cramers_v": 0.045512,
     "rate_rural": 0.072805,
     "rate_urban": 0.042968
   },
   "test_anova_level": {
-    "p": 0.0,
+    "p": "< 1e-300",
     "eta2": 0.288097,
     "means": {
       "Primary": 66.338841,
@@ -108,315 +108,235 @@
       "Secondary": 87.209309,
       "Higher secondary": 92.653623
     },
-    "p_kruskal": 0.0
+    "p_kruskal": "< 1e-300"
   },
   "test_tribal_districts": {
-    "p": 9.4e-05,
+    "p": 9.39e-05,
     "d": -3.189157,
     "mean_tribal": 68.3078,
     "mean_other": 81.13125,
     "n_tribal": 5,
-    "p_mann_whitney": 1.1e-05
+    "p_mann_whitney": 1.07e-05
   },
   "simple": {
-    "slope": 0.439528,
-    "r2_train": 0.531857,
-    "r2_test": 0.523003
+    "slope": 0.439297,
+    "r2_train": 0.531922,
+    "r2_test": 0.522757
   },
   "vif_dropped": [
     "grade_span"
   ],
-  "vif_max": 4.089948,
+  "vif_max": 4.093097,
   "assumptions": {
-    "breusch_pagan_p": 0.0,
-    "residual_skew": 0.54341,
-    "residual_kurtosis": 5.983751,
-    "jarque_bera_p": 0.0
+    "breusch_pagan_p": "< 1e-300",
+    "residual_skew": 0.551556,
+    "residual_kurtosis": 6.014606,
+    "jarque_bera_p": "< 1e-300"
   },
   "linear": {
     "train": {
-      "R2": 0.760344,
-      "Adj_R2": 0.760177,
-      "MAE": 0.272765,
-      "MSE": 0.138425,
-      "RMSE": 0.372054
+      "R2": 0.760304,
+      "Adj_R2": 0.760136,
+      "MAE": 0.272783,
+      "MSE": 0.13839,
+      "RMSE": 0.372009
     },
     "test": {
-      "R2": 0.755446,
-      "Adj_R2": 0.754762,
-      "MAE": 0.27312,
-      "MSE": 0.139108,
-      "RMSE": 0.372972
+      "R2": 0.755567,
+      "Adj_R2": 0.754883,
+      "MAE": 0.272865,
+      "MSE": 0.139272,
+      "RMSE": 0.373192
     },
-    "cv_r2_mean": 0.759885,
-    "cv_r2_sd": 0.004876,
-    "cv_rmse_mean": 0.372368,
-    "rmse_factor_ptr": 1.452044
+    "cv_r2_mean": 0.75993,
+    "cv_r2_sd": 0.003397,
+    "cv_rmse_mean": 0.372283,
+    "rmse_factor_ptr": 1.452363
   },
   "linear_coefficients_pct": {
-    "location = Urban": 4.45,
-    "management = Other": -51.74,
-    "management = Other Non-Government": -6.12,
+    "location = Urban": 4.64,
+    "management = Other": -51.83,
+    "management = Other Non-Government": -6.13,
     "management = Private Unaided": -8.06,
-    "level = Higher secondary": -57.51,
-    "level = Secondary": -48.05,
-    "level = Upper primary": -42.86,
-    "district = AJMER": 4.83,
-    "district = ALWAR": 4.56,
-    "district = BALOTRA": 22.47,
-    "district = BANSWARA": 8.54,
-    "district = BARAN": 1.77,
-    "district = BARMER": 23.23,
-    "district = BEAWAR": 8.97,
-    "district = BHARATPUR": -4.03,
-    "district = BHILWARA": 10.74,
-    "district = BIKANER": 7.7,
-    "district = BUNDI": 4.47,
-    "district = CHITTORGARH": 7.46,
-    "district = CHURU": 0.65,
-    "district = DAUSA": 0.77,
-    "district = DEEG": -1.65,
-    "district = DHOLPUR": 2.79,
-    "district = DIDWANA-KUCHAMAN": -2.56,
-    "district = DUNGARPUR": 9.52,
-    "district = GANGANAGAR": 6.1,
-    "district = HANUMANGARH": 2.28,
-    "district = JAISALMER": 19.0,
-    "district = JALORE": 16.48,
-    "district = JHALAWAR": 4.4,
-    "district = JHUNJHUNU": -12.99,
-    "district = JODHPUR": 1.71,
-    "district = KARAULI": -1.36,
-    "district = KHAIRTHAL-TIJARA": 0.93,
-    "district = KOTA": -1.27,
-    "district = KOTPUTLI-BEHROR": -7.48,
-    "district = NAGAUR": 2.24,
-    "district = PALI": 8.63,
-    "district = PHALODI": 7.78,
-    "district = PRATAPGARH": 17.44,
-    "district = RAJSAMAND": 15.64,
-    "district = SALUMBAR": 16.08,
-    "district = SAWAI MADHOPUR": -1.51,
-    "district = SIKAR": -6.85,
-    "district = SIROHI": 11.33,
-    "district = TONK": -4.08,
-    "district = UDAIPUR": 9.2,
-    "log_enrolment": 99.41,
-    "infra_index": -0.34,
+    "level = Higher secondary": -57.67,
+    "level = Secondary": -48.07,
+    "level = Upper primary": -42.88,
+    "log_enrolment": 99.37,
+    "infra_index": -0.33,
     "students_per_classroom": 0.38,
     "good_classroom_share": 0.84,
-    "female_teacher_share": -11.92,
-    "contract_teacher_share": 1.61,
-    "graduate_teacher_share": -3.06,
-    "school_age": -0.47,
-    "has_pre_primary": -16.39,
-    "co_ed": -1.59,
-    "handwash_not_reported": 1.9,
-    "no_classrooms": 10.22
+    "female_teacher_share": -12.07,
+    "contract_teacher_share": 1.34,
+    "graduate_teacher_share": -3.34,
+    "school_age": -0.46,
+    "has_pre_primary": -16.27,
+    "co_ed": -2.02,
+    "handwash_not_reported": 2.64,
+    "no_classrooms": 9.97
   },
   "linear_coefficients_p": {
-    "location = Urban": 0.0,
-    "management = Other": 0.0,
-    "management = Other Non-Government": 3e-06,
-    "management = Private Unaided": 0.0,
-    "level = Higher secondary": 0.0,
-    "level = Secondary": 0.0,
-    "level = Upper primary": 0.0,
-    "district = AJMER": 5e-06,
-    "district = ALWAR": 1e-05,
-    "district = BALOTRA": 0.0,
-    "district = BANSWARA": 0.0,
-    "district = BARAN": 0.101186,
-    "district = BARMER": 0.0,
-    "district = BEAWAR": 0.0,
-    "district = BHARATPUR": 3.3e-05,
-    "district = BHILWARA": 0.0,
-    "district = BIKANER": 0.0,
-    "district = BUNDI": 2.3e-05,
-    "district = CHITTORGARH": 0.0,
-    "district = CHURU": 0.523168,
-    "district = DAUSA": 0.434539,
-    "district = DEEG": 0.191687,
-    "district = DHOLPUR": 0.012765,
-    "district = DIDWANA-KUCHAMAN": 0.008225,
-    "district = DUNGARPUR": 0.0,
-    "district = GANGANAGAR": 0.0,
-    "district = HANUMANGARH": 0.025869,
-    "district = JAISALMER": 0.0,
-    "district = JALORE": 0.0,
-    "district = JHALAWAR": 1.9e-05,
-    "district = JHUNJHUNU": 0.0,
-    "district = JODHPUR": 0.055679,
-    "district = KARAULI": 0.162406,
-    "district = KHAIRTHAL-TIJARA": 0.474263,
-    "district = KOTA": 0.2424,
-    "district = KOTPUTLI-BEHROR": 0.0,
-    "district = NAGAUR": 0.02071,
-    "district = PALI": 0.0,
-    "district = PHALODI": 0.0,
-    "district = PRATAPGARH": 0.0,
-    "district = RAJSAMAND": 0.0,
-    "district = SALUMBAR": 0.0,
-    "district = SAWAI MADHOPUR": 0.152737,
-    "district = SIKAR": 0.0,
-    "district = SIROHI": 0.0,
-    "district = TONK": 2.5e-05,
-    "district = UDAIPUR": 0.0,
-    "log_enrolment": 0.0,
-    "infra_index": 0.0,
-    "students_per_classroom": 0.0,
-    "good_classroom_share": 0.025401,
-    "female_teacher_share": 0.0,
-    "contract_teacher_share": 0.019466,
-    "graduate_teacher_share": 0.0,
-    "school_age": 0.0,
-    "has_pre_primary": 0.0,
-    "co_ed": 0.058628,
-    "handwash_not_reported": 0.042425,
-    "no_classrooms": 0.0
+    "location = Urban": 3.23e-21,
+    "management = Other": 4.29e-196,
+    "management = Other Non-Government": 2.28e-06,
+    "management = Private Unaided": 6.91e-46,
+    "level = Higher secondary": "< 1e-300",
+    "level = Secondary": "< 1e-300",
+    "level = Upper primary": "< 1e-300",
+    "log_enrolment": "< 1e-300",
+    "infra_index": 7.05e-262,
+    "students_per_classroom": 7.46e-96,
+    "good_classroom_share": 0.024918,
+    "female_teacher_share": 7.49e-133,
+    "contract_teacher_share": 0.049747,
+    "graduate_teacher_share": 5.65e-09,
+    "school_age": "< 1e-300",
+    "has_pre_primary": 3.08e-266,
+    "co_ed": 0.01631,
+    "handwash_not_reported": 0.004893,
+    "no_classrooms": 1.34e-12
   },
   "classifiers": {
     "Logistic regression": {
       "train": {
-        "ROC_AUC": 0.907404,
-        "PR_AUC": 0.425051,
-        "precision": 0.216712,
-        "recall": 0.884609,
-        "F1": 0.348138
+        "ROC_AUC": 0.907043,
+        "PR_AUC": 0.423804,
+        "precision": 0.21622,
+        "recall": 0.885134,
+        "F1": 0.347542
       },
       "test": {
-        "ROC_AUC": 0.914594,
-        "PR_AUC": 0.434881,
-        "precision": 0.216477,
-        "recall": 0.894258,
-        "F1": 0.348574
+        "ROC_AUC": 0.915797,
+        "PR_AUC": 0.43875,
+        "precision": 0.215571,
+        "recall": 0.897759,
+        "F1": 0.347661
       }
     },
     "Decision tree": {
       "train": {
-        "ROC_AUC": 0.92462,
-        "PR_AUC": 0.578391,
-        "precision": 0.220862,
-        "recall": 0.929084,
-        "F1": 0.356886
+        "ROC_AUC": 0.931049,
+        "PR_AUC": 0.600637,
+        "precision": 0.238618,
+        "recall": 0.905796,
+        "F1": 0.377729
       },
       "test": {
-        "ROC_AUC": 0.916412,
-        "PR_AUC": 0.578305,
-        "precision": 0.21508,
-        "recall": 0.920868,
-        "F1": 0.348714
+        "ROC_AUC": 0.911697,
+        "PR_AUC": 0.585546,
+        "precision": 0.22552,
+        "recall": 0.872549,
+        "F1": 0.358406
       }
     },
     "Random forest": {
       "train": {
-        "ROC_AUC": 0.930057,
-        "PR_AUC": 0.607735,
-        "precision": 0.219432,
-        "recall": 0.928909,
-        "F1": 0.355004
+        "ROC_AUC": 0.929927,
+        "PR_AUC": 0.606056,
+        "precision": 0.220065,
+        "recall": 0.93101,
+        "F1": 0.355986
       },
       "test": {
-        "ROC_AUC": 0.926353,
-        "PR_AUC": 0.605249,
-        "precision": 0.216955,
+        "ROC_AUC": 0.926751,
+        "PR_AUC": 0.616485,
+        "precision": 0.216136,
         "recall": 0.922969,
-        "F1": 0.351326
+        "F1": 0.350252
       }
     }
   },
   "pr_auc_baseline": 0.067483,
   "odds_ratios": {
-    "log_enrolment": 0.312,
-    "grade_span": 0.571,
-    "infra_index": 0.736,
-    "school_age": 0.481,
-    "students_per_classroom": 1.242,
-    "good_classroom_share": 1.127,
-    "has_pre_primary": 0.789,
-    "co_ed": 1.173,
-    "handwash_not_reported": 1.063,
-    "no_classrooms": 1.093,
-    "location_Urban": 2.279,
-    "management_Other Non-Government": 1.639,
-    "management_Private Unaided": 0.509,
-    "management_State Government": 1.226,
-    "level_Primary": 1.108,
-    "level_Secondary": 1.006,
-    "level_Upper primary": 0.725
+    "log_enrolment": 0.315,
+    "grade_span": 0.538,
+    "infra_index": 0.734,
+    "school_age": 0.492,
+    "students_per_classroom": 1.229,
+    "good_classroom_share": 1.115,
+    "has_pre_primary": 0.775,
+    "co_ed": 1.187,
+    "handwash_not_reported": 1.066,
+    "no_classrooms": 1.097,
+    "location_Urban": 2.234,
+    "management_Other": 0.977,
+    "management_Other Non-Government": 1.402,
+    "management_Private Unaided": 0.456,
+    "level_Higher secondary": 1.048,
+    "level_Secondary": 0.908,
+    "level_Upper primary": 0.677
   },
   "overfitting": {
     "Linear regression (R\u00b2)": {
       "train": 0.7603,
-      "test": 0.7554,
-      "gap": 0.0049
+      "test": 0.7556,
+      "gap": 0.0047
     },
     "Logistic regression (PR-AUC)": {
-      "train": 0.4251,
-      "test": 0.4349,
-      "gap": -0.0098
+      "train": 0.4238,
+      "test": 0.4387,
+      "gap": -0.0149
     },
     "Decision tree (PR-AUC)": {
-      "train": 0.5784,
-      "test": 0.5783,
-      "gap": 0.0001
+      "train": 0.6006,
+      "test": 0.5855,
+      "gap": 0.0151
     },
     "Random forest (PR-AUC)": {
-      "train": 0.6077,
-      "test": 0.6052,
-      "gap": 0.0025
+      "train": 0.6061,
+      "test": 0.6165,
+      "gap": -0.0104
     },
     "Unconstrained decision tree (PR-AUC)": {
-      "train": 0.9992,
-      "test": 0.2418,
-      "gap": 0.7575
+      "train": 0.9993,
+      "test": 0.2381,
+      "gap": 0.7612
     }
   },
   "depth_curve": [
     {
       "max_depth": "2",
-      "train": 0.264,
-      "validation": 0.2633
+      "train": 0.2708,
+      "validation": 0.2682
     },
     {
       "max_depth": "3",
-      "train": 0.3353,
-      "validation": 0.3339
+      "train": 0.3486,
+      "validation": 0.3469
     },
     {
       "max_depth": "4",
-      "train": 0.4247,
-      "validation": 0.4237
+      "train": 0.4197,
+      "validation": 0.4171
     },
     {
       "max_depth": "6",
-      "train": 0.4811,
-      "validation": 0.468
+      "train": 0.485,
+      "validation": 0.4675
     },
     {
       "max_depth": "8",
-      "train": 0.5436,
-      "validation": 0.5043
+      "train": 0.5465,
+      "validation": 0.5014
     },
     {
       "max_depth": "10",
-      "train": 0.5971,
-      "validation": 0.5083
+      "train": 0.5892,
+      "validation": 0.4898
     },
     {
       "max_depth": "14",
-      "train": 0.6813,
-      "validation": 0.4594
+      "train": 0.6763,
+      "validation": 0.4531
     },
     {
       "max_depth": "18",
-      "train": 0.7548,
-      "validation": 0.3995
+      "train": 0.7452,
+      "validation": 0.3984
     },
     {
       "max_depth": "None",
       "train": 0.9995,
-      "validation": 0.2274
+      "validation": 0.2241
     }
   ]
 }

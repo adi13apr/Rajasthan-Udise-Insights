@@ -1,10 +1,9 @@
 # Interview prep: statistical analysis & regression module
 
 Short answers to the questions most likely to come up about `notebooks/statistical_analysis.ipynb`.
-Numbers are from the run of 21 Oct 2026 (`reports/analysis/stats_module_results.json`). After the fixes
-that followed that run (reference levels and wider grids for the logistic model and the tree), re-run
-the notebook and update the logistic regression and decision tree figures; the linear regression, the
-hypothesis tests and the random forest do not change.
+Numbers are from the run of 25 Oct 2026 (`reports/analysis/stats_module_results.json`), after the fixes
+to reference levels, tuning grids and p-value display, and with a fixed row order (see
+"Are your results reproducible?"). Two consecutive runs gave identical results.
 
 ## Data and sample
 
@@ -136,9 +135,9 @@ percentage changes: exp(b) - 1.
 District dummies compare each school only with schools in its own district. That absorbs district
 staffing policy, geography and demand that I cannot measure directly.
 
-**How do you read R² = 0.755?**
-The model explains 75.5% of the variation in log(PTR) for schools it never saw (test set). Adjusted R² is
-the same (0.755) because ~85k rows easily support ~60 predictors. Simple regression on size alone gave
+**How do you read R² = 0.756?**
+The model explains 75.6% of the variation in log(PTR) for schools it never saw (test set). Adjusted R² is
+almost the same (0.755) because ~85k rows easily support ~60 predictors. Simple regression on size alone gave
 0.523, so the other features add about 23 points.
 
 **What does RMSE = 0.373 mean in plain terms?**
@@ -146,16 +145,16 @@ It is on the log scale; exp(0.373) = 1.45, so a typical prediction is off by a f
 (e.g. predicting 20 when the truth is 14 or 29).
 
 **How did you check the assumptions?**
-- Linearity and constant variance: residuals vs fitted plot. Breusch-Pagan p ~ 0 says the variance is
+- Linearity and constant variance: residuals vs fitted plot. Breusch-Pagan p < 0.001 says the variance is
   not constant, so I report HC3 robust standard errors.
-- Normality of residuals: Q-Q plot and histogram. Skew 0.54, kurtosis 5.98 (heavier tails than normal).
+- Normality of residuals: Q-Q plot and histogram. Skew 0.55, kurtosis 6.01 (heavier tails than normal).
   With 85k residuals formal tests reject tiny departures; normality matters for p-values, not for the
   coefficients, and the robust errors and large n make inference reliable.
 - Multicollinearity: VIF; `grade_span` was removed (VIF > 5), and all remaining VIFs are below 5.
 
 **Interpret a coefficient.**
-Higher-secondary schools have 57.5% fewer students per teacher than primary schools of the same size in
-the same district (a likely reason, not tested here: senior classes need a teacher per subject). Urban schools have 4.5% more, private
+Higher-secondary schools have 57.7% fewer students per teacher than primary schools of the same size in
+the same district (a likely reason, not tested here: senior classes need a teacher per subject). Urban schools have 4.6% more, private
 unaided 8.1% fewer than state-government schools.
 
 **Is the model causal?**
@@ -177,7 +176,7 @@ under imbalance. A model that always says "no" is 93.3% accurate and useless, so
 
 **Why PR-AUC and not only ROC-AUC?**
 ROC-AUC can look high with many true negatives. PR-AUC focuses on the positive class, and its baseline is
-the positive rate: the random forest scores 0.605 against 0.067 for a random guess (ROC-AUC 0.926).
+the positive rate: the random forest scores 0.616 against 0.067 for a random guess (ROC-AUC 0.927).
 
 **Precision is only 22% at 92% recall. Is that bad?**
 It is a trade-off set by the 0.5 threshold with balanced class weights. For a screening list, missing
@@ -187,30 +186,42 @@ ROC curves; adding a PR curve is a quick extension).
 
 **Why did the random forest beat logistic regression?**
 It captures non-linear effects and interactions (size matters differently by level and district).
-Logistic regression is still useful: its odds ratios are easy to explain. In the first run, urban schools
-had about 2.3 times the odds of being single-teacher once size was held constant, even though the raw
+Logistic regression is still useful: its odds ratios are easy to explain. Against rural schools (the larger
+group), urban schools have about 2.2 times the odds of being single-teacher once size was held constant, even though the raw
 rate is lower in urban schools (4.3% vs 7.3%). Rural schools are smaller on average (section 1.2) and size
 is the strongest predictor, so size confounds the raw comparison.
 
 **How were hyperparameters chosen?**
 By 5-fold cross-validation on the training set only: `C` for logistic regression, `max_depth` and
-`min_samples_leaf` for the tree. The first run's best values sat on the edge of their grids (C = 0.01, the
-smallest tried; depth 12, the largest), so the grids were widened.
+`min_samples_leaf` for the tree. In earlier runs the best values sat on the edge of their grids (C = 0.01,
+then the smallest tried; depth 12 and later leaf size 100, the largest), so the grids were widened. Now every
+best value is inside its grid: C = 0.01 (0.001 to 10), depth 30 (3 to 40), leaf size 100 (20 to 800). A value
+on the edge means the real optimum may lie beyond the range searched.
 
 ## Overfitting
 
 **How do you know the models do not overfit?**
-Train vs test gaps are tiny: linear regression R² 0.760 vs 0.755; random forest PR-AUC 0.608 vs 0.605.
-5-fold CV R² for the linear model is 0.760 ± 0.005, so the result is stable across folds.
+Train vs test gaps are small: linear regression R² 0.760 vs 0.756; random forest PR-AUC 0.606 vs 0.616
+(slightly higher on test, which is noise, not a problem); tuned tree 0.601 vs 0.586. 5-fold CV R² for the
+linear model is 0.760 ± 0.003, so the result is stable across folds.
 
 **Show me overfitting.**
-An unconstrained decision tree: PR-AUC 0.999 on training data and 0.242 on the test set. The depth curve
-shows training scores rising with depth while validation scores fall after a point (at depth 18, 0.755
-train vs 0.400 validation).
+An unconstrained decision tree: PR-AUC 0.999 on training data and 0.238 on the test set. The depth curve
+shows training scores rising with depth while validation scores fall after a point (at depth 18, 0.745
+train vs 0.398 validation).
 
 **What did you do about it?**
 Limited tree depth and leaf size (chosen by CV), averaged 300 trees in the forest, regularised the
 logistic regression, and used the test set only once, at the end.
+
+## Reproducibility
+
+**Are your results reproducible?**
+Yes, and checking it found a bug. The seed was fixed, yet two runs gave slightly different numbers (test R²
+0.755 vs 0.754). The cause: DuckDB runs the join in parallel and returns rows in any order, so
+`train_test_split(random_state=42)` drew a different set of schools each time. The query now ends with
+`order by` the school code, and two consecutive runs give byte-identical results. A seed only fixes the
+shuffle; the input order has to be fixed too.
 
 ## Big picture
 
