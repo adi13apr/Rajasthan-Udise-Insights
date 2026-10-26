@@ -27,3 +27,32 @@ jobs:
         with:
           name: sample-reports
           path: data/sample/reports/
+
+  # PySpark implementation (spark/): its tests and the parity check against the DuckDB
+  # pipeline, on the synthetic sample only. Separate job so the main job needs no Java or Spark.
+  spark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Install dependencies (main + pyspark)
+        run: pip install -r requirements-spark.txt
+      - name: Spark tests
+        run: python -m pytest tests/test_spark.py -v
+      - name: Pipeline on synthetic sample data (DuckDB)
+        run: python run_pipeline.py --sample
+      - name: Parity PySpark vs DuckDB on the sample
+        run: python -m spark.parity --sample
+      - name: Upload parity report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spark-parity-sample
+          path: data/sample/reports/spark_parity.*

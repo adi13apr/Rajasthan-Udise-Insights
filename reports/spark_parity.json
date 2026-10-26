@@ -1,0 +1,224 @@
+{
+  "passed": true,
+  "spark_source": "Databricks notebook run 20261026T115516Z (D:\\dev\\tmp\\dbx\\spark_fingerprint.json)",
+  "created_at": "2026-10-26T12:01:16+00:00",
+  "ratio_tolerance": 0.001,
+  "queries": {
+    "table_rows": {
+      "rows": 23,
+      "cells": 23,
+      "max_ratio_diff": null,
+      "mismatches": 0
+    },
+    "quarantine_by_rule": {
+      "rows": 3,
+      "cells": 3,
+      "max_ratio_diff": null,
+      "mismatches": 0
+    },
+    "silver_rows_and_flags_by_year": {
+      "rows": 28,
+      "cells": 28,
+      "max_ratio_diff": null,
+      "mismatches": 0
+    },
+    "silver_schools_by_district_year": {
+      "rows": 82,
+      "cells": 492,
+      "max_ratio_diff": null,
+      "mismatches": 0
+    },
+    "facilities_by_district_year": {
+      "rows": 82,
+      "cells": 2542,
+      "max_ratio_diff": 2.1316282072803006e-14,
+      "mismatches": 0
+    },
+    "enrolment_by_district_year_stage_gender_category": {
+      "rows": 3344,
+      "cells": 6688,
+      "max_ratio_diff": null,
+      "mismatches": 0
+    },
+    "teachers_by_district_year": {
+      "rows": 82,
+      "cells": 410,
+      "max_ratio_diff": null,
+      "mismatches": 0
+    },
+    "dim_school_by_district": {
+      "rows": 41,
+      "cells": 369,
+      "max_ratio_diff": null,
+      "mismatches": 0
+    },
+    "scd2_district_moves": {
+      "rows": 9,
+      "cells": 9,
+      "max_ratio_diff": null,
+      "mismatches": 0
+    },
+    "int_school_year_by_district_year": {
+      "rows": 82,
+      "cells": 1394,
+      "max_ratio_diff": null,
+      "mismatches": 0
+    },
+    "mart_district_year": {
+      "rows": 82,
+      "cells": 1968,
+      "max_ratio_diff": 0.0,
+      "mismatches": 0
+    },
+    "mart_district_year_management": {
+      "rows": 330,
+      "cells": 8250,
+      "max_ratio_diff": 0.0,
+      "mismatches": 0
+    },
+    "official_indicators": {
+      "rows": 18,
+      "cells": 18,
+      "max_ratio_diff": null,
+      "mismatches": 0
+    }
+  },
+  "cells_compared": 22194,
+  "mismatches": 0,
+  "max_ratio_diff": 2.1316282072803006e-14,
+  "data_tests": {
+    "DuckDB": {
+      "checks": 33,
+      "failed": 0
+    },
+    "Spark": {
+      "checks": 33,
+      "failed": 0
+    }
+  },
+  "same_data_test_names": true,
+  "official": {
+    "DuckDB": [
+      {
+        "year": "2024-25",
+        "indicator": "schools",
+        "official": 106302,
+        "ours": 106302,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "enrolment",
+        "official": 16364187,
+        "ours": 16364187,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "teachers",
+        "official": 792265,
+        "ours": 792265,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "zero_enrolment_schools",
+        "official": 215,
+        "ours": 215,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "single_teacher_schools",
+        "official": 6117,
+        "ours": 6117,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "govt_schools",
+        "official": 70155,
+        "ours": 70155,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "govt_enrolment",
+        "official": 7782390,
+        "ours": 7782390,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "govt_teachers",
+        "official": 445073,
+        "ours": 445073,
+        "match": true
+      }
+    ],
+    "Spark": [
+      {
+        "year": "2024-25",
+        "indicator": "schools",
+        "official": 106302,
+        "ours": 106302,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "enrolment",
+        "official": 16364187,
+        "ours": 16364187,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "teachers",
+        "official": 792265,
+        "ours": 792265,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "zero_enrolment_schools",
+        "official": 215,
+        "ours": 215,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "single_teacher_schools",
+        "official": 6117,
+        "ours": 6117,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "govt_schools",
+        "official": 70155,
+        "ours": 70155,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "govt_enrolment",
+        "official": 7782390,
+        "ours": 7782390,
+        "match": true
+      },
+      {
+        "year": "2024-25",
+        "indicator": "govt_teachers",
+        "official": 445073,
+        "ours": 445073,
+        "match": true
+      }
+    ]
+  },
+  "timings_seconds": {
+    "spark: bronze -> silver": 124.3,
+    "spark: silver -> gold": 64.6,
+    "spark: fingerprint": 30.4
+  },
+  "mismatch_details": []
+}

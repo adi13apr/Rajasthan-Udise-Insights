@@ -1,0 +1,5 @@
+# PySpark implementation of silver -> gold (spark/), its tests and the parity check.
+# Kept out of requirements.txt on purpose: the main pipeline and its CI job do not need Spark.
+# Also needs Java 17 (JAVA_HOME or java on PATH). Databricks serverless brings its own Spark.
+-r requirements.txt
+pyspark==4.1.3

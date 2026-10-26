@@ -157,6 +157,18 @@ then the Sattva analysis (phases A1-A6).
   Verified by opening it in Tableau Public 2026.3. Lessons: use document format 18.1 (Tableau's loader
   rejects the published 26.x XSD layout); colour-by-category maps in the XML are ignored, so highlights
   are 0/1 measures on Tableau's default blue ramp; categorical charts use the default palette.
+- PySpark (`spark/`): `spark/silver.py`, `spark/gold.py`, `spark/checks.py` port
+  silver (rules imported from `pipeline/rules.py`), gold (same keys, SCD2, marts) and the 33 data tests;
+  `spark/databricks_pipeline.py` = Databricks notebook (volume bronze -> Delta silver/gold, stops on any
+  failed check, writes `spark_fingerprint.json`); `python -m spark.parity [--sample] [--from FILE]
+  [--time-duckdb]` compares with DuckDB -> `reports/spark_parity.md` (whole numbers exact, ratios <= 0.001).
+  Deps in `requirements-spark.txt` (not requirements.txt); `tests/test_spark.py` skips without pyspark/Java;
+  CI has a separate `spark` job. Local setup: JDK 17 in `D:\dev\jdk17`, venv `D:\dev\.venv-spark`
+  (set `$env:JAVA_HOME='D:\dev\jdk17'`). Windows: local Spark only reads (no winutils), never writes files.
+  Databricks Free Edition workspace https://dbc-dc99cb5a-623d.cloud.databricks.com, CLI `D:\dev\databricks-cli\
+  databricks.exe -p udise` (OAuth login); Git folder /Workspace/Users/chauhanaditya638@gmail.com/Rajasthan-Udise-
+  Insights (repo id 3962042656331835); bronze in /Volumes/workspace/udise/landing/bronze; tables in
+  workspace.udise_silver / workspace.udise_gold. First run 2026-10-26: SUCCESS in 5 min 11 s, parity PASS.
 - Power BI: `scripts/export_powerbi.py` (gold read-only -> `powerbi/data/*.csv`: 7 dims without
   pseudocode, 3 facts, `agg_school_year` from `sql/powerbi/agg_school_year.sql`, `official_totals.csv`,
   `norms.csv` from `reference/norms.json`; row counts read back; school-level CSVs and *.pbix gitignored).
