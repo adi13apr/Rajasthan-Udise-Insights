@@ -1,0 +1,49 @@
+table dim_management
+	lineageTag: f3944b09-8775-53a3-b8e7-616813181170
+
+	column management_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f2ae6f82-5cb5-50d1-ab4e-b981673c6d8a
+		summarizeBy: none
+		sourceColumn: management_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column management_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 56329d83-7e1e-5d52-82d6-627deaed7d85
+		summarizeBy: none
+		sourceColumn: management_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column management_group
+		dataType: string
+		lineageTag: 1cf53c48-c9be-5f5b-a9f2-d06eefbbed31
+		summarizeBy: none
+		sourceColumn: management_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_government
+		dataType: boolean
+		lineageTag: 3d3f1d0c-05ed-5650-a71a-df39c157b21b
+		summarizeBy: none
+		sourceColumn: is_government
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_management = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "dim_management.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"management_key", Int64.Type}, {"management_code", Int64.Type}, {"management_group", type text}, {"is_government", type logical}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

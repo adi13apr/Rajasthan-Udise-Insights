@@ -1,0 +1,73 @@
+table fact_enrolment
+	lineageTag: 8b6a38d3-e960-5178-aa88-0b3b81a51e89
+
+	column school_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a76c4feb-15e1-5dab-b620-f6c9e6aede12
+		summarizeBy: none
+		sourceColumn: school_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 80a6fe83-0c7b-5680-9444-19dafd5853ce
+		summarizeBy: none
+		sourceColumn: year_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column grade_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f169a3aa-4711-53f9-aff1-9e048328236f
+		summarizeBy: none
+		sourceColumn: grade_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4ba401bd-fc0b-54fb-bc8c-4f2d819e7fcc
+		summarizeBy: none
+		sourceColumn: gender_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column social_category_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 89243741-1ce7-5462-8b6e-3cc7e6bff83b
+		summarizeBy: none
+		sourceColumn: social_category_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column students
+		dataType: int64
+		formatString: #,0
+		lineageTag: e97539ac-09b7-5106-94b1-9053176712fa
+		summarizeBy: sum
+		sourceColumn: students
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_enrolment = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "fact_enrolment.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"school_key", Int64.Type}, {"year_key", Int64.Type}, {"grade_key", Int64.Type}, {"gender_key", Int64.Type}, {"social_category_key", Int64.Type}, {"students", Int64.Type}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

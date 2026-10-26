@@ -1,0 +1,64 @@
+table norms
+	lineageTag: d3938058-800f-5d37-8fb1-1cb8295870f3
+
+	column stage
+		dataType: string
+		lineageTag: 7c04fab0-c03e-5645-b40e-4894a31b302b
+		summarizeBy: none
+		sourceColumn: stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column classes
+		dataType: string
+		lineageTag: 5ce31d09-abd7-5739-8c85-5322cd1134eb
+		summarizeBy: none
+		sourceColumn: classes
+
+		annotation SummarizationSetBy = Automatic
+
+	column pupils_per_teacher
+		dataType: int64
+		formatString: 0
+		lineageTag: 1cb08e04-36c9-54c6-88fd-76a58b1cb31c
+		summarizeBy: none
+		sourceColumn: pupils_per_teacher
+
+		annotation SummarizationSetBy = Automatic
+
+	column min_teachers
+		dataType: int64
+		formatString: 0
+		lineageTag: cd7ad559-b820-5d36-b519-5a7c4c84a754
+		summarizeBy: none
+		sourceColumn: min_teachers
+
+		annotation SummarizationSetBy = Automatic
+
+	column source
+		dataType: string
+		lineageTag: 004cac5b-1ae0-5fd2-839b-0f0f4e49a292
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 4fc2274c-1275-526d-9e0d-7cb887ca4fb0
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition norms = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "norms.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"stage", type text}, {"classes", type text}, {"pupils_per_teacher", Int64.Type}, {"min_teachers", Int64.Type}, {"source", type text}, {"status", type text}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

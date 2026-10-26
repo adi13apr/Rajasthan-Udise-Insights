@@ -1,0 +1,41 @@
+table dim_social_category
+	lineageTag: 71146608-d1e6-5e34-9a62-cb5bcffaa271
+
+	column social_category_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ef3532e9-f128-5907-b078-3b74f64028d6
+		summarizeBy: none
+		sourceColumn: social_category_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column item_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7abcb821-4c42-5ea1-bfdd-38229cbbd7c2
+		summarizeBy: none
+		sourceColumn: item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column social_category
+		dataType: string
+		lineageTag: 16d3bc04-87ab-53dc-86fe-b25f9e7797ac
+		summarizeBy: none
+		sourceColumn: social_category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_social_category = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "dim_social_category.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"social_category_key", Int64.Type}, {"item_id", Int64.Type}, {"social_category", type text}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

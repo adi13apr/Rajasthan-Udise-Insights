@@ -8,6 +8,43 @@ and **Validation**.
 Check each result against [`reconciliation.xlsx`](reconciliation.xlsx). It holds the expected
 value of every measure, computed independently from the same CSVs.
 
+## Quick path: open the generated project
+
+The finished dashboard is generated as a **Power BI project** (`.pbip`), Power BI Desktop's
+text format: the model in TMDL files and the report in JSON files, reviewable in git. It holds
+no data.
+
+```powershell
+python scripts/export_powerbi.py          # gold -> powerbi/data/*.csv
+python scripts/make_powerbi_project.py    # -> powerbi/RajasthanUDISE.pbip (+ .SemanticModel, .Report)
+```
+
+Open `powerbi/RajasthanUDISE.pbip` in Power BI Desktop. The project holds no data, so the first
+time Desktop shows empty visuals and a yellow bar *Some of the tables have incomplete or no data*:
+click **Refresh now** (or *Home > Refresh*). On the development laptop the full load took 145 s;
+the 64 lakh enrolment rows take the longest. The CSV folder is
+the `DataFolder` parameter (*Transform data > Edit parameters*). It is set to this checkout's
+`powerbi/data/` when the project is generated.
+
+Everything in sections 1-8 below is already in the project: types, sort orders, the 13
+relationships, the calculated columns, all measures from MEASURES.md (read from that file by the
+generator, so the two cannot drift apart), and the three pages. The sections explain how the
+project is built, so you can defend every part of it or build it again by hand.
+
+**Check the model** while it is open in Desktop:
+
+```powershell
+python scripts/verify_powerbi_model.py              # after the data is loaded
+python scripts/verify_powerbi_model.py --refresh    # or: let the script load it first
+```
+
+This runs DAX queries against Desktop's local engine and compares every value with the SQL
+re-implementation. The result is in [`model_check.md`](model_check.md). It talks to the engine
+through ADOMD.NET, Microsoft's client library, using the copy that ships with Power BI Desktop.
+
+To share the design, commit the `.pbip` project. Never commit a `.pbix` and never use
+*Publish to web*: both carry the school-level data.
+
 ---
 
 ## 0. Before you start

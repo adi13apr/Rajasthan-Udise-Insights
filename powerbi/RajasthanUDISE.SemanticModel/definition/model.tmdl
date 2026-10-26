@@ -1,0 +1,26 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+	annotation __PBI_TimeIntelligenceEnabled = 0
+
+	annotation PBI_QueryOrder = ["DataFolder", "dim_year", "dim_district", "dim_management", "dim_grade", "dim_gender", "dim_social_category", "dim_school", "fact_enrolment", "fact_teachers", "fact_school_facilities", "agg_school_year", "official_totals", "norms", "_Measures"]
+
+ref table _Measures
+ref table dim_year
+ref table dim_district
+ref table dim_management
+ref table dim_grade
+ref table dim_gender
+ref table dim_social_category
+ref table dim_school
+ref table fact_enrolment
+ref table fact_teachers
+ref table fact_school_facilities
+ref table agg_school_year
+ref table official_totals
+ref table norms

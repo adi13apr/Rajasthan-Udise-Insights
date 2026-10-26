@@ -85,3 +85,42 @@ def test_norms_reference():
     stages = {t["stage"]: t for t in n["teachers"]}
     assert set(stages) == {"primary", "upper_primary", "secondary", "higher_secondary"}
     assert stages["primary"]["pupils_per_teacher"] == 30 and stages["upper_primary"]["pupils_per_teacher"] == 35
+
+
+def test_powerbi_project_is_consistent(sample_gold):
+    """The generated .pbip: every measure of MEASURES.md is in the model, every relationship and every
+    visual field points at a real column or measure (Power BI itself is not needed for this test)."""
+    import json
+    import re
+
+    from scripts import make_powerbi_project as P
+    d = sample_gold
+    X.export(d / "udise.duckdb", d / "csv")
+    counts = P.build(d / "pbi", d / "csv")
+    measures, calc = P.parse_measures()
+    assert counts == {"tables": 14, "measures": len(measures), "calculated_columns": 2, "relationships": 13, "pages": 3}
+    assert {c["name"] for c in calc} == {"teachers_required", "teachers_for_norms"}
+    assert len(measures) == len({m["name"] for m in measures}) and all(m["folder"] for m in measures)
+    model = d / "pbi" / f"{P.NAME}.SemanticModel" / "definition"
+    tmdl = (model / "tables" / f"{P.MEASURE_TABLE}.tmdl").read_text(encoding="utf-8")
+    assert all(f"\tmeasure {P.q(m['name'])} =" in tmdl for m in measures)
+    columns = {t: {c for c, _ in cols} for t, cols in P.csv_schema(d / "csv").items()}
+    columns["agg_school_year"] |= {c["name"] for c in calc}
+    for many, one in P.RELATIONSHIPS:
+        for ref in (many, one):
+            table, col = ref.split(".")
+            assert col in columns[table], ref
+    names = {m["name"] for m in measures}
+    visuals = list((d / "pbi" / f"{P.NAME}.Report" / "definition" / "pages").rglob("visual.json"))
+    assert len(visuals) > 20
+    checked = 0
+    for v in visuals:
+        text = v.read_text(encoding="utf-8")
+        json.loads(text)
+        for entity, prop in re.findall(r'"Entity": "(\w+)"\s*}\s*},\s*"Property": "([^"]+)"', text):
+            checked += 1
+            if entity == P.MEASURE_TABLE:
+                assert prop in names, (v.parent.name, prop)
+            else:
+                assert prop in columns[entity], (v.parent.name, entity, prop)
+    assert checked > 50   # the pattern really finds the field references

@@ -32,3 +32,5 @@ powerbi/data/*
 !powerbi/data/norms.csv
 !powerbi/data/export_manifest.json
 *.pbix
+# Power BI project caches: .pbi/cache.abf holds the loaded (school-level) data
+powerbi/**/.pbi/

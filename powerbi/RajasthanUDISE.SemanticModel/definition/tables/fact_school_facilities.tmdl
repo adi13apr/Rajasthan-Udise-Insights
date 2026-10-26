@@ -1,0 +1,250 @@
+table fact_school_facilities
+	lineageTag: 7e755801-89aa-5c81-b3db-69f5e1c433f4
+
+	column school_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 1ad3fc19-6c42-526b-a169-2c4a4db477e0
+		summarizeBy: none
+		sourceColumn: school_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b06ab5bd-5513-5388-8586-5a385d725cea
+		summarizeBy: none
+		sourceColumn: year_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column lowclass
+		dataType: int64
+		formatString: #,0
+		lineageTag: 6e526083-ce95-50e7-9d79-c07f4de239b9
+		summarizeBy: sum
+		sourceColumn: lowclass
+
+		annotation SummarizationSetBy = Automatic
+
+	column highclass
+		dataType: int64
+		formatString: #,0
+		lineageTag: bb40f90c-6550-55c3-920c-3c8ff0847927
+		summarizeBy: sum
+		sourceColumn: highclass
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_electricity
+		dataType: double
+		formatString: #,0
+		lineageTag: d22695f3-d2e6-5dfb-8068-433b63a6b726
+		summarizeBy: sum
+		sourceColumn: has_electricity
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_safe_water
+		dataType: double
+		formatString: #,0
+		lineageTag: 4da4eac9-fa51-5f45-b8bc-370a2ad58ad7
+		summarizeBy: sum
+		sourceColumn: has_safe_water
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_girls_toilet
+		dataType: double
+		formatString: #,0
+		lineageTag: 64a5967b-26a8-5580-a5c4-8bf414711867
+		summarizeBy: sum
+		sourceColumn: has_girls_toilet
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_boys_toilet
+		dataType: double
+		formatString: #,0
+		lineageTag: 2ebc08b8-fd2c-55e0-9ee4-543e4e10884e
+		summarizeBy: sum
+		sourceColumn: has_boys_toilet
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_handwash
+		dataType: double
+		formatString: #,0
+		lineageTag: be748645-82c1-5650-8b65-4ba867864d83
+		summarizeBy: sum
+		sourceColumn: has_handwash
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_library
+		dataType: double
+		formatString: #,0
+		lineageTag: fe42b5d9-b62e-5c77-8d48-f2f39224194e
+		summarizeBy: sum
+		sourceColumn: has_library
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_playground
+		dataType: double
+		formatString: #,0
+		lineageTag: bc60072e-51ca-5f47-9e9d-d408912e5957
+		summarizeBy: sum
+		sourceColumn: has_playground
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_ramp
+		dataType: double
+		formatString: #,0
+		lineageTag: 5088a59e-a392-5198-bc08-ba2bb5e401c7
+		summarizeBy: sum
+		sourceColumn: has_ramp
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_internet
+		dataType: double
+		formatString: #,0
+		lineageTag: 64cf9718-7cfa-5663-b326-0d5ce66e4e13
+		summarizeBy: sum
+		sourceColumn: has_internet
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_computer
+		dataType: double
+		formatString: #,0
+		lineageTag: 5d9a4bc4-f84c-5c79-9ccd-6416195baa24
+		summarizeBy: sum
+		sourceColumn: has_computer
+
+		annotation SummarizationSetBy = Automatic
+
+	column classrooms
+		dataType: int64
+		formatString: #,0
+		lineageTag: 2208a0ed-1557-5742-9d49-565478060b11
+		summarizeBy: sum
+		sourceColumn: classrooms
+
+		annotation SummarizationSetBy = Automatic
+
+	column classrooms_good
+		dataType: int64
+		formatString: #,0
+		lineageTag: a81ddae0-07eb-59b2-a15b-c6662ae1e1b6
+		summarizeBy: sum
+		sourceColumn: classrooms_good
+
+		annotation SummarizationSetBy = Automatic
+
+	column classrooms_needs_minor_repair
+		dataType: int64
+		formatString: #,0
+		lineageTag: ec57bb3e-2fbd-5739-b0ce-0c5acf932866
+		summarizeBy: sum
+		sourceColumn: classrooms_needs_minor_repair
+
+		annotation SummarizationSetBy = Automatic
+
+	column classrooms_needs_major_repair
+		dataType: int64
+		formatString: #,0
+		lineageTag: fff915fc-f6f5-5403-9221-53f44cefcbd3
+		summarizeBy: sum
+		sourceColumn: classrooms_needs_major_repair
+
+		annotation SummarizationSetBy = Automatic
+
+	column pct_classrooms_major_repair
+		dataType: double
+		formatString: #,0
+		lineageTag: 3d6c4e9d-a48e-5a6e-8a8c-21a5748d4d83
+		summarizeBy: sum
+		sourceColumn: pct_classrooms_major_repair
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_girls_toilet
+		dataType: int64
+		formatString: #,0
+		lineageTag: 84cfd175-0c59-58f1-81d6-f7dbd66773ac
+		summarizeBy: sum
+		sourceColumn: total_girls_toilet
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_girls_func_toilet
+		dataType: int64
+		formatString: #,0
+		lineageTag: fd00c4fb-e6d8-53cb-aabe-f287a5ac7890
+		summarizeBy: sum
+		sourceColumn: total_girls_func_toilet
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_boys_toilet
+		dataType: int64
+		formatString: #,0
+		lineageTag: f3c143d4-fb4e-5ad3-878f-83a5e963b6dd
+		summarizeBy: sum
+		sourceColumn: total_boys_toilet
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_boys_func_toilet
+		dataType: int64
+		formatString: #,0
+		lineageTag: 06f21872-202e-594b-b56c-435282947351
+		summarizeBy: sum
+		sourceColumn: total_boys_func_toilet
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_facility_invalid_code
+		dataType: int64
+		formatString: #,0
+		lineageTag: c6a2ef2c-b3f8-52ff-ac55-d12477056ac3
+		summarizeBy: sum
+		sourceColumn: flag_facility_invalid_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_functional_toilets_exceed_total
+		dataType: int64
+		formatString: #,0
+		lineageTag: de1520be-202b-5148-8c75-b1e347239ab6
+		summarizeBy: sum
+		sourceColumn: flag_functional_toilets_exceed_total
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_classroom_total_mismatch
+		dataType: int64
+		formatString: #,0
+		lineageTag: 7209d8f4-3724-5c59-92d8-6e3c1e4d469c
+		summarizeBy: sum
+		sourceColumn: flag_classroom_total_mismatch
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_school_facilities = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "fact_school_facilities.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"school_key", Int64.Type}, {"year_key", Int64.Type}, {"lowclass", Int64.Type}, {"highclass", Int64.Type}, {"has_electricity", type number}, {"has_safe_water", type number}, {"has_girls_toilet", type number}, {"has_boys_toilet", type number}, {"has_handwash", type number}, {"has_library", type number}, {"has_playground", type number}, {"has_ramp", type number}, {"has_internet", type number}, {"has_computer", type number}, {"classrooms", Int64.Type}, {"classrooms_good", Int64.Type}, {"classrooms_needs_minor_repair", Int64.Type}, {"classrooms_needs_major_repair", Int64.Type}, {"pct_classrooms_major_repair", type number}, {"total_girls_toilet", Int64.Type}, {"total_girls_func_toilet", Int64.Type}, {"total_boys_toilet", Int64.Type}, {"total_boys_func_toilet", Int64.Type}, {"flag_facility_invalid_code", Int64.Type}, {"flag_functional_toilets_exceed_total", Int64.Type}, {"flag_classroom_total_mismatch", Int64.Type}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

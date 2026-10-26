@@ -165,6 +165,11 @@ then the Sattva analysis (phases A1-A6).
   mart; exit 1 on failure). `powerbi/MEASURES.md`, `powerbi/BUILD_GUIDE.md`. Teacher norms: RTE 30:1 (min 2)
   primary, 35:1 (min 3) upper primary, 30:1 secondary (RMSA), 30:1 higher secondary (assumption); shortfall
   summed school by school; classrooms: one per teacher (RTE). Both scripts take `--gold-db`.
+  `scripts/make_powerbi_project.py` -> `powerbi/RajasthanUDISE.pbip` (PBIP: TMDL model with M partitions over
+  powerbi/data via the `DataFolder` parameter, measures parsed from MEASURES.md, PBIR report, 3 pages). Verified by
+  opening it in Power BI Desktop 2.159 (Store) and `scripts/verify_powerbi_model.py` (DAX via ADOMD.NET against
+  Desktop's local engine vs the SQL checks -> `powerbi/model_check.md`). PBIR lesson: report.json needs
+  `layoutOptimization`. `.pbi/` caches are gitignored (they hold the data).
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).
