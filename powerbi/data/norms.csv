@@ -1,0 +1,5 @@
+stage,classes,pupils_per_teacher,min_teachers,source,status
+primary,1-5,30,2,"RTE Act 2009, Schedule, item 1(a): 2 teachers for up to 60 children, then one more per 30 children up to 120 (30:1)",statutory (simplified)
+upper_primary,6-8,35,3,"RTE Act 2009, Schedule, item 1(b): at least one teacher each for science and maths, social studies and languages; at least one teacher for every 35 children",statutory
+secondary,9-10,30,0,RMSA framework (now part of Samagra Shiksha): pupil-teacher ratio 30:1 at secondary,programme norm
+higher_secondary,11-12,30,0,"No statutory norm; 30:1 assumed, the same as secondary. Change it here to test other values",assumption

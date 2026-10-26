@@ -1,0 +1,51 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "notes",
+  "position": {
+    "x": 16,
+    "y": 588,
+    "z": 4000,
+    "height": 120,
+    "width": 1248,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Official figures: UDISE+ 2024-25 report (Table 2.2) and Lok Sabha / Rajya Sabha answers for government schools. Enrolment includes pre-primary, as published. Government = management codes grouped as government in reference/management_codes.json. Pipeline Value is computed by the DAX measures from the star schema facts. The same comparison, with a second independent calculation from the CSVs, is in powerbi/reconciliation.xlsx. Source: UDISE+, Ministry of Education, Government of India.",
+                    "textStyle": {
+                      "fontSize": "9pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

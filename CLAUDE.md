@@ -157,7 +157,7 @@ then the Sattva analysis (phases A1-A6).
   Verified by opening it in Tableau Public 2026.3. Lessons: use document format 18.1 (Tableau's loader
   rejects the published 26.x XSD layout); colour-by-category maps in the XML are ignored, so highlights
   are 0/1 measures on Tableau's default blue ramp; categorical charts use the default palette.
-- PySpark (branch feature/pyspark-databricks): `spark/silver.py`, `spark/gold.py`, `spark/checks.py` port
+- PySpark (`spark/`): `spark/silver.py`, `spark/gold.py`, `spark/checks.py` port
   silver (rules imported from `pipeline/rules.py`), gold (same keys, SCD2, marts) and the 33 data tests;
   `spark/databricks_pipeline.py` = Databricks notebook (volume bronze -> Delta silver/gold, stops on any
   failed check, writes `spark_fingerprint.json`); `python -m spark.parity [--sample] [--from FILE]
@@ -169,6 +169,19 @@ then the Sattva analysis (phases A1-A6).
   databricks.exe -p udise` (OAuth login); Git folder /Workspace/Users/chauhanaditya638@gmail.com/Rajasthan-Udise-
   Insights (repo id 3962042656331835); bronze in /Volumes/workspace/udise/landing/bronze; tables in
   workspace.udise_silver / workspace.udise_gold. First run 2026-10-26: SUCCESS in 5 min 11 s, parity PASS.
+- Power BI: `scripts/export_powerbi.py` (gold read-only -> `powerbi/data/*.csv`: 7 dims without
+  pseudocode, 3 facts, `agg_school_year` from `sql/powerbi/agg_school_year.sql`, `official_totals.csv`,
+  `norms.csv` from `reference/norms.json`; row counts read back; school-level CSVs and *.pbix gitignored).
+  `scripts/make_reconciliation_workbook.py` -> `powerbi/reconciliation.xlsx` (official vs gold vs CSVs; the
+  DAX measures re-implemented in `sql/powerbi/check_*.sql` must equal the gold validation and the district
+  mart; exit 1 on failure). `powerbi/MEASURES.md`, `powerbi/BUILD_GUIDE.md`. Teacher norms: RTE 30:1 (min 2)
+  primary, 35:1 (min 3) upper primary, 30:1 secondary (RMSA), 30:1 higher secondary (assumption); shortfall
+  summed school by school; classrooms: one per teacher (RTE). Both scripts take `--gold-db`.
+  `scripts/make_powerbi_project.py` -> `powerbi/RajasthanUDISE.pbip` (PBIP: TMDL model with M partitions over
+  powerbi/data via the `DataFolder` parameter, measures parsed from MEASURES.md, PBIR report, 3 pages). Verified by
+  opening it in Power BI Desktop 2.159 (Store) and `scripts/verify_powerbi_model.py` (DAX via ADOMD.NET against
+  Desktop's local engine vs the SQL checks -> `powerbi/model_check.md`). PBIR lesson: report.json needs
+  `layoutOptimization`. `.pbi/` caches are gitignored (they hold the data).
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

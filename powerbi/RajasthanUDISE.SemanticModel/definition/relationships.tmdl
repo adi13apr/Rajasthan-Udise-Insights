@@ -1,0 +1,51 @@
+relationship 8290e937-c3d0-583e-84fa-c35afb640bce
+	fromColumn: fact_enrolment.school_key
+	toColumn: dim_school.school_key
+
+relationship c6f5909c-7600-5b5c-9956-369969959697
+	fromColumn: fact_enrolment.year_key
+	toColumn: dim_year.year_key
+
+relationship 4cbe405c-3745-5cd3-845a-d4e3511a278b
+	fromColumn: fact_enrolment.grade_key
+	toColumn: dim_grade.grade_key
+
+relationship 862ccedf-8dc9-536f-8610-2c5f9a616606
+	fromColumn: fact_enrolment.gender_key
+	toColumn: dim_gender.gender_key
+
+relationship 41cc1432-1edb-5a19-bffa-a3359d0d6343
+	fromColumn: fact_enrolment.social_category_key
+	toColumn: dim_social_category.social_category_key
+
+relationship 8e8320f4-5158-571a-b774-2ce841fe39e4
+	fromColumn: fact_teachers.school_key
+	toColumn: dim_school.school_key
+
+relationship d31d2eb4-2465-5750-b8ff-a2b7df9a6743
+	fromColumn: fact_teachers.year_key
+	toColumn: dim_year.year_key
+
+relationship 100ec109-9be8-51c9-be39-7f4bd7336571
+	fromColumn: fact_school_facilities.school_key
+	toColumn: dim_school.school_key
+
+relationship 2e551f75-a6be-5d61-955f-83aada4bff4f
+	fromColumn: fact_school_facilities.year_key
+	toColumn: dim_year.year_key
+
+relationship 4b84b291-ba57-5fd7-877b-8623b8c955d0
+	fromColumn: agg_school_year.school_key
+	toColumn: dim_school.school_key
+
+relationship be3f5013-a416-5148-a96e-180c4275cfe0
+	fromColumn: agg_school_year.year_key
+	toColumn: dim_year.year_key
+
+relationship f63b7e01-a66f-5545-b9c9-8ee798ec7c92
+	fromColumn: dim_school.district_key
+	toColumn: dim_district.district_key
+
+relationship 8c0ed819-cc92-5302-beff-bf714ff1fbb9
+	fromColumn: dim_school.management_key
+	toColumn: dim_management.management_key

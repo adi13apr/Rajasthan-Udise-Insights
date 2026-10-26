@@ -1,0 +1,19 @@
+year,indicator,indicator_label,official_value,official_source
+2024-25,schools,Schools,106302,UDISE+ 2024-25 report (Table 2.2) and Lok Sabha / Rajya Sabha answers citing UDISE+ for government schools. Enrolment figures include pre-primary.
+2024-25,enrolment,Enrolment incl. pre-primary,16364187,UDISE+ 2024-25 report (Table 2.2) and Lok Sabha / Rajya Sabha answers citing UDISE+ for government schools. Enrolment figures include pre-primary.
+2024-25,enrolment_classes_1_12,"Enrolment, classes 1-12",,
+2024-25,teachers,Teachers,792265,UDISE+ 2024-25 report (Table 2.2) and Lok Sabha / Rajya Sabha answers citing UDISE+ for government schools. Enrolment figures include pre-primary.
+2024-25,single_teacher_schools,Single-teacher schools,6117,UDISE+ 2024-25 report (Table 2.2) and Lok Sabha / Rajya Sabha answers citing UDISE+ for government schools. Enrolment figures include pre-primary.
+2024-25,zero_enrolment_schools,Zero-enrolment schools,215,UDISE+ 2024-25 report (Table 2.2) and Lok Sabha / Rajya Sabha answers citing UDISE+ for government schools. Enrolment figures include pre-primary.
+2024-25,govt_schools,Government schools,70155,UDISE+ 2024-25 report (Table 2.2) and Lok Sabha / Rajya Sabha answers citing UDISE+ for government schools. Enrolment figures include pre-primary.
+2024-25,govt_enrolment,Government enrolment incl. pre-primary,7782390,UDISE+ 2024-25 report (Table 2.2) and Lok Sabha / Rajya Sabha answers citing UDISE+ for government schools. Enrolment figures include pre-primary.
+2024-25,govt_teachers,Government teachers,445073,UDISE+ 2024-25 report (Table 2.2) and Lok Sabha / Rajya Sabha answers citing UDISE+ for government schools. Enrolment figures include pre-primary.
+2025-26,schools,Schools,,
+2025-26,enrolment,Enrolment incl. pre-primary,,
+2025-26,enrolment_classes_1_12,"Enrolment, classes 1-12",,
+2025-26,teachers,Teachers,,
+2025-26,single_teacher_schools,Single-teacher schools,,
+2025-26,zero_enrolment_schools,Zero-enrolment schools,,
+2025-26,govt_schools,Government schools,,
+2025-26,govt_enrolment,Government enrolment incl. pre-primary,,
+2025-26,govt_teachers,Government teachers,,

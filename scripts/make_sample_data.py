@@ -53,7 +53,7 @@ FACILITY_COLS = ["pseudocode", "electricity_availability", "hand_pump_fun_yn", "
                  "laptop", "desktop", "tablet", "total_class_rooms", "classrooms_in_good_condition",
                  "classrooms_needs_minor_repair", "classrooms_needs_major_repair", "solar_panel"]
 TEACHER_COLS = ["pseudocode", "total_tch", "male", "female", "regular", "contract", "trained_cwsn",
-                "graduate", "post_graduate_and_above"]
+                "graduate", "post_graduate_and_above", "class_taugt_pre_primary_only"]
 
 EXPECTED_QUARANTINE = {
     "schools": {"missing_required": 1, "unknown_district": 1, "duplicate_school_year": 2 * SCHOOLS_PER_DISTRICT},
@@ -122,7 +122,7 @@ def teacher_row(rng, s):
     regular = rng.randint(0, total)
     graduate = rng.randint(0, total)
     return [s["pseudocode"], total, total - female, female, regular, total - regular, rng.randint(0, 1),
-            graduate, total - graduate]
+            graduate, total - graduate, 0]   # pre-primary-only teachers: 0, so no extra random draw
 
 
 def enrolment_rows(rng, s, year):

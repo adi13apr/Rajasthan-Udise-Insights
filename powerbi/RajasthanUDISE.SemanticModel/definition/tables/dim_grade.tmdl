@@ -1,0 +1,49 @@
+table dim_grade
+	lineageTag: 34ca2d10-b62b-5310-8b8c-b2ed0f66f163
+
+	column grade_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c063a5ed-aade-51aa-8946-6af302fe2ca8
+		summarizeBy: none
+		sourceColumn: grade_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column grade_code
+		dataType: string
+		lineageTag: e4fd43fe-13d0-568f-929a-d49d715c13ee
+		summarizeBy: none
+		sourceColumn: grade_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column grade_label
+		dataType: string
+		lineageTag: 70643571-9c75-5295-98a8-00eb384ba05e
+		summarizeBy: none
+		sourceColumn: grade_label
+		sortByColumn: grade_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage
+		dataType: string
+		lineageTag: fec4fb8c-506d-589a-8836-980abf2ca136
+		summarizeBy: none
+		sourceColumn: stage
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_grade = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "dim_grade.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"grade_key", Int64.Type}, {"grade_code", type text}, {"grade_label", type text}, {"stage", type text}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

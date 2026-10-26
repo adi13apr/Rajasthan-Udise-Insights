@@ -1,0 +1,40 @@
+table dim_district
+	lineageTag: 5b73ecac-e861-5f18-85e9-bd7937ef97ad
+
+	column district_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: efa9f8b9-d5af-5a84-a951-80d6d1d93e46
+		summarizeBy: none
+		sourceColumn: district_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column district_name
+		dataType: string
+		lineageTag: 61cb6985-7083-5e21-8e24-dc37c6aa4c9d
+		summarizeBy: none
+		sourceColumn: district_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column aliases
+		dataType: string
+		lineageTag: 970390f9-850a-534f-9cf3-000cb990bfd3
+		summarizeBy: none
+		sourceColumn: aliases
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_district = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "dim_district.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"district_key", Int64.Type}, {"district_name", type text}, {"aliases", type text}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

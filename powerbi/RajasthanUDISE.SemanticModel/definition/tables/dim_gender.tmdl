@@ -1,0 +1,40 @@
+table dim_gender
+	lineageTag: 5782315c-657a-5b8d-ba06-3884b28f625e
+
+	column gender_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f20a130d-ce02-572c-9a3b-2852978296f4
+		summarizeBy: none
+		sourceColumn: gender_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender_code
+		dataType: string
+		lineageTag: 16f37873-e385-5286-b7ef-d4394ac7970e
+		summarizeBy: none
+		sourceColumn: gender_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender_label
+		dataType: string
+		lineageTag: c7b45429-add4-5c7d-923b-117fb05eb650
+		summarizeBy: none
+		sourceColumn: gender_label
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_gender = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "dim_gender.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"gender_key", Int64.Type}, {"gender_code", type text}, {"gender_label", type text}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

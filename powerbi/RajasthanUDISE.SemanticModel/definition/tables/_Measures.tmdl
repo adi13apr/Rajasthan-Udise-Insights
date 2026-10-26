@@ -1,0 +1,394 @@
+table _Measures
+	lineageTag: 4f33c5a7-1da6-594d-a106-f36b7c7399f5
+
+	measure Schools = COUNTROWS ( fact_school_facilities )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: 4976b6df-69d0-5755-a131-2ea038a398a4
+
+	measure 'Enrolment (incl. pre-primary)' = SUM ( fact_enrolment[students] )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: 29f89bb7-f20f-5ebe-9a2a-b9fe68f2d38c
+
+	measure 'Enrolment Classes 1-12' = CALCULATE ( [Enrolment (incl. pre-primary)], dim_grade[grade_key] >= 1 )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: cd321a0f-13c9-589d-96a8-0b8ed1694e67
+
+	measure Teachers = SUM ( fact_teachers[total_tch] )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: d3e12895-208a-53eb-a6f7-42aecface702
+
+	measure 'Single-Teacher Schools' = CALCULATE ( COUNTROWS ( fact_teachers ), fact_teachers[total_tch] = 1 )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: 18050b10-0a79-590a-8c4a-53828c19c73e
+
+	measure 'Zero-Enrolment Schools' =
+			[Schools]
+			    - COUNTROWS ( SUMMARIZE ( fact_enrolment, fact_enrolment[school_key], fact_enrolment[year_key] ) )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: 7c46fa80-6fa6-5fe8-b6d7-8788558c948f
+
+	measure 'Govt Schools' = CALCULATE ( [Schools], dim_management[is_government] = TRUE () )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: 1f53e7eb-73c1-54ad-824b-9b399aeeb300
+
+	measure 'Govt Enrolment' = CALCULATE ( [Enrolment (incl. pre-primary)], dim_management[is_government] = TRUE () )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: a96befab-879a-55b4-a523-37a5a2868336
+
+	measure 'Govt Teachers' = CALCULATE ( [Teachers], dim_management[is_government] = TRUE () )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: 864c352e-353f-5e2e-895f-521d116c5ec5
+
+	measure 'Official Value' = SUM ( official_totals[official_value] )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: a2aa9c97-898d-592f-aae2-fb8461f5c6e9
+
+	measure 'Pipeline Value' =
+			VAR yr  = SELECTEDVALUE ( official_totals[year] )
+			VAR ind = SELECTEDVALUE ( official_totals[indicator] )
+			RETURN
+			    CALCULATE (
+			        SWITCH (
+			            ind,
+			            "schools",                [Schools],
+			            "enrolment",              [Enrolment (incl. pre-primary)],
+			            "enrolment_classes_1_12", [Enrolment Classes 1-12],
+			            "teachers",               [Teachers],
+			            "single_teacher_schools", [Single-Teacher Schools],
+			            "zero_enrolment_schools", [Zero-Enrolment Schools],
+			            "govt_schools",           [Govt Schools],
+			            "govt_enrolment",         [Govt Enrolment],
+			            "govt_teachers",          [Govt Teachers]
+			        ),
+			        TREATAS ( { yr }, dim_year[academic_year] )
+			    )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: da41ec78-e426-5a3d-bec6-cdbba80b2a77
+
+	measure Difference = IF ( NOT ISBLANK ( [Official Value] ), [Pipeline Value] - [Official Value] )
+		formatString: +#,0;-#,0;0
+		displayFolder: 1 Validation
+		lineageTag: d0d58182-c387-55dc-8bfd-975d665fb17c
+
+	measure 'Difference %' = DIVIDE ( [Difference], [Official Value] )
+		formatString: 0.000%
+		displayFolder: 1 Validation
+		lineageTag: 1dac1e7f-1ade-5eaa-96b5-acca4fdb633b
+
+	measure 'Match Status' =
+			SWITCH (
+			    TRUE (),
+			    ISBLANK ( [Official Value] ), "no official figure",
+			    [Difference] = 0, "exact match",
+			    "differs"
+			)
+		displayFolder: 1 Validation
+		lineageTag: b12582d2-b998-5887-9a5f-83a4f5dc2f1d
+
+	measure 'Match Colour' = SWITCH ( [Match Status], "exact match", "#1E7B34", "differs", "#C00000", "#7F7F7F" )
+		displayFolder: 1 Validation
+		lineageTag: 5948c3ec-d4d5-5980-8790-5d896627d25b
+
+	measure 'Published Figures' = CALCULATE ( COUNTROWS ( official_totals ), NOT ISBLANK ( official_totals[official_value] ) )
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: 12df8aec-82b6-576b-80bd-3411efcb0681
+
+	measure 'Exact Matches' =
+			COUNTROWS (
+			    FILTER (
+			        official_totals,
+			        NOT ISBLANK ( official_totals[official_value] )
+			            && [Pipeline Value] = official_totals[official_value]
+			    )
+			)
+		formatString: #,0
+		displayFolder: 1 Validation
+		lineageTag: c30a0467-bf38-5c58-b33d-6e1dec062782
+
+	measure 'Validation Summary' = FORMAT ( [Exact Matches], "0" ) & " of " & FORMAT ( [Published Figures], "0" ) & " published figures match exactly"
+		displayFolder: 1 Validation
+		lineageTag: 531ed07f-ab73-5f86-8184-a6c4e688a314
+
+	measure 'Schools with Students' = CALCULATE ( COUNTROWS ( agg_school_year ), agg_school_year[enr_1_12] > 0 )
+		formatString: #,0
+		displayFolder: 2 District indicators
+		lineageTag: 8577932f-b814-519e-87c4-3bfcc94f496c
+
+	measure 'Enrolment 1-12' = SUM ( agg_school_year[enr_1_12] )
+		formatString: #,0
+		displayFolder: 2 District indicators
+		lineageTag: 4f5976a2-89d5-5168-8321-721054e317c3
+
+	measure 'Teachers (schools with students)' = CALCULATE ( SUM ( agg_school_year[teachers] ), agg_school_year[enr_1_12] > 0 )
+		formatString: #,0
+		displayFolder: 2 District indicators
+		lineageTag: ff828ae2-d63a-58d2-999c-bfa730d0e66a
+
+	measure PTR = DIVIDE ( [Enrolment 1-12], [Teachers (schools with students)] )
+		formatString: 0.0
+		displayFolder: 2 District indicators
+		lineageTag: 53f76c13-5b15-5d3e-bfd1-fd1c80b8fc54
+
+	measure 'Single-Teacher Schools %' =
+			DIVIDE (
+			    CALCULATE ( SUM ( agg_school_year[single_teacher] ), agg_school_year[enr_1_12] > 0 ),
+			    [Schools with Students]
+			)
+		formatString: 0.0%
+		displayFolder: 2 District indicators
+		lineageTag: 7f88c53c-28f6-5330-900e-6f3c7836f345
+
+	measure 'Infrastructure Index' = CALCULATE ( AVERAGE ( agg_school_year[infra_index] ), agg_school_year[enr_1_12] > 0 )
+		formatString: 0.0
+		displayFolder: 2 District indicators
+		lineageTag: f6cf8ce2-ad5b-53fe-a4ab-e2575fbf5b48
+
+	measure 'Girls'' Share 1-12' = DIVIDE ( SUM ( agg_school_year[enr_girls_1_12] ), [Enrolment 1-12] )
+		formatString: 0.0%
+		displayFolder: 2 District indicators
+		lineageTag: 5aa32eef-2fec-5244-a5e8-a93b28fc1445
+
+	measure 'Girls'' Retention Gap' =
+			DIVIDE ( SUM ( agg_school_year[enr_secondary_plus_g] ), SUM ( agg_school_year[enr_secondary_plus] ) )
+			    - DIVIDE ( SUM ( agg_school_year[enr_primary_g] ), SUM ( agg_school_year[enr_primary] ) )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 2 District indicators
+		lineageTag: 15356238-9d3d-5641-898a-49d07dbf9c25
+
+	measure '% Schools with Electricity' = CALCULATE ( AVERAGE ( agg_school_year[has_electricity] ), agg_school_year[enr_1_12] > 0 )
+		formatString: 0.0%
+		displayFolder: 2 District indicators
+		lineageTag: fd8c6801-49a7-5af0-97b3-5c3084c36e18
+
+	measure '% Schools with Safe Water' = CALCULATE ( AVERAGE ( agg_school_year[has_safe_water] ), agg_school_year[enr_1_12] > 0 )
+		formatString: 0.0%
+		displayFolder: 2 District indicators
+		lineageTag: cb7f99ff-3b46-5895-83c6-17da57b9bf13
+
+	measure '% Schools with Girls'' Toilet' = CALCULATE ( AVERAGE ( agg_school_year[has_girls_toilet] ), agg_school_year[enr_1_12] > 0 )
+		formatString: 0.0%
+		displayFolder: 2 District indicators
+		lineageTag: 33b479a8-f224-59f0-89b9-8e0bd0e0d3ae
+
+	measure 'Enrolment 1-12 PY' =
+			VAR y = SELECTEDVALUE ( dim_year[start_year] )
+			RETURN
+			    IF ( NOT ISBLANK ( y ),
+			        CALCULATE ( [Enrolment 1-12], REMOVEFILTERS ( dim_year ), dim_year[start_year] = y - 1 ) )
+		formatString: #,0
+		displayFolder: 3 Year over year
+		lineageTag: 0578a05f-8089-51e9-8246-365ab9aa1167
+
+	measure 'Enrolment 1-12 YoY %' = DIVIDE ( [Enrolment 1-12] - [Enrolment 1-12 PY], [Enrolment 1-12 PY] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 3 Year over year
+		lineageTag: cea234d9-0fac-5500-8d10-354a01830800
+
+	measure 'Teachers PY' =
+			VAR y = SELECTEDVALUE ( dim_year[start_year] )
+			RETURN
+			    IF ( NOT ISBLANK ( y ),
+			        CALCULATE ( [Teachers (schools with students)], REMOVEFILTERS ( dim_year ), dim_year[start_year] = y - 1 ) )
+		formatString: #,0
+		displayFolder: 3 Year over year
+		lineageTag: 8168a975-b487-5abc-a149-c5c1f2e38a0a
+
+	measure 'Teachers YoY %' = DIVIDE ( [Teachers (schools with students)] - [Teachers PY], [Teachers PY] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 3 Year over year
+		lineageTag: 77429593-eebf-5c55-b59e-2b38c353933a
+
+	measure 'PTR PY' =
+			VAR y = SELECTEDVALUE ( dim_year[start_year] )
+			RETURN IF ( NOT ISBLANK ( y ), CALCULATE ( [PTR], REMOVEFILTERS ( dim_year ), dim_year[start_year] = y - 1 ) )
+		formatString: 0.0
+		displayFolder: 3 Year over year
+		lineageTag: e6b3b3ba-2c53-5a7b-9c92-0ab1194befca
+
+	measure 'PTR YoY Change' = IF ( NOT ISBLANK ( [PTR PY] ), [PTR] - [PTR PY] )
+		formatString: +0.00;-0.00;0.00
+		displayFolder: 3 Year over year
+		lineageTag: 79debee1-6a6f-50f3-8ffb-1b4735ec62c7
+
+	measure 'Single-Teacher Schools % PY' =
+			VAR y = SELECTEDVALUE ( dim_year[start_year] )
+			RETURN
+			    IF ( NOT ISBLANK ( y ),
+			        CALCULATE ( [Single-Teacher Schools %], REMOVEFILTERS ( dim_year ), dim_year[start_year] = y - 1 ) )
+		formatString: 0.0%
+		displayFolder: 3 Year over year
+		lineageTag: 68400269-cd73-53d7-8268-475a3078881e
+
+	measure 'Single-Teacher Schools % YoY Change' = IF ( NOT ISBLANK ( [Single-Teacher Schools % PY] ), [Single-Teacher Schools %] - [Single-Teacher Schools % PY] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 3 Year over year
+		lineageTag: 892cc62b-6588-54d3-96bf-7359eec713f8
+
+	measure 'Teacher Shortfall PY' =
+			VAR y = SELECTEDVALUE ( dim_year[start_year] )
+			RETURN
+			    IF ( NOT ISBLANK ( y ),
+			        CALCULATE ( [Teacher Shortfall], REMOVEFILTERS ( dim_year ), dim_year[start_year] = y - 1 ) )
+		formatString: #,0
+		displayFolder: 3 Year over year
+		lineageTag: a7b7e2a6-426d-5ac2-b7f8-8c59f2d92a4b
+
+	measure 'Teacher Shortfall YoY Change' = IF ( NOT ISBLANK ( [Teacher Shortfall PY] ), [Teacher Shortfall] - [Teacher Shortfall PY] )
+		formatString: +#,0;-#,0;0
+		displayFolder: 3 Year over year
+		lineageTag: dd33e369-1375-5574-8882-595cb57cc29e
+
+	measure 'PTR (State)' = CALCULATE ( [PTR], REMOVEFILTERS ( dim_district ) )
+		formatString: 0.0
+		displayFolder: 4 vs State
+		lineageTag: 46b331c9-43a6-5a4b-9cbf-7be15803cc3d
+
+	measure 'PTR vs State' = [PTR] - [PTR (State)]
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 4 vs State
+		lineageTag: 2f3ed044-ba12-5c99-8a34-0ee7c74205b4
+
+	measure 'PTR vs State %' = DIVIDE ( [PTR vs State], [PTR (State)] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 4 vs State
+		lineageTag: 04e0c729-9b04-57db-947b-108a5d1c58b2
+
+	measure 'Single-Teacher Schools % (State)' = CALCULATE ( [Single-Teacher Schools %], REMOVEFILTERS ( dim_district ) )
+		formatString: 0.0%
+		displayFolder: 4 vs State
+		lineageTag: 9c29bbf0-6b2d-5cd5-b7a6-d4a19ef4b97e
+
+	measure 'Single-Teacher Schools % vs State' = [Single-Teacher Schools %] - [Single-Teacher Schools % (State)]
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 4 vs State
+		lineageTag: ba15a76f-1dcb-5288-be52-48e96fd14ed3
+
+	measure 'Infrastructure Index (State)' = CALCULATE ( [Infrastructure Index], REMOVEFILTERS ( dim_district ) )
+		formatString: 0.0
+		displayFolder: 4 vs State
+		lineageTag: 50ed0331-486c-59fb-9cad-19576112b021
+
+	measure 'Infrastructure Index vs State' = [Infrastructure Index] - [Infrastructure Index (State)]
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 4 vs State
+		lineageTag: 8aa05fe0-9dfe-59d4-883b-28296dc28f1f
+
+	measure 'Girls'' Share 1-12 (State)' = CALCULATE ( [Girls' Share 1-12], REMOVEFILTERS ( dim_district ) )
+		formatString: 0.0%
+		displayFolder: 4 vs State
+		lineageTag: 2fdc2a10-0563-5466-b150-b04699a08e31
+
+	measure 'Girls'' Share 1-12 vs State' = [Girls' Share 1-12] - [Girls' Share 1-12 (State)]
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 4 vs State
+		lineageTag: ad42b3f2-0e6f-5969-bd40-d00575f8b9aa
+
+	measure 'Teacher Shortfall % (State)' = CALCULATE ( [Teacher Shortfall %], REMOVEFILTERS ( dim_district ) )
+		formatString: 0.0%
+		displayFolder: 4 vs State
+		lineageTag: c8124e41-6507-5bfc-b8e6-e15e7dad7ed7
+
+	measure 'Teacher Shortfall % vs State' = [Teacher Shortfall %] - [Teacher Shortfall % (State)]
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 4 vs State
+		lineageTag: e3e7b8e6-d489-5c52-8676-287f14533930
+
+	measure 'PTR Above State' = IF ( [PTR] > [PTR (State)], 1, 0 )
+		formatString: 0
+		displayFolder: 4 vs State
+		lineageTag: c6b788e9-ede3-5c9f-9b6c-2190ea66d2b7
+
+	measure 'PTR (Mean of Districts)' = AVERAGEX ( ALL ( dim_district[district_name] ), [PTR] )
+		formatString: 0.0
+		displayFolder: 4 vs State
+		lineageTag: e8a8ac1c-f8e2-54f9-b3f6-767e918287e1
+
+	measure 'Teachers Required (Norm)' = CALCULATE ( SUM ( agg_school_year[teachers_required] ), agg_school_year[enr_1_12] > 0 )
+		formatString: #,0
+		displayFolder: 5 Resource gaps
+		lineageTag: 517545e8-d144-50b2-b682-e27169615c4b
+
+	measure 'Teacher Shortfall' =
+			SUMX (
+			    FILTER ( agg_school_year, agg_school_year[enr_1_12] > 0 ),
+			    MAX ( 0, agg_school_year[teachers_required] - agg_school_year[teachers_for_norms] )
+			)
+		formatString: #,0
+		displayFolder: 5 Resource gaps
+		lineageTag: c06db0d3-9394-55d5-b2d7-df1766765431
+
+	measure 'Teacher Surplus' =
+			SUMX (
+			    FILTER ( agg_school_year, agg_school_year[enr_1_12] > 0 ),
+			    MAX ( 0, agg_school_year[teachers_for_norms] - agg_school_year[teachers_required] )
+			)
+		formatString: #,0
+		displayFolder: 5 Resource gaps
+		lineageTag: ce508c57-c288-51ea-9c11-d91955c21a6e
+
+	measure 'Net Teacher Gap' =
+			[Teachers Required (Norm)]
+			    - CALCULATE ( SUM ( agg_school_year[teachers_for_norms] ), agg_school_year[enr_1_12] > 0 )
+		formatString: +#,0;-#,0;0
+		displayFolder: 5 Resource gaps
+		lineageTag: 5ff81cd8-e807-5a54-9055-e10e510f886d
+
+	measure 'Teacher Shortfall %' = DIVIDE ( [Teacher Shortfall], [Teachers Required (Norm)] )
+		formatString: 0.0%
+		displayFolder: 5 Resource gaps
+		lineageTag: 81e3c7b7-6002-5bae-b389-99934b104978
+
+	measure 'Schools Short of Teachers' =
+			COUNTROWS (
+			    FILTER (
+			        agg_school_year,
+			        agg_school_year[enr_1_12] > 0
+			            && agg_school_year[teachers_for_norms] < agg_school_year[teachers_required]
+			    )
+			)
+		formatString: #,0
+		displayFolder: 5 Resource gaps
+		lineageTag: 42fc1736-d8bb-5c7a-905c-c315c75b5ed1
+
+	measure 'Classroom Shortfall' =
+			SUMX (
+			    FILTER ( agg_school_year, agg_school_year[enr_1_12] > 0 ),
+			    MAX ( 0, agg_school_year[teachers] - agg_school_year[classrooms] )
+			)
+		formatString: #,0
+		displayFolder: 5 Resource gaps
+		lineageTag: e1f1a0f5-1bbe-5da3-b605-6ba83398c575
+
+	measure 'Classroom Shortfall (Usable Rooms)' =
+			SUMX (
+			    FILTER ( agg_school_year, agg_school_year[enr_1_12] > 0 ),
+			    MAX ( 0, agg_school_year[teachers] - agg_school_year[classrooms_usable] )
+			)
+		formatString: #,0
+		displayFolder: 5 Resource gaps
+		lineageTag: 6f81a9c7-80a6-5bf1-8bdd-dcb2d16bd193
+
+	column Placeholder
+		dataType: string
+		isHidden
+		lineageTag: 2134a9c8-30dd-5d33-bc79-764096805135
+		summarizeBy: none
+		sourceColumn: Placeholder
+
+	partition _Measures = m
+		mode: import
+		source = #table(type table [Placeholder = text], {})
+
+	annotation PBI_ResultType = Table

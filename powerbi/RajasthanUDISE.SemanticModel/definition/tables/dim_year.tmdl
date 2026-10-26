@@ -1,0 +1,42 @@
+table dim_year
+	lineageTag: 9ef0599b-adee-5888-a1bb-6c0d87befbac
+
+	column year_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 880007ee-171d-5057-a0a1-f41575688f32
+		summarizeBy: none
+		sourceColumn: year_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column academic_year
+		dataType: string
+		lineageTag: 7152a45f-c2b4-5826-b252-227f01d94b58
+		summarizeBy: none
+		sourceColumn: academic_year
+		sortByColumn: start_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column start_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 6618f07d-36c4-5361-a88a-5dfad8c5f641
+		summarizeBy: none
+		sourceColumn: start_year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_year = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "dim_year.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"year_key", Int64.Type}, {"academic_year", type text}, {"start_year", Int64.Type}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

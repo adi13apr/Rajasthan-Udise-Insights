@@ -1,0 +1,55 @@
+table official_totals
+	lineageTag: 3760b72d-d4ed-5d0b-8e0a-d87341af3f32
+
+	column year
+		dataType: string
+		lineageTag: bfb05424-2a7f-5757-a831-89d5ef4b61d6
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column indicator
+		dataType: string
+		lineageTag: a52bcbd8-5e1d-5766-ae57-034877c97324
+		summarizeBy: none
+		sourceColumn: indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column indicator_label
+		dataType: string
+		lineageTag: efc0a575-99eb-55d3-af51-9b39ee7c3499
+		summarizeBy: none
+		sourceColumn: indicator_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column official_value
+		dataType: int64
+		formatString: 0
+		lineageTag: 71128423-f402-5502-9633-a9810c08d7d7
+		summarizeBy: none
+		sourceColumn: official_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column official_source
+		dataType: string
+		lineageTag: 3987c1fe-6e87-5b62-84f6-0ecd71374388
+		summarizeBy: none
+		sourceColumn: official_source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition official_totals = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "official_totals.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"year", type text}, {"indicator", type text}, {"indicator_label", type text}, {"official_value", Int64.Type}, {"official_source", type text}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table
