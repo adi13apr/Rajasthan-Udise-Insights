@@ -35,6 +35,8 @@ flowchart LR
     G --> V["validation.md<br/>vs official figures"]
     B & S --> P["profiling/<br/>per-column stats"]
     G --> A["analysis<br/>notebook, brief"]
+    B -->|"spark/ PySpark<br/>same rules + SQL logic"| DB[("Databricks<br/>Delta silver + gold")]
+    DB -. "spark.parity:<br/>same answers?" .- G
 ```
 
 | Layer | What it holds | Last full run |
@@ -71,6 +73,72 @@ UDISE+ Data Sharing Portal and place them in `data/raw/<year>/` with their origi
 (e.g. `data/raw/2024-25/facility_data_RAJASTHAN_2024-25.zip`). Do not unzip them. New districts
 or years need no code changes. Without the real data, `--sample` runs every stage on
 synthetic files; CI does exactly that on every push.
+
+## Running on Databricks
+
+`spark/` is a second implementation of bronze -> silver -> gold in **PySpark**, writing **Delta
+tables** in Unity Catalog. It does not replace the DuckDB pipeline: the same rules (imported from
+`pipeline/rules.py`), the same star schema with the SCD Type 2 `dim_school`, the same marts, and
+the same 33 data tests and official-total checks. `python -m spark.parity` proves both engines
+give the same answers (`reports/spark_parity.md`). It runs on **Databricks Free Edition**
+(serverless compute; only the DataFrame API and Spark SQL are used, no RDDs or caching).
+
+**1. Build bronze locally** (the raw zips never leave your machine; bronze is 94 Parquet files, 31.7 MB):
+
+```powershell
+python run_pipeline.py        # writes data/bronze/<dataset>/year=<YYYY-YY>/*.parquet
+```
+
+**2. Get the code into the workspace.** In Databricks: *Workspace* > *Create* > *Git folder*, Git
+repository URL `https://github.com/adi13apr/Rajasthan-Udise-Insights`, provider GitHub, *Create Git
+folder* (the repository is public). Pick the branch that has `spark/` (`main` once merged).
+
+**3. Create a volume for the files.** *Catalog* > catalog `workspace` > *Create schema* `udise`;
+in that schema *Create* > *Volume*, name `landing`, type *Managed*. Open the volume and use
+*Create directory* to make `bronze`, and inside it `profile1`, `facility`, `teacher`, `enrolment1`.
+
+**4. Upload bronze.** For each dataset folder, open it in the volume and *Upload to this volume*
+all the `.parquet` files from the matching local folder, from both year folders
+(`data/bronze/profile1/year=2024-25/` and `.../year=2025-26/`, and so on; 94 files in total).
+The year folders are not needed: every file has a `_year` column and the file names include the
+year. With the Databricks CLI instead (keeps the folders, also fine):
+
+```powershell
+databricks fs cp -r data/bronze dbfs:/Volumes/workspace/udise/landing/bronze
+```
+
+**5. Run the notebook.** Open `spark/databricks_pipeline` in the Git folder, connect to
+*Serverless*, check the widgets at the top (defaults: catalog `workspace`, bronze
+`/Volumes/workspace/udise/landing/bronze`), and *Run all*. It writes:
+
+- `workspace.udise_silver.<table>` (5 tables, partitioned by year) and `quarantine_<table>`;
+- `workspace.udise_gold.<table>`: 7 dimensions, 3 facts, `int_school_year`, 2 marts;
+- every write is a new Delta version tagged with the run id (`DESCRIBE HISTORY`, time travel);
+- it stops with an error if any data test fails or any official 2024-25 total does not match;
+- `/Volumes/workspace/udise/landing/parity/spark_fingerprint.json`: district-level aggregates for the parity check.
+
+**6. Compare with DuckDB.** Download `spark_fingerprint.json` from the volume (kebab menu >
+*Download file*) and run, next to your local gold database:
+
+```powershell
+python -m spark.parity --from spark_fingerprint.json   # exit code 1 on any mismatch
+```
+
+**Local Spark (optional).** Needs Java 17 and `pip install -r requirements-spark.txt` (Spark is
+deliberately not in `requirements.txt`). Then `python -m spark.parity` builds silver and gold
+with local Spark from `data/bronze/` (in memory, nothing written) and compares;
+`python -m pytest tests/test_spark.py` runs the Spark tests (skipped when Spark or Java is
+missing). CI runs both on the synthetic sample in a separate `spark` job.
+
+Last local parity run on the full data (`reports/spark_parity.md`): **PASS**, 22,194 cells compared,
+0 mismatches (largest ratio difference 3.6e-14), 33/33 data tests and 8/8 official 2024-25 totals
+in both engines. On this laptop (16 logical cores, 16 GB), local Spark took 92.9 s for bronze ->
+silver and 20.5 s for silver -> gold, against 19.1 s and 6.5 s for DuckDB. At 1.7 million rows,
+one in-process DuckDB is the faster tool; Spark is here for the platform (Databricks, Delta, Unity
+Catalog) and for data that outgrows one machine.
+
+The tables in the workspace are school-level UDISE+ data: keep them in your own workspace and do
+not share them (portal terms); only district-level results are published.
 
 ## Outputs
 
@@ -119,11 +187,12 @@ pipeline/
   gold.py              runs sql/*.sql into DuckDB, runs sql/tests/, exports
   validation.py        gold vs official figures (sql/validation/)
   build.py, checks.py  pandas school-year table and the QA report
+spark/                 PySpark version of silver and gold (Databricks notebook, parity check)
 sql/                   star schema and marts (numbered, run in order), tests/, validation/
 reference/             districts, management codes, official totals, schema (JSON)
 scripts/               sample data, benchmark, data dictionary, schema extraction, downloader
 tests/                 pytest (synthetic data only); regression/ = frozen pandas output
-.github/workflows/     CI: tests + pipeline on sample data
+.github/workflows/     CI: tests + pipeline on sample data; spark job: Spark tests + parity on the sample
 ```
 
 ## Data source, terms and ethics

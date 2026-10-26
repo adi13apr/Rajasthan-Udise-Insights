@@ -163,3 +163,41 @@ incremental upserts would be the next step if loads became incremental.
 Re-running on the same data gives the same files: deterministic surrogate keys, top values
 ordered by count then value, exact decimals where averages are rounded. Committed reports
 therefore change only when the data or the code changes.
+
+## 13. A second engine: PySpark on Databricks, held to parity with DuckDB
+
+`spark/` rebuilds silver and gold in PySpark so the pipeline can run on a Spark platform
+(Databricks Free Edition, writing Delta tables in Unity Catalog). Choices:
+
+- **DuckDB stays the reference.** Nothing in `pipeline/` or `sql/` changed. Spark is judged
+  by whether it gives the same answers, not the other way round.
+- **One rule catalogue.** The rule list (names, order, severity, tables) is imported from
+  `pipeline/rules.py`; only the checks are written again as Spark column expressions. The
+  "first failing rule wins" order is kept in one pass: the row-level rules are computed side
+  by side and a row gets the first rule (in order) that gave it a reason; only the duplicate
+  rule compares rows with each other, so its window is partitioned by "passed the earlier
+  rules" as well as the key. (A first version defined each rule's reason in terms of the
+  earlier ones; once Spark inlined that, the expression tree doubled with every rule.)
+- **Same surrogate keys.** Every key uses the same `row_number()` ordering as the SQL, so a
+  school version has the same `school_key` in both engines (the parity check compares key sums).
+- **Engine differences handled on purpose:** `mergeSchema` when reading bronze (the Spark version
+  of `union_by_name`; without it 2025-26-only columns vanish); `max_by` restricted to non-NULL
+  values because DuckDB's `arg_max` skips NULLs; `\z` instead of `$` in the whole-number regex
+  (Java's `$` also matches before a final newline); explicit NULL-safe comparisons where pandas
+  treats `NaN != x` as true; CASE expressions instead of map lookups, which raise in ANSI mode.
+- **Serverless-safe code.** Only the DataFrame API and Spark SQL; no RDDs, `sparkContext` or
+  `cache()` inside the transforms. Callers decide how a table is materialised through a
+  `persist(name, df)` function: the notebook writes a Delta table and reads it back, local runs
+  use `localCheckpoint()`. Both cut the lineage. `cache()` does not: with it, each later plan
+  carried every earlier one (the mart plans reached 5.7 million characters) and task
+  serialisation ran out of memory even on the synthetic sample.
+- **Windows without winutils.** Local Spark only reads: the bronze files are listed in Python
+  and passed to Spark one by one (Hadoop's directory listing needs native Windows binaries),
+  and nothing is written by Spark locally.
+- **Parity, not trust.** `python -m spark.parity` runs the same SQL queries (row counts,
+  quarantine counts per rule, flag counts, district x year totals from every fact, SCD2 versions
+  and district moves, both marts cell by cell, the official indicators) on both engines. Whole
+  numbers must be equal; only ratio columns may differ, by at most 0.001 (the marts round to 3
+  decimals and the engines may round a .xxx5 value differently). Any mismatch fails the run.
+- **Spark stays optional.** `requirements-spark.txt` and a separate CI job; the main job and
+  `requirements.txt` do not need Java.

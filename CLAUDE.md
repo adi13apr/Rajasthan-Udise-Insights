@@ -157,6 +157,14 @@ then the Sattva analysis (phases A1-A6).
   Verified by opening it in Tableau Public 2026.3. Lessons: use document format 18.1 (Tableau's loader
   rejects the published 26.x XSD layout); colour-by-category maps in the XML are ignored, so highlights
   are 0/1 measures on Tableau's default blue ramp; categorical charts use the default palette.
+- PySpark (branch feature/pyspark-databricks): `spark/silver.py`, `spark/gold.py`, `spark/checks.py` port
+  silver (rules imported from `pipeline/rules.py`), gold (same keys, SCD2, marts) and the 33 data tests;
+  `spark/databricks_pipeline.py` = Databricks notebook (volume bronze -> Delta silver/gold, stops on any
+  failed check, writes `spark_fingerprint.json`); `python -m spark.parity [--sample] [--from FILE]
+  [--time-duckdb]` compares with DuckDB -> `reports/spark_parity.md` (whole numbers exact, ratios <= 0.001).
+  Deps in `requirements-spark.txt` (not requirements.txt); `tests/test_spark.py` skips without pyspark/Java;
+  CI has a separate `spark` job. Local setup: JDK 17 in `D:\dev\jdk17`, venv `D:\dev\.venv-spark`
+  (set `$env:JAVA_HOME='D:\dev\jdk17'`). Windows: local Spark only reads (no winutils), never writes files.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).
