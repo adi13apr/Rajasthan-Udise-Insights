@@ -21,8 +21,8 @@ python scripts/make_powerbi_project.py    # -> powerbi/RajasthanUDISE.pbip (+ .S
 
 Open `powerbi/RajasthanUDISE.pbip` in Power BI Desktop. The project holds no data, so the first
 time Desktop shows empty visuals and a yellow bar *Some of the tables have incomplete or no data*:
-click **Refresh now** (or *Home > Refresh*). On the development laptop the full load took 145 s;
-the 64 lakh enrolment rows take the longest. The CSV folder is
+click **Refresh now** (or *Home > Refresh*). On the development laptop the full load took 75-145 s
+in three timed runs; the 64 lakh enrolment rows take the longest. The CSV folder is
 the `DataFolder` parameter (*Transform data > Edit parameters*). It is set to this checkout's
 `powerbi/data/` when the project is generated.
 

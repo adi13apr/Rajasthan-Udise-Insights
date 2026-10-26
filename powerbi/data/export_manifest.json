@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-10-26T09:12:44+00:00",
-  "gold_db": "E:/rajasthan-udise-insights/data/gold/udise.duckdb",
-  "seconds": 3.8,
+  "generated_at": "2026-10-26T13:48:44+00:00",
+  "gold_db": "data/gold/udise.duckdb",
+  "seconds": 2.4,
   "tables": {
     "dim_year": {
       "rows": 2,
       "columns": 3,
       "bytes": 64,
-      "seconds": 0.02
+      "seconds": 0.05
     },
     "dim_district": {
       "rows": 41,
       "columns": 3,
       "bytes": 669,
-      "seconds": 0.01
+      "seconds": 0.02
     },
     "dim_management": {
       "rows": 14,
@@ -31,43 +31,43 @@
       "rows": 3,
       "columns": 3,
       "bytes": 71,
-      "seconds": 0.01
+      "seconds": 0.02
     },
     "dim_social_category": {
       "rows": 4,
       "columns": 3,
       "bytes": 78,
-      "seconds": 0.01
+      "seconds": 0.03
     },
     "dim_school": {
       "rows": 109037,
       "columns": 14,
       "bytes": 7880476,
-      "seconds": 0.35
+      "seconds": 0.18
     },
     "fact_enrolment": {
       "rows": 6403516,
       "columns": 6,
       "bytes": 103968847,
-      "seconds": 0.83
+      "seconds": 0.44
     },
     "fact_teachers": {
       "rows": 212747,
       "columns": 41,
       "bytes": 18548169,
-      "seconds": 0.62
+      "seconds": 0.36
     },
     "fact_school_facilities": {
       "rows": 212747,
       "columns": 26,
       "bytes": 16841345,
-      "seconds": 0.61
+      "seconds": 0.4
     },
     "agg_school_year": {
       "rows": 212747,
       "columns": 28,
       "bytes": 19305990,
-      "seconds": 1.3
+      "seconds": 0.82
     },
     "official_totals": {
       "rows": 18,

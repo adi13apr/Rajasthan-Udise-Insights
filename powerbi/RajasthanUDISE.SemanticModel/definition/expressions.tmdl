@@ -1,4 +1,4 @@
-expression DataFolder = "E:\udise-powerbi\powerbi\data\" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+expression DataFolder = "E:\rajasthan-udise-insights\powerbi\data\" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
 	lineageTag: 5d69a6ce-b0bd-5e84-8f72-bb01d3f4fe2c
 
 	annotation PBI_ResultType = Text
