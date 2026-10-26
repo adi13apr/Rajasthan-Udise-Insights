@@ -24,3 +24,13 @@ tests/fixtures/raw/
 data/sample/
 # Tableau autosave / recovery files
 *.twbr
+# Power BI: the CSV export is school-level (UDISE+ data-sharing terms), and so is any .pbix
+# (it embeds the data). Commit only the reference files, the manifest and .pbit templates.
+powerbi/data/*
+!powerbi/data/README.md
+!powerbi/data/official_totals.csv
+!powerbi/data/norms.csv
+!powerbi/data/export_manifest.json
+*.pbix
+# Power BI project caches: .pbi/cache.abf holds the loaded (school-level) data
+powerbi/**/.pbi/

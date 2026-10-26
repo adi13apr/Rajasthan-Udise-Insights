@@ -1,0 +1,88 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "facilities",
+  "position": {
+    "x": 852,
+    "y": 256,
+    "z": 16000,
+    "height": 196,
+    "width": 412,
+    "tabOrder": 16000
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "% Schools with Electricity"
+                }
+              },
+              "queryRef": "_Measures.% Schools with Electricity",
+              "nativeQueryRef": "% Schools with Electricity"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "% Schools with Safe Water"
+                }
+              },
+              "queryRef": "_Measures.% Schools with Safe Water",
+              "nativeQueryRef": "% Schools with Safe Water"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "% Schools with Girls' Toilet"
+                }
+              },
+              "queryRef": "_Measures.% Schools with Girls' Toilet",
+              "nativeQueryRef": "% Schools with Girls' Toilet"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Schools with basic facilities'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

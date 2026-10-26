@@ -1,0 +1,299 @@
+table agg_school_year
+	lineageTag: b6f8c760-8168-5fd6-a249-b8fc2c0ad76b
+
+	column school_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5b91622b-dc57-55db-9d3d-fd6b20faf80b
+		summarizeBy: none
+		sourceColumn: school_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f521c178-e983-539b-9ca7-90b10ba944bb
+		summarizeBy: none
+		sourceColumn: year_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column enr_pre_primary
+		dataType: int64
+		formatString: #,0
+		lineageTag: 9261f97c-b2d0-5ecb-af3e-bfa35ace5634
+		summarizeBy: sum
+		sourceColumn: enr_pre_primary
+
+		annotation SummarizationSetBy = Automatic
+
+	column enr_1_12
+		dataType: int64
+		formatString: #,0
+		lineageTag: fc44e551-52b0-5c3f-9f6e-7758b589d749
+		summarizeBy: sum
+		sourceColumn: enr_1_12
+
+		annotation SummarizationSetBy = Automatic
+
+	column enr_girls_1_12
+		dataType: int64
+		formatString: #,0
+		lineageTag: 09d689da-1d8f-595a-8a8a-eceecf5097a0
+		summarizeBy: sum
+		sourceColumn: enr_girls_1_12
+
+		annotation SummarizationSetBy = Automatic
+
+	column enr_primary
+		dataType: int64
+		formatString: #,0
+		lineageTag: d8d5250e-a206-5808-b833-b4f25b475a37
+		summarizeBy: sum
+		sourceColumn: enr_primary
+
+		annotation SummarizationSetBy = Automatic
+
+	column enr_primary_g
+		dataType: int64
+		formatString: #,0
+		lineageTag: ad0483af-40a5-5ebd-9245-89351f6b1e14
+		summarizeBy: sum
+		sourceColumn: enr_primary_g
+
+		annotation SummarizationSetBy = Automatic
+
+	column enr_upper_primary
+		dataType: int64
+		formatString: #,0
+		lineageTag: e01ce0fa-908f-5171-82d9-001c939e4a96
+		summarizeBy: sum
+		sourceColumn: enr_upper_primary
+
+		annotation SummarizationSetBy = Automatic
+
+	column enr_secondary
+		dataType: int64
+		formatString: #,0
+		lineageTag: a077e78c-a678-5d7c-a059-da3f12e9f102
+		summarizeBy: sum
+		sourceColumn: enr_secondary
+
+		annotation SummarizationSetBy = Automatic
+
+	column enr_higher_secondary
+		dataType: int64
+		formatString: #,0
+		lineageTag: 379af7fd-d756-5b27-bcd9-c779ca6e2d66
+		summarizeBy: sum
+		sourceColumn: enr_higher_secondary
+
+		annotation SummarizationSetBy = Automatic
+
+	column enr_secondary_plus
+		dataType: int64
+		formatString: #,0
+		lineageTag: 30f14e1d-5a2d-5ebf-954b-30875532b7b6
+		summarizeBy: sum
+		sourceColumn: enr_secondary_plus
+
+		annotation SummarizationSetBy = Automatic
+
+	column enr_secondary_plus_g
+		dataType: int64
+		formatString: #,0
+		lineageTag: 060e0501-576e-55c4-94a8-13d777de5804
+		summarizeBy: sum
+		sourceColumn: enr_secondary_plus_g
+
+		annotation SummarizationSetBy = Automatic
+
+	column teachers
+		dataType: int64
+		formatString: #,0
+		lineageTag: 1bba6c5d-6308-51ed-8c8e-671aff99f084
+		summarizeBy: sum
+		sourceColumn: teachers
+
+		annotation SummarizationSetBy = Automatic
+
+	column teachers_pre_primary_only
+		dataType: int64
+		formatString: #,0
+		lineageTag: 348bf9b4-eb92-53bc-bc61-c34d47073004
+		summarizeBy: sum
+		sourceColumn: teachers_pre_primary_only
+
+		annotation SummarizationSetBy = Automatic
+
+	column single_teacher
+		dataType: int64
+		formatString: #,0
+		lineageTag: 499c933f-88f0-5957-9e33-cb552b5bc474
+		summarizeBy: sum
+		sourceColumn: single_teacher
+
+		annotation SummarizationSetBy = Automatic
+
+	column classrooms
+		dataType: int64
+		formatString: #,0
+		lineageTag: 5658cada-c821-53a2-9f14-762ad67d2c90
+		summarizeBy: sum
+		sourceColumn: classrooms
+
+		annotation SummarizationSetBy = Automatic
+
+	column classrooms_usable
+		dataType: int64
+		formatString: #,0
+		lineageTag: 10449579-8712-5e5c-8c09-007136f5e37a
+		summarizeBy: sum
+		sourceColumn: classrooms_usable
+
+		annotation SummarizationSetBy = Automatic
+
+	column infra_index
+		dataType: double
+		formatString: #,0
+		lineageTag: 606ac985-470d-5b05-bfd8-0e321c6a3c0e
+		summarizeBy: sum
+		sourceColumn: infra_index
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_electricity
+		dataType: double
+		formatString: #,0
+		lineageTag: f66418d1-96e4-58ab-9c7d-8b865eb7f3e5
+		summarizeBy: sum
+		sourceColumn: has_electricity
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_safe_water
+		dataType: double
+		formatString: #,0
+		lineageTag: 967b94ba-bbf0-53a0-be9e-6ad0d50e7949
+		summarizeBy: sum
+		sourceColumn: has_safe_water
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_girls_toilet
+		dataType: double
+		formatString: #,0
+		lineageTag: 19b9580e-8aea-53d2-91c6-b4b8b3354f48
+		summarizeBy: sum
+		sourceColumn: has_girls_toilet
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_boys_toilet
+		dataType: double
+		formatString: #,0
+		lineageTag: 3172955e-d892-5675-bef7-3b178c3387ef
+		summarizeBy: sum
+		sourceColumn: has_boys_toilet
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_handwash
+		dataType: double
+		formatString: #,0
+		lineageTag: 59b59299-c5f4-5dbb-a2c7-3168b3d5edc0
+		summarizeBy: sum
+		sourceColumn: has_handwash
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_library
+		dataType: double
+		formatString: #,0
+		lineageTag: b8a11e50-4ea2-552c-aa27-75bd745ad635
+		summarizeBy: sum
+		sourceColumn: has_library
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_playground
+		dataType: double
+		formatString: #,0
+		lineageTag: 9999cfad-42ed-5da9-aba5-faae8ed6cdbc
+		summarizeBy: sum
+		sourceColumn: has_playground
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_ramp
+		dataType: double
+		formatString: #,0
+		lineageTag: 2f5c37fc-9cb3-5828-a691-59957b21dbdf
+		summarizeBy: sum
+		sourceColumn: has_ramp
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_internet
+		dataType: double
+		formatString: #,0
+		lineageTag: 2b4d5a60-c6fa-5377-9240-21254646ef85
+		summarizeBy: sum
+		sourceColumn: has_internet
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_computer
+		dataType: double
+		formatString: #,0
+		lineageTag: 4b3b6f1b-6431-5b5a-a874-da67c6eefee6
+		summarizeBy: sum
+		sourceColumn: has_computer
+
+		annotation SummarizationSetBy = Automatic
+
+	column teachers_required =
+			VAR p_ppt = LOOKUPVALUE ( norms[pupils_per_teacher], norms[stage], "primary" )
+			VAR p_min = LOOKUPVALUE ( norms[min_teachers], norms[stage], "primary" )
+			VAR u_ppt = LOOKUPVALUE ( norms[pupils_per_teacher], norms[stage], "upper_primary" )
+			VAR u_min = LOOKUPVALUE ( norms[min_teachers], norms[stage], "upper_primary" )
+			VAR s_ppt = LOOKUPVALUE ( norms[pupils_per_teacher], norms[stage], "secondary" )
+			VAR s_min = LOOKUPVALUE ( norms[min_teachers], norms[stage], "secondary" )
+			VAR h_ppt = LOOKUPVALUE ( norms[pupils_per_teacher], norms[stage], "higher_secondary" )
+			VAR h_min = LOOKUPVALUE ( norms[min_teachers], norms[stage], "higher_secondary" )
+			VAR p = agg_school_year[enr_primary]
+			VAR u = agg_school_year[enr_upper_primary]
+			VAR s = agg_school_year[enr_secondary]
+			VAR h = agg_school_year[enr_higher_secondary]
+			RETURN
+			    IF ( p > 0, MAX ( p_min, ROUNDUP ( p / p_ppt, 0 ) ), 0 )
+			        + IF ( u > 0, MAX ( u_min, ROUNDUP ( u / u_ppt, 0 ) ), 0 )
+			        + IF ( s > 0, MAX ( s_min, ROUNDUP ( s / s_ppt, 0 ) ), 0 )
+			        + IF ( h > 0, MAX ( h_min, ROUNDUP ( h / h_ppt, 0 ) ), 0 )
+		formatString: 0
+		lineageTag: e9193318-d3d4-53c8-a64b-4f3d33956857
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column teachers_for_norms = agg_school_year[teachers] - agg_school_year[teachers_pre_primary_only]
+		formatString: 0
+		lineageTag: 4a446979-90c3-50e2-a846-d489fe0aa9ed
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition agg_school_year = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "agg_school_year.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"school_key", Int64.Type}, {"year_key", Int64.Type}, {"enr_pre_primary", Int64.Type}, {"enr_1_12", Int64.Type}, {"enr_girls_1_12", Int64.Type}, {"enr_primary", Int64.Type}, {"enr_primary_g", Int64.Type}, {"enr_upper_primary", Int64.Type}, {"enr_secondary", Int64.Type}, {"enr_higher_secondary", Int64.Type}, {"enr_secondary_plus", Int64.Type}, {"enr_secondary_plus_g", Int64.Type}, {"teachers", Int64.Type}, {"teachers_pre_primary_only", Int64.Type}, {"single_teacher", Int64.Type}, {"classrooms", Int64.Type}, {"classrooms_usable", Int64.Type}, {"infra_index", type number}, {"has_electricity", type number}, {"has_safe_water", type number}, {"has_girls_toilet", type number}, {"has_boys_toilet", type number}, {"has_handwash", type number}, {"has_library", type number}, {"has_playground", type number}, {"has_ramp", type number}, {"has_internet", type number}, {"has_computer", type number}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

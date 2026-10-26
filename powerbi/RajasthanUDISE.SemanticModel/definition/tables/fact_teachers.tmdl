@@ -1,0 +1,385 @@
+table fact_teachers
+	lineageTag: 2a888edb-ebdd-5715-a848-cb52e2c70bc0
+
+	column school_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c0d5d722-3658-5486-aa12-b5dcfc970ebc
+		summarizeBy: none
+		sourceColumn: school_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e8c0c9e5-22be-5b7f-823d-ad4c24cb0b4e
+		summarizeBy: none
+		sourceColumn: year_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_tch
+		dataType: int64
+		formatString: #,0
+		lineageTag: 74ca3981-16d9-5092-8321-899b1cbb159a
+		summarizeBy: sum
+		sourceColumn: total_tch
+
+		annotation SummarizationSetBy = Automatic
+
+	column male
+		dataType: int64
+		formatString: #,0
+		lineageTag: 6ae882d9-ac75-51e8-8894-1c038f471fc9
+		summarizeBy: sum
+		sourceColumn: male
+
+		annotation SummarizationSetBy = Automatic
+
+	column female
+		dataType: int64
+		formatString: #,0
+		lineageTag: 57738ec8-8eb4-5a2f-917d-c7b57818b0e3
+		summarizeBy: sum
+		sourceColumn: female
+
+		annotation SummarizationSetBy = Automatic
+
+	column transgender
+		dataType: int64
+		formatString: #,0
+		lineageTag: ccd521ee-e277-59d8-9429-93b8c5b6c4da
+		summarizeBy: sum
+		sourceColumn: transgender
+
+		annotation SummarizationSetBy = Automatic
+
+	column gen_tch
+		dataType: int64
+		formatString: #,0
+		lineageTag: 2809fcca-b65e-5f5f-89ff-5faa88832120
+		summarizeBy: sum
+		sourceColumn: gen_tch
+
+		annotation SummarizationSetBy = Automatic
+
+	column sc_tch
+		dataType: int64
+		formatString: #,0
+		lineageTag: a08776e2-ef94-5688-a617-f16847363358
+		summarizeBy: sum
+		sourceColumn: sc_tch
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_tch
+		dataType: int64
+		formatString: #,0
+		lineageTag: 259cf50a-8220-53ec-b266-a0ca50f801f3
+		summarizeBy: sum
+		sourceColumn: st_tch
+
+		annotation SummarizationSetBy = Automatic
+
+	column obc_tch
+		dataType: int64
+		formatString: #,0
+		lineageTag: 39ad4ff3-fd2b-5f10-ad3c-5976425d8766
+		summarizeBy: sum
+		sourceColumn: obc_tch
+
+		annotation SummarizationSetBy = Automatic
+
+	column regular
+		dataType: int64
+		formatString: #,0
+		lineageTag: 6da18006-c48a-54bc-a918-c79efab58729
+		summarizeBy: sum
+		sourceColumn: regular
+
+		annotation SummarizationSetBy = Automatic
+
+	column contract
+		dataType: int64
+		formatString: #,0
+		lineageTag: 2673fcc4-a3c9-52dc-9377-722144751220
+		summarizeBy: sum
+		sourceColumn: contract
+
+		annotation SummarizationSetBy = Automatic
+
+	column part_time
+		dataType: int64
+		formatString: #,0
+		lineageTag: 1397e4fe-bf2b-5f34-9450-76859492936c
+		summarizeBy: sum
+		sourceColumn: part_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column below_graduate
+		dataType: int64
+		formatString: #,0
+		lineageTag: 86bf53e9-eb89-5311-b3b6-08747179ce46
+		summarizeBy: sum
+		sourceColumn: below_graduate
+
+		annotation SummarizationSetBy = Automatic
+
+	column graduate
+		dataType: int64
+		formatString: #,0
+		lineageTag: 312d8bbe-c31f-536e-808e-49da5a1fd41f
+		summarizeBy: sum
+		sourceColumn: graduate
+
+		annotation SummarizationSetBy = Automatic
+
+	column post_graduate_and_above
+		dataType: int64
+		formatString: #,0
+		lineageTag: 1e807adb-b346-5628-aacf-45b548c04019
+		summarizeBy: sum
+		sourceColumn: post_graduate_and_above
+
+		annotation SummarizationSetBy = Automatic
+
+	column trained_comp
+		dataType: int64
+		formatString: #,0
+		lineageTag: 24c14e80-07b8-5d25-ad85-62367576df77
+		summarizeBy: sum
+		sourceColumn: trained_comp
+
+		annotation SummarizationSetBy = Automatic
+
+	column class_taught_pr
+		dataType: int64
+		formatString: #,0
+		lineageTag: dc68f425-1559-583b-84dd-08dc96f555e9
+		summarizeBy: sum
+		sourceColumn: class_taught_pr
+
+		annotation SummarizationSetBy = Automatic
+
+	column class_taught_upr
+		dataType: int64
+		formatString: #,0
+		lineageTag: cae44799-8f54-5f1b-9092-e0ff214da480
+		summarizeBy: sum
+		sourceColumn: class_taught_upr
+
+		annotation SummarizationSetBy = Automatic
+
+	column class_taught_pr_upr
+		dataType: int64
+		formatString: #,0
+		lineageTag: 02937406-4a16-5889-8cc3-3073c633b799
+		summarizeBy: sum
+		sourceColumn: class_taught_pr_upr
+
+		annotation SummarizationSetBy = Automatic
+
+	column class_taught_sec_only
+		dataType: int64
+		formatString: #,0
+		lineageTag: e6150410-bdcb-5dbf-81f0-5b5c78df00e8
+		summarizeBy: sum
+		sourceColumn: class_taught_sec_only
+
+		annotation SummarizationSetBy = Automatic
+
+	column class_taught_hsec_only
+		dataType: int64
+		formatString: #,0
+		lineageTag: 287010a8-1427-564b-9f47-43d0b641e858
+		summarizeBy: sum
+		sourceColumn: class_taught_hsec_only
+
+		annotation SummarizationSetBy = Automatic
+
+	column class_taught_upr_sec
+		dataType: int64
+		formatString: #,0
+		lineageTag: 81c3c367-e269-51bd-b8f1-5a6b15910bac
+		summarizeBy: sum
+		sourceColumn: class_taught_upr_sec
+
+		annotation SummarizationSetBy = Automatic
+
+	column class_taught_sec_hsec
+		dataType: int64
+		formatString: #,0
+		lineageTag: 3f826c35-1354-55c6-8f88-1581b8ef8a01
+		summarizeBy: sum
+		sourceColumn: class_taught_sec_hsec
+
+		annotation SummarizationSetBy = Automatic
+
+	column class_taugt_pre_primary_only
+		dataType: int64
+		formatString: #,0
+		lineageTag: a0e1f7c3-42fc-5774-98d4-0fd12496082a
+		summarizeBy: sum
+		sourceColumn: class_taugt_pre_primary_only
+
+		annotation SummarizationSetBy = Automatic
+
+	column class_taught_pr_and_pre_pri
+		dataType: int64
+		formatString: #,0
+		lineageTag: b8f849a4-73dd-51f1-884c-e18d308c84d8
+		summarizeBy: sum
+		sourceColumn: class_taught_pr_and_pre_pri
+
+		annotation SummarizationSetBy = Automatic
+
+	column teacher_involve_non_training_assignment
+		dataType: int64
+		formatString: #,0
+		lineageTag: fc70a0f0-b43d-59ab-8e29-7d21e2c33c3a
+		summarizeBy: sum
+		sourceColumn: teacher_involve_non_training_assignment
+
+		annotation SummarizationSetBy = Automatic
+
+	column diploma_certificate
+		dataType: int64
+		formatString: #,0
+		lineageTag: 4f580385-913a-5236-b971-f21141469764
+		summarizeBy: sum
+		sourceColumn: diploma_certificate
+
+		annotation SummarizationSetBy = Automatic
+
+	column bachelor_of_ee
+		dataType: int64
+		formatString: #,0
+		lineageTag: 2dafbfac-f847-5178-a197-d72a5477101d
+		summarizeBy: sum
+		sourceColumn: bachelor_of_ee
+
+		annotation SummarizationSetBy = Automatic
+
+	column bed_equivalent
+		dataType: int64
+		formatString: #,0
+		lineageTag: cd2f8f1b-080d-55ff-bcd1-f6f94addfbbc
+		summarizeBy: sum
+		sourceColumn: bed_equivalent
+
+		annotation SummarizationSetBy = Automatic
+
+	column med_equivalent
+		dataType: int64
+		formatString: #,0
+		lineageTag: 0908d6c5-4d95-5955-a547-d8904a7799c9
+		summarizeBy: sum
+		sourceColumn: med_equivalent
+
+		annotation SummarizationSetBy = Automatic
+
+	column other
+		dataType: int64
+		formatString: #,0
+		lineageTag: de0716f2-909e-59fd-b27f-3d84ba885b6e
+		summarizeBy: sum
+		sourceColumn: other
+
+		annotation SummarizationSetBy = Automatic
+
+	column none
+		dataType: int64
+		formatString: #,0
+		lineageTag: 657d7fd6-dda3-57ee-b6ec-3f406620ed8b
+		summarizeBy: sum
+		sourceColumn: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column diploma_special_edu
+		dataType: int64
+		formatString: #,0
+		lineageTag: c9a37513-bf31-5acf-85fd-4e3d57985993
+		summarizeBy: sum
+		sourceColumn: diploma_special_edu
+
+		annotation SummarizationSetBy = Automatic
+
+	column pursuing_rpc
+		dataType: int64
+		formatString: #,0
+		lineageTag: f1e75ff0-4407-586c-92ed-62a5b898c074
+		summarizeBy: sum
+		sourceColumn: pursuing_rpc
+
+		annotation SummarizationSetBy = Automatic
+
+	column diploma_ele_edu
+		dataType: int64
+		formatString: #,0
+		lineageTag: 02119728-efed-57d0-aa6e-82a8a4d9cfaa
+		summarizeBy: sum
+		sourceColumn: diploma_ele_edu
+
+		annotation SummarizationSetBy = Automatic
+
+	column early_childhood_tch
+		dataType: int64
+		formatString: #,0
+		lineageTag: b7e5f80a-eef1-5c1a-9713-94676d5e96c6
+		summarizeBy: sum
+		sourceColumn: early_childhood_tch
+
+		annotation SummarizationSetBy = Automatic
+
+	column bed_nursery
+		dataType: int64
+		formatString: #,0
+		lineageTag: b554ca9a-1fb2-5e0d-bf6e-10560f78670a
+		summarizeBy: sum
+		sourceColumn: bed_nursery
+
+		annotation SummarizationSetBy = Automatic
+
+	column trained_cwsn
+		dataType: int64
+		formatString: #,0
+		lineageTag: cae7f13e-139e-568a-af88-f4cb204491ad
+		summarizeBy: sum
+		sourceColumn: trained_cwsn
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_no_teachers_with_students
+		dataType: int64
+		formatString: #,0
+		lineageTag: 15e57883-94ee-50c9-827b-52ae12fb9c5b
+		summarizeBy: sum
+		sourceColumn: flag_no_teachers_with_students
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_high_ptr
+		dataType: int64
+		formatString: #,0
+		lineageTag: b6696cc0-e3ad-5b3c-bcc7-b73251c72e5f
+		summarizeBy: sum
+		sourceColumn: flag_high_ptr
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_teachers = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "fact_teachers.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"school_key", Int64.Type}, {"year_key", Int64.Type}, {"total_tch", Int64.Type}, {"male", Int64.Type}, {"female", Int64.Type}, {"transgender", Int64.Type}, {"gen_tch", Int64.Type}, {"sc_tch", Int64.Type}, {"st_tch", Int64.Type}, {"obc_tch", Int64.Type}, {"regular", Int64.Type}, {"contract", Int64.Type}, {"part_time", Int64.Type}, {"below_graduate", Int64.Type}, {"graduate", Int64.Type}, {"post_graduate_and_above", Int64.Type}, {"trained_comp", Int64.Type}, {"class_taught_pr", Int64.Type}, {"class_taught_upr", Int64.Type}, {"class_taught_pr_upr", Int64.Type}, {"class_taught_sec_only", Int64.Type}, {"class_taught_hsec_only", Int64.Type}, {"class_taught_upr_sec", Int64.Type}, {"class_taught_sec_hsec", Int64.Type}, {"class_taugt_pre_primary_only", Int64.Type}, {"class_taught_pr_and_pre_pri", Int64.Type}, {"teacher_involve_non_training_assignment", Int64.Type}, {"diploma_certificate", Int64.Type}, {"bachelor_of_ee", Int64.Type}, {"bed_equivalent", Int64.Type}, {"med_equivalent", Int64.Type}, {"other", Int64.Type}, {"none", Int64.Type}, {"diploma_special_edu", Int64.Type}, {"pursuing_rpc", Int64.Type}, {"diploma_ele_edu", Int64.Type}, {"early_childhood_tch", Int64.Type}, {"bed_nursery", Int64.Type}, {"trained_cwsn", Int64.Type}, {"flag_no_teachers_with_students", Int64.Type}, {"flag_high_ptr", Int64.Type}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

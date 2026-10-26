@@ -1,0 +1,138 @@
+table dim_school
+	lineageTag: f836846d-2f46-5541-9361-64a2f7aec262
+
+	column school_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 323a956b-ca4c-5745-95ba-dc6e054bc1c1
+		summarizeBy: none
+		sourceColumn: school_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column version
+		dataType: int64
+		formatString: 0
+		lineageTag: e15de7d9-54f9-5b23-a38e-abfa1adc1e43
+		summarizeBy: none
+		sourceColumn: version
+
+		annotation SummarizationSetBy = Automatic
+
+	column valid_from_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 813f54bf-1203-5704-864a-e59e86111655
+		summarizeBy: none
+		sourceColumn: valid_from_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column valid_to_year
+		dataType: int64
+		formatString: 0
+		lineageTag: b5e45a24-3176-5ab7-bc7a-e2c2d3d5aff8
+		summarizeBy: none
+		sourceColumn: valid_to_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_current
+		dataType: boolean
+		lineageTag: 6954dec2-d2c7-5dec-be39-24ae3cfa220f
+		summarizeBy: none
+		sourceColumn: is_current
+
+		annotation SummarizationSetBy = Automatic
+
+	column district_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2838a9e5-5ae4-53e2-ac2f-52ed9b5c89e8
+		summarizeBy: none
+		sourceColumn: district_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column block
+		dataType: string
+		lineageTag: ebc262f9-9d2b-5490-8563-d8d928056c38
+		summarizeBy: none
+		sourceColumn: block
+
+		annotation SummarizationSetBy = Automatic
+
+	column block_clean
+		dataType: string
+		lineageTag: c5091677-1895-5191-9155-41161becb59f
+		summarizeBy: none
+		sourceColumn: block_clean
+
+		annotation SummarizationSetBy = Automatic
+
+	column management_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 099b7a53-40fc-5055-85e1-4805bea3c41e
+		summarizeBy: none
+		sourceColumn: management_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column rural_urban
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a84e67b-2d11-56f2-a24f-284c66dbb478
+		summarizeBy: none
+		sourceColumn: rural_urban
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: string
+		lineageTag: ff29339c-a45c-5984-8301-22af122ad921
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column school_category
+		dataType: int64
+		formatString: 0
+		lineageTag: cb207a50-8160-5a37-b30a-6783aa4e6d58
+		summarizeBy: none
+		sourceColumn: school_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column school_type
+		dataType: int64
+		formatString: 0
+		lineageTag: 5459dcf7-bdba-5ecd-a217-fdf91117cc52
+		summarizeBy: none
+		sourceColumn: school_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column school_type_label
+		dataType: string
+		lineageTag: 562b60dd-8127-5967-80cc-794a3ffda47d
+		summarizeBy: none
+		sourceColumn: school_type_label
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_school = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents(DataFolder & "dim_school.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+			    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+			    Typed = Table.TransformColumnTypes(Headers, {{"school_key", Int64.Type}, {"version", Int64.Type}, {"valid_from_year", Int64.Type}, {"valid_to_year", Int64.Type}, {"is_current", type logical}, {"district_key", Int64.Type}, {"block", type text}, {"block_clean", type text}, {"management_key", Int64.Type}, {"rural_urban", Int64.Type}, {"location", type text}, {"school_category", Int64.Type}, {"school_type", Int64.Type}, {"school_type_label", type text}}, "en-US")
+			in
+			    Typed
+
+	annotation PBI_ResultType = Table

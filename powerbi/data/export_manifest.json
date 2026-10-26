@@ -1,0 +1,84 @@
+{
+  "generated_at": "2026-10-26T09:12:44+00:00",
+  "gold_db": "E:/rajasthan-udise-insights/data/gold/udise.duckdb",
+  "seconds": 3.8,
+  "tables": {
+    "dim_year": {
+      "rows": 2,
+      "columns": 3,
+      "bytes": 64,
+      "seconds": 0.02
+    },
+    "dim_district": {
+      "rows": 41,
+      "columns": 3,
+      "bytes": 669,
+      "seconds": 0.01
+    },
+    "dim_management": {
+      "rows": 14,
+      "columns": 4,
+      "bytes": 445,
+      "seconds": 0.01
+    },
+    "dim_grade": {
+      "rows": 13,
+      "columns": 4,
+      "bytes": 357,
+      "seconds": 0.01
+    },
+    "dim_gender": {
+      "rows": 3,
+      "columns": 3,
+      "bytes": 71,
+      "seconds": 0.01
+    },
+    "dim_social_category": {
+      "rows": 4,
+      "columns": 3,
+      "bytes": 78,
+      "seconds": 0.01
+    },
+    "dim_school": {
+      "rows": 109037,
+      "columns": 14,
+      "bytes": 7880476,
+      "seconds": 0.35
+    },
+    "fact_enrolment": {
+      "rows": 6403516,
+      "columns": 6,
+      "bytes": 103968847,
+      "seconds": 0.83
+    },
+    "fact_teachers": {
+      "rows": 212747,
+      "columns": 41,
+      "bytes": 18548169,
+      "seconds": 0.62
+    },
+    "fact_school_facilities": {
+      "rows": 212747,
+      "columns": 26,
+      "bytes": 16841345,
+      "seconds": 0.61
+    },
+    "agg_school_year": {
+      "rows": 212747,
+      "columns": 28,
+      "bytes": 19305990,
+      "seconds": 1.3
+    },
+    "official_totals": {
+      "rows": 18,
+      "columns": 5,
+      "bytes": 2140
+    },
+    "norms": {
+      "rows": 4,
+      "columns": 6,
+      "bytes": 667
+    }
+  },
+  "note": "School-level files (facts, dim_school, agg_school_year) stay local: UDISE+ data-sharing terms. Source: UDISE+, Ministry of Education, Government of India"
+}
