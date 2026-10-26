@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "spark_source": "local Spark run on data/bronze",
-  "created_at": "2026-10-26T11:28:59+00:00",
+  "spark_source": "Databricks notebook run 20261026T115516Z (D:\\dev\\tmp\\dbx\\spark_fingerprint.json)",
+  "created_at": "2026-10-26T12:01:16+00:00",
   "ratio_tolerance": 0.001,
   "queries": {
     "table_rows": {
@@ -31,7 +31,7 @@
     "facilities_by_district_year": {
       "rows": 82,
       "cells": 2542,
-      "max_ratio_diff": 3.552713678800501e-14,
+      "max_ratio_diff": 2.1316282072803006e-14,
       "mismatches": 0
     },
     "enrolment_by_district_year_stage_gender_category": {
@@ -85,7 +85,7 @@
   },
   "cells_compared": 22194,
   "mismatches": 0,
-  "max_ratio_diff": 3.552713678800501e-14,
+  "max_ratio_diff": 2.1316282072803006e-14,
   "data_tests": {
     "DuckDB": {
       "checks": 33,
@@ -216,12 +216,9 @@
     ]
   },
   "timings_seconds": {
-    "spark: start session": 6.1,
-    "spark: bronze -> silver": 92.9,
-    "spark: silver -> gold": 20.5,
-    "spark: data tests + fingerprint": 26.2,
-    "duckdb: bronze -> silver": 19.1,
-    "duckdb: silver -> gold": 6.5
+    "spark: bronze -> silver": 124.3,
+    "spark: silver -> gold": 64.6,
+    "spark: fingerprint": 30.4
   },
   "mismatch_details": []
 }

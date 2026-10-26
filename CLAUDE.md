@@ -165,6 +165,10 @@ then the Sattva analysis (phases A1-A6).
   Deps in `requirements-spark.txt` (not requirements.txt); `tests/test_spark.py` skips without pyspark/Java;
   CI has a separate `spark` job. Local setup: JDK 17 in `D:\dev\jdk17`, venv `D:\dev\.venv-spark`
   (set `$env:JAVA_HOME='D:\dev\jdk17'`). Windows: local Spark only reads (no winutils), never writes files.
+  Databricks Free Edition workspace https://dbc-dc99cb5a-623d.cloud.databricks.com, CLI `D:\dev\databricks-cli\
+  databricks.exe -p udise` (OAuth login); Git folder /Workspace/Users/chauhanaditya638@gmail.com/Rajasthan-Udise-
+  Insights (repo id 3962042656331835); bronze in /Volumes/workspace/udise/landing/bronze; tables in
+  workspace.udise_silver / workspace.udise_gold. First run 2026-10-26: SUCCESS in 5 min 11 s, parity PASS.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

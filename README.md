@@ -130,12 +130,18 @@ with local Spark from `data/bronze/` (in memory, nothing written) and compares;
 `python -m pytest tests/test_spark.py` runs the Spark tests (skipped when Spark or Java is
 missing). CI runs both on the synthetic sample in a separate `spark` job.
 
-Last local parity run on the full data (`reports/spark_parity.md`): **PASS**, 22,194 cells compared,
-0 mismatches (largest ratio difference 3.6e-14), 33/33 data tests and 8/8 official 2024-25 totals
-in both engines. On this laptop (16 logical cores, 16 GB), local Spark took 92.9 s for bronze ->
-silver and 20.5 s for silver -> gold, against 19.1 s and 6.5 s for DuckDB. At 1.7 million rows,
-one in-process DuckDB is the faster tool; Spark is here for the platform (Databricks, Delta, Unity
-Catalog) and for data that outgrows one machine.
+Results on the full data, both **PASS** with 22,194 cells compared, 0 mismatches, 33/33 data tests
+and 8/8 official 2024-25 totals in both engines:
+
+| Spark run | Largest ratio difference | bronze -> silver | silver -> gold |
+|---|---:|---:|---:|
+| Databricks Free Edition, serverless, Spark 4.2.0 (`reports/spark_parity.md`) | 2.1e-14 | 124.3 s | 64.6 s |
+| Local Spark 4.1.3 on a laptop (16 logical cores, 16 GB) | 3.6e-14 | 92.9 s | 20.5 s |
+| DuckDB pipeline, same laptop (for comparison) | - | 19.1 s | 6.5 s |
+
+The Databricks times include writing every table to Delta and reading it back; the whole notebook
+run took 5 min 11 s. At 1.7 million rows one in-process DuckDB is the faster tool; Spark is here
+for the platform (Databricks, Delta, Unity Catalog) and for data that outgrows one machine.
 
 The tables in the workspace are school-level UDISE+ data: keep them in your own workspace and do
 not share them (portal terms); only district-level results are published.

@@ -366,7 +366,8 @@ def write_report(out_dir, results: dict, tests: dict, official: dict, timings: d
                      + " | ".join(fmt(v) + ("" if official[e][i]["match"] else " (differs)")
                                   for e, v in zip(engines, vals)) + " |")
     if timings:
-        lines += ["", "## Timings (this machine)", "", "| Step | Seconds |", "|---|---:|"]
+        lines += ["", "## Timings", "", f"Where the Spark steps ran: {source}.", "", "| Step | Seconds |",
+                  "|---|---:|"]
         lines += [f"| {k} | {v} |" for k, v in timings.items()]
     if mismatches:
         lines += ["", "## Mismatches", "", "| Query | Key | Column | DuckDB | Spark | Problem |",
