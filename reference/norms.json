@@ -1,0 +1,22 @@
+{
+  "note": "Staffing and classroom norms for the resource-gap measures (Power BI). Teacher norms apply per school and per stage: a stage with students needs max(min_teachers, ceil(students / pupils_per_teacher)) teachers. Simplified: head-teacher posts and the RTE rule of 40 pupils per teacher for primary sections above 200 children are not modelled.",
+  "teachers": [
+    {"stage": "primary", "classes": "1-5", "pupils_per_teacher": 30, "min_teachers": 2,
+     "source": "RTE Act 2009, Schedule, item 1(a): 2 teachers for up to 60 children, then one more per 30 children up to 120 (30:1)",
+     "status": "statutory (simplified)"},
+    {"stage": "upper_primary", "classes": "6-8", "pupils_per_teacher": 35, "min_teachers": 3,
+     "source": "RTE Act 2009, Schedule, item 1(b): at least one teacher each for science and maths, social studies and languages; at least one teacher for every 35 children",
+     "status": "statutory"},
+    {"stage": "secondary", "classes": "9-10", "pupils_per_teacher": 30, "min_teachers": 0,
+     "source": "RMSA framework (now part of Samagra Shiksha): pupil-teacher ratio 30:1 at secondary",
+     "status": "programme norm"},
+    {"stage": "higher_secondary", "classes": "11-12", "pupils_per_teacher": 30, "min_teachers": 0,
+     "source": "No statutory norm; 30:1 assumed, the same as secondary. Change it here to test other values",
+     "status": "assumption"}
+  ],
+  "classrooms": {
+    "rule": "one classroom per teacher",
+    "source": "RTE Act 2009, Schedule, item 2: an all-weather building with at least one class-room for every teacher",
+    "status": "statutory for elementary schools; applied to every school"
+  }
+}

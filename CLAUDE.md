@@ -157,6 +157,14 @@ then the Sattva analysis (phases A1-A6).
   Verified by opening it in Tableau Public 2026.3. Lessons: use document format 18.1 (Tableau's loader
   rejects the published 26.x XSD layout); colour-by-category maps in the XML are ignored, so highlights
   are 0/1 measures on Tableau's default blue ramp; categorical charts use the default palette.
+- Power BI: `scripts/export_powerbi.py` (gold read-only -> `powerbi/data/*.csv`: 7 dims without
+  pseudocode, 3 facts, `agg_school_year` from `sql/powerbi/agg_school_year.sql`, `official_totals.csv`,
+  `norms.csv` from `reference/norms.json`; row counts read back; school-level CSVs and *.pbix gitignored).
+  `scripts/make_reconciliation_workbook.py` -> `powerbi/reconciliation.xlsx` (official vs gold vs CSVs; the
+  DAX measures re-implemented in `sql/powerbi/check_*.sql` must equal the gold validation and the district
+  mart; exit 1 on failure). `powerbi/MEASURES.md`, `powerbi/BUILD_GUIDE.md`. Teacher norms: RTE 30:1 (min 2)
+  primary, 35:1 (min 3) upper primary, 30:1 secondary (RMSA), 30:1 higher secondary (assumption); shortfall
+  summed school by school; classrooms: one per teacher (RTE). Both scripts take `--gold-db`.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).
