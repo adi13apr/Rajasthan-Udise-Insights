@@ -28,6 +28,8 @@ if command -v cfn-lint >/dev/null 2>&1; then
 fi
 
 mkdir -p "$HERE/build"
+# Keep test leftovers out of the Lambda zip.
+find "$HERE/bronze_validator" -name __pycache__ -type d -prune -exec rm -rf {} +
 # 1. Zip aws/bronze_validator/ and upload it to s3://<bucket>/artifacts/; write a template that points to it.
 "${AWS[@]}" cloudformation package \
   --template-file "$HERE/template.yaml" \
