@@ -1,0 +1,237 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  Rajasthan UDISE+ insights - AWS layer. Athena workgroup, the bronze validator Lambda and its
+  least-privilege role, and (through a custom resource) the S3 trigger on bronze/ and the
+  7-day lifecycle rule on athena-results/ of the existing bucket. The bucket itself is not
+  part of this stack and is never created or deleted by it.
+
+# Deploy with aws/deploy.sh (packages the Lambda code from aws/bronze_validator/ into
+# s3://<bucket>/artifacts/).
+# Remove with aws/teardown.sh.
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: udise-lake-aditya-2026
+    Description: Existing data-lake bucket (not created or deleted by this stack).
+  PandasLayerArn:
+    Type: String
+    # AWS-managed "AWS SDK for pandas" layer 3.16.1 for Python 3.13 (x86_64): provides pyarrow.
+    Default: arn:aws:lambda:ap-southeast-2:336392948345:layer:AWSSDKPandas-Python313:12
+
+Resources:
+  # --- Athena -------------------------------------------------------------------------------
+  AthenaWorkGroup:
+    Type: AWS::Athena::WorkGroup
+    Properties:
+      Name: udise-wg
+      Description: UDISE+ lakehouse queries (1 GB scan limit per query)
+      State: ENABLED
+      RecursiveDeleteOption: true          # teardown also removes the saved query history
+      WorkGroupConfiguration:
+        EnforceWorkGroupConfiguration: true  # clients cannot override the limit or the location
+        PublishCloudWatchMetricsEnabled: true
+        BytesScannedCutoffPerQuery: 1073741824   # 1 GB: a runaway query is cancelled, not billed
+        EngineVersion:
+          SelectedEngineVersion: Athena engine version 3
+        ResultConfiguration:
+          OutputLocation: !Sub s3://${BucketName}/athena-results/
+          EncryptionConfiguration:
+            EncryptionOption: SSE_S3
+      Tags:
+        - {Key: project, Value: udise}
+
+  # --- Bronze validator Lambda ----------------------------------------------------------------
+  ValidatorLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/udise-bronze-validator
+      RetentionInDays: 7
+
+  ValidatorRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: udise-bronze-validator-role
+      Description: Bronze validator - read and remove bronze files, write quarantine files, own logs.
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: {Service: lambda.amazonaws.com}
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: least-privilege
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: ReadAndRemoveBronzeFiles
+                Effect: Allow
+                Action: [s3:GetObject, s3:DeleteObject]
+                Resource: !Sub arn:aws:s3:::${BucketName}/bronze/*
+              - Sid: WriteQuarantinedFiles
+                Effect: Allow
+                Action: s3:PutObject
+                Resource: !Sub arn:aws:s3:::${BucketName}/quarantine/files/*
+              - Sid: OwnLogs
+                Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub ${ValidatorLogGroup.Arn}
+      Tags:
+        - {Key: project, Value: udise}
+
+  ValidatorFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: udise-bronze-validator
+      Description: Checks each bronze Parquet upload against the contract; moves bad files to quarantine/files/.
+      Runtime: python3.13
+      Architectures: [x86_64]
+      Handler: handler.lambda_handler
+      Code: bronze_validator/             # aws cloudformation package zips and uploads this folder
+      MemorySize: 1024
+      Timeout: 120
+      Role: !GetAtt ValidatorRole.Arn
+      Layers: [!Ref PandasLayerArn]
+      LoggingConfig:
+        LogGroup: !Ref ValidatorLogGroup
+      Environment:
+        Variables:
+          QUARANTINE_PREFIX: quarantine/files/
+      Tags:
+        - {Key: project, Value: udise}
+
+  ValidatorInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ValidatorFunction
+      Action: lambda:InvokeFunction
+      Principal: s3.amazonaws.com
+      SourceArn: !Sub arn:aws:s3:::${BucketName}
+      SourceAccount: !Ref AWS::AccountId
+
+  # --- Settings on the existing bucket (custom resource) ---------------------------------------
+  # CloudFormation cannot change a bucket it did not create, so this small function adds the
+  # S3 trigger and the lifecycle rule when the stack is created and removes them when it is
+  # deleted. It touches only its own entries (by Id) and keeps any other settings on the bucket.
+  BucketConfigLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/udise-bucket-config
+      RetentionInDays: 7
+
+  BucketConfigRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: udise-bucket-config-role
+      Description: Custom resource - notification and lifecycle settings of the data-lake bucket only.
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: {Service: lambda.amazonaws.com}
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: least-privilege
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: BucketNotificationAndLifecycle
+                Effect: Allow
+                Action:
+                  - s3:GetBucketNotification
+                  - s3:PutBucketNotification
+                  - s3:GetLifecycleConfiguration
+                  - s3:PutLifecycleConfiguration
+                Resource: !Sub arn:aws:s3:::${BucketName}
+              - Sid: OwnLogs
+                Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub ${BucketConfigLogGroup.Arn}
+      Tags:
+        - {Key: project, Value: udise}
+
+  BucketConfigFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: udise-bucket-config
+      Description: Custom resource - adds/removes the bronze/ trigger and the athena-results/ lifecycle rule.
+      Runtime: python3.13
+      Handler: index.handler
+      MemorySize: 128
+      Timeout: 60
+      Role: !GetAtt BucketConfigRole.Arn
+      LoggingConfig:
+        LogGroup: !Ref BucketConfigLogGroup
+      Tags:
+        - {Key: project, Value: udise}
+      Code:
+        ZipFile: |
+          import boto3, cfnresponse
+          from botocore.exceptions import ClientError
+          s3 = boto3.client("s3")
+          NOTIFY_ID = "udise-bronze-validator"
+          RULE_ID = "udise-athena-results-expiry"
+
+          def set_trigger(p, add):
+              cur = s3.get_bucket_notification_configuration(Bucket=p["BucketName"])
+              cur.pop("ResponseMetadata", None)
+              fns = [c for c in cur.get("LambdaFunctionConfigurations", []) if c.get("Id") != NOTIFY_ID]
+              if add:
+                  fns.append({"Id": NOTIFY_ID, "LambdaFunctionArn": p["FunctionArn"],
+                              "Events": ["s3:ObjectCreated:*"],
+                              "Filter": {"Key": {"FilterRules": [
+                                  {"Name": "prefix", "Value": p["TriggerPrefix"]},
+                                  {"Name": "suffix", "Value": p["TriggerSuffix"]}]}}})
+              cur["LambdaFunctionConfigurations"] = fns
+              s3.put_bucket_notification_configuration(Bucket=p["BucketName"], NotificationConfiguration=cur)
+
+          def set_lifecycle(p, add):
+              try:
+                  rules = s3.get_bucket_lifecycle_configuration(Bucket=p["BucketName"])["Rules"]
+              except ClientError as e:
+                  if e.response["Error"]["Code"] != "NoSuchLifecycleConfiguration":
+                      raise
+                  rules = []
+              rules = [r for r in rules if r.get("ID") != RULE_ID]
+              if add:
+                  rules.append({"ID": RULE_ID, "Status": "Enabled",
+                                "Filter": {"Prefix": p["ExpirePrefix"]},
+                                "Expiration": {"Days": int(p["ExpireDays"])}})
+              if rules:
+                  s3.put_bucket_lifecycle_configuration(Bucket=p["BucketName"],
+                                                        LifecycleConfiguration={"Rules": rules})
+              else:
+                  s3.delete_bucket_lifecycle(Bucket=p["BucketName"])
+
+          def handler(event, context):
+              p = event["ResourceProperties"]
+              add = event["RequestType"] != "Delete"
+              pid = "udise-bucket-config-" + p["BucketName"]
+              try:
+                  set_trigger(p, add)
+                  set_lifecycle(p, add)
+                  print(event["RequestType"], "done for", p["BucketName"])
+                  cfnresponse.send(event, context, cfnresponse.SUCCESS, {}, pid)
+              except Exception as e:
+                  print("FAILED:", repr(e))
+                  cfnresponse.send(event, context, cfnresponse.FAILED, {}, pid, reason=str(e)[:250])
+
+  BucketConfig:
+    Type: Custom::BucketConfig
+    DependsOn: ValidatorInvokePermission   # S3 checks it may invoke the function before saving the trigger
+    Properties:
+      ServiceToken: !GetAtt BucketConfigFunction.Arn
+      BucketName: !Ref BucketName
+      FunctionArn: !GetAtt ValidatorFunction.Arn
+      TriggerPrefix: bronze/        # only bronze uploads; the function writes to quarantine/, so no loop
+      TriggerSuffix: .parquet
+      ExpirePrefix: athena-results/
+      ExpireDays: 7
+
+Outputs:
+  WorkGroup:
+    Value: !Ref AthenaWorkGroup
+  ValidatorFunction:
+    Value: !Ref ValidatorFunction
+  ValidatorRoleArn:
+    Value: !GetAtt ValidatorRole.Arn

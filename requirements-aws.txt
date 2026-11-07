@@ -1,0 +1,6 @@
+# AWS layer (aws/): upload to S3, Athena build, parity. Kept out of requirements.txt on purpose:
+# the main pipeline and its CI job do not need AWS. The Lambda itself needs nothing from here
+# (boto3 is in the Lambda runtime, pyarrow in the AWS SDK for pandas layer).
+-r requirements.txt
+boto3==1.43.126
+cfn-lint==1.60.0    # static check of aws/template.yaml (aws/deploy.sh runs it when installed)

@@ -30,7 +30,7 @@ Bucket `udise-lake-aditya-2026` already exists and is never recreated or deleted
    in the contract, is readable Parquet, has exactly the expected columns and types and row
    count, its `_year` matches its folder, and `_source_row` runs 1..n. A failing file moves to
    `quarantine/files/` with a `.reason.json` (`_rule`, `_reason`, expected vs actual). The
-   contract (`aws/lambda/contract.json`) is generated from the local bronze files; it holds
+   contract (`aws/bronze_validator/contract.json`) is generated from the local bronze files; it holds
    file names, columns and row counts, no school data. A file not in the contract is
    quarantined (no expected row count); regenerate the contract when new data arrives.
    Row-level rules run in Athena silver, as they do locally; quarantined rows go to
@@ -65,7 +65,7 @@ the bucket, `manual-test/` or `udise.manual_facility`.
 1. This plan.
 2. `aws/template.yaml`, `aws/deploy.sh`, `aws/teardown.sh`.
 3. `aws/upload_bronze.py` (boto3): local bronze -> `s3://udise-lake-aditya-2026/bronze/<dataset>/year=<YYYY-YY>/`.
-4. `aws/lambda/` (validator, handler, contract) and `aws/make_contract.py`; then deploy and upload.
+4. `aws/bronze_validator/` (validator, handler, contract; not `aws/lambda/`, a reserved word in Python) and `aws/make_contract.py`; then deploy and upload.
 5. `aws/athena_build.py`: bronze tables (partitioned by year) -> silver and quarantine
    (SQL generated from the rules) -> gold with CTAS (Parquet under `gold/`, facts
    partitioned by year) -> the `sql/tests` checks, translated to Athena SQL.
