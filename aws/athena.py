@@ -8,6 +8,7 @@ CTAS ("CREATE TABLE ... AS SELECT") writes Parquet to an S3 prefix that must be 
 rebuild first drops the table (metadata only) and deletes the files under its prefix. Only
 the pipeline's own output prefixes may be cleared; bronze/ never.
 """
+import re
 import time
 from decimal import Decimal
 
@@ -15,7 +16,11 @@ import pandas as pd
 
 from . import settings as S
 
+# The only S3 prefixes a rebuild may empty: one table's folder under the pipeline's own outputs,
+# e.g. "silver/schools/" or "gold/dim_school/". Never bronze/, quarantine/files/, manual-test/,
+# athena-results/ or anything else (and no "..", no prefix shorter than one table folder).
 CLEARABLE = ("silver/", "quarantine/rows/", "gold/", "reference/")
+CLEARABLE_PATTERN = re.compile(r"^(silver|quarantine/rows|gold|reference)/[a-z0-9_]+/$")
 
 
 class AthenaError(RuntimeError):
@@ -86,7 +91,7 @@ class Athena:
 
     def clear_prefix(self, prefix: str) -> int:
         """Delete every object under s3://<bucket>/<prefix>. Only the pipeline's output prefixes."""
-        if not prefix.startswith(CLEARABLE) or not prefix.endswith("/"):
+        if not CLEARABLE_PATTERN.match(prefix):
             raise ValueError(f"refusing to clear s3://{self.bucket}/{prefix}")
         deleted = 0
         for page in self.s3.get_paginator("list_objects_v2").paginate(Bucket=self.bucket, Prefix=prefix):
