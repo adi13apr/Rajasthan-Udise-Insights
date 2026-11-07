@@ -166,7 +166,10 @@ Resources:
         - {Key: project, Value: udise}
       Code:
         ZipFile: |
-          import boto3, cfnresponse
+          # Only modules the Lambda runtime has: boto3, botocore and the standard library.
+          # (Not cfnresponse: it is not available in the python3.13 runtime.)
+          import json, urllib.request
+          import boto3
           from botocore.exceptions import ClientError
           s3 = boto3.client("s3")
           NOTIFY_ID = "udise-bronze-validator"
@@ -203,24 +206,36 @@ Resources:
               else:
                   s3.delete_bucket_lifecycle(Bucket=p["BucketName"])
 
+          def reply(event, status, reason):
+              # Tell CloudFormation the result: PUT a JSON document to the pre-signed ResponseURL.
+              body = json.dumps({
+                  "Status": status, "Reason": reason[:250],
+                  "PhysicalResourceId": "udise-bucket-config-" + event["ResourceProperties"]["BucketName"],
+                  "StackId": event["StackId"], "RequestId": event["RequestId"],
+                  "LogicalResourceId": event["LogicalResourceId"], "Data": {}}).encode()
+              req = urllib.request.Request(event["ResponseURL"], data=body, method="PUT",
+                                           headers={"Content-Type": "", "Content-Length": str(len(body))})
+              with urllib.request.urlopen(req, timeout=30) as resp:
+                  print("CloudFormation reply:", status, resp.status)
+
           def handler(event, context):
               p = event["ResourceProperties"]
               add = event["RequestType"] != "Delete"
-              pid = "udise-bucket-config-" + p["BucketName"]
               try:
                   set_trigger(p, add)
                   set_lifecycle(p, add)
                   print(event["RequestType"], "done for", p["BucketName"])
-                  cfnresponse.send(event, context, cfnresponse.SUCCESS, {}, pid)
+                  reply(event, "SUCCESS", "done")
               except Exception as e:
                   print("FAILED:", repr(e))
-                  cfnresponse.send(event, context, cfnresponse.FAILED, {}, pid, reason=str(e)[:250])
+                  reply(event, "FAILED", str(e))
 
   BucketConfig:
     Type: Custom::BucketConfig
     DependsOn: ValidatorInvokePermission   # S3 checks it may invoke the function before saving the trigger
     Properties:
       ServiceToken: !GetAtt BucketConfigFunction.Arn
+      ServiceTimeout: 300           # if the function never replies, fail after 5 minutes (default 1 hour)
       BucketName: !Ref BucketName
       FunctionArn: !GetAtt ValidatorFunction.Arn
       TriggerPrefix: bronze/        # only bronze uploads; the function writes to quarantine/, so no loop
