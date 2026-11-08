@@ -1,0 +1,25 @@
+-- Athena version of sql/tests/01_referential_integrity.sql: every foreign key in a fact matches
+-- a dimension row. DuckDB `anti join` -> where not exists (...). Every failures value must be 0.
+select 'fact_enrolment.school_key' as check_name, count(*) as failures
+from fact_enrolment f where not exists (select 1 from dim_school d where d.school_key = f.school_key)
+union all select 'fact_enrolment.year_key', count(*)
+from fact_enrolment f where not exists (select 1 from dim_year d where d.year_key = f.year_key)
+union all select 'fact_enrolment.grade_key', count(*)
+from fact_enrolment f where not exists (select 1 from dim_grade d where d.grade_key = f.grade_key)
+union all select 'fact_enrolment.gender_key', count(*)
+from fact_enrolment f where not exists (select 1 from dim_gender d where d.gender_key = f.gender_key)
+union all select 'fact_enrolment.social_category_key', count(*)
+from fact_enrolment f where not exists (select 1 from dim_social_category d
+                                        where d.social_category_key = f.social_category_key)
+union all select 'fact_teachers.school_key', count(*)
+from fact_teachers f where not exists (select 1 from dim_school d where d.school_key = f.school_key)
+union all select 'fact_teachers.year_key', count(*)
+from fact_teachers f where not exists (select 1 from dim_year d where d.year_key = f.year_key)
+union all select 'fact_school_facilities.school_key', count(*)
+from fact_school_facilities f where not exists (select 1 from dim_school d where d.school_key = f.school_key)
+union all select 'fact_school_facilities.year_key', count(*)
+from fact_school_facilities f where not exists (select 1 from dim_year d where d.year_key = f.year_key)
+union all select 'dim_school.district_key', count(*)
+from dim_school s where not exists (select 1 from dim_district d where d.district_key = s.district_key)
+union all select 'dim_school.management_key', count(*)
+from dim_school s where not exists (select 1 from dim_management d where d.management_key = s.management_key)

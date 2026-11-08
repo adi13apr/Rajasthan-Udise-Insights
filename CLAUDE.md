@@ -182,6 +182,16 @@ then the Sattva analysis (phases A1-A6).
   opening it in Power BI Desktop 2.159 (Store) and `scripts/verify_powerbi_model.py` (DAX via ADOMD.NET against
   Desktop's local engine vs the SQL checks -> `powerbi/model_check.md`). PBIR lesson: report.json needs
   `layoutOptimization`. `.pbi/` caches are gitignored (they hold the data).
+- AWS (`aws/`, branch feature/aws-lakehouse, plan `docs/aws_plan.md`): profile `udise`, region
+  ap-southeast-2 only, Free plan (no EC2/EMR/Redshift/RDS/NAT/Glue crawlers or ETL/QuickSight), bucket
+  `udise-lake-aditya-2026` (not in the stack). Stack `udise-aws` (`aws/template.yaml`, `bash aws/deploy.sh`
+  with a smoke test, `aws/teardown.sh [--data]`): workgroup `udise-wg` (1 GB per-query limit, NOT enforced:
+  enforcing blocks CTAS external_location), Lambda `udise-bronze-validator` (footer-only checks vs
+  `contract.json`: the AWS SDK for pandas layer's pyarrow has no zstd), custom resource for the bucket trigger
+  + 7-day athena-results/ rule (replies itself; no cfnresponse in python3.13). `python -m aws.athena_build`
+  (silver SQL generated from pipeline/rules.py, gold from `sql/athena/`), `python -m aws.parity`. First full
+  run 2026-11-08: 94/94 files valid, build PASSED (103 queries, 172.0 MB), parity PASS (22,194 cells, 0
+  mismatches), official 8/8. Credentials only via `aws login`; boto3 needs `boto3[crt]`.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

@@ -1,0 +1,483 @@
+{
+  "run_id": "20261108T042139Z",
+  "steps": {
+    "bronze": {
+      "result": {
+        "bronze_enrolment1": 1068886,
+        "bronze_facility": 217267,
+        "bronze_profile1": 217267,
+        "bronze_teacher": 217267
+      },
+      "queries": 16,
+      "seconds": 28.2,
+      "bytes_scanned": 0
+    },
+    "reference": {
+      "result": {
+        "ref_districts": 41,
+        "ref_district_aliases": 5,
+        "ref_management": 13
+      },
+      "queries": 9,
+      "seconds": 17.6,
+      "bytes_scanned": 0
+    },
+    "silver": {
+      "result": {
+        "schools": {
+          "source": "bronze_profile1",
+          "rows_silver": 212747,
+          "rows_quarantined": 4520,
+          "quarantined_by_rule": {
+            "duplicate_school_year": 4520
+          }
+        },
+        "enrolment": {
+          "source": "bronze_enrolment1",
+          "rows_silver": 592350,
+          "rows_quarantined": 0,
+          "quarantined_by_rule": {}
+        },
+        "enrolment_other": {
+          "source": "bronze_enrolment1",
+          "rows_silver": 476536,
+          "rows_quarantined": 0,
+          "quarantined_by_rule": {}
+        },
+        "facilities": {
+          "source": "bronze_facility",
+          "rows_silver": 212747,
+          "rows_quarantined": 4520,
+          "quarantined_by_rule": {
+            "duplicate_school_year": 4520
+          }
+        },
+        "teachers": {
+          "source": "bronze_teacher",
+          "rows_silver": 212747,
+          "rows_quarantined": 4520,
+          "quarantined_by_rule": {
+            "duplicate_school_year": 4520
+          }
+        }
+      },
+      "queries": 30,
+      "seconds": 162.1,
+      "bytes_scanned": 102152316
+    },
+    "gold": {
+      "result": {
+        "dim_year": 2,
+        "dim_district": 41,
+        "dim_management": 14,
+        "dim_grade": 13,
+        "dim_gender": 3,
+        "dim_social_category": 4,
+        "dim_school": 109037,
+        "fact_enrolment": 6403516,
+        "fact_teachers": 212747,
+        "fact_school_facilities": 212747,
+        "int_school_year": 212747,
+        "mart_district_year": 82,
+        "mart_district_year_management": 330
+      },
+      "queries": 41,
+      "seconds": 108.4,
+      "bytes_scanned": 32473079
+    },
+    "tests": {
+      "result": [
+        {
+          "file": "00_bronze_silver_quarantine.sql",
+          "check": "profile1: bronze = silver_schools + quarantine",
+          "failures": 0
+        },
+        {
+          "file": "00_bronze_silver_quarantine.sql",
+          "check": "teacher: bronze = silver_teachers + quarantine",
+          "failures": 0
+        },
+        {
+          "file": "00_bronze_silver_quarantine.sql",
+          "check": "facility: bronze = silver_facilities + quarantine",
+          "failures": 0
+        },
+        {
+          "file": "00_bronze_silver_quarantine.sql",
+          "check": "enrolment1: bronze = silver_enrolment(+other) + quarantine",
+          "failures": 0
+        },
+        {
+          "file": "00_bronze_source_rows.sql",
+          "check": "bronze_teacher: _source_row is 1..n in every file",
+          "failures": 0
+        },
+        {
+          "file": "00_bronze_source_rows.sql",
+          "check": "bronze_facility: _source_row is 1..n in every file",
+          "failures": 0
+        },
+        {
+          "file": "00_bronze_source_rows.sql",
+          "check": "bronze_profile1: _source_row is 1..n in every file",
+          "failures": 0
+        },
+        {
+          "file": "00_bronze_source_rows.sql",
+          "check": "bronze_enrolment1: _source_row is 1..n in every file",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_school_facilities.year_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_teachers.year_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_enrolment.year_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "dim_school.management_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "dim_school.district_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_teachers.school_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_school_facilities.school_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_enrolment.grade_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_enrolment.gender_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_enrolment.social_category_key",
+          "failures": 0
+        },
+        {
+          "file": "01_referential_integrity.sql",
+          "check": "fact_enrolment.school_key",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "dim_district has 41 districts",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "fact_enrolment has no zero rows",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "dim_school versions numbered 1..n without gaps",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "dim_school keys unique",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "dim_school one current version per school",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "fact_school_facilities one row per school-year",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "fact_teachers one row per school-year",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "dim_school versions do not overlap",
+          "failures": 0
+        },
+        {
+          "file": "02_grain_and_scd2.sql",
+          "check": "fact_enrolment grain unique",
+          "failures": 0
+        },
+        {
+          "file": "03_totals_preserved.sql",
+          "check": "teacher rows silver = gold",
+          "failures": 0
+        },
+        {
+          "file": "03_totals_preserved.sql",
+          "check": "school-years silver = gold",
+          "failures": 0
+        },
+        {
+          "file": "03_totals_preserved.sql",
+          "check": "teachers total silver = gold",
+          "failures": 0
+        },
+        {
+          "file": "03_totals_preserved.sql",
+          "check": "schools silver = current versions in dim_school",
+          "failures": 0
+        },
+        {
+          "file": "03_totals_preserved.sql",
+          "check": "enrolment total silver = gold",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "mart_district_year one row per district-year",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "int_school_year one row per school-year",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "management mart adds up to district mart: enrolment",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "management mart adds up to district mart: schools",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "shares between 0 and 1",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "management mart adds up to district mart: teachers",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "mart_district_year covers every district-year with students",
+          "failures": 0
+        },
+        {
+          "file": "04_marts.sql",
+          "check": "mart enrolment = fact enrolment classes 1-12",
+          "failures": 0
+        }
+      ],
+      "queries": 6,
+      "seconds": 26.7,
+      "bytes_scanned": 36855669
+    },
+    "validation": {
+      "result": {
+        "indicators_checked": 8,
+        "exact_matches": 8,
+        "rows": [
+          {
+            "year": "2024-25",
+            "indicator": "enrolment",
+            "official": 16364187,
+            "ours": 16364187,
+            "difference": 0,
+            "pct_difference": 0,
+            "result": "exact match"
+          },
+          {
+            "year": "2024-25",
+            "indicator": "enrolment_classes_1_12",
+            "official": null,
+            "ours": 15340387,
+            "difference": null,
+            "pct_difference": null,
+            "result": "no official figure"
+          },
+          {
+            "year": "2024-25",
+            "indicator": "govt_enrolment",
+            "official": 7782390,
+            "ours": 7782390,
+            "difference": 0,
+            "pct_difference": 0,
+            "result": "exact match"
+          },
+          {
+            "year": "2024-25",
+            "indicator": "govt_schools",
+            "official": 70155,
+            "ours": 70155,
+            "difference": 0,
+            "pct_difference": 0,
+            "result": "exact match"
+          },
+          {
+            "year": "2024-25",
+            "indicator": "govt_teachers",
+            "official": 445073,
+            "ours": 445073,
+            "difference": 0,
+            "pct_difference": 0,
+            "result": "exact match"
+          },
+          {
+            "year": "2024-25",
+            "indicator": "schools",
+            "official": 106302,
+            "ours": 106302,
+            "difference": 0,
+            "pct_difference": 0,
+            "result": "exact match"
+          },
+          {
+            "year": "2024-25",
+            "indicator": "single_teacher_schools",
+            "official": 6117,
+            "ours": 6117,
+            "difference": 0,
+            "pct_difference": 0,
+            "result": "exact match"
+          },
+          {
+            "year": "2024-25",
+            "indicator": "teachers",
+            "official": 792265,
+            "ours": 792265,
+            "difference": 0,
+            "pct_difference": 0,
+            "result": "exact match"
+          },
+          {
+            "year": "2024-25",
+            "indicator": "zero_enrolment_schools",
+            "official": 215,
+            "ours": 215,
+            "difference": 0,
+            "pct_difference": 0,
+            "result": "exact match"
+          },
+          {
+            "year": "2025-26",
+            "indicator": "enrolment",
+            "official": null,
+            "ours": 15945455,
+            "difference": null,
+            "pct_difference": null,
+            "result": "no official figure"
+          },
+          {
+            "year": "2025-26",
+            "indicator": "enrolment_classes_1_12",
+            "official": null,
+            "ours": 14954579,
+            "difference": null,
+            "pct_difference": null,
+            "result": "no official figure"
+          },
+          {
+            "year": "2025-26",
+            "indicator": "govt_enrolment",
+            "official": null,
+            "ours": 7449532,
+            "difference": null,
+            "pct_difference": null,
+            "result": "no official figure"
+          },
+          {
+            "year": "2025-26",
+            "indicator": "govt_schools",
+            "official": null,
+            "ours": 69983,
+            "difference": null,
+            "pct_difference": null,
+            "result": "no official figure"
+          },
+          {
+            "year": "2025-26",
+            "indicator": "govt_teachers",
+            "official": null,
+            "ours": 441070,
+            "difference": null,
+            "pct_difference": null,
+            "result": "no official figure"
+          },
+          {
+            "year": "2025-26",
+            "indicator": "schools",
+            "official": null,
+            "ours": 106445,
+            "difference": null,
+            "pct_difference": null,
+            "result": "no official figure"
+          },
+          {
+            "year": "2025-26",
+            "indicator": "single_teacher_schools",
+            "official": null,
+            "ours": 7200,
+            "difference": null,
+            "pct_difference": null,
+            "result": "no official figure"
+          },
+          {
+            "year": "2025-26",
+            "indicator": "teachers",
+            "official": null,
+            "ours": 793158,
+            "difference": null,
+            "pct_difference": null,
+            "result": "no official figure"
+          },
+          {
+            "year": "2025-26",
+            "indicator": "zero_enrolment_schools",
+            "official": null,
+            "ours": 140,
+            "difference": null,
+            "pct_difference": null,
+            "result": "no official figure"
+          }
+        ]
+      },
+      "queries": 1,
+      "seconds": 2.5,
+      "bytes_scanned": 528140
+    }
+  },
+  "region": "ap-southeast-2",
+  "workgroup": "udise-wg",
+  "total": {
+    "queries": 103,
+    "seconds": 291.4,
+    "bytes_scanned": 172009204,
+    "wall_seconds": 345.4
+  },
+  "passed": true
+}

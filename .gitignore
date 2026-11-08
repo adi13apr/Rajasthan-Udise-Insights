@@ -34,3 +34,6 @@ powerbi/data/*
 *.pbix
 # Power BI project caches: .pbi/cache.abf holds the loaded (school-level) data
 powerbi/**/.pbi/
+
+# AWS layer: packaged CloudFormation template (aws/deploy.sh)
+aws/build/

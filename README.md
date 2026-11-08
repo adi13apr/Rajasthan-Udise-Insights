@@ -149,6 +149,126 @@ for the platform (Databricks, Delta, Unity Catalog) and for data that outgrows o
 The tables in the workspace are school-level UDISE+ data: keep them in your own workspace and do
 not share them (portal terms); only district-level results are published.
 
+## AWS architecture (S3, Lambda, Athena)
+
+`aws/` runs the same lakehouse on **AWS, serverless**: bronze files in **S3**, a **Lambda**
+function that checks every bronze upload, and **Athena** (SQL over the Parquet files in S3) that
+builds silver, quarantine and the gold star schema. Everything except the bucket is defined in one
+**CloudFormation** template, so it can be created and removed with one command each. The same
+rules (`pipeline/rules.py`), the same star schema and the same official-figure checks are used, and
+`python -m aws.parity` proves Athena and DuckDB give the same answers. It runs on the AWS Free plan
+in `ap-southeast-2` (no EC2, EMR, Redshift, RDS, NAT gateways, Glue crawlers / ETL jobs or QuickSight).
+
+```mermaid
+flowchart LR
+    L["local data/bronze<br/>94 Parquet files, 31.7 MB"] -->|"aws/upload_bronze.py<br/>boto3, skips same MD5"| B["S3 bronze/<br/>dataset/year=YYYY-YY/"]
+    B -->|"S3 trigger<br/>bronze/ + .parquet"| LV["Lambda udise-bronze-validator<br/>file footer vs contract.json"]
+    LV -->|"bad file + reason JSON"| QF["S3 quarantine/files/"]
+    B --> AB["Athena bronze_* tables<br/>external, partitioned by year"]
+    AB -->|"SQL generated from<br/>pipeline/rules.py (CTAS)"| S["S3 silver/<br/>+ quarantine/rows/"]
+    S -->|"sql/athena/*.sql (CTAS)"| G[("S3 gold/<br/>star schema + marts")]
+    G --> T["sql/athena/tests<br/>41 checks, all 0"]
+    G -->|"aws/parity.py"| P["reports/aws_parity.md<br/>vs DuckDB + official figures"]
+    CFN["CloudFormation stack udise-aws<br/>aws/template.yaml"] -.-> LV
+    CFN -.-> WG["Athena workgroup udise-wg<br/>1 GB per-query scan limit"]
+```
+
+**What each piece does, in simple words**
+
+| Piece | What it is | Why |
+|---|---|---|
+| S3 bucket `udise-lake-aditya-2026` | file storage, one prefix per layer: `bronze/`, `silver/`, `quarantine/`, `gold/`, `reference/` | the lake: cheap storage, Parquet files any engine can read |
+| `aws/upload_bronze.py` | copies local bronze to `bronze/<dataset>/year=<YYYY-YY>/`, same layout | skips files whose MD5 already matches, so a re-run uploads only what changed |
+| Lambda `udise-bronze-validator` (`aws/bronze_validator/`) | runs on every `.parquet` upload to `bronze/`: is the file in `contract.json`, readable, with exactly the expected columns, types and row count, and is every `_year` the folder's year? | a gate at the door: a bad file is moved to `quarantine/files/` with a `.reason.json` before anything reads it. It only writes to `quarantine/`, so it cannot trigger itself |
+| `aws/make_contract.py` | writes `contract.json` from the local bronze files (94 files, 1,720,687 rows, 7 column layouts) | the "expected" side of the checks; file names, columns and counts only, no school data |
+| Athena + Glue catalog, database `udise` | `aws/athena_build.py` registers the bronze tables, then builds every other table with CTAS (`CREATE TABLE ... AS SELECT`, written as Parquet to its own S3 prefix) | silver rules are generated as SQL from `pipeline/rules.py` (one rule catalogue for DuckDB, Spark and Athena); gold is `sql/` translated to Athena SQL (`sql/athena/`, each file lists what changed) |
+| Workgroup `udise-wg` | where every query runs; **1 GB scan limit per query**; results to `athena-results/` (deleted after 7 days by a lifecycle rule) | Athena bills by data scanned, so a runaway query is cancelled, not paid for |
+| CloudFormation stack `udise-aws` (`aws/template.yaml`) | workgroup, both Lambdas, least-privilege IAM roles, log groups (7 days), and a custom resource that adds the S3 trigger and lifecycle rule to the existing bucket | infrastructure as code. CloudFormation cannot change a bucket it did not create, so a small function does it (what AWS CDK does under the hood) |
+
+**Deploy, run, tear down** (Windows PowerShell; the `.sh` scripts need Git Bash's `bash`):
+
+```powershell
+pip install -r requirements-aws.txt              # boto3[crt] (for `aws login` credentials), cfn-lint
+aws login --profile udise --region ap-southeast-2  # browser sign-in; no access keys are stored anywhere
+python run_pipeline.py                           # local bronze (data/bronze/)
+python -m aws.make_contract                      # aws/bronze_validator/contract.json
+bash aws/deploy.sh                               # cfn-lint, package, deploy stack, smoke-test the Lambda
+python -m aws.upload_bronze --check              # upload bronze; report anything quarantined
+python -m aws.revalidate_bronze                  # only if the validator changed after files were uploaded
+python -m aws.athena_build                       # bronze -> silver -> gold in Athena + tests + official figures
+python -m aws.parity                             # Athena vs DuckDB; exit code 1 on any mismatch
+bash aws/teardown.sh                             # delete the stack and artifacts/ (asks to type 'delete')
+bash aws/teardown.sh --data                      # ...and drop the Athena tables and the pipeline's S3 data
+```
+
+`teardown.sh` never deletes the bucket, `manual-test/`, `athena-results/` or `udise.manual_facility`.
+If the AWS CLI prints a `'charmap' codec` error on Windows, run `$env:PYTHONUTF8 = '1'` first.
+
+**Results on the full data** (2026-11-08, `reports/aws_build.json`, `reports/aws_parity.md`):
+
+- Stack `udise-aws`: `CREATE_COMPLETE` in 1 min 41 s; every later update `UPDATE_COMPLETE` with
+  the smoke test passing.
+- Upload: 94 files, 31.7 MB, 288.1 s. Validation: **94 ok, 0 quarantined** (47.1 s).
+- Athena build, run `20261108T042139Z`: **PASSED**, 103 queries, 172.0 MB scanned, 345.4 s.
+
+| Step | Queries | Seconds | MB scanned |
+|---|---:|---:|---:|
+| bronze (register tables) | 16 | 28.2 | 0.0 |
+| reference | 9 | 17.6 | 0.0 |
+| silver + quarantine | 30 | 162.1 | 102.2 |
+| gold (star schema + marts) | 41 | 108.4 | 32.5 |
+| data tests | 6 | 26.7 | 36.9 |
+| official figures | 1 | 2.5 | 0.5 |
+
+- Silver equals the local pipeline: 212,747 rows in each school-year table with 4,520 duplicate
+  Kota rows quarantined from each (`duplicate_school_year`); enrolment 592,350 + 476,536 rows.
+- **41 Athena data tests, 0 failed**: the 33 DuckDB checks translated, plus bronze rows = silver +
+  quarantined rows per dataset, and `_source_row` runs 1..n in every bronze file.
+- Official 2024-25 figures: **8 of 8 exact** (schools 1,06,302; teachers 7,92,265; enrolment incl.
+  pre-primary 1,63,64,187; ...).
+- **Parity: PASS**, 22,194 cells compared, **0 mismatches**, largest ratio difference 2.1e-14;
+  Athena side 19 read-only queries, 53.9 MB scanned.
+- Scan limit checked live: a test query in `udise-wg` was cancelled at exactly 1,073,741,824 bytes
+  ("Bytes scanned limit was exceeded").
+- **Actual cost:** _to be filled in from the Billing page (`docs/aws/billing.png`)._ Free plan
+  credits remaining when checked on 2026-11-08: USD 120.00.
+
+**Problems hit and fixes**
+
+1. **The custom resource crashed on `import cfnresponse`.** CloudFormation's helper module is not
+   in the Python 3.13 Lambda runtime, so the function failed on import, never replied, and the
+   stack waited an hour before rolling back. The unit test had injected a fake `cfnresponse`, which
+   hid it. Fix: the function sends its reply itself (an HTTP PUT to CloudFormation's ResponseURL)
+   and the whole handler is wrapped so it always replies, even on an unexpected error;
+   `ServiceTimeout: 300` caps any wait at 5 minutes. Both Lambdas are now tested by importing them
+   exactly as packaged, in an isolated Python with only what Lambda provides.
+2. **The pyarrow in the AWS SDK for pandas layer cannot read zstd.** Bronze is zstd-compressed, so
+   the validator failed on all 94 files ("Support for codec 'zstd' not built"). Fix: the Lambda
+   checks only the Parquet footer (schema, row count, `_year` min = max from the column
+   statistics), which is not compressed. The check that needs the data (`_source_row` runs 1..n,
+   per file) moved to Athena as a data test that fails the build. A test blocks every data read,
+   as the layer does, and `deploy.sh` now smoke-tests the deployed function on a real file.
+3. **An enforcing workgroup rejects CTAS with `external_location`.** `udise-wg` was set to enforce
+   its settings, and Athena refused to let the build write tables to `silver/` and `gold/`. Fix:
+   enforcement is off and the 1 GB per-query limit stays (AWS applies it to every query in the
+   workgroup; checked live, above). A test fails if the template enforces again while the build
+   uses `external_location`.
+
+The lesson in all three: the tests ran in a different environment from AWS. Each fix adds a check
+that runs against the real environment (the deployed Lambda, Athena) or copies its limits.
+
+**Screenshots** (`docs/aws/`; `billing.png` is a placeholder until the charges appear, see `docs/aws/README.md`):
+
+| | |
+|---|---|
+| ![S3 layers](docs/aws/s3_layers.png)<br>*The bucket: one prefix per layer.* | ![CloudFormation stack](docs/aws/cloudformation_stack.png)<br>*Stack `udise-aws`, `UPDATE_COMPLETE`.* |
+| ![Lambda invocations](docs/aws/lambda_invocations.png)<br>*Validator invocations, 378 in total: 282 for the 94 uploads (each failed and was retried twice), then 94 re-validation calls and 2 deploy smoke tests.* | ![Lambda errors](docs/aws/lambda_errors.png)<br>*Errors: the early spike (up to 55 a minute, about 03:50-03:57 UTC) is the zstd crash before the fix; zero after the footer-only validator (success rate 100% at the re-validation).* |
+| ![Athena gold query](docs/aws/athena_gold_query.png)<br>*A district mart in Athena, workgroup `udise-wg`.* | ![Parity PASS](docs/aws/parity_pass.png)<br>*Parity: PASS, 22,194 cells, 0 mismatches.* |
+| ![Billing](docs/aws/billing.png) | |
+
+The bucket holds school-level UDISE+ data: it stays private and is never shared (portal terms);
+only the district-level results above are published. Design and decisions: `docs/aws_plan.md`.
+
 ## Outputs
 
 | Output | What | In git? |
@@ -164,6 +284,7 @@ not share them (portal terms); only district-level results are published.
 | `reports/qa_report.md` | automated QA report (coverage, schema drift, logic checks, district moves) | yes |
 | `reports/benchmark.md` | query timings: raw CSV vs bronze Parquet vs gold | yes |
 | `reports/run_manifest.json` | what the last run did: files and checksums, rows per stage, rules, timings | yes |
+| `reports/aws_build.json`, `reports/aws_parity.md` (+ `.json`) | AWS: Athena build (rows, rules, tests, queries / time / bytes per step) and parity with DuckDB | yes (aggregates) |
 | `data/bronze/`, `data/silver/`, `data/quarantine/`, `data/gold/udise.duckdb`, `data/gold/parquet/` | the data layers | no (school-level) |
 
 ## Documentation
@@ -186,7 +307,8 @@ not share them (portal terms); only district-level results are published.
 - `docs/data_dictionary.md`: every gold table and column (generated from the database).
 - `docs/quality_rules.md`: every quality rule (generated from `pipeline/rules.py`).
 - `DATA_QUALITY_LOG.md`: every data issue found and the decision taken.
-- `docs/PLAN.md`: the work plan.
+- `docs/PLAN.md`: the work plan. `docs/aws_plan.md`: the AWS layer's plan and decisions;
+  `docs/aws/`: its screenshots.
 
 ## Repository layout
 
@@ -203,7 +325,15 @@ pipeline/
   validation.py        gold vs official figures (sql/validation/)
   build.py, checks.py  pandas school-year table and the QA report
 spark/                 PySpark version of silver and gold (Databricks notebook, parity check)
-sql/                   star schema and marts (numbered, run in order), tests/, validation/
+aws/
+  template.yaml        CloudFormation: Athena workgroup, validator Lambda, IAM roles, S3 trigger
+  deploy.sh, teardown.sh  create / update (with smoke test) and remove the stack
+  bronze_validator/    Lambda: footer checks of each bronze upload vs contract.json
+  upload_bronze.py     local bronze -> S3; revalidate_bronze.py, make_contract.py
+  athena_build.py      Athena: bronze tables -> silver (rules as SQL) -> gold -> tests -> official figures
+  parity.py            Athena vs DuckDB, cell by cell
+sql/                   star schema and marts (numbered, run in order), tests/, validation/;
+                       sql/athena/: the same in Athena SQL
 reference/             districts, management codes, official totals, schema (JSON)
 scripts/               sample data, benchmark, data dictionary, schema extraction, downloader
 tests/                 pytest (synthetic data only); regression/ = frozen pandas output
