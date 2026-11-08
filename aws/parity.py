@@ -82,9 +82,11 @@ def write_report(results: dict, tests: dict, official: dict, timings: dict, athe
                      f"{fmt(r['max_ratio_diff']) if r['max_ratio_diff'] is not None else '-'} |")
     lines += ["", "## Data tests", "", "| Engine | Checks | Failed |", "|---|---:|---:|"]
     lines += [f"| {e} | {len(ts)} | {len(failed_tests[e])} |" for e, ts in tests.items()]
-    lines += ["", "Athena runs the four DuckDB test files translated (`sql/athena/tests/`) plus one more: "
+    lines += ["", "Athena runs the four DuckDB test files translated (`sql/athena/tests/`) plus two more: "
               "bronze rows = silver rows + quarantined rows, per dataset (in DuckDB that check is in "
-              "`pipeline/silver.py`).", "", "## Official 2024-25 totals", "",
+              "`pipeline/silver.py`), and `_source_row` runs 1..n in every bronze file (the validator "
+              "Lambda reads only file footers, so this check runs in Athena).", "",
+              "## Official 2024-25 totals", "",
               "| Indicator | Official | Athena | DuckDB |", "|---|---:|---:|---:|"]
     for a, d in zip(official["Athena"], official["DuckDB"]):
         lines.append(f"| {a['year']} {a['indicator']} | {a['official']:,} | {fmt(a['ours'])}"
