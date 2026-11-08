@@ -2,9 +2,11 @@
 # Remove the AWS layer.
 #
 #   aws/teardown.sh           delete the stack "udise-aws": Athena workgroup udise-wg, both Lambda
-#                             functions, their IAM roles and log groups, the S3 trigger on bronze/
-#                             and the athena-results/ lifecycle rule; then the packaged Lambda
-#                             code under artifacts/.
+#                             functions, their IAM roles and log groups, the DynamoDB ingestion
+#                             manifest udise-ingest-manifest (its items too: they only record checks
+#                             and python -m aws.revalidate_bronze rebuilds them), the S3 trigger on
+#                             bronze/ and the athena-results/ lifecycle rule; then the packaged
+#                             Lambda code under artifacts/.
 #   aws/teardown.sh --data    also drop the Athena tables the pipeline created and delete its S3
 #                             data (bronze/, silver/, quarantine/, gold/, reference/).
 #   --yes                     do not ask for confirmation.
@@ -17,6 +19,7 @@ REGION="ap-southeast-2"
 BUCKET="udise-lake-aditya-2026"
 STACK="udise-aws"
 DATABASE="udise"
+MANIFEST_TABLE="udise-ingest-manifest"
 AWS=(aws --profile "$PROFILE" --region "$REGION")
 
 DATA=0; YES=0
@@ -35,7 +38,8 @@ mart_district_year_management"
 DATA_PREFIXES="bronze silver quarantine gold reference"
 
 echo "Account $("${AWS[@]}" sts get-caller-identity --query Account --output text), region $REGION"
-echo "Will delete: stack $STACK and s3://$BUCKET/artifacts/"
+items=$("${AWS[@]}" dynamodb scan --table-name "$MANIFEST_TABLE" --select COUNT --query Count --output text 2>/dev/null || echo "no table")
+echo "Will delete: stack $STACK (with DynamoDB table $MANIFEST_TABLE: $items items) and s3://$BUCKET/artifacts/"
 if [ "$DATA" = 1 ]; then
   echo "and (--data): Athena tables bronze_*, ref_*, silver_*, quarantine_*, gold tables"
   echo "              and s3://$BUCKET/{${DATA_PREFIXES// /,}}/"
@@ -77,3 +81,10 @@ left=$("${AWS[@]}" s3api get-bucket-notification-configuration --bucket "$BUCKET
 rule=$("${AWS[@]}" s3api get-bucket-lifecycle-configuration --bucket "$BUCKET" \
   --query "Rules[?ID=='udise-athena-results-expiry'] | length(@)" --output text 2>/dev/null || echo 0)
 echo "Bucket trigger entries left: ${left:-0}; lifecycle rule entries left: ${rule:-0} (both should be 0)."
+
+# Check that the manifest table went with the stack (DeletionPolicy: Delete in template.yaml).
+if "${AWS[@]}" dynamodb describe-table --table-name "$MANIFEST_TABLE" >/dev/null 2>&1; then
+  echo "WARNING: DynamoDB table $MANIFEST_TABLE still exists." >&2
+  exit 1
+fi
+echo "DynamoDB table $MANIFEST_TABLE: deleted."
