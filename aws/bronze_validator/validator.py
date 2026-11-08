@@ -8,8 +8,18 @@ below are about the FILE, not its rows: is it the file we expect, intact and com
     unreadable_parquet    the bytes are a readable Parquet file
     schema_mismatch       exactly the expected columns, in order, with the expected types
     row_count_mismatch    exactly the expected number of rows
-    year_mismatch         every row's _year equals the year=<YYYY-YY> folder
-    source_row_sequence   _source_row runs 1, 2, ..., n in file order (no row lost or repeated)
+    year_mismatch         every row's _year equals the year=<YYYY-YY> folder: in every row group the
+                          _year statistics say min = max = that year and no NULLs
+
+FOOTER ONLY: every check reads the Parquet footer (columns, row count, per-column min / max /
+null-count statistics), never the data pages. The footer is not compressed; the data pages are
+(zstd), and the pyarrow in the AWS SDK for pandas Lambda layer is built without zstd (the first
+deployment failed on every file with "Support for codec 'zstd' not built"). A file written
+without statistics fails year_mismatch, because the year cannot be checked from the footer.
+
+"_source_row runs 1..n" needs the data, so it is checked in Athena instead, on the whole
+bronze table: sql/athena/tests/00_bronze_source_rows.sql (per file: count = distinct count =
+max and min = 1).
 
 Row-level quality rules (missing keys, non-numbers, negative counts, unknown districts,
 duplicates across files, ...) are NOT checked here: they belong to silver
@@ -28,7 +38,7 @@ import pyarrow.parquet as pq
 CONTRACT_PATH = Path(__file__).with_name("contract.json")
 KEY_PATTERN = re.compile(r"^bronze/(?P<dataset>[a-z0-9]+)/year=(?P<year>\d{4}-\d{2})/(?P<name>[^/]+\.parquet)$")
 RULES = ["not_in_contract", "unreadable_parquet", "schema_mismatch", "row_count_mismatch",
-         "year_mismatch", "source_row_sequence"]
+         "year_mismatch"]
 
 
 def load_contract(path: Path = CONTRACT_PATH) -> dict:
@@ -85,19 +95,25 @@ def validate(key: str, data: bytes, contract: dict) -> list[dict]:
         fails.append(failure("row_count_mismatch", f"{rows:,} rows, expected {entry['rows']:,}",
                              entry["rows"], rows))
 
-    present = set(pf.schema_arrow.names)
-    columns = [c for c in ("_year", "_source_row") if c in present]
-    table = pf.read(columns=columns) if columns else None
-    if "_year" in present:
-        years = sorted({y for y in table["_year"].to_pylist()}, key=str)
-        if years != [match["year"]]:
-            fails.append(failure("year_mismatch", f"_year values {years} but the folder is year={match['year']}",
-                                 match["year"], years))
-    if "_source_row" in present:
-        seq = table["_source_row"].to_pylist()
-        if seq != list(range(1, len(seq) + 1)):
-            first_bad = next(i for i, v in enumerate(seq, 1) if v != i)
-            fails.append(failure("source_row_sequence",
-                                 f"_source_row should run 1..{len(seq)} in file order; row {first_bad} has "
-                                 f"{seq[first_bad - 1]}", "1..n", f"row {first_bad} = {seq[first_bad - 1]}"))
+    parquet_columns = [pf.metadata.schema.column(j).name for j in range(pf.metadata.num_columns)]
+    if "_year" in parquet_columns:
+        problem = year_problem(pf.metadata, parquet_columns.index("_year"), match["year"])
+        if problem:
+            fails.append(failure("year_mismatch", problem, match["year"], problem))
     return fails
+
+
+def year_problem(meta, column: int, year: str) -> str | None:
+    """Why the _year column does not prove that every row is `year` (None if it does), from the
+    row-group statistics in the footer: min = max = year and no NULLs in every row group."""
+    seen = set()
+    for i in range(meta.num_row_groups):
+        stats = meta.row_group(i).column(column).statistics
+        if stats is None or not stats.has_min_max:
+            return f"_year has no min/max statistics in row group {i}: cannot check it from the footer"
+        if stats.null_count:
+            return f"_year has {stats.null_count} empty values in row group {i}"
+        seen.update({stats.min, stats.max})
+    if seen and seen != {year}:
+        return f"_year values {sorted(seen, key=str)} but the folder is year={year}"
+    return None

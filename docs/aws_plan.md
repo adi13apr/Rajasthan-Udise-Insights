@@ -28,7 +28,11 @@ Bucket `udise-lake-aditya-2026` already exists and is never recreated or deleted
    `pipeline/rules.py` are row-level, and one (duplicates) compares rows across files, which a
    function looking at one file cannot judge. So the Lambda is a gate at the door: the file is
    in the contract, is readable Parquet, has exactly the expected columns and types and row
-   count, its `_year` matches its folder, and `_source_row` runs 1..n. A failing file moves to
+   count, and its `_year` matches its folder. It reads only the Parquet footer (columns, row
+   count, min/max statistics): the AWS SDK for pandas layer's pyarrow cannot decompress zstd
+   data pages (the first deploy failed on every file). `_source_row` runs 1..n needs the data,
+   so it is an Athena data test on each bronze table instead
+   (`sql/athena/tests/00_bronze_source_rows.sql`). A failing file moves to
    `quarantine/files/` with a `.reason.json` (`_rule`, `_reason`, expected vs actual). The
    contract (`aws/bronze_validator/contract.json`) is generated from the local bronze files; it holds
    file names, columns and row counts, no school data. A file not in the contract is

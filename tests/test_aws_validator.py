@@ -129,11 +129,57 @@ def test_wrong_year_in_rows(bronze, contract):
     assert rules(V.validate(KEY, data, contract)) == ["year_mismatch"]
 
 
-def test_source_rows_out_of_sequence(bronze, contract):
-    data = rewrite(file_bytes(bronze, KEY), lambda t: set_column(t, "_source_row", [1, 1, 3]))
+def test_year_check_reads_the_footer_statistics(bronze, contract):
+    """min = max = the folder's year in every row group, read from the footer statistics."""
+    meta = pq.ParquetFile(io.BytesIO(file_bytes(bronze, KEY))).metadata
+    names = [meta.schema.column(j).name for j in range(meta.num_columns)]
+    stats = meta.row_group(0).column(names.index("_year")).statistics
+    assert (stats.min, stats.max, stats.null_count) == ("2024-25", "2024-25", 0)
+
+
+def test_empty_year_fails(bronze, contract):
+    data = rewrite(file_bytes(bronze, KEY), lambda t: set_column(t, "_year", ["2024-25", None, "2024-25"]))
     fails = V.validate(KEY, data, contract)
-    assert rules(fails) == ["source_row_sequence"]
-    assert "row 2 has 1" in fails[0]["reason"]
+    assert rules(fails) == ["year_mismatch"] and "1 empty values" in fails[0]["reason"]
+
+
+def test_file_without_statistics_fails_the_year_check(bronze, contract):
+    """Without min/max statistics the year cannot be checked from the footer: fail, don't guess."""
+    table = pq.read_table(io.BytesIO(file_bytes(bronze, KEY)))
+    buf = io.BytesIO()
+    pq.write_table(table, buf, write_statistics=False)
+    fails = V.validate(KEY, buf.getvalue(), contract)
+    assert rules(fails) == ["year_mismatch"] and "no min/max statistics" in fails[0]["reason"]
+
+
+def test_source_row_order_is_not_checked_here(bronze, contract):
+    """_source_row needs the data pages, so it is checked in Athena on the whole bronze table
+    (sql/athena/tests/00_bronze_source_rows.sql), not by the footer-only validator."""
+    data = rewrite(file_bytes(bronze, KEY), lambda t: set_column(t, "_source_row", [1, 1, 3]))
+    assert V.validate(KEY, data, contract) == []
+    test_sql = (ROOT / "sql" / "athena" / "tests" / "00_bronze_source_rows.sql").read_text(encoding="utf-8")
+    assert test_sql.count("n = d and d = hi and lo = 1") == 4   # one per bronze dataset
+
+
+DATA_READS = ["read", "read_row_group", "read_row_groups", "iter_batches", "scan_contents"]
+
+
+def test_validator_reads_only_the_footer(bronze, contract, monkeypatch):
+    """The Lambda layer's pyarrow cannot decompress zstd data pages (the first deploy failed on
+    every file with exactly this error). Any attempt to read data must fail the test."""
+    table = set_column(pq.read_table(io.BytesIO(file_bytes(bronze, KEY))), "_year", ["2025-26"] * 3)
+    buf = io.BytesIO()
+    pq.write_table(table, buf, compression="zstd")   # zstd, as bronze is; made before reads are blocked
+    bad_year, good = buf.getvalue(), file_bytes(bronze, KEY)
+
+    def no_data(*args, **kwargs):
+        raise pa.lib.ArrowNotImplementedError("Support for codec 'zstd' not built")
+    for name in DATA_READS:
+        monkeypatch.setattr(pq.ParquetFile, name, no_data)
+    monkeypatch.setattr(pq, "read_table", no_data)
+
+    assert V.validate(KEY, good, contract) == []                              # a good file passes
+    assert rules(V.validate(KEY, bad_year, contract)) == ["year_mismatch"]    # a bad one fails
 
 
 def test_every_failure_is_listed_first_one_is_the_rule(bronze, contract):
@@ -192,7 +238,7 @@ def test_handler_keeps_good_files_and_quarantines_bad_ones(handler, bronze, monk
 
     result = handler.lambda_handler(s3_event(KEY, ODD_KEY), types.SimpleNamespace(aws_request_id="req-1"))
 
-    assert result == {"checked": 2, "quarantined": 1}
+    assert (result["checked"], result["quarantined"]) == (2, 1)
     dest = "quarantine/files/profile1/year=2024-25/profile_data_1_KOTA_2024-25.parquet"
     assert KEY not in s3.objects and ODD_KEY in s3.objects          # good file left alone
     assert s3.objects[dest] == bad                                   # bad file moved intact
@@ -208,8 +254,33 @@ def test_handler_decodes_keys_with_spaces_and_skips_other_prefixes(handler, bron
     s3 = FakeS3({ODD_KEY: file_bytes(bronze, ODD_KEY)})
     monkeypatch.setattr(handler, "S3", s3)
     result = handler.lambda_handler(s3_event(ODD_KEY, "quarantine/files/x.parquet"), None)
-    assert result == {"checked": 1, "quarantined": 0}
+    assert (result["checked"], result["quarantined"]) == (1, 0)
+    assert [r["result"] for r in result["results"]] == ["ok", "skipped"]
     assert s3.calls == [("get", ODD_KEY)]
+
+
+def test_direct_call_dry_run_moves_nothing(handler, bronze, monkeypatch):
+    """{"keys": [...], "dry_run": true}: the smoke test in aws/deploy.sh."""
+    bad = rewrite(file_bytes(bronze, KEY), lambda t: t.slice(0, 1))
+    s3 = FakeS3({KEY: bad, ODD_KEY: file_bytes(bronze, ODD_KEY)})
+    monkeypatch.setattr(handler, "S3", s3)
+    monkeypatch.setattr(handler, "BUCKET", "b")
+    result = handler.lambda_handler({"keys": [ODD_KEY, KEY], "dry_run": True}, None)
+    assert [r["result"] for r in result["results"]] == ["ok", "would_quarantine"]
+    assert result["results"][1]["rule"] == "row_count_mismatch"
+    assert (result["quarantined"], result["would_quarantine"]) == (0, 1)
+    assert all(c[0] == "get" for c in s3.calls) and set(s3.objects) == {KEY, ODD_KEY}
+
+
+def test_direct_call_quarantines_like_an_upload(handler, bronze, monkeypatch):
+    """{"keys": [...]}: aws/revalidate_bronze.py, for files already in bronze/."""
+    bad = rewrite(file_bytes(bronze, KEY), lambda t: t.slice(0, 1))
+    s3 = FakeS3({KEY: bad})
+    monkeypatch.setattr(handler, "S3", s3)
+    monkeypatch.setattr(handler, "BUCKET", "b")
+    result = handler.lambda_handler({"keys": [KEY]}, types.SimpleNamespace(aws_request_id="req-2"))
+    assert result["quarantined"] == 1 and KEY not in s3.objects
+    assert json.loads(s3.objects[result["results"][0]["quarantine_key"] + ".reason.json"])["_run_id"] == "req-2"
 
 
 # --- Custom resource in aws/template.yaml (bucket trigger + lifecycle rule) -------------------

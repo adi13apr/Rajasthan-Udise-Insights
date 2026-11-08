@@ -48,3 +48,27 @@ find "$HERE/bronze_validator" -name __pycache__ -type d -prune -exec rm -rf {} +
 
 "${AWS[@]}" cloudformation describe-stacks --stack-name "$STACK" \
   --query 'Stacks[0].[StackStatus, Outputs]' --output json
+
+# 3. Smoke test: call the deployed validator on one real bronze file, in dry-run mode (it only
+#    checks; nothing is moved). Fails the deploy if the function errors or the file does not
+#    pass. Unit tests run with the local pyarrow; this proves the code works in the real Lambda
+#    runtime and layer (the first deploy failed there on every file: no zstd in the layer).
+KEY=$("${AWS[@]}" s3api list-objects-v2 --bucket "$BUCKET" --prefix bronze/ \
+  --query "Contents[?ends_with(Key, '.parquet')] | [0].Key" --output text)
+if [ -z "$KEY" ] || [ "$KEY" = "None" ]; then
+  echo "Smoke test skipped: no bronze file in s3://$BUCKET/bronze/ yet."
+else
+  PAYLOAD=$(python -c 'import json, sys; print(json.dumps({"keys": [sys.argv[1]], "dry_run": True}))' "$KEY")
+  (cd "$HERE" && "${AWS[@]}" lambda invoke --function-name udise-bronze-validator \
+     --cli-binary-format raw-in-base64-out --payload "$PAYLOAD" build/smoke.json \
+     --query FunctionError --output text > build/smoke_error.txt)
+  ERR=$(cat "$HERE/build/smoke_error.txt")
+  RESULT=$(python -c 'import json, sys; print(json.load(open(sys.argv[1]))["results"][0]["result"])' \
+             "$HERE/build/smoke.json" 2>/dev/null || echo "unreadable reply")
+  if [ "$ERR" != "None" ] || [ "$RESULT" != "ok" ]; then
+    echo "SMOKE TEST FAILED on $KEY: FunctionError=$ERR result=$RESULT" >&2
+    cat "$HERE/build/smoke.json" >&2
+    exit 1
+  fi
+  echo "Smoke test passed: the deployed validator checked $KEY (dry run): ok."
+fi

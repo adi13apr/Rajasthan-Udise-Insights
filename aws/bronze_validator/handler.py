@@ -11,6 +11,12 @@ For each uploaded file:
 The quarantine copy is written before the bronze file is deleted, so a file is never lost.
 Writing to quarantine/ cannot trigger this function again (the trigger is on bronze/ only).
 
+It can also be called directly (aws lambda invoke), for files already in bronze/:
+    {"keys": ["bronze/.../x.parquet", ...]}                  validate, quarantine failures
+    {"keys": [...], "dry_run": true}                         validate only, move nothing
+The bucket is BUCKET_NAME (template.yaml). Used by the smoke test in aws/deploy.sh (dry run)
+and by aws/revalidate_bronze.py. The reply lists each key's result.
+
 Permissions (template.yaml): get/delete bronze/*, put quarantine/files/*, own log group.
 """
 import json
@@ -26,6 +32,7 @@ S3 = boto3.client("s3")
 CONTRACT = load_contract()
 BRONZE = "bronze/"
 QUARANTINE = os.environ.get("QUARANTINE_PREFIX", "quarantine/files/")
+BUCKET = os.environ.get("BUCKET_NAME", "")
 
 
 def log(**fields) -> None:
@@ -51,23 +58,36 @@ def quarantine(bucket: str, key: str, data: bytes, fails: list[dict], run_id: st
     return dest
 
 
+def check(bucket: str, key: str, run_id: str, dry_run: bool = False) -> dict:
+    """Validate one bronze file; quarantine it if it fails (unless dry_run). Returns its result."""
+    if not key.startswith(BRONZE):
+        result = {"key": key, "result": "skipped", "why": "not under bronze/"}
+        log(**result)
+        return result
+    data = S3.get_object(Bucket=bucket, Key=key)["Body"].read()
+    fails = validate(key, data, CONTRACT)
+    if not fails:
+        result = {"key": key, "result": "ok", "bytes": len(data), "rows": CONTRACT["files"][key]["rows"]}
+    elif dry_run:
+        result = {"key": key, "result": "would_quarantine", "rule": fails[0]["rule"], "reason": fails[0]["reason"]}
+    else:
+        dest = quarantine(bucket, key, data, fails, run_id)
+        result = {"key": key, "result": "quarantined", "rule": fails[0]["rule"], "reason": fails[0]["reason"],
+                  "quarantine_key": dest, "failures": [f["rule"] for f in fails]}
+    log(**result, dry_run=dry_run)
+    return result
+
+
 def lambda_handler(event, context):
     run_id = getattr(context, "aws_request_id", "local")
-    checked = moved = 0
-    for record in event.get("Records", []):
-        bucket = record["s3"]["bucket"]["name"]
-        key = urllib.parse.unquote_plus(record["s3"]["object"]["key"])
-        if not key.startswith(BRONZE):
-            log(key=key, result="skipped", why="not under bronze/")
-            continue
-        data = S3.get_object(Bucket=bucket, Key=key)["Body"].read()
-        fails = validate(key, data, CONTRACT)
-        checked += 1
-        if not fails:
-            log(key=key, result="ok", bytes=len(data), rows=CONTRACT["files"][key]["rows"])
-            continue
-        dest = quarantine(bucket, key, data, fails, run_id)
-        moved += 1
-        log(key=key, result="quarantined", rule=fails[0]["rule"], reason=fails[0]["reason"],
-            quarantine_key=dest, failures=[f["rule"] for f in fails])
-    return {"checked": checked, "quarantined": moved}
+    if "Records" in event:   # S3 upload notifications
+        targets = [(r["s3"]["bucket"]["name"], urllib.parse.unquote_plus(r["s3"]["object"]["key"]))
+                   for r in event["Records"]]
+    else:                    # direct call: {"keys": [...], "dry_run": true|false}
+        targets = [(event.get("bucket") or BUCKET, k) for k in event.get("keys", [])]
+    dry_run = bool(event.get("dry_run", False))
+    results = [check(bucket, key, run_id, dry_run) for bucket, key in targets]
+    return {"checked": sum(r["result"] != "skipped" for r in results),
+            "quarantined": sum(r["result"] == "quarantined" for r in results),
+            "would_quarantine": sum(r["result"] == "would_quarantine" for r in results),
+            "results": results}

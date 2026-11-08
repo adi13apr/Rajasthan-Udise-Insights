@@ -97,6 +97,7 @@ Resources:
       Environment:
         Variables:
           QUARANTINE_PREFIX: quarantine/files/
+          BUCKET_NAME: !Ref BucketName   # for direct calls ({"keys": [...]}): smoke test, re-validation
       Tags:
         - {Key: project, Value: udise}
 
