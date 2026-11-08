@@ -48,6 +48,17 @@ def test_every_prefix_the_build_writes_is_clearable():
     assert not [(a, b) for a in prefixes for b in prefixes if a != b and b.startswith(a)]
 
 
+def test_workgroup_allows_ctas_locations_and_keeps_the_scan_limit():
+    """An enforcing workgroup rejects CTAS with external_location (the first build failed on that),
+    and the build uses external_location for every table. The 1 GB per-query limit must stay."""
+    text = (B.C.ROOT / "aws" / "template.yaml").read_text(encoding="utf-8")
+    assert re.search(r"^\s+EnforceWorkGroupConfiguration: false\b", text, re.M)
+    assert re.search(r"^\s+BytesScannedCutoffPerQuery: 1073741824\b", text, re.M)
+    import inspect
+    from aws.athena import Athena as A
+    assert "external_location" in inspect.getsource(A.ctas)
+
+
 def test_sql_files_parse_and_placeholders_are_known():
     names = []
     for path in sorted(B.SQL_DIR.glob("*.sql")) + sorted((B.SQL_DIR / "tests").glob("*.sql")):

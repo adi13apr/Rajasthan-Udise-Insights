@@ -29,7 +29,11 @@ Resources:
       State: ENABLED
       RecursiveDeleteOption: true          # teardown also removes the saved query history
       WorkGroupConfiguration:
-        EnforceWorkGroupConfiguration: true  # clients cannot override the limit or the location
+        # Not enforced: an enforcing workgroup rejects CTAS with external_location, and the build
+        # writes each table to its own prefix (silver/, gold/, ...). The 1 GB per-query limit
+        # still applies to every query (it does not depend on this flag), and a query that names
+        # no result location uses OutputLocation below.
+        EnforceWorkGroupConfiguration: false
         PublishCloudWatchMetricsEnabled: true
         BytesScannedCutoffPerQuery: 1073741824   # 1 GB: a runaway query is cancelled, not billed
         EngineVersion:
