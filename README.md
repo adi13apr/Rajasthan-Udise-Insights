@@ -257,13 +257,14 @@ If the AWS CLI prints a `'charmap' codec` error on Windows, run `$env:PYTHONUTF8
 The lesson in all three: the tests ran in a different environment from AWS. Each fix adds a check
 that runs against the real environment (the deployed Lambda, Athena) or copies its limits.
 
-**Screenshots** (`docs/aws/`; placeholders until replaced, see `docs/aws/README.md`):
+**Screenshots** (`docs/aws/`; `billing.png` is a placeholder until the charges appear, see `docs/aws/README.md`):
 
 | | |
 |---|---|
-| ![S3 layers](docs/aws/s3_layers.png) | ![CloudFormation stack](docs/aws/cloudformation_stack.png) |
-| ![Lambda logs](docs/aws/lambda_logs.png) | ![Athena gold query](docs/aws/athena_gold_query.png) |
-| ![Parity PASS](docs/aws/parity_pass.png) | ![Billing](docs/aws/billing.png) |
+| ![S3 layers](docs/aws/s3_layers.png)<br>*The bucket: one prefix per layer.* | ![CloudFormation stack](docs/aws/cloudformation_stack.png)<br>*Stack `udise-aws`, `UPDATE_COMPLETE`.* |
+| ![Lambda invocations](docs/aws/lambda_invocations.png)<br>*Validator invocations, 378 in total: 282 for the 94 uploads (each failed and was retried twice), then 94 re-validation calls and 2 deploy smoke tests.* | ![Lambda errors](docs/aws/lambda_errors.png)<br>*Errors: the early spike (up to 55 a minute, about 03:50-03:57 UTC) is the zstd crash before the fix; zero after the footer-only validator (success rate 100% at the re-validation).* |
+| ![Athena gold query](docs/aws/athena_gold_query.png)<br>*A district mart in Athena, workgroup `udise-wg`.* | ![Parity PASS](docs/aws/parity_pass.png)<br>*Parity: PASS, 22,194 cells, 0 mismatches.* |
+| ![Billing](docs/aws/billing.png) | |
 
 The bucket holds school-level UDISE+ data: it stays private and is never shared (portal terms);
 only the district-level results above are published. Design and decisions: `docs/aws_plan.md`.
