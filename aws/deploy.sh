@@ -24,7 +24,9 @@ fi
 # Optional static check of the template (pip install -r requirements-aws.txt).
 if command -v cfn-lint >/dev/null 2>&1; then
   # W3002 = "Code: bronze_validator/ needs 'aws cloudformation package'", which step 1 does.
-  cfn-lint --ignore-checks W3002 -- "$HERE/template.yaml"
+  # Relative path, run from aws/: on Windows (Git Bash) cfn-lint finds no file at /e/... paths
+  # and exits 1 without a message.
+  (cd "$HERE" && cfn-lint --ignore-checks W3002 -- template.yaml)
 fi
 
 mkdir -p "$HERE/build"
