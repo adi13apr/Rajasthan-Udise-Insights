@@ -1,7 +1,8 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: >-
   Rajasthan UDISE+ insights - AWS layer. Athena workgroup, the bronze validator Lambda and its
-  least-privilege role, and (through a custom resource) the S3 trigger on bronze/ and the
+  least-privilege role, the DynamoDB ingestion manifest it writes, and (through a custom
+  resource) the S3 trigger on bronze/ and the
   7-day lifecycle rule on athena-results/ of the existing bucket. The bucket itself is not
   part of this stack and is never created or deleted by it.
 
@@ -45,6 +46,27 @@ Resources:
       Tags:
         - {Key: project, Value: udise}
 
+  # --- Ingestion manifest (DynamoDB) -----------------------------------------------------------
+  # One item per bronze file, written by the validator after each check: s3_key (partition key),
+  # dataset, year, row_count, etag, status (PASSED / QUARANTINED), reason, validated_at, run_id.
+  # Lets the validator skip a re-upload whose etag already PASSED (idempotent uploads) and
+  # answers "which files are in, which failed and why" without listing S3.
+  # On-demand billing: pay per read/write, no capacity to size (a few hundred writes per run).
+  # Deleted with the stack: it is a record of checks and is rebuilt by aws/revalidate_bronze.py.
+  ManifestTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      TableName: udise-ingest-manifest
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - {AttributeName: s3_key, AttributeType: S}
+      KeySchema:
+        - {AttributeName: s3_key, KeyType: HASH}
+      Tags:
+        - {Key: project, Value: udise}
+
   # --- Bronze validator Lambda ----------------------------------------------------------------
   ValidatorLogGroup:
     Type: AWS::Logs::LogGroup
@@ -56,7 +78,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       RoleName: udise-bronze-validator-role
-      Description: Bronze validator - read and remove bronze files, write quarantine files, own logs.
+      Description: Bronze validator - read and remove bronze files, write quarantine files, read/write the manifest, own logs.
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -76,6 +98,10 @@ Resources:
                 Effect: Allow
                 Action: s3:PutObject
                 Resource: !Sub arn:aws:s3:::${BucketName}/quarantine/files/*
+              - Sid: ReadAndWriteManifestItems
+                Effect: Allow
+                Action: [dynamodb:GetItem, dynamodb:PutItem]   # no Scan, Query, Delete or table actions
+                Resource: !GetAtt ManifestTable.Arn
               - Sid: OwnLogs
                 Effect: Allow
                 Action: [logs:CreateLogStream, logs:PutLogEvents]
@@ -102,6 +128,7 @@ Resources:
         Variables:
           QUARANTINE_PREFIX: quarantine/files/
           BUCKET_NAME: !Ref BucketName   # for direct calls ({"keys": [...]}): smoke test, re-validation
+          MANIFEST_TABLE: !Ref ManifestTable
       Tags:
         - {Key: project, Value: udise}
 
@@ -260,3 +287,5 @@ Outputs:
     Value: !Ref ValidatorFunction
   ValidatorRoleArn:
     Value: !GetAtt ValidatorRole.Arn
+  ManifestTable:
+    Value: !Ref ManifestTable

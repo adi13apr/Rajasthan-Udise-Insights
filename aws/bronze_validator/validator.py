@@ -103,6 +103,20 @@ def validate(key: str, data: bytes, contract: dict) -> list[dict]:
     return fails
 
 
+def key_parts(key: str) -> tuple[str | None, str | None]:
+    """(dataset, year) from bronze/<dataset>/year=<YYYY-YY>/<file>.parquet; (None, None) otherwise."""
+    match = KEY_PATTERN.match(key)
+    return (match["dataset"], match["year"]) if match else (None, None)
+
+
+def footer_rows(data: bytes) -> int | None:
+    """Row count from the Parquet footer, or None if the bytes are not readable Parquet."""
+    try:
+        return pq.ParquetFile(io.BytesIO(data)).metadata.num_rows
+    except Exception:
+        return None
+
+
 def year_problem(meta, column: int, year: str) -> str | None:
     """Why the _year column does not prove that every row is `year` (None if it does), from the
     row-group statistics in the footer: min = max = year and no NULLs in every row group."""
