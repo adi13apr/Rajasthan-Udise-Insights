@@ -46,8 +46,8 @@ Athena runs the four DuckDB test files translated (`sql/athena/tests/`) plus two
 
 | Step | Seconds |
 |---|---:|
-| duckdb: fingerprint + data tests | 3.3 |
-| athena: fingerprint + data tests | 79.5 |
+| duckdb: fingerprint + data tests | 1.7 |
+| athena: fingerprint + data tests | 93.4 |
 
 Athena: 19 read-only queries, 53.9 MB scanned.
 
