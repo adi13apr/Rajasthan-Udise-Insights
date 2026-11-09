@@ -15,6 +15,15 @@
 2. **Citations.** Every [title, p. N] in the answer must be the citation of a retrieved chunk.
    On the docs route, an answer that does not say the evidence is insufficient must cite at
    least one chunk.
+
+The agent uses `check_claims`: the answer is a list of claims, each with its own sources
+(document ids D1, D2 ... and/or "sql"), and each claim's numbers are checked against **that
+claim's sources only**, not the pooled evidence. So a figure from the SQL result written in a
+claim that cites a document fails, even though the figure is in the evidence somewhere. In a
+claim with numbers, every listed source must also hold at least one of them, so a document
+cannot ride along next to "sql" on a database-only figure. A
+source id that was not given, or a citation written into the claim text (code renders them),
+also fails. `check` (pooled evidence, one free-text answer) is kept for the number rules.
 """
 from __future__ import annotations
 
@@ -37,8 +46,11 @@ class GroundResult:
     unknown_citations: list[str] = field(default_factory=list)
     missing_citation: bool = False
     numbers_checked: int = 0
+    claim_problems: list[str] = field(default_factory=list)   # check_claims: one line per problem
 
     def problems(self) -> list[str]:
+        if self.claim_problems:          # check_claims already wrote every problem, per claim
+            return list(self.claim_problems)
         out = []
         if self.unsupported_numbers:
             out.append("numbers not found in the evidence: " + ", ".join(self.unsupported_numbers))
@@ -142,3 +154,54 @@ def check(answer: str, *, sql_cells: list | None = None, chunk_texts: list[str] 
     missing = require_citation and cited == 0
     ok = not unsupported and not unknown and not missing
     return GroundResult(ok, unsupported, unknown, missing, len(nums))
+
+
+SQL_SOURCE = "sql"
+_INLINE_SOURCE = re.compile(r"\[[^\[\]]*(?:\bpp?\.\s*\d|\bD\d+\b)[^\[\]]*\]|\(computed from the database\)", re.I)
+
+
+def check_claims(claims, *, doc_texts: dict[str, str], sql_cells: list | None, sql_text: str = "",
+                 question: str = "", require_doc_source: bool = False) -> GroundResult:
+    """Check each claim against its own sources.
+
+    `claims`: objects with `.text` and `.sources` (prompts.Claim). `doc_texts`: document id (D1 ...)
+    -> chunk text, for the chunks given to the model. `sql_cells`: every cell of the SQL result,
+    or None if there was no result (then "sql" is not a valid source). A claim's evidence is the
+    union of its sources (a document's text; for "sql" the cells and the SQL text) plus the
+    question's own numbers. A claim with numbers and no sources fails."""
+    question_vals = evidence_values([question], [])
+    sql_vals = evidence_values([sql_text], sql_cells) if sql_cells is not None else None
+    doc_vals = {d: evidence_values([t], []) for d, t in doc_texts.items()}
+    problems, unsupported, checked, doc_backed = [], [], 0, 0
+    for n, claim in enumerate(claims, start=1):
+        sources = list(claim.sources)
+        unknown = [s for s in sources if not (s in doc_vals or (s == SQL_SOURCE and sql_vals is not None))]
+        if unknown:
+            given = ", ".join(list(doc_vals) + ([SQL_SOURCE] if sql_vals is not None else [])) or "none"
+            problems.append(f"claim {n}: sources {', '.join(unknown)} were not given (given: {given})")
+        if _INLINE_SOURCE.search(claim.text):
+            problems.append(f"claim {n}: do not write citations in the claim text; list them in sources")
+        per_source = {s: (doc_vals.get(s, set()) if s != SQL_SOURCE else (sql_vals or set())) for s in sources}
+        evidence = set(question_vals).union(*per_source.values()) if per_source else set(question_vals)
+        doc_backed += any(s in doc_vals for s in sources)
+        nums = answer_numbers(claim.text)
+        checked += len(nums)
+        bad = list(dict.fromkeys(w for w, v, pct in nums if not matches(w, v, pct, evidence)))
+        if bad:
+            unsupported += bad
+            where = ", ".join(sources) if sources else "no sources"
+            problems.append(f"claim {n}: {', '.join(bad)} not found in its own sources ({where})")
+        # A source must back something: in a claim with numbers, every listed source must hold at
+        # least one of them. Otherwise [D2, "sql"] on a database-only figure would still print the
+        # report's citation next to it (the Q5 bug, second form).
+        if nums:
+            for s, vals in per_source.items():
+                if s in unknown:
+                    continue
+                if not any(matches(w, v, pct, vals) for w, v, pct in nums):
+                    problems.append(f"claim {n}: source {s} contains none of the claim's numbers "
+                                    f"({', '.join(w for w, _, _ in nums)}); remove it or split the claim")
+    missing = require_doc_source and doc_backed == 0
+    if missing:
+        problems.append("no claim cites a document: give each document fact its document id in sources")
+    return GroundResult(not problems, unsupported, [], missing, checked, problems)

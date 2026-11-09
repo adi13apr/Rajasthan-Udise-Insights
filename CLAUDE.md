@@ -228,9 +228,17 @@ then the Sattva analysis (phases A1-A6).
   LLM_BASE_URL / LLM_MODEL / LLM_API_KEY from the gitignored `.env` (`.env.example`); Pydantic-validated JSON; rolling
   TPM/RPM limiter; 429/503 backoff (no retry if the asked wait > 20 s); max 5 LLM calls per question. Trace JSONL in
   data/rag/traces/agent_runs.jsonl. `python -m rag.ask "..."`. Tests: `tests/test_rag_agent.py` (fake LLM, CI job `rag`).
-  Provider: Google Gemini free tier, **20 requests per day per model**; gemini-2.5-flash 404 for new keys, use
-  gemini-3.5-flash (LLM_TIMEOUT_S=60, LLM_MAX_OUTPUT_TOKENS=4096: thinking tokens count). First real run 2026-11-09: 5/5
-  status ok, gov schools/teachers 2024-25 = official exactly; known misses in rag/README.md (code 9 retrieval, citation placement).
+  Provider: Google Gemini free tier (limits in AI Studio, aistudio.google.com/rate-limit): gemini-3.5-flash (shown as
+  Gemini 3.6 Flash) 5 RPM / 250K TPM / **20 per day**; gemini-3.5-flash-lite 15 / 250K / 500 per day; gemini-2.5-flash 404
+  for new keys. LLM_TIMEOUT_S=60, LLM_MAX_OUTPUT_TOKENS=4096 (thinking tokens count). Route also extracts filters `year`
+  (2024-25/2025-26) and `doc_type` (values from the manifest), kept only if the question states them (`clear_filters`);
+  `Retriever.search(..., filters=Filters(...))` -> Chroma `where` + BM25 post-filter; a year filter keeps documents with no
+  academic year (blank, 2026). No filters = the exact phase 2 call (33/33 eval questions identical on the real index).
+  Real runs 2026-11-09: 5/5 answered both times, gov schools/teachers 2024-25 = official exactly. Answers are claims
+  `{text, sources: [D1.. | "sql"]}`; code renders [title, p. N] / "(computed from the database)"; `check_claims` checks
+  each claim's numbers against its own sources and requires every listed source to hold one of them. Default model
+  gemini-3.5-flash-lite (500/day). Trace: `load_ms` (index, embedder, DuckDB, LLM client) apart from `latency_ms`.
+  Q3 miss diagnosed in rag/README.md: hand-worded query + eval q01 relevance labelled at section level (not tuned).
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

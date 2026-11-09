@@ -8,7 +8,7 @@ import pytest
 pytest.importorskip("chromadb")
 pytest.importorskip("rank_bm25")
 
-from rag.retrieve import MODES, Retriever, rrf, tokenize  # noqa: E402
+from rag.retrieve import MODES, Filters, Retriever, rrf, tokenize  # noqa: E402
 from rag.store import Store  # noqa: E402
 
 VOCAB = ["toilet", "teacher", "enrolment", "electricity", "code", "girls", "library", "computer"]
@@ -202,3 +202,87 @@ def test_bad_mode_wrong_embedder_and_missing_index(index, tmp_path):
         Retriever(index, embedder=Other())
     with pytest.raises(FileNotFoundError):
         Retriever(tmp_path / "nothing-here")
+
+
+# --- metadata filters (phase 4) ----------------------------------------------------------
+QUERIES = ["code 9", "girls toilet", "teacher ratio", "item_group 4 disability", "library computer",
+           "management code 94", "electricity enrolment", "nothing shared here zzz"]
+
+
+def _same(a, b):
+    return [(h.id, h.rank, h.score, h.scores) for h in a] == [(h.id, h.rank, h.score, h.scores) for h in b]
+
+
+@pytest.mark.parametrize("mode", MODES)
+def test_no_filters_is_exactly_the_phase2_search(retriever, mode):
+    """filters=None and an empty Filters() give the same ids, ranks and every stage's scores as
+    the phase 2 call search(q, mode, k), so the phase 2 evaluation stays valid."""
+    for q in QUERIES:
+        phase2 = retriever.search(q, mode=mode, k=5)
+        assert _same(retriever.search(q, mode=mode, k=5, filters=None), phase2)
+        assert _same(retriever.search(q, mode=mode, k=5, filters=Filters()), phase2)
+
+
+# Documents like the real corpus: reports and schemas per academic year, the metadata note with
+# no year, the project's Markdown docs with year 2026 (a calendar year, not an academic year).
+FILTER_DOCS = [
+    ("r24-a", "Report 2024-25", "2024-25", "official_report", "Schools with a girls toilet in 2024-25 toilet."),
+    ("r24-b", "Report 2024-25", "2024-25", "official_report", "Teacher numbers teacher ratio 2024-25."),
+    ("r25-a", "Report 2025-26", "2025-26", "official_report", "Schools with a girls toilet in 2025-26 toilet."),
+    ("r25-b", "Report 2025-26", "2025-26", "official_report", "Teacher numbers teacher ratio 2025-26."),
+    ("s24", "Schema", "2024-25", "schema", "Yes/No columns: code 9 means not applicable toilet."),
+    ("s25", "Schema (2025-26)", "2025-26", "schema", "Yes/No columns: code 9 means not applicable teacher."),
+    ("meta", "General metadata", "", "official_metadata", "Toilet means a functional toilet; teacher defined."),
+    ("dql", "Data Quality Log", "2026", "project_doc", "Code 9 treated as missing; toilet flags; teacher."),
+]
+
+
+@pytest.fixture(scope="module")
+def filter_index(tmp_path_factory):
+    path = tmp_path_factory.mktemp("rag-filter-index")
+    emb = KeywordEmbedder()
+    store = Store(path, "udise_docs", emb.name, emb.dim)
+    ids, texts = [d[0] for d in FILTER_DOCS], [d[4] for d in FILTER_DOCS]
+    metas = [{"file": "all", "title": d[1], "year": d[2], "doc_type": d[3], "location": "p. 1", "page": 1}
+             for d in FILTER_DOCS]
+    store.replace_file("all", ids, emb.embed_documents(texts), texts, metas)
+    return path
+
+
+@pytest.fixture
+def fretriever(filter_index):
+    return Retriever(filter_index, embedder=KeywordEmbedder(), reranker=FakeReranker())
+
+
+def _years(hits):
+    return {h.metadata["year"] for h in hits}
+
+
+def test_year_filter_keeps_that_year_and_documents_without_an_academic_year(fretriever):
+    hits = fretriever.search("toilet teacher code", mode="hybrid", k=8, filters=Filters(year="2024-25"))
+    ids = {h.id for h in hits}
+    assert "r25-a" not in ids and "r25-b" not in ids and "s25" not in ids    # the other year is gone
+    assert {"meta", "dql"} <= ids                       # no year / calendar year: apply to every year
+    assert _years(hits) <= {"2024-25", "", "2026"}
+
+
+@pytest.mark.parametrize("mode", ["bm25", "vector"])
+@pytest.mark.parametrize("filters", [Filters(year="2024-25"), Filters(year="2025-26"),
+                                     Filters(doc_type="official_report"), Filters(doc_type="schema"),
+                                     Filters(year="2025-26", doc_type="official_report"),
+                                     Filters(doc_type="official_metadata")])
+def test_chroma_where_and_bm25_filter_select_the_same_chunks(fretriever, mode, filters):
+    """With k = all chunks, each list returns exactly the chunks that pass the filter (vector:
+    through Chroma's `where`; bm25: in Python), so both halves of hybrid agree on the rule."""
+    expected = {d[0] for d in FILTER_DOCS if filters.matches({"year": d[2], "doc_type": d[3]})}
+    q = "toilet teacher code 9 girls ratio numbers functional missing columns schools"
+    got = {h.id for h in fretriever.search(q, mode=mode, k=len(FILTER_DOCS), filters=filters)}
+    assert got == expected
+
+
+def test_doc_type_filter_and_unchanged_bm25_scores(fretriever):
+    plain = {h.id: h.score for h in fretriever.search("teacher ratio", mode="bm25", k=8)}
+    hits = fretriever.search("teacher ratio", mode="bm25", k=8, filters=Filters(doc_type="official_report"))
+    assert hits and all(h.metadata["doc_type"] == "official_report" for h in hits)
+    assert all(h.score == plain[h.id] for h in hits)    # the filter does not change BM25 scores
+    assert fretriever.search("teacher", mode="vector", k=5, filters=Filters(doc_type="no_such_type")) == []
