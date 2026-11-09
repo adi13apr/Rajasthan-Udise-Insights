@@ -37,3 +37,9 @@ powerbi/**/.pbi/
 
 # AWS layer: packaged CloudFormation template (aws/deploy.sh)
 aws/build/
+
+# RAG layer: the ChromaDB index is rebuilt by `python -m rag.ingest`. The corpus documents
+# live outside the repo (UDISE_DOCS_DIR); only the manifest is committed.
+data/rag/
+docs_corpus/*
+!docs_corpus/manifest.csv
