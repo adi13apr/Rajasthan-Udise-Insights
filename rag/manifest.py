@@ -1,7 +1,8 @@
 """The document manifest: docs_corpus/manifest.csv, one row per document.
 
 Columns: file, title, publisher, year, doc_type, source_url (source_url may be blank, e.g.
-for the project's own documents). `file` is either a path inside the repo
+for the project's own documents; year may be blank for a document that covers no particular
+year, e.g. the general metadata note). `file` is either a path inside the repo
 (docs/design_decisions.md) or a file name inside the corpus folder (UDISE_DOCS_DIR), so
 official reports can be added to that folder later without changing any code.
 """
@@ -13,7 +14,7 @@ from pathlib import Path
 from . import config as C
 
 COLUMNS = ["file", "title", "publisher", "year", "doc_type", "source_url"]
-REQUIRED = ["file", "title", "publisher", "year", "doc_type"]
+REQUIRED = ["file", "title", "publisher", "doc_type"]   # year and source_url may be blank
 SUPPORTED = {".pdf": "pdf", ".md": "markdown"}
 YEAR = re.compile(r"^\d{4}(-\d{2})?$")         # 2026 or 2024-25
 DOC_TYPE = re.compile(r"^[a-z][a-z_]*$")        # schema, project_doc, official_report, ...
@@ -73,8 +74,9 @@ def load_manifest(path: Path = C.MANIFEST, docs_dir: Path = C.DOCS_DIR,
         kind = SUPPORTED.get(Path(file).suffix.lower())
         if kind is None:
             problems.append(f"{where}: unsupported file type (use {', '.join(SUPPORTED)})")
-        if not YEAR.match(row["year"]):
-            problems.append(f"{where}: year must look like 2026 or 2024-25, got {row['year']!r}")
+        if row["year"] and not YEAR.match(row["year"]):
+            problems.append(f"{where}: year must be blank or look like 2026 or 2024-25, "
+                            f"got {row['year']!r}")
         if not DOC_TYPE.match(row["doc_type"]):
             problems.append(f"{where}: doc_type must be lower_case_words, got {row['doc_type']!r}")
         try:

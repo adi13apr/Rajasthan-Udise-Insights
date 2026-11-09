@@ -48,7 +48,7 @@ same folder. Do not run two ingestions on the same index at the same time.
   PDF in `E:\udise-docs\` and add a row: no code change. A name that exists in both places is
   an error, so it is always clear which file was read.
 - `title` is taken from the document itself, not from the file name.
-- `year` is `2026` or `2024-25`; `doc_type` is a lower-case word (`schema`, `project_doc`,
+- `year` is `2026`, `2024-25` or blank (a document about no particular year); `doc_type` is a lower-case word (`schema`, `project_doc`,
   `official_report`, ...); `source_url` may be blank (the project's own documents).
 - PDF (`.pdf`) and Markdown (`.md`) files are supported.
 

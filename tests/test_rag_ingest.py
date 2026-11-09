@@ -168,6 +168,18 @@ def test_manifest_problems_are_all_reported(tmp_path):
         assert text in msg
 
 
+def test_manifest_allows_a_blank_year(tmp_path):
+    """A document that covers no particular year (the general metadata note) has year ''."""
+    root, docs = tmp_path / "repo", tmp_path / "corpus"
+    root.mkdir()
+    docs.mkdir()
+    (docs / "meta.md").write_text("# Metadata\n", encoding="utf-8")
+    manifest = tmp_path / "manifest.csv"
+    write_manifest(manifest, [{"file": "meta.md", "title": "Metadata", "year": ""}])
+    [entry] = load_manifest(manifest, docs, root)
+    assert entry.year == ""
+
+
 def test_manifest_resolves_repo_paths_and_corpus_files(corpus):
     entries = load_manifest(corpus["manifest"], corpus["docs"], corpus["root"])
     where = {e.file: e.path for e in entries}
