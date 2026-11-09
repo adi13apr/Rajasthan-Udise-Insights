@@ -122,7 +122,12 @@ class RunContext:
     settings: AgentSettings
     prompt_tokens: int = 0
     completion_tokens: int = 0
+    load_ms: float = 0.0             # cold start: index, embedding model, DuckDB opened in this run
     lock: threading.Lock = field(default_factory=threading.Lock)
+
+    def add_load(self, ms: float) -> None:
+        with self.lock:
+            self.load_ms += ms
 
 
 class AgentState(TypedDict, total=False):
@@ -138,7 +143,8 @@ class AgentState(TypedDict, total=False):
     sql_error: str | None
     sql_attempts: int
     card_tables: list[str]
-    draft: str | None
+    claims: list                     # prompts.Claim objects of the latest answer
+    draft: str | None                # the claims rendered with their citations
     draft_raw: str | None
     insufficient: bool
     answer_attempts: int
@@ -159,13 +165,15 @@ class AgentResult:
     sources: list[str]               # every retrieved chunk's citation
     filters: dict                    # retrieval filters after the clear-statement check
     retrieved_ids: list[str]         # chunk ids in rank order
+    claims: list[dict]               # {text, sources, rendered} of the answer's claims
     sql: str | None                  # the SQL that ran (or the last one tried)
     sql_error: str | None
     sql_rows: int | None
     llm_calls: int
     prompt_tokens: int
     completion_tokens: int
-    latency_ms: float
+    latency_ms: float                # the question's own time: cold start NOT included
+    load_ms: float                   # cold start in this run (index, embedding model, DuckDB)
     run_id: str
     trace_file: str | None
     steps: list[dict]                # the trace events of this run
@@ -321,12 +329,24 @@ class Agent:
         from .retrieve import DEFAULT_MODE, Filters
         mode = s.retrieve_mode or DEFAULT_MODE
         f = Filters(**(state.get("filters") or {}))
+        timing = {"load_ms": 0.0, "search_ms": 0.0}
         t0 = time.perf_counter()
 
         def search():
+            # Cold start, timed on its own: the index (first use in the process) and the
+            # embedding model. Near 0 ms once they are loaded.
+            t = time.perf_counter()
+            retriever = self.retriever
+            if hasattr(retriever, "load_models"):
+                retriever.load_models(mode)
+            timing["load_ms"] = round((time.perf_counter() - t) * 1000, 1)
+            t = time.perf_counter()
             if f.is_empty():   # exactly the phase 2 call, so the phase 2 evaluation stays valid
-                return self.retriever.search(state["question"], mode, s.retrieve_k)
-            return self.retriever.search(state["question"], mode, s.retrieve_k, filters=f)
+                hits = retriever.search(state["question"], mode, s.retrieve_k)
+            else:
+                hits = retriever.search(state["question"], mode, s.retrieve_k, filters=f)
+            timing["search_ms"] = round((time.perf_counter() - t) * 1000, 1)
+            return hits
 
         filters_text = "none" if f.is_empty() else f"year={f.year} doc_type={f.doc_type}"
         try:
@@ -337,21 +357,29 @@ class Agent:
         except Exception as e:   # index missing, model failed to load...
             err = f"{type(e).__name__}: {e}"
         else:
+            ctx.add_load(timing["load_ms"])
             ctx.tracer.event("retrieve", f"mode={mode} k={s.retrieve_k} filters={filters_text}",
                              "; ".join(P.cite_for(h.metadata) for h in hits),
-                             round((time.perf_counter() - t0) * 1000, 1), hits=len(hits),
+                             timing["search_ms"], hits=len(hits), load_ms=timing["load_ms"],
                              filters=None if f.is_empty() else f.as_dict())
             return {"hits": hits, "retrieve_error": None}
+        ctx.add_load(timing["load_ms"])
         ctx.tracer.event("retrieve", f"mode={mode} filters={filters_text}",
-                         latency_ms=round((time.perf_counter() - t0) * 1000, 1), error=err)
+                         latency_ms=round((time.perf_counter() - t0) * 1000 - timing["load_ms"], 1),
+                         load_ms=timing["load_ms"], error=err)
         return {"hits": [], "retrieve_error": err}
 
     # --- sql -------------------------------------------------------------------------
     def _run_sql(self, ctx: RunContext, sql: str):
         from .sql_tool import SqlExecutionError, SqlRejected
-        t0 = time.perf_counter()
+        t = t0 = time.perf_counter()
+        load_ms = 0.0
         try:
-            result = self.sql_tool.run(sql, require_aggregate=True)
+            tool = self.sql_tool            # opens the DuckDB file on first use in the process
+            load_ms = round((time.perf_counter() - t) * 1000, 1)
+            ctx.add_load(load_ms)
+            t0 = time.perf_counter()
+            result = tool.run(sql, require_aggregate=True)
         except SqlRejected as e:
             err = f"rejected by the SQL checks: {e}"
         except SqlExecutionError as e:
@@ -362,10 +390,10 @@ class Agent:
             ctx.tracer.event("sql.run", short(result.sql_executed, 200),
                              f"{result.row_count} rows; columns: {', '.join(result.columns)}",
                              round((time.perf_counter() - t0) * 1000, 1), rows=result.row_count,
-                             truncated=result.truncated)
+                             truncated=result.truncated, load_ms=load_ms)
             return result, None
         ctx.tracer.event("sql.run", short(sql, 200), latency_ms=round((time.perf_counter() - t0) * 1000, 1),
-                         error=err)
+                         error=err, load_ms=load_ms)
         return None, err
 
     def sql_node(self, state: AgentState, config) -> dict:
@@ -417,8 +445,10 @@ class Agent:
             d = call_llm(ctx, step, messages, P.AnswerDraft, evidence)
         except AgentStop as e:
             return {"draft": None, "stop_reason": str(e), "answer_attempts": attempts + 1}
-        return {"draft": d.answer, "draft_raw": d.model_dump_json(), "insufficient": d.insufficient_evidence,
-                "answer_attempts": attempts + 1}
+        # The draft is rendered from the claims: citations and the SQL mark come from each claim's
+        # sources, never from text the model wrote.
+        return {"claims": d.claims, "draft": P.render_claims(d.claims, hits), "draft_raw": d.model_dump_json(),
+                "insufficient": d.insufficient_evidence, "answer_attempts": attempts + 1}
 
     @staticmethod
     def after_answer(state: AgentState) -> str:
@@ -429,13 +459,14 @@ class Agent:
         ctx = _ctx(config)
         t0 = time.perf_counter()
         hits, result = state.get("hits") or [], state.get("sql_result")
-        cells = [c for row in (result.rows if result is not None else []) for c in row]
-        g = grounding.check(
-            state["draft"], sql_cells=cells, chunk_texts=[h.text for h in hits],
-            extra_texts=[state["question"], state.get("sql") or ""] if result is not None else [state["question"]],
-            allowed_citations=[P.cite_for(h.metadata) for h in hits],
-            require_citation=state.get("route") == "docs" and bool(hits) and not state.get("insufficient"))
-        ctx.tracer.event("ground_check", f"attempt {state.get('answer_attempts', 0)}, {g.numbers_checked} numbers",
+        cells = [c for row in result.rows for c in row] if result is not None else None
+        claims = state.get("claims") or []
+        g = grounding.check_claims(
+            claims, doc_texts={d: h.text for d, h in P.doc_ids(hits).items()}, sql_cells=cells,
+            sql_text=(state.get("sql") or "") if result is not None else "", question=state["question"],
+            require_doc_source=state.get("route") == "docs" and bool(hits) and not state.get("insufficient"))
+        ctx.tracer.event("ground_check",
+                         f"attempt {state.get('answer_attempts', 0)}, {len(claims)} claims, {g.numbers_checked} numbers",
                          "ok" if g.ok else "; ".join(g.problems()),
                          round((time.perf_counter() - t0) * 1000, 1), ok=g.ok)
         return {"ground": g}
@@ -505,7 +536,13 @@ class Agent:
         if not question:
             raise ValueError("empty question")
         tracer = Tracer(question, self.trace_file)
-        ctx = RunContext(tracer, Budget(self.settings.max_llm_calls), self.llm, self.settings)
+        t = time.perf_counter()
+        llm = self.llm                      # first use: imports the SDK and builds the client
+        llm_load_ms = round((time.perf_counter() - t) * 1000, 1)
+        ctx = RunContext(tracer, Budget(self.settings.max_llm_calls), llm, self.settings)
+        ctx.add_load(llm_load_ms)
+        if llm_load_ms >= 1:
+            tracer.event("load.llm_client", getattr(llm, "model", ""), latency_ms=0.0, load_ms=llm_load_ms)
         state = self.graph.invoke({"question": question, "answer_attempts": 0},
                                   config={"configurable": {"ctx": ctx}, "recursion_limit": 25})
         final = state.get("final", "")
@@ -519,12 +556,17 @@ class Agent:
             question=question, answer=final, status=state.get("status", "unverified"),
             route=state.get("route"), route_reason=state.get("route_reason"), citations=cited,
             sources=sources, filters=state.get("filters") or {"year": None, "doc_type": None},
-            retrieved_ids=[h.id for h in hits], sql=state.get("sql"), sql_error=state.get("sql_error"),
+            retrieved_ids=[h.id for h in hits],
+            claims=[{"text": c.text, "sources": list(c.sources), "rendered": P.render_claim(c, hits)}
+                    for c in (state.get("claims") or [])] if state.get("status") in ("ok", "insufficient_evidence") else [],
+            sql=state.get("sql"), sql_error=state.get("sql_error"),
             sql_rows=result.row_count if result is not None else None,
             llm_calls=ctx.budget.used, prompt_tokens=ctx.prompt_tokens,
-            completion_tokens=ctx.completion_tokens, latency_ms=tracer.elapsed_ms(), run_id=tracer.run_id,
+            completion_tokens=ctx.completion_tokens,
+            latency_ms=round(tracer.elapsed_ms() - ctx.load_ms, 1), load_ms=round(ctx.load_ms, 1),
+            run_id=tracer.run_id,
             trace_file=str(self.trace_file) if self.trace_file else None, steps=list(tracer.events),
             problems=g.problems() if g is not None and not g.ok else [])
         tracer.event("run", short(question), f"status={res.status} route={res.route}", res.latency_ms,
-                     res.prompt_tokens, res.completion_tokens, llm_calls=res.llm_calls)
+                     res.prompt_tokens, res.completion_tokens, llm_calls=res.llm_calls, load_ms=res.load_ms)
         return res

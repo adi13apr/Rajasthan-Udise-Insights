@@ -234,8 +234,11 @@ then the Sattva analysis (phases A1-A6).
   (2024-25/2025-26) and `doc_type` (values from the manifest), kept only if the question states them (`clear_filters`);
   `Retriever.search(..., filters=Filters(...))` -> Chroma `where` + BM25 post-filter; a year filter keeps documents with no
   academic year (blank, 2026). No filters = the exact phase 2 call (33/33 eval questions identical on the real index).
-  Real runs 2026-11-09: 5/5 answered both times, gov schools/teachers 2024-25 = official exactly; known misses in
-  rag/README.md (code 9 retrieval, citation placement).
+  Real runs 2026-11-09: 5/5 answered both times, gov schools/teachers 2024-25 = official exactly. Answers are claims
+  `{text, sources: [D1.. | "sql"]}`; code renders [title, p. N] / "(computed from the database)"; `check_claims` checks
+  each claim's numbers against its own sources and requires every listed source to hold one of them. Default model
+  gemini-3.5-flash-lite (500/day). Trace: `load_ms` (index, embedder, DuckDB, LLM client) apart from `latency_ms`.
+  Q3 miss diagnosed in rag/README.md: hand-worded query + eval q01 relevance labelled at section level (not tuned).
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

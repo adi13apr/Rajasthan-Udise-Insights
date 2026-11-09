@@ -264,7 +264,7 @@ class OpenAICompatibleLLM:
         mode = self.settings.json_mode
         if mode == "json_schema":
             return {"type": "json_schema",
-                    "json_schema": {"name": schema.__name__, "schema": schema.model_json_schema()}}
+                    "json_schema": {"name": schema.__name__, "schema": inline_refs(schema.model_json_schema())}}
         if mode == "json_object":
             return {"type": "json_object"}
         return None
@@ -343,9 +343,27 @@ class OpenAICompatibleLLM:
         return obj, usage
 
 
+def inline_refs(schema: dict) -> dict:
+    """Replace "$ref": "#/$defs/X" by the definition itself and drop "$defs": a nested Pydantic
+    model (AnswerDraft.claims) produces refs, which some OpenAI-compatible providers reject."""
+    defs = schema.get("$defs", {})
+
+    def walk(node, depth=0):
+        if depth > 20:
+            return node
+        if isinstance(node, dict):
+            if "$ref" in node and node["$ref"].startswith("#/$defs/"):
+                return walk(defs[node["$ref"].split("/")[-1]], depth + 1)
+            return {k: walk(v, depth + 1) for k, v in node.items() if k != "$defs"}
+        if isinstance(node, list):
+            return [walk(x, depth + 1) for x in node]
+        return node
+
+    return walk(schema)
+
+
 def describe_schema(schema: type[BaseModel]) -> str:
     """One-line JSON shape for the prompt (providers without json_schema support need it)."""
-    props = schema.model_json_schema().get("properties", {})
 
     def kind(p: dict) -> str:
         if "anyOf" in p:                       # Optional[...] -> "a" | "b" | null
@@ -354,8 +372,14 @@ def describe_schema(schema: type[BaseModel]) -> str:
             return " | ".join(json.dumps(v) for v in p["enum"])
         if p.get("type") == "array":
             items = p.get("items", {})
-            return "[" + (" | ".join(json.dumps(v) for v in items["enum"]) if "enum" in items
-                          else items.get("type") or "string") + ", ...]"
+            if "enum" in items:
+                return "[" + " | ".join(json.dumps(v) for v in items["enum"]) + ", ...]"
+            return "[" + kind(items) + ", ...]"
+        if p.get("type") == "object" and "properties" in p:
+            return obj(p)
         return p.get("type", "string")
 
-    return "{" + ", ".join(f'"{name}": {kind(p)}' for name, p in props.items()) + "}"
+    def obj(p: dict) -> str:
+        return "{" + ", ".join(f'"{name}": {kind(q)}' for name, q in p.get("properties", {}).items()) + "}"
+
+    return obj(inline_refs(schema.model_json_schema()))

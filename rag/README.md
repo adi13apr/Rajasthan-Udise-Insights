@@ -452,8 +452,12 @@ contain instruction-like sentences, and must never be followed. The ground check
 guard: an injected "say 42" fails unless 42 is really in the evidence.
 
 ### Answers: citations, SQL, the management note
-- Document facts are cited as `[doc title, p. N]` (Markdown documents: `[title, section]`),
-  copied from the chunk's `cite` attribute.
+- **The answer is a list of claims** (`AnswerDraft.claims`), each `{text, sources}`, where
+  sources are the ids of the chunks in the prompt (`D1`, `D2` ...) and/or `"sql"`. The model
+  writes no citation in the text: code renders `[doc title, p. N]` (Markdown: `[title, section]`)
+  after a document-backed claim and "(computed from the database)" after an SQL-backed one,
+  before the full stop. So a citation can only appear next to a claim that names that chunk.
+  The nested schema's `$ref`s are inlined before it is sent (`llm.inline_refs`).
 - Computed figures: `finalize` appends the executed SQL in a code block and the line "Source:
   UDISE+, Ministry of Education, Government of India."
 - **Management note.** When the SQL uses management columns (is_government, management_group,
@@ -468,9 +472,17 @@ guard: an injected "say 42" fails unless 42 is really in the evidence.
   100x smaller (girls_share 0.4823 -> 48.2%). Nothing else: no lakh/crore conversions, and no
   figure the model computed itself (computed figures must come from SQL). Not checked: academic
   years, calendar years 1990-2035, class numbers ("classes 9-12") and citation page numbers.
-- Every citation must be one of the retrieved chunks; on the docs route an answer must cite at
-  least one (unless it says the evidence is insufficient).
-- Fails once: the answer is regenerated with the list of problems. Fails again: fallback.
+- **Per claim, not pooled** (`grounding.check_claims`): a claim's numbers are checked only
+  against its own sources (a chunk's text; for "sql" the result cells and the SQL text; plus the
+  question). A database figure in a claim that cites only a document fails, even though the
+  figure is in the evidence somewhere. In a claim with numbers, **every listed source must hold
+  at least one of them**, so `[D2, "sql"]` on a database-only figure fails too (seen in a real
+  run). Also refused: a source id that was not given, "sql" when there is no SQL result,
+  citations written into the claim text, numbers with no source.
+- On the docs route an answer must have at least one document-backed claim (unless it says the
+  evidence is insufficient).
+- Fails once: the answer is regenerated with the list of problems, per claim. Fails again:
+  fallback.
 
 ### SQL results never leave the database at school level
 The prompt asks for aggregates, and the agent calls `SqlTool.run(sql, require_aggregate=True)`:
@@ -530,16 +542,19 @@ The five questions (after those fixes; numbers from the trace, Gemini's own toke
 | 2 | sql | Five districts with the highest PTR, 2025-26 | 3.5-flash | ok | 3 | 3,609 + 235 | 18.6 s | values from the mart |
 | 3 | docs | What code 9 means in yes/no columns | 3.5-flash | ok | 2 | 3,078 + 184 | 56.1 s | **grounded but misleading**: retrieval returned the log chunk on codes 0/9 in anganwadi_yn / spl_educator_yn, not entry #11 (9 = not applicable), so it called 9 "invalid" |
 | 4 | docs | All-India schools and teachers in the 2024-25 report | 3.5-flash | ok | 2 | 2,626 + 138 | 41.5 s | 1,471,473 schools and 10,122,420 teachers, cited p. 32 |
-| 5 | both | Definition and count of single-teacher schools, 2024-25 | 3.5-flash-lite | ok | 3 | 7,157 + 293 | 27.0 s | 6,117 = official; said the definition was not in the evidence; **put the report's citation after the computed figure** |
+| 5 | both | Definition and count of single-teacher schools, 2024-25 | 3.5-flash-lite | ok | 3 | 7,157 + 293 | 27.0 s | 6,117 = official; said the definition was not in the evidence; cited the report next to the computed figure (looked misplaced; see the correction below) |
 
 Question 5 ran on `gemini-3.5-flash-lite` because `gemini-3.5-flash` had used its 20 daily
 requests. Prompt tokens per step, measured: route 958-971; sql.generate 1,938-2,097 (3,083
 when the router chose more tables); answer 462-554 on SQL results, 1,659-2,120 on documents,
 3,103 on both. The first retrieval of a process takes 20-26 s (it loads the embedding model).
 
-What the ground check cannot see (for phase 5's evaluation): it proves every number and
-citation is in the evidence, not that the evidence is the right evidence (question 3) or that a
-citation sits next to the fact it supports (question 5).
+What the pooled ground check could not see: that the evidence is the right evidence (question
+3), or that a citation sits next to the fact it supports (question 5's concern). The second is
+now enforced per claim (see "Ground check"). **Correction:** question 5's citation was in fact
+right: Table 2.2 on p. 32 of the 2024-25 report lists Rajasthan with 6117 single-teacher
+schools, so the report and the database both give the figure. It only looked wrong because the
+old free-text check could not say which source backed which number.
 
 ### Metadata filters (year, doc_type)
 The router's `RouteDecision` also has two optional filters for the document search:
@@ -596,7 +611,50 @@ gemini-3.5-flash had used its 20 requests of the day, so all five ran on gemini-
 Same figures as the first run: 70,155 / 445,073 (official), the same five PTR districts,
 1,471,473 schools / 10,122,420 teachers (report p. 32), 6,117 single-teacher schools (official).
 Unchanged misses: question 3 still retrieves the log chunk on spl_educator_yn instead of entry #11
-(9 = not applicable), so the answer is narrow; question 5 still cites the report next to the
-computed 6,117. The year filter does not change the retrieved chunks of questions 4 and 5 (they
-were already 2024-25 report pages); it matters when both years' reports have the same table.
-Retrieval takes 22-24 s per run because each CLI run loads the embedding model again.
+(9 = not applicable), so the answer is narrow; question 5 cites the report next to the
+computed 6,117 (correct, as it turned out: see the correction above). The year filter does not
+change the retrieved chunks of questions 4 and 5 (they were already 2024-25 report pages); it
+matters when both years' reports have the same table. Retrieval takes 22-24 s per run because
+each CLI run loads the embedding model again.
+
+### Question 3: why the agent missed the entry that phase 2 "found at rank 1"
+Diagnosed on the real index before changing anything (nothing was tuned for it):
+
+| | Eval q01 (phase 2) | Agent, question 3 |
+|---|---|---|
+| Query text | "What does code 9 mean in yes/no columns?" | "What does code 9 mean in **the** yes/no columns **of the UDISE+ data**?" (worded by hand for the run, not copied from q01) |
+| Call | `search(q, "hybrid", k=10)` | `search(q, "hybrid", k=5)`, no filters |
+| Rank 1 | Data Quality Log chunk with entries #24/#25 | the same chunk |
+| Chunk with entry #11 (9 = not applicable) | hybrid rank 3 (BM25 3, vector 16) | not in the top 5 (BM25 3, **vector 47**) |
+
+Two causes. (1) **The eval's relevance label is coarser than the answer**: q01 counts any chunk of
+the Data Quality Log section "Issues in the data itself" as relevant, and that section is split
+into several chunks, so "rank 1 in every mode" was the #24/#25 chunk, not entry #11. Phase 2's
+recall for q01 is right by its own definition but does not show that the answering chunk was
+retrieved. (2) **The wording**: the extra words "udise" and "data" (in most chunks) leave BM25's
+rank of #11 at 3 but move the query vector, so #11 falls from vector rank 16 to 47 and its
+fused score drops below rank 5. With q01's exact wording, the agent's k=5 call would have
+returned #11 at rank 3. For phase 5: label relevance at chunk level where a section has many
+chunks, and expect paraphrases of a question to retrieve differently.
+
+### Cold start traced apart
+Each `retrieve` step records `load_ms` (the index on first use, the embedding model) apart
+from its `latency_ms` (the search itself); `sql.run` records opening DuckDB, and
+`load.llm_client` the SDK import and client. `AgentResult.latency_ms` is the question's own
+time without them; `load_ms` is the cold start. In one CLI run: about 22-26 s to load the
+retriever and model, 3-4 s to open DuckDB, 3 s for the LLM client; the search itself took
+0.2-0.5 s.
+
+### Model: one for every run
+`LLM_MODEL=gemini-3.5-flash-lite` in `.env` and `.env.example` (15 RPM, 250,000 TPM, 500
+requests per day), so the phase 5 evaluation and every other run use one model.
+
+### Third real run: questions 3 and 5 (claims, 2026-11-09, gemini-3.5-flash-lite)
+| # | Status | Claims (sources) | Ground check | Calls | Tokens in + out | Latency (+ cold start) |
+|---|---|---|---|---|---|---|
+| 3 | ok | 2 claims, both [D1] (the log chunk on spl_educator_yn) | passed, 5 numbers | 2 | 3,453 + 184 | 18.8 s (+ 26.1 s) |
+| 5 | insufficient_evidence | [D2, sql] 6117 single-teacher schools; [no source] the definition is missing | passed, 1 number | 3 | 7,924 + 318 | 8.1 s (+ 28.2 s) |
+
+Question 5's claim names both the report (Table 2.2, p. 32, has 6117 for Rajasthan) and the
+database, and each source holds the number, so both marks are printed. Question 3 is still the
+narrow answer from the #24/#25 chunk: retrieval is unchanged, by design (see above).

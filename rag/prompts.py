@@ -111,17 +111,46 @@ class SqlDraft(BaseModel):
         return v.strip()
 
 
+SQL_SOURCE = "sql"            # a claim's source when its figures come from the database result
+COMPUTED_MARK = "(computed from the database)"
+_DOC_ID = re.compile(r"^D\d+$")
+
+
+class Claim(BaseModel):
+    """One statement of the answer and where it comes from. The citation is rendered by code
+    from `sources`, so the model cannot put a document's citation on a database figure."""
+    text: str = Field(description="one sentence, without any citation")
+    sources: list[str] = Field(default_factory=list,
+                               description='document ids (D1, D2, ...) and/or "sql"; empty for a statement '
+                                           "that something is missing from the evidence")
+
+    @field_validator("text")
+    @classmethod
+    def _text_not_empty(cls, v: str) -> str:
+        if not v.strip():
+            raise ValueError("claim text must not be empty")
+        return v.strip()
+
+    @field_validator("sources")
+    @classmethod
+    def _normalise_sources(cls, v: list[str]) -> list[str]:
+        out = []
+        for s in v:
+            s = s.strip()
+            s = SQL_SOURCE if s.lower() == SQL_SOURCE else s.upper()
+            if s and s not in out:
+                out.append(s)
+        return out
+
+
 class AnswerDraft(BaseModel):
-    answer: str = Field(description="the answer with citations")
+    claims: list[Claim] = Field(min_length=1, description="the answer as a list of claims")
     insufficient_evidence: bool = Field(default=False,
                                         description="true if the evidence does not answer the question")
 
-    @field_validator("answer")
-    @classmethod
-    def _answer_not_empty(cls, v: str) -> str:
-        if not v.strip():
-            raise ValueError("answer must not be empty")
-        return v.strip()
+
+def is_doc_source(source: str) -> bool:
+    return bool(_DOC_ID.match(source))
 
 
 # ------------------------------------------------------------------ fixed texts
@@ -195,17 +224,17 @@ ANSWER_SYSTEM = """You answer a question about school education in Rajasthan usi
 {untrusted}
 
 Rules:
-1. After every fact taken from a document, put its citation exactly as written in the tag's cite attribute, for example [Report on UDISE+ 2024-25, p. 12].
-2. Figures from the database: copy the numbers exactly as they appear in the SQL result (you may round decimals or add thousands separators). Say they are computed from UDISE+ school-level data. Do not show the SQL: it is added automatically.
-3. Never compute, convert or estimate numbers yourself: no arithmetic, no lakh/crore or percentage conversions, no numbers from memory. Every number you write must appear in the evidence. If a figure the question needs is not in the evidence, say so.
-4. If the evidence does not answer the question, say what is missing and set insufficient_evidence to true.
-5. Be concise: 2 to 6 sentences, or a short list.
+1. Write the answer as a list of claims (1 to 6). Each claim is one sentence that states one fact, or says that something is missing from the evidence.
+2. Give each claim its sources: the id of every document it comes from (the id attribute: "D1", "D2", ...) and/or "sql" if its figures come from the database result. A claim's numbers must appear in that claim's own sources: never put a database figure on a document, or a document's figure on "sql". If one sentence needs both, split it into two claims.
+3. Do not write citations, brackets, document titles, page numbers or "computed from the database" in the claim text: the citation is added automatically from the sources. Do not show the SQL either.
+4. Figures: copy the numbers exactly as they appear in their source (you may round decimals or add thousands separators). Never compute, convert or estimate numbers yourself: no arithmetic, no lakh/crore or percentage conversions, no numbers from memory.
+5. A claim that something is missing from the evidence has no sources. If the evidence does not answer the question, say what is missing and set insufficient_evidence to true.
 
 Reply with JSON only: {schema}"""
 
 REGENERATE = """Your previous answer could not be verified:
 {problems}
-Rewrite the answer. Use only numbers that appear in the evidence, copied as written, and only citations given in the cite attributes. Reply with JSON only: {schema}"""
+Rewrite the claims. Each claim's numbers must appear in that claim's own sources (document ids from the id attributes, or "sql" for the database result), copied as written; split a claim whose facts come from different sources. Reply with JSON only: {schema}"""
 
 
 # ------------------------------------------------------------------ the schema card
@@ -337,6 +366,36 @@ def cite_for(meta: dict) -> str:
     title = " ".join(str(meta.get("title") or meta.get("file") or "document").split())
     loc = " ".join(str(meta.get("location") or "").split())
     return f"[{title}, {loc}]" if loc else f"[{title}]"
+
+
+def doc_ids(hits) -> dict:
+    """The ids the answer prompt gives the chunks: D1 = the first hit, D2 = the second ..."""
+    return {f"D{i}": h for i, h in enumerate(hits, start=1)}
+
+
+def claim_marks(claim, hits) -> list[str]:
+    """What is printed after a claim: [title, p. N] per document source, then the SQL mark."""
+    docs, marks = doc_ids(hits), []
+    for s in claim.sources:
+        if s in docs:
+            cite = cite_for(docs[s].metadata)
+            if cite not in marks:
+                marks.append(cite)
+    if SQL_SOURCE in claim.sources:
+        marks.append(COMPUTED_MARK)
+    return marks
+
+
+def render_claim(claim, hits) -> str:
+    text, end = claim.text.rstrip(), ""
+    if text and text[-1] in ".!?":
+        text, end = text[:-1], text[-1]
+    marks = claim_marks(claim, hits)
+    return f"{text} {' '.join(marks)}{end}" if marks else f"{text}{end}"
+
+
+def render_claims(claims, hits) -> str:
+    return " ".join(render_claim(c, hits) for c in claims)
 
 
 def format_documents(hits) -> str:

@@ -189,6 +189,14 @@ class Retriever:
             self._reranker = BgeReranker()
         return self._reranker
 
+    def load_models(self, mode: str = DEFAULT_MODE) -> None:
+        """Load the models a mode needs now (embedder; reranker for hybrid_rerank), so the
+        caller can time the cold start apart from the search. Cheap once they are loaded."""
+        if mode in ("vector", "hybrid", "hybrid_rerank"):
+            getattr(self.embedder, "model", None)     # BgeSmallEmbedder loads on .model
+        if mode == "hybrid_rerank":
+            getattr(self.reranker, "model", None)
+
     # --- the four modes -----------------------------------------------------------------
     def search_text(self, id_: str) -> str:
         """What BM25 and the reranker read: the document title, then the chunk."""

@@ -31,6 +31,10 @@ def print_result(res, out=sys.stdout) -> None:
     w()
     w(res.answer)
     w()
+    if res.claims:
+        w("Claims (sources as the model gave them; citations rendered from them):")
+        for n, c in enumerate(res.claims, start=1):
+            w(f"  {n}. [{', '.join(c['sources']) or 'no source'}] {c['text']}")
     w("Citations used: " + ("; ".join(res.citations) if res.citations else "none"))
     if res.sources:
         w("Retrieved:      " + "; ".join(res.sources))
@@ -45,18 +49,20 @@ def print_result(res, out=sys.stdout) -> None:
     if not checks:
         w("Ground check: not run (no answer to check)")
     w()
-    per = defaultdict(lambda: [0.0, 0, 0, 0])
+    per = defaultdict(lambda: [0.0, 0, 0, 0, 0.0])
     for e in res.steps:
         p = per[e["node"]]
         p[0] += e.get("latency_ms") or 0
         p[1] += e.get("prompt_tokens") or 0
         p[2] += e.get("completion_tokens") or 0
         p[3] += 1
-    w(f"{'step':22s} {'calls':>5s} {'latency':>9s} {'prompt tok':>10s} {'output tok':>10s}")
-    for node, (ms, pt, ct, n) in per.items():
-        w(f"{node:22s} {n:5d} {_fmt_ms(ms):>9s} {pt or '-':>10} {ct or '-':>10}")
+        p[4] += e.get("load_ms") or 0
+    w(f"{'step':22s} {'calls':>5s} {'latency':>9s} {'load':>9s} {'prompt tok':>10s} {'output tok':>10s}")
+    for node, (ms, pt, ct, n, load) in per.items():
+        w(f"{node:22s} {n:5d} {_fmt_ms(ms):>9s} {_fmt_ms(load) if load else '-':>9s} {pt or '-':>10} {ct or '-':>10}")
     w(f"Total: {res.llm_calls} LLM calls, {res.prompt_tokens:,} prompt + {res.completion_tokens:,} "
-      f"output tokens, {_fmt_ms(res.latency_ms)}  (run {res.run_id}"
+      f"output tokens, latency {_fmt_ms(res.latency_ms)} without the cold start "
+      f"(+ {_fmt_ms(res.load_ms)} loading the index, models and database)  (run {res.run_id}"
       + (f", trace {res.trace_file})" if res.trace_file else ")"))
 
 
