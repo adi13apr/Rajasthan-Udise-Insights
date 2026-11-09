@@ -43,3 +43,7 @@ aws/build/
 data/rag/
 docs_corpus/*
 !docs_corpus/manifest.csv
+# LLM settings for the RAG agent (rag/llm.py): holds the API key, never committed. Copy .env.example.
+.env
+.env.*
+!.env.example

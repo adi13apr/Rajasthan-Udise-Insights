@@ -5,6 +5,10 @@ chromadb==1.5.9     # persistent vector index (rag/store.py)
 reportlab==5.0.0    # builds the synthetic PDFs used by tests/test_rag_*.py
 sqlglot==30.30.0    # parses and checks the SQL of rag/sql_tool.py (phase 3)
 rank-bm25==0.2.2    # keyword search (BM25) in rag/retrieve.py (phase 2); pure Python
+openai==3.46.0      # LLM client (rag/llm.py, phase 4): any OpenAI-compatible endpoint via base_url
+langgraph==1.2.20   # the agent's state graph (rag/agent.py, phase 4)
+pydantic==2.14.3    # validates every structured LLM output (rag/agent.py)
+python-dotenv==1.2.4  # reads LLM settings from the gitignored .env
 # The real embedder (rag/embedder.py, BAAI/bge-small-en-v1.5 on CPU) and reranker
 # (rag/reranker.py, BAAI/bge-reranker-base, phase 2). Not installed in CI:
 # the tests use a tiny fake embedder and a word-count token estimate, so CI never downloads a model.

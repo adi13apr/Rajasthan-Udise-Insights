@@ -220,6 +220,17 @@ then the Sattva analysis (phases A1-A6).
   SQL), truncated. `rag/schema_card.md` generated from gold + `scripts/make_data_dictionary.py` (test fails if stale).
   `tests/test_rag_sql.py`: sample gold built in the test; full-DB tests (8/8 official through both validation SQLs) skip
   without the DB. Lesson: DuckDB refuses a 2nd connection to the same file in one process with different config.
+- RAG phase 4 (`rag/agent.py`, `rag/llm.py`, `rag/prompts.py`, `rag/grounding.py`, `rag/trace.py`, `rag/ask.py`, branch
+  rag-phase4-agent): LangGraph StateGraph route -> retrieve (hybrid) and/or sql (generate from the sliced schema card, run via
+  the one shared SqlTool with `require_aggregate=True`, one repair with the error) -> answer -> ground_check (no LLM: every
+  number in SQL cells / chunks / SQL text / question, every citation a retrieved chunk) -> finalize (SQL, management-code
+  note, source line added by code) or one regenerate then fallback ("couldn't verify" + raw evidence). OpenAI SDK with
+  LLM_BASE_URL / LLM_MODEL / LLM_API_KEY from the gitignored `.env` (`.env.example`); Pydantic-validated JSON; rolling
+  TPM/RPM limiter; 429/503 backoff (no retry if the asked wait > 20 s); max 5 LLM calls per question. Trace JSONL in
+  data/rag/traces/agent_runs.jsonl. `python -m rag.ask "..."`. Tests: `tests/test_rag_agent.py` (fake LLM, CI job `rag`).
+  Provider: Google Gemini free tier, **20 requests per day per model**; gemini-2.5-flash 404 for new keys, use
+  gemini-3.5-flash (LLM_TIMEOUT_S=60, LLM_MAX_OUTPUT_TOKENS=4096: thinking tokens count). First real run 2026-11-09: 5/5
+  status ok, gov schools/teachers 2024-25 = official exactly; known misses in rag/README.md (code 9 retrieval, citation placement).
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

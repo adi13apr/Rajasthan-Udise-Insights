@@ -59,10 +59,10 @@ jobs:
 
   # RAG (rag/): document ingestion (chunking, PDF extraction, the ChromaDB index) on synthetic
   # documents with a fake embedder, retrieval (BM25, RRF, reranking) with a fake embedder and
-  # reranker, and the safe SQL tool on the synthetic sample gold database
-  # (tests needing the full gold database skip). Installs only chromadb, reportlab, sqlglot and rank-bm25
-  # (pinned in requirements-rag.txt), not sentence-transformers/torch, and runs offline from
-  # Hugging Face, so CI never downloads a model.
+  # reranker, the safe SQL tool on the synthetic sample gold database (tests needing the full
+  # gold database skip), and the LangGraph agent with a scripted fake LLM (no API key, no real
+  # LLM call). Installs only the packages below (pinned in requirements-rag.txt), not
+  # sentence-transformers/torch, and runs offline from Hugging Face, so CI never downloads a model.
   rag:
     runs-on: ubuntu-latest
     env:
@@ -73,9 +73,9 @@ jobs:
         with:
           python-version: "3.13"
           cache: pip
-      - name: Install dependencies (main + chromadb + reportlab + sqlglot + rank-bm25)
+      - name: Install dependencies (main + chromadb, reportlab, sqlglot, rank-bm25, openai, langgraph, pydantic, python-dotenv)
         run: |
           pip install -r requirements.txt
-          pip install $(grep -E '^(chromadb|reportlab|sqlglot|rank-bm25)==' requirements-rag.txt | cut -d' ' -f1)
+          pip install $(grep -E '^(chromadb|reportlab|sqlglot|rank-bm25|openai|langgraph|pydantic|python-dotenv)==' requirements-rag.txt | cut -d' ' -f1)
       - name: RAG tests
-        run: python -m pytest tests/test_rag_chunking.py tests/test_rag_pdf.py tests/test_rag_ingest.py tests/test_rag_retrieve.py tests/test_rag_sql.py -v -rs
+        run: python -m pytest tests/test_rag_chunking.py tests/test_rag_pdf.py tests/test_rag_ingest.py tests/test_rag_retrieve.py tests/test_rag_sql.py tests/test_rag_agent.py -v -rs
