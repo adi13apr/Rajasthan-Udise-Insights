@@ -540,3 +540,63 @@ when the router chose more tables); answer 462-554 on SQL results, 1,659-2,120 o
 What the ground check cannot see (for phase 5's evaluation): it proves every number and
 citation is in the evidence, not that the evidence is the right evidence (question 3) or that a
 citation sits next to the fact it supports (question 5).
+
+### Metadata filters (year, doc_type)
+The router's `RouteDecision` also has two optional filters for the document search:
+- `year`: "2024-25", "2025-26" or null;
+- `doc_type`: one of the doc_type values read from `docs_corpus/manifest.csv` itself
+  (`official_metadata`, `official_report`, `project_doc`, `schema`), or null.
+
+Pydantic rejects any other value. **The LLM proposes, code checks** (`prompts.clear_filters`): a
+year is kept only if the question writes it (2024-25, 2024–25, 2024/25 or 2024-2025), a doc_type
+only if the question names that kind of document ("report", "schema", "metadata", "data quality
+log" ...). A dropped filter is logged as a `route.filters` step. Reason: in the real run below
+the model proposed `doc_type=schema` for "What does code 9 mean ...?" and
+`doc_type=official_metadata` for the single-teacher question; neither question names a document.
+
+`Retriever.search(q, mode, k, filters=Filters(year, doc_type))` applies them to both halves of
+hybrid search: Chroma gets a `where` (`doc_type $eq`, `year $in [...]`), BM25 drops the
+chunks that do not pass after scoring (the BM25 index and its IDF stay the full corpus's, so a
+chunk's score does not change). **A year filter keeps documents that belong to no academic
+year**: the metadata note (year blank) and the project's Markdown docs (year 2026, a calendar
+year) apply to every year. With no filter, the agent makes exactly the phase 2 call
+`search(q, mode, k)`, and `allowed = None` everywhere in the retriever.
+
+Proof that the phase 2 results stay valid: `tests/test_rag_retrieve.py` checks, in all four
+modes, that `filters=None` and `Filters()` give the same ids, ranks and every stage's scores as
+the phase 2 call; `tests/test_rag_agent.py` checks that the agent with null filters returns the
+direct hybrid search's ids; and on the real shared index, this branch's unfiltered hybrid top 10
+equals the phase 2 code from origin/main (`git show origin/main:rag/retrieve.py`) for **33/33**
+eval questions (ids, ranks, RRF, BM25 and vector scores; run of 2026-11-09). Other filter tests:
+Chroma's `where` and the BM25 filter select exactly the same chunks for six filter combinations;
+a year filter keeps the yearless documents; a filter the question does not state is dropped.
+
+### Rate limits found in AI Studio (aistudio.google.com/rate-limit, free tier, 2026-11-09)
+| Model id | Shown in AI Studio as | RPM | TPM | Requests per day |
+|---|---|---|---|---|
+| gemini-3.5-flash | Gemini 3.6 Flash (its 20/20 daily use matched our calls) | 5 | 250,000 | 20 |
+| gemini-3.5-flash-lite | Gemini 3.5 Flash Lite | 15 | 250,000 | 500 |
+| gemini-3.8-flash | Gemini 3.8 Flash | 5 | 250,000 | 20 |
+
+So TPM is not the binding limit (the 15,000 first assumed was wrong); requests per day are.
+`.env.example` now has `LLM_TPM_LIMIT=250000`, `LLM_RPM_LIMIT=5` for gemini-3.5-flash. The card is
+still sliced: smaller prompts are faster and the first run showed the full card is not needed.
+
+### Second real run (2026-11-09, with filters, all on gemini-3.5-flash-lite)
+gemini-3.5-flash had used its 20 requests of the day, so all five ran on gemini-3.5-flash-lite.
+
+| # | Route | Filters after the check | Status | Ground check | Calls | Tokens in + out | Latency |
+|---|---|---|---|---|---|---|---|
+| 1 Government schools and teachers 2024-25 | sql | year 2024-25 | ok | passed (2 numbers) | 3 | 3,872 + 240 | 9.0 s |
+| 2 Top 5 PTR districts 2025-26 | sql | year 2025-26 | ok | passed (5) | 3 | 4,068 + 299 | 9.6 s |
+| 3 Meaning of code 9 | docs | none (LLM's doc_type=schema dropped) | ok | passed (1) | 2 | 3,379 + 134 | 30.0 s |
+| 4 All-India totals, 2024-25 report | docs | year 2024-25, doc_type official_report | ok | passed (2) | 2 | 2,927 + 171 | 28.6 s |
+| 5 Single-teacher schools 2024-25 | both | year 2024-25 (LLM's doc_type=official_metadata dropped) | insufficient_evidence | passed (1) | 3 | 7,850 + 316 | 29.0 s |
+
+Same figures as the first run: 70,155 / 445,073 (official), the same five PTR districts,
+1,471,473 schools / 10,122,420 teachers (report p. 32), 6,117 single-teacher schools (official).
+Unchanged misses: question 3 still retrieves the log chunk on spl_educator_yn instead of entry #11
+(9 = not applicable), so the answer is narrow; question 5 still cites the report next to the
+computed 6,117. The year filter does not change the retrieved chunks of questions 4 and 5 (they
+were already 2024-25 report pages); it matters when both years' reports have the same table.
+Retrieval takes 22-24 s per run because each CLI run loads the embedding model again.

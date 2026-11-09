@@ -346,13 +346,16 @@ class OpenAICompatibleLLM:
 def describe_schema(schema: type[BaseModel]) -> str:
     """One-line JSON shape for the prompt (providers without json_schema support need it)."""
     props = schema.model_json_schema().get("properties", {})
-    parts = []
-    for name, p in props.items():
+
+    def kind(p: dict) -> str:
+        if "anyOf" in p:                       # Optional[...] -> "a" | "b" | null
+            return " | ".join(kind(x) for x in p["anyOf"])
         if "enum" in p:
-            kind = " | ".join(json.dumps(v) for v in p["enum"])
-        elif p.get("type") == "array":
-            kind = "[" + (p.get("items", {}).get("type") or "string") + ", ...]"
-        else:
-            kind = p.get("type", "string")
-        parts.append(f'"{name}": {kind}')
-    return "{" + ", ".join(parts) + "}"
+            return " | ".join(json.dumps(v) for v in p["enum"])
+        if p.get("type") == "array":
+            items = p.get("items", {})
+            return "[" + (" | ".join(json.dumps(v) for v in items["enum"]) if "enum" in items
+                          else items.get("type") or "string") + ", ...]"
+        return p.get("type", "string")
+
+    return "{" + ", ".join(f'"{name}": {kind(p)}' for name, p in props.items()) + "}"

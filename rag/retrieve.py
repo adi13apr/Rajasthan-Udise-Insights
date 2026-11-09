@@ -58,6 +58,37 @@ _DECIMAL = re.compile(r"\d+(\.\d+)+")
 _PARTS = re.compile(r"[_\-/.]")
 
 
+_ACADEMIC_YEAR = re.compile(r"^\d{4}-\d{2}$")   # 2024-25; '2026' or '' is not an academic year
+
+
+@dataclass(frozen=True)
+class Filters:
+    """Metadata filters (phase 4): `year` is an academic year ('2024-25'), `doc_type` a manifest
+    doc_type ('official_report'). None = no filter on that field.
+
+    A year filter keeps the chunks of that academic year AND the chunks of documents that belong
+    to no academic year (year blank, like the general metadata note, or a calendar year, like the
+    project's Markdown docs, year 2026): they apply to every year. An empty Filters() filters
+    nothing, and `search` then runs exactly the phase 2 code path."""
+    year: str | None = None
+    doc_type: str | None = None
+
+    def is_empty(self) -> bool:
+        return not self.year and not self.doc_type
+
+    def matches(self, meta: dict) -> bool:
+        if self.doc_type and meta.get("doc_type") != self.doc_type:
+            return False
+        if self.year:
+            y = str(meta.get("year") or "")
+            if _ACADEMIC_YEAR.match(y) and y != self.year:
+                return False
+        return True
+
+    def as_dict(self) -> dict:
+        return {"year": self.year, "doc_type": self.doc_type}
+
+
 def tokenize(text: str) -> list[str]:
     """Words and codes of a text, for BM25 (the same function for chunks and questions)."""
     out = []
@@ -164,39 +195,75 @@ class Retriever:
         text, meta = self.chunks[id_]
         return f"{meta.get('title', '')}\n{text}"
 
-    def bm25_ranking(self, query: str, n: int) -> list[tuple[str, float]]:
-        """Top n (id, BM25 score); only chunks that share at least one word with the query."""
+    def bm25_ranking(self, query: str, n: int, allowed: set[str] | None = None) -> list[tuple[str, float]]:
+        """Top n (id, BM25 score); only chunks that share at least one word with the query.
+        `allowed` (filters) keeps only those ids; the index and its IDF stay the full corpus's,
+        so a chunk's score is the same with or without a filter."""
         tokens = tokenize(query)
         if not tokens:
             return []
         scores = self.bm25.get_scores(tokens)
         order = sorted(range(len(self.ids)), key=lambda i: (-scores[i], self.ids[i]))
+        if allowed is not None:
+            order = [i for i in order if self.ids[i] in allowed]
         return [(self.ids[i], float(scores[i])) for i in order[:n] if scores[i] > 0]
 
-    def vector_ranking(self, query: str, n: int) -> list[tuple[str, float]]:
+    def chroma_where(self, filters: Filters) -> dict | None:
+        """The same filters as a ChromaDB `where`. The year rule ("that year or no academic
+        year") becomes `year $in [...]` over the year values present in the index."""
+        clauses = []
+        if filters.doc_type:
+            clauses.append({"doc_type": {"$eq": filters.doc_type}})
+        if filters.year:
+            years = sorted({str(m.get("year") or "") for _, m in self.chunks.values()
+                            if Filters(year=filters.year).matches(m)})
+            clauses.append({"year": {"$in": years or [filters.year]}})
+        if not clauses:
+            return None
+        return clauses[0] if len(clauses) == 1 else {"$and": clauses}
+
+    def vector_ranking(self, query: str, n: int, filters: Filters | None = None,
+                       allowed: set[str] | None = None) -> list[tuple[str, float]]:
         """Top n (id, cosine similarity) for the query vector (bge query prefix included)."""
         vector = self.embedder.embed_query(query)
-        res = self.collection.query(query_embeddings=[vector], n_results=min(n, len(self.ids)),
-                                    include=["distances"])
+        if filters is None or filters.is_empty():
+            res = self.collection.query(query_embeddings=[vector], n_results=min(n, len(self.ids)),
+                                        include=["distances"])
+        else:
+            if not allowed:
+                return []
+            res = self.collection.query(query_embeddings=[vector], n_results=min(n, len(allowed)),
+                                        where=self.chroma_where(filters), include=["distances"])
         pairs = [(i, 1.0 - d) for i, d in zip(res["ids"][0], res["distances"][0])]
+        if allowed is not None:
+            pairs = [p for p in pairs if p[0] in allowed]   # belt and braces: Chroma's where = ours
         return sorted(pairs, key=lambda p: (-p[1], p[0]))
 
     def _hit(self, id_: str, score: float, rank: int, scores: dict) -> Hit:
         text, meta = self.chunks[id_]
         return Hit(id_, text, meta, score, rank, scores)
 
-    def search(self, query: str, mode: str = DEFAULT_MODE, k: int = TOP_K) -> list[Hit]:
+    def allowed_ids(self, filters: Filters | None) -> set[str] | None:
+        """Ids that pass the filters; None when there is nothing to filter."""
+        if filters is None or filters.is_empty():
+            return None
+        return {i for i, (_, meta) in self.chunks.items() if filters.matches(meta)}
+
+    def search(self, query: str, mode: str = DEFAULT_MODE, k: int = TOP_K,
+               filters: Filters | None = None) -> list[Hit]:
+        """`filters` None or empty: exactly the phase 2 search (allowed = None everywhere)."""
         if mode not in MODES:
             raise ValueError(f"unknown mode {mode!r}; use one of {', '.join(MODES)}")
+        allowed = self.allowed_ids(filters)
         if mode == "bm25":
             return [self._hit(i, s, r, {"bm25": s})
-                    for r, (i, s) in enumerate(self.bm25_ranking(query, k), start=1)]
+                    for r, (i, s) in enumerate(self.bm25_ranking(query, k, allowed), start=1)]
         if mode == "vector":
             return [self._hit(i, s, r, {"vector": s})
-                    for r, (i, s) in enumerate(self.vector_ranking(query, k), start=1)]
+                    for r, (i, s) in enumerate(self.vector_ranking(query, k, filters, allowed), start=1)]
 
-        bm25 = self.bm25_ranking(query, self.candidates)
-        vector = self.vector_ranking(query, self.candidates)
+        bm25 = self.bm25_ranking(query, self.candidates, allowed)
+        vector = self.vector_ranking(query, self.candidates, filters, allowed)
         raw = {"bm25": dict(bm25), "vector": dict(vector)}
         fused = rrf({"bm25": [i for i, _ in bm25], "vector": [i for i, _ in vector]}, self.rrf_k)
 
@@ -233,8 +300,12 @@ def main(argv=None) -> int:
     parser.add_argument("--k", type=int, default=TOP_K)
     parser.add_argument("--index-dir", type=Path, default=C.INDEX_DIR,
                         help="ChromaDB folder (default: $UDISE_RAG_DIR or data/rag/chroma)")
+    parser.add_argument("--year", help="academic year filter, e.g. 2024-25 (keeps documents with no year)")
+    parser.add_argument("--doc-type", help="doc_type filter from the manifest, e.g. official_report")
     args = parser.parse_args(argv)
-    hits = Retriever(args.index_dir).search(args.question, args.mode, args.k)
+    filters = Filters(args.year, args.doc_type)
+    hits = Retriever(args.index_dir).search(args.question, args.mode, args.k,
+                                            None if filters.is_empty() else filters)
     out = sys.stdout
     if not hits:
         print("no results", file=out)

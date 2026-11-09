@@ -17,6 +17,7 @@ examples that use those tables. LLM_SCHEMA_CARD=full sends the whole card instea
 """
 from __future__ import annotations
 
+import csv
 import re
 from dataclasses import dataclass
 from functools import lru_cache
@@ -25,7 +26,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, field_validator
 
-from .config import ROOT
+from .config import MANIFEST, ROOT
 from .llm import describe_schema
 from .sql_tool import ALLOWED_TABLES
 
@@ -36,6 +37,49 @@ SNIPPET_CHARS = 400       # per document in the fallback's raw evidence
 
 TableName = Literal[tuple(sorted(ALLOWED_TABLES))]  # type: ignore[valid-type]
 
+# Metadata filters the router may extract (phase 4). The doc_type values are read from the
+# manifest's doc_type column itself (not load_manifest: that also needs the corpus files), so a
+# new kind of document becomes a valid filter value without a code change.
+ACADEMIC_YEARS = ("2024-25", "2025-26")
+
+
+def manifest_doc_types(path: Path = MANIFEST) -> tuple[str, ...]:
+    with open(path, newline="", encoding="utf-8-sig") as f:
+        return tuple(sorted({(r.get("doc_type") or "").strip() for r in csv.DictReader(f)} - {""}))
+
+
+DOC_TYPES = manifest_doc_types()
+Year = Literal[ACADEMIC_YEARS]           # type: ignore[valid-type]
+DocType = Literal[DOC_TYPES]             # type: ignore[valid-type]
+
+# What a question must say for a filter to count as "clearly stated" (checked by code after the
+# LLM, see clear_filters). A doc_type without an entry here is trusted as the LLM gave it.
+DOC_TYPE_WORDS = {
+    "schema": r"\bschema|data sharing portal|\bdsp\b|data dictionary",
+    "official_report": r"\breports?\b",
+    "official_metadata": r"\bmetadata\b",
+    "project_doc": r"data quality log|design decision|this project|project('s)? (doc|note)",
+}
+
+
+def year_stated(question: str, year: str) -> bool:
+    """'2024-25', '2024–25', '2024/25' or '2024-2025' in the question."""
+    start, end = year[:4], year[5:7]
+    return bool(re.search(rf"\b{start}\s*[-–/]\s*(?:20)?{end}\b", question))
+
+
+def clear_filters(question: str, year: str | None, doc_type: str | None) -> tuple[str | None, str | None, list[str]]:
+    """Keep a filter only if the question clearly states it; returns (year, doc_type, notes)."""
+    notes = []
+    if year and not year_stated(question, year):
+        notes.append(f"year {year} dropped: not stated in the question")
+        year = None
+    words = DOC_TYPE_WORDS.get(doc_type or "")
+    if doc_type and words and not re.search(words, question, re.I):
+        notes.append(f"doc_type {doc_type} dropped: not stated in the question")
+        doc_type = None
+    return year, doc_type, notes
+
 
 # ------------------------------------------------------------------ structured outputs
 class RouteDecision(BaseModel):
@@ -43,6 +87,9 @@ class RouteDecision(BaseModel):
     reason: str = Field(description="one sentence: why this route")
     tables: list[TableName] = Field(default_factory=list,
                                     description="database tables needed (sql / both only)")
+    year: Year | None = Field(default=None, description="academic year, only if the question states it")
+    doc_type: DocType | None = Field(default=None,
+                                     description="kind of document, only if the question names it")
 
     @field_validator("reason")
     @classmethod
@@ -111,7 +158,19 @@ For sql and both, list the database tables needed, from: {tables}
 Official totals of schools, students or teachers (overall or by management) come from int_school_year: the marts leave out schools with no students in classes 1-12.
 {table_guide}
 
+Filters for the document search (set them only when the question clearly states them, else null):
+- year: "2024-25" or "2025-26" if the question names that academic year; null otherwise (do not guess a year).
+- doc_type: one of {doc_types} if the question names that kind of document; null otherwise.
+{doc_type_guide}
+
 Reply with JSON only: {schema}"""
+
+DOC_TYPE_GUIDE = {
+    "schema": "the Data Sharing Portal schema (column meanings and codes)",
+    "official_report": "the UDISE+ reports",
+    "official_metadata": "the UDISE+ general metadata note",
+    "project_doc": "this project's data quality log or design decisions",
+}
 
 SQL_SYSTEM = """You write one DuckDB SQL query that answers a question about UDISE+ school data for Rajasthan, using only the tables and columns in the schema card below.
 
@@ -308,7 +367,9 @@ def format_sql_result(result, limit: int = PROMPT_ROWS) -> str:
 
 # ------------------------------------------------------------------ messages per node
 def route_messages(question: str) -> list[dict]:
+    guide = "\n".join(f"  - {t}: {DOC_TYPE_GUIDE.get(t, t)}" for t in DOC_TYPES)
     system = ROUTE_SYSTEM.format(tables=", ".join(sorted(ALLOWED_TABLES)), table_guide=table_guide(),
+                                 doc_types=", ".join(f'"{t}"' for t in DOC_TYPES), doc_type_guide=guide,
                                  schema=describe_schema(RouteDecision))
     return [{"role": "system", "content": system}, {"role": "user", "content": f"Question: {question}"}]
 

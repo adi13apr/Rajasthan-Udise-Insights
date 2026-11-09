@@ -30,7 +30,7 @@ from rag import prompts as P  # noqa: E402
 from rag.agent import Agent, AgentSettings  # noqa: E402
 from rag.llm import (LLMConfigError, LLMOutputInvalid, LLMRateLimited, LLMSettings,  # noqa: E402
                      LLMUsage, OpenAICompatibleLLM, RateLimiter, parse_json_reply)
-from rag.retrieve import Hit  # noqa: E402
+from rag.retrieve import Filters, Hit  # noqa: E402
 from rag.sql_tool import SqlRejected, SqlTool, check_aggregated  # noqa: E402
 from scripts.make_sample_data import make_sample  # noqa: E402
 
@@ -67,11 +67,16 @@ class FakeLLM:
 
 
 class FakeRetriever:
-    def __init__(self, hits):
-        self.hits, self.queries = hits, []
+    """Records each call; `filters` is recorded as NO_FILTERS when the agent did not pass the
+    argument at all (the exact phase 2 call)."""
+    NO_FILTERS = "not passed"
 
-    def search(self, query, mode="hybrid", k=5):
+    def __init__(self, hits):
+        self.hits, self.queries, self.filters = hits, [], []
+
+    def search(self, query, mode="hybrid", k=5, **kwargs):
         self.queries.append((query, mode, k))
+        self.filters.append(kwargs.get("filters", self.NO_FILTERS))
         return self.hits[:k]
 
 
@@ -122,8 +127,8 @@ def make_agent(llm, tool=None, hits=DOC_HITS, max_calls=5, trace_file=None):
                  settings=settings, trace_file=trace_file)
 
 
-def route(r, tables=(), reason="test"):
-    return {"route": r, "reason": reason, "tables": list(tables)}
+def route(r, tables=(), reason="test", year=None, doc_type=None):
+    return {"route": r, "reason": reason, "tables": list(tables), "year": year, "doc_type": doc_type}
 
 
 def sql_rows(messages) -> list[list[str]]:
@@ -208,6 +213,100 @@ def test_out_of_scope_makes_one_call_and_touches_nothing(tool):
     assert res.status == "out_of_scope" and res.llm_calls == 1
     assert "about cricket" in res.answer
     assert agent._retriever.queries == [] and agent._sql_tool.sql == []
+
+
+# ------------------------------------------------------------------ metadata filters
+DOC_ANSWER = {"answer": f"Not applicable [{SCHEMA_TITLE}, p. 3]."}
+
+
+def test_question_naming_a_year_gets_the_filter():
+    q = "According to the UDISE+ 2024-25 report, what does code 9 mean?"
+    llm = FakeLLM({"RouteDecision": [route("docs", year="2024-25", doc_type="official_report")],
+                   "AnswerDraft": [DOC_ANSWER]})
+    agent = make_agent(llm)
+    res = agent.ask(q)
+    assert agent._retriever.filters == [Filters(year="2024-25", doc_type="official_report")]
+    assert res.filters == {"year": "2024-25", "doc_type": "official_report"}
+    retrieve = next(e for e in res.steps if e["node"] == "retrieve")
+    assert retrieve["filters"] == {"year": "2024-25", "doc_type": "official_report"}
+    # The router was told the exact doc_type values of the manifest.
+    system = llm.calls[0][1][0]["content"]
+    assert all(f'"{t}"' in system for t in P.DOC_TYPES) and "official_report" in P.DOC_TYPES
+
+
+def test_question_without_a_year_gets_no_filter_and_the_phase2_call():
+    llm = FakeLLM({"RouteDecision": [route("docs")], "AnswerDraft": [DOC_ANSWER]})
+    agent = make_agent(llm)
+    res = agent.ask("What does code 9 mean in yes/no columns?")
+    assert res.filters == {"year": None, "doc_type": None}
+    assert agent._retriever.filters == [FakeRetriever.NO_FILTERS]   # search(q, mode, k), as in phase 2
+
+
+def test_a_filter_the_question_does_not_state_is_dropped():
+    """The LLM proposes a year and a doc_type the question never mentions: code removes them."""
+    llm = FakeLLM({"RouteDecision": [route("docs", year="2025-26", doc_type="schema")],
+                   "AnswerDraft": [DOC_ANSWER]})
+    agent = make_agent(llm)
+    res = agent.ask("What does code 9 mean?")
+    assert res.filters == {"year": None, "doc_type": None}
+    assert agent._retriever.filters == [FakeRetriever.NO_FILTERS]
+    note = next(e for e in res.steps if e["node"] == "route.filters")
+    assert "year 2025-26 dropped" in note["output"] and "doc_type schema dropped" in note["output"]
+
+
+@pytest.mark.parametrize("question, year, stated", [
+    ("schools in 2024-25", "2024-25", True), ("schools in 2024–25", "2024-25", True),
+    ("schools in 2024-2025", "2024-25", True), ("schools in 2024/25", "2024-25", True),
+    ("schools in 2025-26", "2024-25", False), ("schools in 2024", "2024-25", False),
+])
+def test_year_must_be_written_in_the_question(question, year, stated):
+    assert P.year_stated(question, year) is stated
+
+
+def test_invalid_filter_values_are_rejected_by_pydantic():
+    with pytest.raises(LLMOutputInvalid):
+        parse_json_reply(json.dumps(route("docs", year="2026-27")), P.RouteDecision)
+    with pytest.raises(LLMOutputInvalid):
+        parse_json_reply(json.dumps(route("docs", doc_type="newspaper")), P.RouteDecision)
+
+
+def test_agent_without_filters_returns_exactly_the_phase2_hybrid_results(tmp_path):
+    """The real Retriever (small index, keyword embedder): the agent's retrieval with filters
+    null equals calling the phase 2 hybrid search directly."""
+    from rag.retrieve import Retriever
+    from rag.store import Store
+
+    class Emb:
+        name, dim, vocab = "fake-kw", 4, ["code", "toilet", "teacher", "report"]
+
+        def _v(self, t):
+            v = [t.lower().count(w) + 0.01 * (i + 1) for i, w in enumerate(self.vocab)]
+            n = sum(x * x for x in v) ** 0.5
+            return [x / n for x in v]
+
+        def embed_documents(self, texts):
+            return [self._v(t) for t in texts]
+
+        def embed_query(self, t):
+            return self._v(t)
+
+    docs = [(f"d{i}", t) for i, t in enumerate(
+        ["code 9 means not applicable", "girls toilet toilet", "teacher ratio teacher", "report code",
+         "toilet and teacher", "code toilet teacher report", "nothing", "report 2024-25 teacher"] * 3)]
+    docs = [(f"{i}-{n}", t) for n, (i, t) in enumerate(docs)]
+    store = Store(tmp_path, "udise_docs", Emb.name, Emb.dim)
+    store.replace_file("all", [d[0] for d in docs], Emb().embed_documents([d[1] for d in docs]),
+                       [d[1] for d in docs],
+                       [{"file": "all", "title": "T", "year": "2024-25", "doc_type": "schema",
+                         "location": "p. 1", "page": 1} for _ in docs])
+    retriever = Retriever(tmp_path, embedder=Emb())
+    q = "what does code 9 mean for a teacher toilet"
+    llm = FakeLLM({"RouteDecision": [route("docs")],
+                   "AnswerDraft": [{"answer": "x", "insufficient_evidence": True}]})
+    agent = Agent(llm=llm, retriever=retriever, settings=AgentSettings(retrieve_timeout_s=10), trace_file=None)
+    res = agent.ask(q)
+    assert res.retrieved_ids == [h.id for h in retriever.search(q, "hybrid", 5)]
+    assert res.retrieved_ids and res.filters == {"year": None, "doc_type": None}
 
 
 # ------------------------------------------------------------------ SQL repair

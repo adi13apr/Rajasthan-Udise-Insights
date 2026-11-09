@@ -26,6 +26,8 @@ def print_result(res, out=sys.stdout) -> None:
     w = lambda s="": print(s, file=out)
     w(f"Route:  {res.route or '-'}" + (f"  ({res.route_reason})" if res.route_reason else ""))
     w(f"Status: {res.status}")
+    f = res.filters or {}
+    w(f"Filters: year={f.get('year') or 'none'}, doc_type={f.get('doc_type') or 'none'}")
     w()
     w(res.answer)
     w()
@@ -37,8 +39,11 @@ def print_result(res, out=sys.stdout) -> None:
         w("  " + res.sql.replace("\n", "\n  "))
     if res.sql_error:
         w(f"SQL error: {res.sql_error}")
-    if res.problems:
-        w("Ground check: " + "; ".join(res.problems))
+    checks = [e for e in res.steps if e["node"] == "ground_check"]
+    for e in checks:
+        w(f"Ground check ({e['input']}): " + ("passed" if e.get("ok") else f"FAILED: {e['output']}"))
+    if not checks:
+        w("Ground check: not run (no answer to check)")
     w()
     per = defaultdict(lambda: [0.0, 0, 0, 0])
     for e in res.steps:

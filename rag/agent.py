@@ -130,6 +130,7 @@ class AgentState(TypedDict, total=False):
     route: str
     route_reason: str
     tables: list[str]
+    filters: dict                    # {"year": ..., "doc_type": ...}, values None = no filter
     hits: list
     retrieve_error: str | None
     sql: str | None
@@ -156,6 +157,8 @@ class AgentResult:
     route_reason: str | None
     citations: list[str]             # citations that appear in the answer
     sources: list[str]               # every retrieved chunk's citation
+    filters: dict                    # retrieval filters after the clear-statement check
+    retrieved_ids: list[str]         # chunk ids in rank order
     sql: str | None                  # the SQL that ran (or the last one tried)
     sql_error: str | None
     sql_rows: int | None
@@ -291,7 +294,12 @@ class Agent:
         except AgentStop as e:
             return {"route": None, "stop_reason": str(e)}
         tables = list(d.tables) if d.route in ("sql", "both") else []
-        return {"route": d.route, "route_reason": d.reason, "tables": tables}
+        # Filters only when the question clearly states them: the LLM proposes, code checks.
+        year, doc_type, notes = P.clear_filters(state["question"], d.year, d.doc_type)
+        if notes:
+            ctx.tracer.event("route.filters", f"llm: year={d.year} doc_type={d.doc_type}", "; ".join(notes))
+        return {"route": d.route, "route_reason": d.reason, "tables": tables,
+                "filters": {"year": year, "doc_type": doc_type}}
 
     @staticmethod
     def after_route(state: AgentState):
@@ -310,23 +318,32 @@ class Agent:
     def retrieve_node(self, state: AgentState, config) -> dict:
         ctx = _ctx(config)
         s = self.settings
-        from .retrieve import DEFAULT_MODE
+        from .retrieve import DEFAULT_MODE, Filters
         mode = s.retrieve_mode or DEFAULT_MODE
+        f = Filters(**(state.get("filters") or {}))
         t0 = time.perf_counter()
+
+        def search():
+            if f.is_empty():   # exactly the phase 2 call, so the phase 2 evaluation stays valid
+                return self.retriever.search(state["question"], mode, s.retrieve_k)
+            return self.retriever.search(state["question"], mode, s.retrieve_k, filters=f)
+
+        filters_text = "none" if f.is_empty() else f"year={f.year} doc_type={f.doc_type}"
         try:
-            future = _executor.submit(lambda: self.retriever.search(state["question"], mode, s.retrieve_k))
+            future = _executor.submit(search)
             hits = future.result(timeout=s.retrieve_timeout_s)
         except concurrent.futures.TimeoutError:
             err = f"retrieval took longer than {s.retrieve_timeout_s:g} s"
         except Exception as e:   # index missing, model failed to load...
             err = f"{type(e).__name__}: {e}"
         else:
-            ctx.tracer.event("retrieve", f"mode={mode} k={s.retrieve_k}",
+            ctx.tracer.event("retrieve", f"mode={mode} k={s.retrieve_k} filters={filters_text}",
                              "; ".join(P.cite_for(h.metadata) for h in hits),
-                             round((time.perf_counter() - t0) * 1000, 1), hits=len(hits))
+                             round((time.perf_counter() - t0) * 1000, 1), hits=len(hits),
+                             filters=None if f.is_empty() else f.as_dict())
             return {"hits": hits, "retrieve_error": None}
-        ctx.tracer.event("retrieve", f"mode={mode}", latency_ms=round((time.perf_counter() - t0) * 1000, 1),
-                         error=err)
+        ctx.tracer.event("retrieve", f"mode={mode} filters={filters_text}",
+                         latency_ms=round((time.perf_counter() - t0) * 1000, 1), error=err)
         return {"hits": [], "retrieve_error": err}
 
     # --- sql -------------------------------------------------------------------------
@@ -501,7 +518,8 @@ class Agent:
         res = AgentResult(
             question=question, answer=final, status=state.get("status", "unverified"),
             route=state.get("route"), route_reason=state.get("route_reason"), citations=cited,
-            sources=sources, sql=state.get("sql"), sql_error=state.get("sql_error"),
+            sources=sources, filters=state.get("filters") or {"year": None, "doc_type": None},
+            retrieved_ids=[h.id for h in hits], sql=state.get("sql"), sql_error=state.get("sql_error"),
             sql_rows=result.row_count if result is not None else None,
             llm_calls=ctx.budget.used, prompt_tokens=ctx.prompt_tokens,
             completion_tokens=ctx.completion_tokens, latency_ms=tracer.elapsed_ms(), run_id=tracer.run_id,
