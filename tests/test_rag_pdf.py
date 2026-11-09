@@ -8,7 +8,8 @@ pytest.importorskip("reportlab")
 
 from rag import config as C  # noqa: E402
 from rag.chunking import Chunker  # noqa: E402
-from rag.extract import Heading, Paragraph, Table, TableRow, _merge_into, extract_pdf  # noqa: E402
+from rag.extract import (Heading, Paragraph, Table, TableRow, _continues, _merge_into,  # noqa: E402
+                         extract_pdf)
 from rag.tokens import estimate_tokens  # noqa: E402
 from rag_helpers import make_pdf  # noqa: E402
 
@@ -76,3 +77,13 @@ def test_wrapped_row_is_joined_without_repeating_text():
     row = TableRow(["39", "cwsn_sch_type", "Type of Special", "smallint"], 1)
     _merge_into(row, ["", "cwsn_sch_type", "School", ""])    # echo + real wrapped text
     assert row.cells == ["39", "cwsn_sch_type", "Type of Special School", "smallint"]
+
+
+def test_only_real_continuations_are_joined():
+    row = TableRow(["1", "pseudocode", "Code of the school", "bigint"], 6)
+    assert _continues(row, ["", "pseudocode", "", ""])          # echo of the name
+    assert _continues(row, ["", "pseudoc", "", ""])             # cut-off echo
+    assert _continues(row, ["", "", "(unique id)", ""])         # wrapped description
+    # Blank S.No. but a new column name: its own row (2024-25 schema, Item_group).
+    assert not _continues(row, ["", "Item_group", "Item Group =1 ...", ""])
+    assert not _continues(row, ["2", "", "text", ""])

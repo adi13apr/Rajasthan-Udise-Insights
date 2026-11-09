@@ -1,0 +1,106 @@
+{
+  "run_at": "2026-11-09T04:48:43+00:00",
+  "seconds": 39.49,
+  "manifest": "docs_corpus/manifest.csv",
+  "index_dir": "data/rag/chroma",
+  "collection": "udise_docs",
+  "settings": {
+    "chunker_version": 2,
+    "target_tokens": 450,
+    "max_tokens": 512,
+    "overlap_tokens": 68,
+    "token_counter": "tokenizer:BAAI/bge-small-en-v1.5",
+    "embedder": "BAAI/bge-small-en-v1.5"
+  },
+  "files": [
+    {
+      "file": "docs/DSP_Schema_2024-25.pdf",
+      "title": "Data Sharing Portal - Schema",
+      "kind": "pdf",
+      "status": "new",
+      "pages": 10,
+      "sections": 6,
+      "tables": 6,
+      "chunks": 20,
+      "text_chunks": 0,
+      "table_chunks": 20,
+      "oversized_chunks": 1,
+      "max_chunk_tokens": 522,
+      "empty_pages": [],
+      "seconds": 21.98
+    },
+    {
+      "file": "docs/DSP_Schema_2025-26.pdf",
+      "title": "Data Sharing Portal - Schema (2025-26)",
+      "kind": "pdf",
+      "status": "new",
+      "pages": 6,
+      "sections": 7,
+      "tables": 7,
+      "chunks": 26,
+      "text_chunks": 0,
+      "table_chunks": 26,
+      "oversized_chunks": 1,
+      "max_chunk_tokens": 525,
+      "empty_pages": [],
+      "seconds": 11.24
+    },
+    {
+      "file": "docs/design_decisions.md",
+      "title": "Design decisions",
+      "kind": "markdown",
+      "status": "new",
+      "pages": 0,
+      "sections": 15,
+      "tables": 0,
+      "chunks": 16,
+      "text_chunks": 16,
+      "table_chunks": 0,
+      "oversized_chunks": 0,
+      "max_chunk_tokens": 447,
+      "empty_pages": [],
+      "seconds": 1.94
+    },
+    {
+      "file": "DATA_QUALITY_LOG.md",
+      "title": "Data Quality Log",
+      "kind": "markdown",
+      "status": "new",
+      "pages": 0,
+      "sections": 5,
+      "tables": 4,
+      "chunks": 13,
+      "text_chunks": 5,
+      "table_chunks": 8,
+      "oversized_chunks": 0,
+      "max_chunk_tokens": 442,
+      "empty_pages": [],
+      "seconds": 1.53
+    }
+  ],
+  "removed": [],
+  "empty_pages": {},
+  "totals": {
+    "files_in_manifest": 4,
+    "files_ingested": 4,
+    "files_skipped": 0,
+    "files_removed": 0,
+    "chunks_deleted_for_removed_files": 0,
+    "ingested": {
+      "pages": 16,
+      "chunks": 75,
+      "text_chunks": 21,
+      "table_chunks": 54,
+      "tables": 17
+    },
+    "index": {
+      "pages": 16,
+      "chunks": 75,
+      "text_chunks": 21,
+      "table_chunks": 54,
+      "tables": 17,
+      "oversized_chunks": 2
+    },
+    "index_records": 75
+  }
+}

@@ -33,7 +33,7 @@ OVERLAP_TOKENS = round(0.15 * TARGET_TOKENS)  # ~15% of a chunk is repeated in t
 
 # Bump when the chunking logic changes in a way that changes chunks: every file is then
 # re-chunked on the next run even if the file itself did not change.
-CHUNKER_VERSION = 1
+CHUNKER_VERSION = 2   # bump when extraction or chunking changes, so indexed files are rebuilt
 
 
 def display_path(path: Path) -> str:

@@ -165,3 +165,7 @@ the manifest checks and that only queries get the bge prefix. CI job `rag` insta
 - Tables are found from ruling lines (pdfplumber's default). A table drawn without lines is
   read as text.
 - No OCR: scanned pages are reported, not read.
+- Oversized rows: in both schema PDFs the `Item_group` row (Enrolment_1) lists every
+  item_group/item_id code in one cell, 522 tokens (2024-25) and 525 (2025-26) with the
+  header. It is kept whole and marked `oversized`: the full text is stored and returned, but
+  the embedding only sees the first 512 tokens (the last few codes: repeater, EWS).

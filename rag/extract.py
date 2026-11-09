@@ -12,7 +12,9 @@ PDF (pdfplumber):
     header of its own continues the table above it (same number of columns, nothing in
     between), so it keeps that table's header. A repeated header row is not repeated as data.
   * A row with an empty first cell is the rest of the row above it (a cell that wrapped onto
-    the next row); it is joined to that row, so a row is never cut in two.
+    the next row) when its second cell is also empty or repeats the row above; it is joined
+    to that row, so a row is never cut in two. A row with an empty first cell but a new value
+    in the second cell is a row of its own (the 2024-25 schema has no S.No. for Item_group).
   * Lines that are only a page number are dropped. Pages with no text and no table cells
     are reported as empty (no OCR in this phase).
   * A text line is a heading if it is short and all bold, or clearly bigger than body text.
@@ -110,6 +112,14 @@ def _is_heading(line, body_size: float) -> bool:
     return _is_bold(chars) or (body_size > 0 and size >= HEADING_SIZE * body_size)
 
 
+def _continues(row: TableRow, cells: list[str]) -> bool:
+    """True if `cells` is the wrapped rest of `row`: first cell empty and the second cell
+    (usually the name or key column) empty or already in the row above."""
+    if cells[0]:
+        return False
+    return len(cells) < 2 or len(row.cells) < 2 or not cells[1] or cells[1] in row.cells[1]
+
+
 def _merge_into(row: TableRow, cells: list[str]) -> None:
     """Join a wrapped continuation row into the row above (skip text the row already has)."""
     for i, value in enumerate(cells[:len(row.cells)]):
@@ -179,7 +189,7 @@ def extract_pdf(path: Path) -> Document:
                         table = Table(n_tables, cells, page=pno)
                         n_tables += 1
                         elements.append(table)
-                    elif not cells[0] and table.rows:
+                    elif table.rows and _continues(table.rows[-1], cells):
                         _merge_into(table.rows[-1], cells)
                     else:
                         table.rows.append(TableRow(cells, pno))
