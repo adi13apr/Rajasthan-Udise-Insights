@@ -1,11 +1,11 @@
 {
-  "run_at": "2026-11-09T04:48:43+00:00",
-  "seconds": 39.49,
+  "run_at": "2026-11-09T09:12:32+00:00",
+  "seconds": 679.89,
   "manifest": "docs_corpus/manifest.csv",
-  "index_dir": "data/rag/chroma",
+  "index_dir": "E:/udise-rag-index",
   "collection": "udise_docs",
   "settings": {
-    "chunker_version": 2,
+    "chunker_version": 4,
     "target_tokens": 450,
     "max_tokens": 512,
     "overlap_tokens": 68,
@@ -17,7 +17,7 @@
       "file": "docs/DSP_Schema_2024-25.pdf",
       "title": "Data Sharing Portal - Schema",
       "kind": "pdf",
-      "status": "new",
+      "status": "changed",
       "pages": 10,
       "sections": 6,
       "tables": 6,
@@ -27,13 +27,13 @@
       "oversized_chunks": 1,
       "max_chunk_tokens": 522,
       "empty_pages": [],
-      "seconds": 21.98
+      "seconds": 24.8
     },
     {
       "file": "docs/DSP_Schema_2025-26.pdf",
       "title": "Data Sharing Portal - Schema (2025-26)",
       "kind": "pdf",
-      "status": "new",
+      "status": "changed",
       "pages": 6,
       "sections": 7,
       "tables": 7,
@@ -43,13 +43,13 @@
       "oversized_chunks": 1,
       "max_chunk_tokens": 525,
       "empty_pages": [],
-      "seconds": 11.24
+      "seconds": 9.55
     },
     {
       "file": "docs/design_decisions.md",
       "title": "Design decisions",
       "kind": "markdown",
-      "status": "new",
+      "status": "changed",
       "pages": 0,
       "sections": 15,
       "tables": 0,
@@ -59,13 +59,13 @@
       "oversized_chunks": 0,
       "max_chunk_tokens": 447,
       "empty_pages": [],
-      "seconds": 1.94
+      "seconds": 2.06
     },
     {
       "file": "DATA_QUALITY_LOG.md",
       "title": "Data Quality Log",
       "kind": "markdown",
-      "status": "new",
+      "status": "changed",
       "pages": 0,
       "sections": 5,
       "tables": 4,
@@ -75,32 +75,113 @@
       "oversized_chunks": 0,
       "max_chunk_tokens": 442,
       "empty_pages": [],
-      "seconds": 1.53
+      "seconds": 1.57
+    },
+    {
+      "file": "udise_report_2024-25_existing.pdf",
+      "title": "Report on Unified District Information System for Education Plus (UDISE+) 2024-25",
+      "kind": "pdf",
+      "status": "changed",
+      "pages": 189,
+      "sections": 222,
+      "tables": 174,
+      "chunks": 1110,
+      "text_chunks": 268,
+      "table_chunks": 842,
+      "oversized_chunks": 1,
+      "max_chunk_tokens": 767,
+      "empty_pages": [
+        1
+      ],
+      "seconds": 326.57
+    },
+    {
+      "file": "udise_report_2025-26_existing.pdf",
+      "title": "Report on Unified District Information System for Education Plus (UDISE+) 2025-26",
+      "kind": "pdf",
+      "status": "changed",
+      "pages": 189,
+      "sections": 230,
+      "tables": 183,
+      "chunks": 1128,
+      "text_chunks": 280,
+      "table_chunks": 848,
+      "oversized_chunks": 0,
+      "max_chunk_tokens": 510,
+      "empty_pages": [
+        1,
+        9,
+        27,
+        30,
+        39,
+        51,
+        84,
+        107,
+        123,
+        155,
+        170,
+        180
+      ],
+      "seconds": 310.33
+    },
+    {
+      "file": "udise_general_metadata.pdf",
+      "title": "General metadata information on the data collected in UDISE+",
+      "kind": "pdf",
+      "status": "changed",
+      "pages": 6,
+      "sections": 2,
+      "tables": 6,
+      "chunks": 7,
+      "text_chunks": 1,
+      "table_chunks": 6,
+      "oversized_chunks": 0,
+      "max_chunk_tokens": 424,
+      "empty_pages": [],
+      "seconds": 2.07
     }
   ],
   "removed": [],
-  "empty_pages": {},
+  "empty_pages": {
+    "udise_report_2024-25_existing.pdf": [
+      1
+    ],
+    "udise_report_2025-26_existing.pdf": [
+      1,
+      9,
+      27,
+      30,
+      39,
+      51,
+      84,
+      107,
+      123,
+      155,
+      170,
+      180
+    ]
+  },
   "totals": {
-    "files_in_manifest": 4,
-    "files_ingested": 4,
+    "files_in_manifest": 7,
+    "files_ingested": 7,
     "files_skipped": 0,
     "files_removed": 0,
     "chunks_deleted_for_removed_files": 0,
     "ingested": {
-      "pages": 16,
-      "chunks": 75,
-      "text_chunks": 21,
-      "table_chunks": 54,
-      "tables": 17
+      "pages": 400,
+      "chunks": 2320,
+      "text_chunks": 570,
+      "table_chunks": 1750,
+      "tables": 380
     },
     "index": {
-      "pages": 16,
-      "chunks": 75,
-      "text_chunks": 21,
-      "table_chunks": 54,
-      "tables": 17,
-      "oversized_chunks": 2
+      "pages": 400,
+      "chunks": 2320,
+      "text_chunks": 570,
+      "table_chunks": 1750,
+      "tables": 380,
+      "oversized_chunks": 3
     },
-    "index_records": 75
+    "index_records": 2320
   }
 }

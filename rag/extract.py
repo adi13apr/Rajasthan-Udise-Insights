@@ -18,6 +18,12 @@ PDF (pdfplumber):
   * Lines that are only a page number are dropped. Pages with no text and no table cells
     are reported as empty (no OCR in this phase).
   * A text line is a heading if it is short and all bold, or clearly bigger than body text.
+    Not a heading: a line that starts with a lower-case letter (the wrapped rest of a
+    sentence), a contents line with dot leaders ("Section 1 ........ 27"), or a line that is
+    mostly numbers (chart labels, map legends); a bold one-value table row with no letters
+    is dropped (a chart label read as a table). On a page whose text is mostly bold (the
+    narrative "Key Results" pages of the UDISE+ reports are set in bold), bold says nothing,
+    so there only bigger text makes a heading.
 
 Markdown: '#' headings, pipe tables, fenced code blocks and paragraphs (each list item is its
 own paragraph). There are no pages: the section heading takes the place of the page number.
@@ -79,6 +85,9 @@ PAGE_NUMBER = re.compile(r"^\s*(page\s*)?\d{1,4}(\s*(of|/)\s*\d{1,4})?\s*$", re.
 BOLD_SHARE = 0.9        # a row or line is bold if at least 90% of its letters are bold
 HEADING_SIZE = 1.2      # ... or a heading if its letters are 20% bigger than body text
 HEADING_MAX_CHARS = 120
+BOLD_BODY_SHARE = 0.6   # a page whose text-line letters are >= 60% bold has bold body text ...
+BOLD_BODY_MIN_LETTERS = 300   # ... if it has enough text to tell (a title page does not)
+DOT_LEADER = re.compile(r"(\.\s*){4,}|…{2,}")   # contents lines: "Section 1 ........ 27"
 
 
 def _clean(cell) -> str:
@@ -101,15 +110,30 @@ def _body_size(pdf) -> float:
     return sizes.most_common(1)[0][0] if sizes else 0.0
 
 
-def _is_heading(line, body_size: float) -> bool:
+def _mostly_words(text: str) -> bool:
+    """At least half of the visible characters are letters ("Map 2.1" yes, "79.1 - 89.0" no)."""
+    visible = [ch for ch in text if not ch.isspace()]
+    return bool(visible) and sum(ch.isalpha() for ch in visible) >= 0.5 * len(visible)
+
+
+def _is_heading(line, body_size: float, bold_body: bool = False) -> bool:
     text = line["text"].strip()
-    if not text or len(text) > HEADING_MAX_CHARS or not re.search(r"[A-Za-z]", text):
+    if not text or len(text) > HEADING_MAX_CHARS or not _mostly_words(text):
         return False
-    if text.endswith((".", ",", ";")):
+    if text.endswith((".", ",", ";")) or text[0].islower() or DOT_LEADER.search(text):
         return False
     chars = [c for c in line["chars"] if c["text"].strip()]
     size = sorted(c["size"] for c in chars)[len(chars) // 2] if chars else 0
-    return _is_bold(chars) or (body_size > 0 and size >= HEADING_SIZE * body_size)
+    bigger = body_size > 0 and size >= HEADING_SIZE * body_size
+    return bigger or (_is_bold(chars) and not bold_body)
+
+
+def _bold_body(lines) -> bool:
+    """True if most letters of the page's text lines are bold (bold is then the body font)."""
+    letters = [c for line in lines for c in line["chars"] if c["text"].isalpha()]
+    if len(letters) < BOLD_BODY_MIN_LETTERS:
+        return False
+    return sum("bold" in c["fontname"].lower() for c in letters) >= BOLD_BODY_SHARE * len(letters)
 
 
 def _continues(row: TableRow, cells: list[str]) -> bool:
@@ -139,11 +163,11 @@ def extract_pdf(path: Path) -> Document:
             found = page.find_tables()
             boxes = [t.bbox for t in found]
             chars = [c for c in page.chars if c["text"].strip()]
-            items = []
-            for line in page.extract_text_lines(return_chars=True):
-                if any(_center_in(line, b) for b in boxes) or PAGE_NUMBER.match(line["text"]):
-                    continue
-                items.append((line["top"], 0, line))
+            lines = [line for line in page.extract_text_lines(return_chars=True)
+                     if not any(_center_in(line, b) for b in boxes)
+                     and not PAGE_NUMBER.match(line["text"])]
+            bold_body = _bold_body(lines)
+            items = [(line["top"], 0, line) for line in lines]
             items += [(t.bbox[1], 1, t) for t in found]
             items.sort(key=lambda item: (item[0], item[1]))
 
@@ -159,7 +183,7 @@ def extract_pdf(path: Path) -> Document:
                     text = obj["text"].strip()
                     has_content = True
                     table = None                       # text between tables ends a table
-                    if _is_heading(obj, body):
+                    if _is_heading(obj, body, bold_body):
                         flush_para()
                         elements.append(Heading(text, 0, pno))
                     else:
@@ -176,7 +200,9 @@ def extract_pdf(path: Path) -> Document:
                     has_content = True
                     bold = _is_bold([c for c in chars if _center_in(c, row.bbox)])
                     if bold and len(values) == 1:      # a title row inside the table
-                        elements.append(Heading(values.pop(), 0, pno))
+                        title = values.pop()
+                        if re.search(r"[A-Za-z]", title):   # "391" (a chart label) is dropped
+                            elements.append(Heading(title, 0, pno))
                         table = None
                         continue
                     if table is not None and cells == table.header:

@@ -4,8 +4,10 @@ The RAG layer will let a user ask a question and get an answer from two kinds of
 official UDISE+ documents (schemas, reports, guidelines) and SQL over the gold tables. It is
 built in five phases. **Phase 1 ingests documents**: it reads them, cuts them into chunks,
 turns every chunk into a vector with a local model, and stores the vectors in a ChromaDB index
-on disk. **Phase 3** (below) is a safe, read-only SQL tool over the gold tables and the schema
-card the agent will read. There are no LLM calls and no paid APIs yet.
+on disk. **Phase 2** (below) finds the chunks that answer a question: keyword search, vector
+search, both fused, and a reranker, with an evaluation that picks the default. **Phase 3**
+(below) is a safe, read-only SQL tool over the gold tables and the schema card the agent will
+read. There are no LLM calls and no paid APIs yet.
 
 ```
 docs_corpus/manifest.csv ──> extract.py ──> chunking.py ──> embedder.py ──> store.py (ChromaDB)
@@ -48,7 +50,7 @@ same folder. Do not run two ingestions on the same index at the same time.
   PDF in `E:\udise-docs\` and add a row: no code change. A name that exists in both places is
   an error, so it is always clear which file was read.
 - `title` is taken from the document itself, not from the file name.
-- `year` is `2026` or `2024-25`; `doc_type` is a lower-case word (`schema`, `project_doc`,
+- `year` is `2026`, `2024-25` or blank (a document about no particular year); `doc_type` is a lower-case word (`schema`, `project_doc`,
   `official_report`, ...); `source_url` may be blank (the project's own documents).
 - PDF (`.pdf`) and Markdown (`.md`) files are supported.
 
@@ -85,7 +87,19 @@ a chunk read on its own still says what it is about, and the search can match on
 
 In PDFs, headings are found from the typography: a short line that is all bold, or clearly
 bigger than the body text, or a bold title row inside a table. Headings that come straight
-after each other stack up (`Data Sharing Portal - Schema > School Profile 1`). In Markdown
+after each other stack up (`Data Sharing Portal - Schema > School Profile 1`), at most 3 deep.
+
+The UDISE+ reports needed five extra rules (chunker version 4). Without them their front
+matter produced section paths of up to 2,356 characters, repeated in front of every chunk,
+and 15 chunks of the 2024-25 disclaimer held one word each:
+- the "Key Results" narrative pages are set **in bold**: on a page whose text is mostly bold,
+  bold is the body font and says nothing, so there only bigger text makes a heading;
+- a line that starts with a lower-case letter is the wrapped rest of a sentence, not a heading;
+- a contents line with dot leaders (`Section 1: Data Highlights ........ 27`) is not a heading;
+- a text line that is mostly numbers (chart labels, map legends such as `79.1 - 89.0`) is
+  not a heading;
+- a bold one-value table row with no letters at all (a chart label such as `391`) is dropped;
+  one with letters (`Primary`, `(1 to 5)`) stays a title row, as before. In Markdown
 the `#` headings are used, and **the section heading takes the place of a page number**
 (Markdown has no pages): `page` is 0 and `location` is the section.
 
@@ -161,6 +175,15 @@ the manifest checks and that only queries get the bge prefix. CI job `rag` insta
 
 ## Limits (known, for later phases)
 
+- The two UDISE+ reports start with a cover and (2025-26) eleven section divider pages
+  that are images: 1 page (2024-25) and 12 pages (2025-26) have no text. They hold only a
+  title (the same pages of the 2024-25 report contain just "Section 5: Details on
+  Enrolments India & State/UT" and the like), so no figure is lost.
+- Charts are not read. One chart (2024-25 report, p. 19, PTR by state) has ruling lines and
+  is read as a table; its rotated state names come out as letter salad. It is one oversized
+  chunk; dropping rotated text would also drop the vertical column headers of real tables.
+- Some dashes in the reports come out as `�` (the PDF's font has no Unicode mapping for them).
+
 - Heading detection in PDFs is a heuristic (bold or bigger text). A PDF without such
   typography gives fewer sections; its chunks are still correct, just less labelled.
 - Tables are found from ruling lines (pdfplumber's default). A table drawn without lines is
@@ -169,7 +192,82 @@ the manifest checks and that only queries get the bge prefix. CI job `rag` insta
 - Oversized rows: in both schema PDFs the `Item_group` row (Enrolment_1) lists every
   item_group/item_id code in one cell, 522 tokens (2024-25) and 525 (2025-26) with the
   header. It is kept whole and marked `oversized`: the full text is stored and returned, but
-  the embedding only sees the first 512 tokens (the last few codes: repeater, EWS).
+  the embedding only sees the first 512 tokens (the last few codes: repeater, EWS). BM25
+  (phase 2) reads the full text, so those codes can still be found by keyword.
+- The reranker (`BAAI/bge-reranker-base`) also reads at most 512 tokens, and that budget
+  includes the question: a 500-token chunk with a 20-token question is cut at its end, so the
+  reranker never sees the last lines of the longest chunks.
+
+## Phase 2: retrieval (keyword, vector, hybrid, reranked)
+
+`rag/retrieve.py` answers "which chunks talk about this?". Still no LLM.
+
+```powershell
+$env:UDISE_RAG_DIR = 'E:\udise-rag-index'        # the shared index
+D:\dev\.venv-rag\Scripts\python.exe -m pip install -r requirements-rag.txt   # adds rank-bm25
+D:\dev\.venv-rag\Scripts\python.exe -m rag.retrieve "What does code 9 mean in yes/no columns?"
+D:\dev\.venv-rag\Scripts\python.exe -m rag.retrieve "schools in Rajasthan 2024-25" --mode bm25 --k 10
+```
+
+```python
+from rag.retrieve import Retriever
+hits = Retriever().search("pupil teacher ratio in Rajasthan", mode="hybrid_rerank", k=5)
+hits[0].citation, hits[0].text, hits[0].scores   # citation = "<document title>, p. <page>"
+```
+
+| Mode | How it ranks | Good at | Weak at |
+|---|---|---|---|
+| `bm25` | BM25 keyword score (rank_bm25, BM25Okapi) over title + full chunk text | exact codes, numbers, table names | synonyms, paraphrases |
+| `vector` | cosine similarity of bge-small vectors (query gets the bge prefix) | paraphrases, meaning | short codes ("9"), exact numbers |
+| `hybrid` | Reciprocal Rank Fusion of the top 50 of each list, k = 60 | both, when either list finds it | slightly slower than one list |
+| `hybrid_rerank` | the top 30 of hybrid re-scored by `BAAI/bge-reranker-base`, top 5 returned | precise ordering of the top | CPU time: one model pass per candidate |
+
+**Reciprocal Rank Fusion.** Each list gives a chunk `1 / (60 + rank)`; the votes are added.
+Only ranks are used, so BM25 scores (0 to ~30) and cosine similarities (0 to 1) never have to
+be put on one scale. A chunk found by both lists at ranks 3 and 4 beats one found by a single
+list at rank 1. Ties go to the best single rank, then the chunk id, so results never change
+between runs.
+
+**Tokenizer for BM25.** Many common tokenizers drop one-character tokens, so "code 9" would
+search only for "code". Here numbers are always kept, single digits included; `item_group`
+is kept whole and also split into `item` and `group`; `2024-25` is kept whole and split;
+`1,06,302` becomes `106302` so it matches however the PDF wrote it; decimals stay whole. A
+short list of English stopwords is removed, never a number. No stemming.
+
+**Why the title is searched too.** The 2024-25 and 2025-26 reports contain the same tables,
+so most chunks have a twin in the other report. The year in the document title is what tells
+them apart, so BM25 and the reranker read `title + chunk`. The vectors were made from the
+chunk alone (phase 1); changing that would need a re-embedding.
+
+**Models load only when needed.** `bm25` loads no model; `vector` and `hybrid` load the
+embedder; `hybrid_rerank` also loads the reranker (~1.1 GB, downloaded once). The reranker
+sits behind the same kind of small interface as the embedder (`name`, `score(query, passages)`).
+
+### Which mode is the default: the evaluation
+`python -m rag.evals.run_retrieval` runs 33 reviewed questions (exact codes, definitions, figures
+from the reports including Rajasthan rows, paraphrases) through all four modes. The rule for
+choosing the default was written in `rag/evals/RETRIEVAL_RESULTS.md` before the run and applied as
+written. Result (2026-11-09, laptop CPU, 2,320 chunks):
+
+| Mode | recall@5 | MRR@10 | p50 | p95 |
+|---|---|---|---|---|
+| `bm25` | 60.6 % | 0.526 | 0.006 s | 0.009 s |
+| `vector` | 57.6 % | 0.478 | 0.057 s | 0.219 s |
+| `hybrid` | 63.6 % | 0.545 | 0.107 s | 0.187 s |
+| `hybrid_rerank` | 66.7 % | 0.533 | 14.1 s | 15.6 s |
+
+**Default: `hybrid`.** The reranker answered one more question (+3.0 points, under the 5-point bar)
+and its p95 is 15.6 s (over 1.5 s). BM25 wins exact codes (8/8), vectors win definitions (4/7 vs
+1/7). What was missed, and why, is in `RETRIEVAL_RESULTS.md`.
+
+### Tests (`tests/test_rag_retrieve.py`)
+A tiny Chroma index is written in a temp folder with a fake embedder whose vectors are word
+counts (so "similar" is predictable) and searched with a fake reranker that counts a word. The
+tests check the tokenizer (digits, codes, years, Indian numbers), the RRF scores against
+hand-computed values (`1/62 + 1/61` ...), the tie order, that a chunk in both lists beats a
+single rank 1, that BM25 finds `code 9`, `code 94` and `item_group 4`, that the title is
+searched, that vector search goes through `embed_query`, that hybrid equals the RRF of the
+two lists, and that the reranker gets exactly the top 30 in hybrid order and its order wins.
 
 ## Phase 3: a safe SQL tool over the gold tables
 

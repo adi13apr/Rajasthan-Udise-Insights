@@ -3,3 +3,6 @@ docs/DSP_Schema_2024-25.pdf,Data Sharing Portal - Schema,"UDISE+, Ministry of Ed
 docs/DSP_Schema_2025-26.pdf,Data Sharing Portal - Schema (2025-26),"UDISE+, Ministry of Education, Government of India",2025-26,schema,https://microdata.udiseplus.gov.in
 docs/design_decisions.md,Design decisions,Rajasthan UDISE+ Insights (project documentation),2026,project_doc,
 DATA_QUALITY_LOG.md,Data Quality Log,Rajasthan UDISE+ Insights (project documentation),2026,project_doc,
+udise_report_2024-25_existing.pdf,Report on Unified District Information System for Education Plus (UDISE+) 2024-25,"Department of School Education & Literacy, Ministry of Education",2024-25,official_report,https://udiseplus.gov.in/#/en/page/publications
+udise_report_2025-26_existing.pdf,Report on Unified District Information System for Education Plus (UDISE+) 2025-26,"Department of School Education & Literacy, Ministry of Education",2025-26,official_report,https://udiseplus.gov.in/#/en/page/publications
+udise_general_metadata.pdf,General metadata information on the data collected in UDISE+,"Department of School Education & Literacy, Ministry of Education",,official_metadata,https://udiseplus.gov.in/#/en/page/publications
