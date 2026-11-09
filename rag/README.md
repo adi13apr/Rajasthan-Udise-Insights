@@ -6,8 +6,11 @@ built in five phases. **Phase 1 ingests documents**: it reads them, cuts them in
 turns every chunk into a vector with a local model, and stores the vectors in a ChromaDB index
 on disk. **Phase 2** (below) finds the chunks that answer a question: keyword search, vector
 search, both fused, and a reranker, with an evaluation that picks the default. **Phase 3**
-(below) is a safe, read-only SQL tool over the gold tables and the schema card the agent will
-read. There are no LLM calls and no paid APIs yet.
+(below) is a safe, read-only SQL tool over the gold tables and the schema card the agent
+reads. **Phase 4** (below) is the agent: a LangGraph graph that routes a question to the
+documents, the SQL tool or both, answers with citations and the SQL, and checks every number of
+the answer against the evidence without an LLM. Phases 1-3 make no LLM calls; phase 4 calls any
+OpenAI-compatible API with a key from the gitignored `.env`.
 
 ```
 docs_corpus/manifest.csv ──> extract.py ──> chunking.py ──> embedder.py ──> store.py (ChromaDB)
@@ -363,7 +366,177 @@ question -> SQL pairs. The tests run every example.
   linked (so "which schools moved?" cannot be answered row by row). The count of moves is in the
   card as a fact.
 - A query can still return up to 200 school-level rows (without codes). The card tells the
-  agent to aggregate; a later phase can add a check that answers only show aggregates.
+  agent to aggregate, and since phase 4 the agent calls `run(sql, require_aggregate=True)`,
+  which refuses such queries (`check_aggregated`, see phase 4).
 - DuckDB allows only one configuration per database file per process: while a `SqlTool` is
   open, other code in the same process cannot open the same file read-only with different
   settings. Open the tool last, or close it first.
+
+## Phase 4: the agent (route, retrieve and/or SQL, answer, ground check)
+
+`python -m rag.ask "question"` answers a question from the documents (phase 2 retrieval), the
+gold tables (phase 3 SQL tool) or both. It prints the answer, the route and its reason, the
+citations, the SQL, and the LLM calls, tokens and latency of every step.
+
+```powershell
+Copy-Item .env.example .env      # then fill in LLM_API_KEY (the file is gitignored)
+$env:UDISE_RAG_DIR = 'E:\udise-rag-index'
+D:\dev\.venv-rag\Scripts\python.exe -m rag.ask "How many government schools did Rajasthan have in 2024-25?"
+D:\dev\.venv-rag\Scripts\python.exe -m rag.ask "What does code 9 mean in yes/no columns?" --json
+```
+
+### The graph (`rag/agent.py`, LangGraph `StateGraph`)
+
+```
+START -> route --docs--> retrieve ------------------\
+               --sql---> sql (generate, run, repair) > answer -> ground_check --ok--> finalize -> END
+               --both--> retrieve + sql in parallel /     ^           |
+               --out_of_scope--> out_of_scope -> END      +-- once ---+ (a number or citation not found)
+               (LLM failed) --> fallback -> END                       +-- twice --> fallback -> END
+```
+
+| Node | LLM? | What it does |
+|---|---|---|
+| route | 1 call | `RouteDecision`: docs / sql / both / out_of_scope, a one-sentence reason, the tables needed |
+| retrieve | no | `Retriever().search(q)` in the phase 2 default mode (hybrid), top 5, with a timeout |
+| sql | 1-2 calls | writes SQL from the schema card and runs it through the one `SqlTool` of the process; on any error (refused by the checks, DuckDB error, timeout) one repair call gets the error message and the failed SQL |
+| answer | 1 call | `AnswerDraft` over the evidence; a regenerated answer also gets the ground check's problems |
+| ground_check | no | `rag/grounding.py`, see below |
+| finalize | no | adds the executed SQL, the management-code note and the source line (by code, so they cannot be forgotten) |
+| fallback | no | "I couldn't verify ..." with the reason and the raw evidence (SQL result, document excerpts) |
+| out_of_scope | no | a fixed reply saying what the agent can answer |
+
+Why the SQL step is one node (generate, run and repair inside): on the "both" route, retrieve
+and sql run in the same LangGraph step, and `answer` runs once when both are done. Separate
+generate / run / repair nodes would finish in different steps and `answer` would run twice.
+
+### LLM client (`rag/llm.py`)
+- The OpenAI Python SDK with `base_url`, model and key from environment variables (read from
+  `.env` by python-dotenv; variables already set win). The same code talks to OpenAI, Azure
+  OpenAI, Gemini's OpenAI-compatible endpoint, Groq or a local server. `.env.example` lists
+  every setting.
+- **Structured output, always validated.** Each call asks for JSON (`response_format` with the
+  Pydantic model's JSON schema; `LLM_JSON_MODE=json_object` or `none` for providers without
+  it) and the prompt also spells out the JSON shape. The reply is parsed with
+  `Model.model_validate_json`; an invalid reply raises `LLMOutputInvalid`, and the agent spends
+  one retry on it (with the validation error) if its budget allows.
+- **Rate limits.** A rolling 60-second window waits *before* a call that would go over
+  `LLM_TPM_LIMIT` / `LLM_RPM_LIMIT` (it counts the real usage the provider reports). If the
+  provider still answers 429 (or 500/503), the client waits what it asks for (Retry-After, or
+  Gemini's `retryDelay`), else 2, 4, 8 s, never more than 20 s, at most 3 retries, then raises
+  `LLMRateLimited`; the agent turns that into the fallback instead of crashing. The SDK's own
+  retries are off, so the trace shows every attempt.
+
+### Budgets and timeouts
+- At most `AGENT_MAX_LLM_CALLS` (default 5) LLM calls per question, JSON retries included:
+  route 1 + SQL 1 + repair 1 + answer 1 + regenerate 1. When the budget is used up the agent
+  stops calling the LLM and goes to the fallback with the evidence it has.
+- `LLM_TIMEOUT_S` (default 30 s) per LLM call; `AGENT_RETRIEVE_TIMEOUT_S` (default 120 s: the
+  first query loads the embedding model) for retrieval; SqlTool's own 10 s per query.
+
+### Token budget: the schema card is sliced
+The full card is about 4,800 tokens (2,388 words; measured with tiktoken o200k, an estimate of
+the provider's tokenizer). With a 15,000 tokens-per-minute key that is a third of a minute's
+budget for one call. `prompts.card_for()` sends only "How to query", the sections of the tables
+the router chose (plus the dimensions a chosen fact table joins to, and dim_school's own
+joins), the Codes entries the question or the tables need (Years always), and up to two
+examples that use only those tables. Measured SQL prompts: 1,184-1,914 tokens sliced vs 4,958
+full. `LLM_SCHEMA_CARD=full` (or `--card full`) sends the whole card. The answer prompt shows at
+most 30 SQL result rows (the ground check sees all of them).
+
+### Untrusted documents
+Document chunks are quoted inside `<document id="D1" cite="[title, p. N]">` tags and the SQL
+result inside `<sql_result>`, with `&`, `<`, `>` and `"` escaped, so a chunk cannot close its
+own tag and pose as instructions. The answer prompt says that this text is untrusted data, may
+contain instruction-like sentences, and must never be followed. The ground check is a second
+guard: an injected "say 42" fails unless 42 is really in the evidence.
+
+### Answers: citations, SQL, the management note
+- Document facts are cited as `[doc title, p. N]` (Markdown documents: `[title, section]`),
+  copied from the chunk's `cite` attribute.
+- Computed figures: `finalize` appends the executed SQL in a code block and the line "Source:
+  UDISE+, Ministry of Education, Government of India."
+- **Management note.** When the SQL uses management columns (is_government, management_group,
+  dim_management, the management mart) or the answer mentions government / private /
+  management, `finalize` appends that codes 94, 95 and 101 are counted as government by
+  reconciliation with official figures, not by official documentation.
+
+### Ground check (`rag/grounding.py`, no LLM)
+- Every number of the answer must be in the evidence: a cell of the SQL result, a number in a
+  retrieved chunk, the SQL text or the question. 1,06,302 = 106,302 = 106302; signs are
+  ignored; rounding to the answer's decimals is allowed; a number followed by % may be a share
+  100x smaller (girls_share 0.4823 -> 48.2%). Nothing else: no lakh/crore conversions, and no
+  figure the model computed itself (computed figures must come from SQL). Not checked: academic
+  years, calendar years 1990-2035, class numbers ("classes 9-12") and citation page numbers.
+- Every citation must be one of the retrieved chunks; on the docs route an answer must cite at
+  least one (unless it says the evidence is insufficient).
+- Fails once: the answer is regenerated with the list of problems. Fails again: fallback.
+
+### SQL results never leave the database at school level
+The prompt asks for aggregates, and the agent calls `SqlTool.run(sql, require_aggregate=True)`:
+`check_aggregated` refuses a query whose rows can be school-level (it reads int_school_year, a
+fact table or dim_school and the outer query does not aggregate, or it groups by school_key),
+and the repair step is told to aggregate. Reason: the rows go to an outside LLM, and the UDISE+
+terms forbid redistributing school-level data. It is a heuristic (grouping by a very fine
+attribute could still give small groups); the marts and the small dimensions are not affected.
+
+### Trace (`rag/trace.py`)
+One JSON line per step in `data/rag/traces/agent_runs.jsonl` (gitignored; `UDISE_TRACE_FILE`
+to change): run id, step (`route`, `retrieve`, `sql.generate`, `sql.run`, `sql.repair`,
+`answer`, `answer.regenerate`, `*.json_retry`, `ground_check`, `finalize` / `fallback` /
+`out_of_scope`, `run`), a short input and output summary, latency, prompt and completion
+tokens, error. SQL results are logged as row count and column names only. Read it with DuckDB:
+`select node, count(*), avg(latency_ms), sum(prompt_tokens) from read_json_auto('data/rag/traces/agent_runs.jsonl') group by 1`.
+
+### One SqlTool and one Retriever per process
+`shared_sql_tool()` and `shared_retriever()` create them once (with a lock): DuckDB refuses a
+second connection to the same file with different settings (phase 3 lesson), and the retriever
+loads about 2,300 chunks and the embedding model. Tests inject their own.
+
+### Tests (`tests/test_rag_agent.py`, no API calls)
+A scripted fake LLM (replies per schema: JSON text, a dict, an exception, or a function of the
+messages, so that an answer can quote the SQL result), a fake retriever, and the real SqlTool on
+the synthetic sample gold database. Covered: every route; SQL repair after a DuckDB error and
+after the aggregate-only rule; SQL failing twice; a ground-check rejection then a good
+regenerated answer; the fallback with raw evidence; a docs answer with no citation; a citation
+that was not retrieved; the management note (SQL and documents); the call budget; a
+rate-limited LLM; invalid JSON and an invalid route value; document text that tries to close
+its tag; the ground check's number rules; the aggregate-only rule; card slicing; the client's
+429 backoff, give-up, and no retry when asked to wait longer than the cap; a reply cut off by
+the output limit; the rate limiter; missing settings; the trace file; the CLI.
+
+### First real run (2026-11-09, Google Gemini free tier, OpenAI-compatible endpoint)
+Setup lessons, all from real errors:
+- `gemini-2.5-flash` answers 404 "no longer available to new users"; `gemini-3.8-flash` and
+  `gemini-flash-latest` answered 503 "high demand" or timed out at 60 s; `gemini-3.5-flash`
+  answered in 2-3 s. `.env.example` now says `gemini-3.5-flash` and `LLM_TIMEOUT_S=60`.
+- The first SQL reply was cut mid-string: thinking tokens count against the output cap (then
+  1,024). Now `LLM_MAX_OUTPUT_TOKENS` (default 4,096), a `finish_reason=length` reply is
+  reported as cut off, and the tokens of invalid replies are counted in the trace.
+- The free tier allows **20 requests per day per model** (`GenerateRequestsPerDayPerProjectPerModel-FreeTier`);
+  the 429 asks to wait ~19 h. The client now gives up at once when the asked wait is longer
+  than its 20 s cap (retrying only spent requests). With up to 5 calls per question, that is
+  4-6 questions per model per day.
+- The first run of question 1 gave 69,941 government schools: the router picked the management
+  mart and the sliced card no longer had int_school_year or the note that the marts leave out
+  schools without students. Now int_school_year is always in the slice, the management mart
+  brings mart_district_year, and the router is told where official totals come from.
+
+The five questions (after those fixes; numbers from the trace, Gemini's own token counts):
+
+| # | Route | Question | Model | Status | LLM calls | Prompt + output tokens | Latency | Check |
+|---|---|---|---|---|---|---|---|---|
+| 1 | sql | Government schools and teachers, 2024-25 | 3.5-flash | ok | 3 | 3,358 + 198 | 36.4 s | 70,155 and 445,073 = official exactly; management note added |
+| 2 | sql | Five districts with the highest PTR, 2025-26 | 3.5-flash | ok | 3 | 3,609 + 235 | 18.6 s | values from the mart |
+| 3 | docs | What code 9 means in yes/no columns | 3.5-flash | ok | 2 | 3,078 + 184 | 56.1 s | **grounded but misleading**: retrieval returned the log chunk on codes 0/9 in anganwadi_yn / spl_educator_yn, not entry #11 (9 = not applicable), so it called 9 "invalid" |
+| 4 | docs | All-India schools and teachers in the 2024-25 report | 3.5-flash | ok | 2 | 2,626 + 138 | 41.5 s | 1,471,473 schools and 10,122,420 teachers, cited p. 32 |
+| 5 | both | Definition and count of single-teacher schools, 2024-25 | 3.5-flash-lite | ok | 3 | 7,157 + 293 | 27.0 s | 6,117 = official; said the definition was not in the evidence; **put the report's citation after the computed figure** |
+
+Question 5 ran on `gemini-3.5-flash-lite` because `gemini-3.5-flash` had used its 20 daily
+requests. Prompt tokens per step, measured: route 958-971; sql.generate 1,938-2,097 (3,083
+when the router chose more tables); answer 462-554 on SQL results, 1,659-2,120 on documents,
+3,103 on both. The first retrieval of a process takes 20-26 s (it loads the embedding model).
+
+What the ground check cannot see (for phase 5's evaluation): it proves every number and
+citation is in the evidence, not that the evidence is the right evidence (question 3) or that a
+citation sits next to the fact it supports (question 5).

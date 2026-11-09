@@ -177,6 +177,76 @@ def check_sql(sql: str, max_rows: int = MAX_ROWS) -> tuple[str, bool]:
     return limited.sql(dialect="duckdb"), limit_applied
 
 
+# Tables with one row per school (or finer). Their rows must not leave the tool un-aggregated
+# when the result is sent to an outside LLM (phase 4): UDISE+ terms forbid redistributing
+# school-level data. Marts and the small dimensions are aggregate or reference data already.
+SCHOOL_LEVEL_TABLES = frozenset({"int_school_year", "fact_enrolment", "fact_teachers",
+                                 "fact_school_facilities", "dim_school"})
+SCHOOL_GRAIN_COLUMNS = frozenset({"school_key"})
+
+
+def _is_aggregating(select: exp.Select) -> bool:
+    """GROUP BY, or an aggregate function in the select list that is not a window function
+    (count(*) over () keeps one row per school)."""
+    if select.args.get("group"):
+        return True
+    for projection in select.expressions:
+        for agg in projection.find_all(exp.AggFunc):
+            if not agg.find_ancestor(exp.Window):
+                return True
+    return False
+
+
+def _query_level(query: exp.Expression, ctes: dict[str, exp.Expression], depth: int = 0) -> str:
+    """'school' if the rows of this query can be school-level rows, else 'agg'."""
+    if depth > 50:
+        return "school"
+    if isinstance(query, exp.Subquery):
+        return _query_level(query.this, ctes, depth + 1)
+    if isinstance(query, exp.SetOperation):   # UNION / INTERSECT / EXCEPT: any school branch
+        sides = (query.left, query.right)
+        return "school" if any(_query_level(s, ctes, depth + 1) == "school" for s in sides) else "agg"
+    if not isinstance(query, exp.Select):
+        return "agg"
+    local = dict(ctes)
+    with_ = query.args.get("with_") or query.args.get("with")
+    for cte in (with_.expressions if with_ else []):
+        local[str(cte.alias_or_name).lower()] = cte.this
+    if _is_aggregating(query):
+        group = query.args.get("group")
+        if group and any(isinstance(c, exp.Column) and str(c.name).lower() in SCHOOL_GRAIN_COLUMNS
+                         for c in group.find_all(exp.Column)):
+            return "school"          # group by school_key = one row per school
+        return "agg"
+    sources = []
+    from_ = query.args.get("from_") or query.args.get("from")
+    if from_:
+        sources.append(from_.this)
+    sources += [j.this for j in query.args.get("joins") or []]
+    for src in sources:
+        if isinstance(src, exp.Table):
+            name = str(src.name).lower()
+            if name in local:
+                if _query_level(local[name], {k: v for k, v in local.items() if k != name},
+                                depth + 1) == "school":
+                    return "school"
+            elif name in SCHOOL_LEVEL_TABLES:
+                return "school"
+        elif isinstance(src, exp.Subquery) and _query_level(src, local, depth + 1) == "school":
+            return "school"
+    return "agg"
+
+
+def check_aggregated(sql: str) -> None:
+    """Raise SqlRejected if the query can return one row per school: a query that reads a
+    school-level table must aggregate it (GROUP BY or count/sum/avg...), not by school_key.
+    A heuristic on top of check_sql, used when results are sent to an outside LLM."""
+    root = _parse_one(sql)
+    if _query_level(root, {}) == "school":
+        raise SqlRejected("the query would return school-level rows; aggregate with GROUP BY and "
+                          "count/sum/avg (school-level data must not leave the database)")
+
+
 def _apply_limit(root: exp.Query, max_rows: int) -> tuple[exp.Query, bool]:
     """Keep a plain LIMIT n with n <= max_rows; otherwise (missing, larger, a percentage, an
     expression, FETCH FIRST ...) set LIMIT max_rows. OFFSET is kept."""
@@ -241,8 +311,12 @@ class SqlTool:
                                  f'from "{catalog}".main."{table}"')
         self.con.execute("set lock_configuration = true")
 
-    def run(self, sql: str) -> QueryResult:
+    def run(self, sql: str, require_aggregate: bool = False) -> QueryResult:
+        """Check and run one query. `require_aggregate=True` (the agent) also refuses queries
+        that could return school-level rows (`check_aggregated`)."""
         sql_executed, limit_applied = check_sql(sql, self.max_rows)
+        if require_aggregate:
+            check_aggregated(sql_executed)
         timer = threading.Timer(self.timeout_s, self.con.interrupt)
         t0 = time.perf_counter()
         timer.start()
