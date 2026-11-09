@@ -203,6 +203,14 @@ then the Sattva analysis (phases A1-A6).
   `reports/rag_ingest.json`. No LLM calls yet. Deps `requirements-rag.txt`, venv `D:\dev\.venv-rag` (the global
   Python has a transformers/huggingface-hub version clash); CI job `rag` installs only chromadb + reportlab and
   tests use a fake embedder and a word-count token estimate.
+- RAG phase 3 (`rag/sql_tool.py`, `rag/schema_card.py`, branch rag-phase3-sql): `SqlTool().run(sql)` over the gold
+  DuckDB (`UDISE_GOLD_DB`, else this checkout's, else the main checkout's via git-common-dir), opened read_only with
+  `enable_external_access=false` + `lock_configuration=true`; sqlglot check: one SELECT, 13 allowlisted bare table names
+  or CTEs, no commands/table functions/file functions, `pseudocode` rejected and hidden by same-name temp views; LIMIT 200
+  added or lowered; 10 s timeout via `interrupt()`; returns columns, rows, row_count, sql_executed (sqlglot's re-written
+  SQL), truncated. `rag/schema_card.md` generated from gold + `scripts/make_data_dictionary.py` (test fails if stale).
+  `tests/test_rag_sql.py`: sample gold built in the test; full-DB tests (8/8 official through both validation SQLs) skip
+  without the DB. Lesson: DuckDB refuses a 2nd connection to the same file in one process with different config.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

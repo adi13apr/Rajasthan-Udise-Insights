@@ -1,10 +1,11 @@
-# rag/: questions answered from UDISE+ documents (phase 1: ingestion)
+# rag/: questions answered from UDISE+ documents and the gold tables
 
 The RAG layer will let a user ask a question and get an answer from two kinds of evidence:
 official UDISE+ documents (schemas, reports, guidelines) and SQL over the gold tables. It is
-built in five phases. **Phase 1, this one, only ingests documents**: it reads them, cuts them
-into chunks, turns every chunk into a vector with a local model, and stores the vectors in a
-ChromaDB index on disk. There are no LLM calls and no paid APIs.
+built in five phases. **Phase 1 ingests documents**: it reads them, cuts them into chunks,
+turns every chunk into a vector with a local model, and stores the vectors in a ChromaDB index
+on disk. **Phase 3** (below) is a safe, read-only SQL tool over the gold tables and the schema
+card the agent will read. There are no LLM calls and no paid APIs yet.
 
 ```
 docs_corpus/manifest.csv ──> extract.py ──> chunking.py ──> embedder.py ──> store.py (ChromaDB)
@@ -169,3 +170,102 @@ the manifest checks and that only queries get the bge prefix. CI job `rag` insta
   item_group/item_id code in one cell, 522 tokens (2024-25) and 525 (2025-26) with the
   header. It is kept whole and marked `oversized`: the full text is stored and returned, but
   the embedding only sees the first 512 tokens (the last few codes: repeater, EWS).
+
+## Phase 3: a safe SQL tool over the gold tables
+
+The second kind of evidence is SQL over the gold star schema. `rag/sql_tool.py` is the only way
+later phases will touch the database, so it has to be safe even when the SQL is written by an
+LLM. Still no LLM in this phase.
+
+```powershell
+D:\dev\.venv-rag\Scripts\python.exe -m pip install -r requirements-rag.txt   # adds sqlglot
+D:\dev\.venv-rag\Scripts\python.exe -m rag.schema_card                       # rewrite rag/schema_card.md
+D:\dev\.venv-rag\Scripts\python.exe -m pytest tests/test_rag_sql.py -v -rs
+```
+
+```python
+from rag.sql_tool import SqlTool
+with SqlTool() as tool:                  # UDISE_GOLD_DB, else the main checkout's gold database
+    r = tool.run("select district, ptr from mart_district_year where year = '2025-26' order by ptr desc")
+    r.columns, r.rows, r.row_count, r.sql_executed, r.truncated
+```
+
+| Setting | Default | Change with |
+|---|---|---|
+| Gold database | this checkout's `data/gold/udise.duckdb`, else the main checkout's (worktrees have none: it is gitignored) | `UDISE_GOLD_DB` or `SqlTool(path)` |
+| Row cap | 200 | `SqlTool(max_rows=...)` |
+| Timeout | 10 s | `SqlTool(timeout_s=...)` |
+
+### Two layers of protection
+Each layer would stop most attacks on its own; together a gap in one is caught by the other.
+
+1. **The SQL is checked before it runs** (`check_sql`, parsed by sqlglot in the DuckDB dialect).
+   Exactly one statement. The top level must be a query (SELECT, UNION / INTERSECT / EXCEPT;
+   CTEs and subqueries are fine). No DDL, DML or command anywhere in the tree (INSERT, DELETE
+   inside a CTE, ATTACH, COPY, PRAGMA, SET, INSTALL, LOAD, CALL, EXPLAIN, ...). Every table is
+   a bare name from the allowlist (the 13 gold tables) or a CTE of the same query: no
+   `main.x`, no `FROM 'file.csv'`, no table functions (`read_csv(...)`, `range(...)`). No
+   file-reading or system function anywhere (`read_*`, `glob`, `query`, `duckdb_*`,
+   `current_setting`, ...). Why parse rather than search for words: a word search is fooled by
+   comments, quoting and spacing, and rejects harmless queries that mention "delete" in a string.
+2. **The database refuses anything but reading.** It is opened `read_only=True` with
+   `enable_external_access = false`: DuckDB then cannot touch the file system at all (no
+   reading files, no COPY TO, no ATTACH, no extensions), and it does not allow switching that
+   back on while the database is open. `lock_configuration = true` then stops any `SET`. The
+   tests send dangerous statements straight to the connection, past layer 1, and check that
+   DuckDB refuses each one.
+
+**What runs is what was checked.** The tool runs the SQL that sqlglot writes back out of the
+checked tree, not the original text, and returns it as `sql_executed`. So nothing can hide in
+a comment or an odd quote, and the caller sees exactly what ran, including the LIMIT.
+
+**LIMIT 200.** A query without a LIMIT gets `LIMIT 200`. A larger LIMIT (or a percentage,
+an expression, `FETCH FIRST`) is lowered to 200, and an OFFSET is kept. `truncated` says that
+the cap was reached, so the caller knows more rows may exist and should aggregate instead.
+
+**Timeout.** A timer calls DuckDB's `interrupt()` after 10 s. The query stops with
+`SqlTimeout`, and the tool stays usable for the next query. Memory is capped at 2 GB and
+threads at 4. If the SQL passed the checks but DuckDB still fails (wrong column, for example),
+the tool raises `SqlExecutionError` with DuckDB's message, so an agent can correct the query.
+
+**The school code is hidden.** The UDISE+ terms forbid re-identifying schools. `pseudocode`
+is rejected by layer 1, and temporary views with the same names as `dim_school` and
+`int_school_year` leave it out (`select * exclude (pseudocode)`), so even `select *` never
+returns it. `school_key` (a row number given by the pipeline) is still there for joins.
+
+### The schema card
+`rag/schema_card.md` is what the agent will read before writing SQL. It is generated
+(`python -m rag.schema_card`) from the gold database: names, types and row counts come from
+DuckDB, column meanings are reused from `scripts/make_data_dictionary.py`, and code lists come
+from the dimension tables. That way it cannot drift from the real schema, and a test fails if
+the committed card is stale. It is compact on purpose (about 2,400 words): the 37 teacher count
+columns are grouped, the facility flags are listed once, and the management mart refers to the
+district mart. It covers how to query (joins through the SCD2 `school_key`, official vs
+classes 1-12 enrolment, NULL is not "no", the playground reporting change), the codes
+(including how management codes 94, 95 and 101 were resolved as government), and 5 example
+question -> SQL pairs. The tests run every example.
+
+### Tests (`tests/test_rag_sql.py`)
+- **Rejected:** 64 unsafe statements, each must raise `SqlRejected`. They cover a second
+  statement hidden after a comment, DELETE inside a CTE, every command above, file functions
+  in FROM, in a subquery, in a CTE and as a scalar, file paths as tables, qualified names, and
+  the school code. There are also 14 safe queries that must pass and 11 LIMIT rewrites.
+- **On the synthetic sample gold** (built by the test, as in CI): results and `sql_executed`,
+  the row cap, the hidden school code, the database's own lock-down, the timeout, DuckDB
+  errors, the examples, and both validation queries (`sql/validation/01_official_indicators.sql`
+  through `int_school_year`, `sql/powerbi/check_validation_measures.sql` straight from the
+  facts), which must give exactly what `pipeline.validation` gives.
+- **On the full gold database** (skipped when it is absent, e.g. in CI): both validation
+  queries run through the tool reproduce the 8 official 2024-25 figures exactly, the first
+  example gives the official schools / students / teachers, and the committed card is up to
+  date.
+
+### Limits (known)
+- With the school code hidden, the two versions of a school that changed district cannot be
+  linked (so "which schools moved?" cannot be answered row by row). The count of moves is in the
+  card as a fact.
+- A query can still return up to 200 school-level rows (without codes). The card tells the
+  agent to aggregate; a later phase can add a check that answers only show aggregates.
+- DuckDB allows only one configuration per database file per process: while a `SqlTool` is
+  open, other code in the same process cannot open the same file read-only with different
+  settings. Open the tool last, or close it first.

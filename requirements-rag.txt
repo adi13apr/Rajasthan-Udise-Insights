@@ -3,6 +3,7 @@
 -r requirements.txt
 chromadb==1.5.9     # persistent vector index (rag/store.py)
 reportlab==5.0.0    # builds the synthetic PDFs used by tests/test_rag_*.py
+sqlglot==30.30.0    # parses and checks the SQL of rag/sql_tool.py (phase 3)
 # The real embedder (rag/embedder.py, BAAI/bge-small-en-v1.5 on CPU). Not installed in CI:
 # the tests use a tiny fake embedder and a word-count token estimate, so CI never downloads a model.
 sentence-transformers==5.2.0
