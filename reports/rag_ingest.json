@@ -1,11 +1,11 @@
 {
-  "run_at": "2026-11-09T08:42:14+00:00",
-  "seconds": 736.33,
+  "run_at": "2026-11-09T09:12:32+00:00",
+  "seconds": 679.89,
   "manifest": "docs_corpus/manifest.csv",
   "index_dir": "E:/udise-rag-index",
   "collection": "udise_docs",
   "settings": {
-    "chunker_version": 2,
+    "chunker_version": 4,
     "target_tokens": 450,
     "max_tokens": 512,
     "overlap_tokens": 68,
@@ -17,7 +17,7 @@
       "file": "docs/DSP_Schema_2024-25.pdf",
       "title": "Data Sharing Portal - Schema",
       "kind": "pdf",
-      "status": "new",
+      "status": "changed",
       "pages": 10,
       "sections": 6,
       "tables": 6,
@@ -27,13 +27,13 @@
       "oversized_chunks": 1,
       "max_chunk_tokens": 522,
       "empty_pages": [],
-      "seconds": 72.03
+      "seconds": 24.8
     },
     {
       "file": "docs/DSP_Schema_2025-26.pdf",
       "title": "Data Sharing Portal - Schema (2025-26)",
       "kind": "pdf",
-      "status": "new",
+      "status": "changed",
       "pages": 6,
       "sections": 7,
       "tables": 7,
@@ -43,13 +43,13 @@
       "oversized_chunks": 1,
       "max_chunk_tokens": 525,
       "empty_pages": [],
-      "seconds": 9.68
+      "seconds": 9.55
     },
     {
       "file": "docs/design_decisions.md",
       "title": "Design decisions",
       "kind": "markdown",
-      "status": "new",
+      "status": "changed",
       "pages": 0,
       "sections": 15,
       "tables": 0,
@@ -65,7 +65,7 @@
       "file": "DATA_QUALITY_LOG.md",
       "title": "Data Quality Log",
       "kind": "markdown",
-      "status": "new",
+      "status": "changed",
       "pages": 0,
       "sections": 5,
       "tables": 4,
@@ -75,39 +75,39 @@
       "oversized_chunks": 0,
       "max_chunk_tokens": 442,
       "empty_pages": [],
-      "seconds": 1.48
+      "seconds": 1.57
     },
     {
       "file": "udise_report_2024-25_existing.pdf",
       "title": "Report on Unified District Information System for Education Plus (UDISE+) 2024-25",
       "kind": "pdf",
-      "status": "new",
+      "status": "changed",
       "pages": 189,
-      "sections": 223,
+      "sections": 222,
       "tables": 174,
-      "chunks": 1123,
-      "text_chunks": 279,
-      "table_chunks": 844,
-      "oversized_chunks": 17,
-      "max_chunk_tokens": 770,
+      "chunks": 1110,
+      "text_chunks": 268,
+      "table_chunks": 842,
+      "oversized_chunks": 1,
+      "max_chunk_tokens": 767,
       "empty_pages": [
         1
       ],
-      "seconds": 326.37
+      "seconds": 326.57
     },
     {
       "file": "udise_report_2025-26_existing.pdf",
       "title": "Report on Unified District Information System for Education Plus (UDISE+) 2025-26",
       "kind": "pdf",
-      "status": "new",
+      "status": "changed",
       "pages": 189,
-      "sections": 232,
+      "sections": 230,
       "tables": 183,
-      "chunks": 1123,
-      "text_chunks": 275,
+      "chunks": 1128,
+      "text_chunks": 280,
       "table_chunks": 848,
       "oversized_chunks": 0,
-      "max_chunk_tokens": 512,
+      "max_chunk_tokens": 510,
       "empty_pages": [
         1,
         9,
@@ -122,13 +122,13 @@
         170,
         180
       ],
-      "seconds": 315.16
+      "seconds": 310.33
     },
     {
       "file": "udise_general_metadata.pdf",
       "title": "General metadata information on the data collected in UDISE+",
       "kind": "pdf",
-      "status": "new",
+      "status": "changed",
       "pages": 6,
       "sections": 2,
       "tables": 6,
@@ -138,7 +138,7 @@
       "oversized_chunks": 0,
       "max_chunk_tokens": 424,
       "empty_pages": [],
-      "seconds": 2.15
+      "seconds": 2.07
     }
   ],
   "removed": [],
@@ -169,19 +169,19 @@
     "chunks_deleted_for_removed_files": 0,
     "ingested": {
       "pages": 400,
-      "chunks": 2328,
-      "text_chunks": 576,
-      "table_chunks": 1752,
+      "chunks": 2320,
+      "text_chunks": 570,
+      "table_chunks": 1750,
       "tables": 380
     },
     "index": {
       "pages": 400,
-      "chunks": 2328,
-      "text_chunks": 576,
-      "table_chunks": 1752,
+      "chunks": 2320,
+      "text_chunks": 570,
+      "table_chunks": 1750,
       "tables": 380,
-      "oversized_chunks": 19
+      "oversized_chunks": 3
     },
-    "index_records": 2328
+    "index_records": 2320
   }
 }

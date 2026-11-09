@@ -28,6 +28,7 @@ from .tokens import TokenCounter
 
 SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[\"'(\[*`A-Z0-9])")
 WORD = re.compile(r"\S+")
+MAX_PDF_PATH = 3   # at most 3 stacked PDF headings in a section path
 
 
 @dataclass
@@ -210,13 +211,15 @@ class Chunker:
 
         # Section path. Markdown: the usual heading stack by level. PDF headings have no level:
         # headings that follow each other directly stack up ("Data Sharing Portal - Schema >
-        # School Profile 1"); a heading after some content starts a new path.
+        # School Profile 1"); a heading after some content starts a new path. A PDF path keeps
+        # its last MAX_PDF_PATH headings, so a long run of heading-like lines can never make
+        # a section path that crowds the text out of every chunk.
         md_stack: list[tuple[int, str]] = []
         for el in doc.elements:
             if isinstance(el, Heading):
                 flush()
                 if el.level == 0:
-                    path = path + [el.text] if after_heading else [el.text]
+                    path = (path + [el.text])[-MAX_PDF_PATH:] if after_heading else [el.text]
                 else:
                     md_stack = [(lvl, t) for lvl, t in md_stack if lvl < el.level] + [(el.level, el.text)]
                     path = [t for _, t in md_stack]

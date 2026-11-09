@@ -11,7 +11,7 @@ from rag.chunking import Chunker  # noqa: E402
 from rag.extract import (Heading, Paragraph, Table, TableRow, _continues, _merge_into,  # noqa: E402
                          extract_pdf)
 from rag.tokens import estimate_tokens  # noqa: E402
-from rag_helpers import make_pdf  # noqa: E402
+from rag_helpers import make_pdf, sentences  # noqa: E402
 
 ROW = re.compile(r"\| District (\d{3}) \| (\d+) \| (\d+) \|")
 
@@ -87,3 +87,49 @@ def test_only_real_continuations_are_joined():
     # Blank S.No. but a new column name: its own row (2024-25 schema, Item_group).
     assert not _continues(row, ["", "Item_group", "Item Group =1 ...", ""])
     assert not _continues(row, ["2", "", "text", ""])
+
+
+def _front_matter_pdf(path):
+    """Report front matter: a narrative page set in bold (the body font is bold), a contents
+    page with dot leaders, a number-only bold line and five bold headings in a row."""
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+    from reportlab.platypus import PageBreak
+    from reportlab.platypus import Paragraph as P
+    from reportlab.platypus import SimpleDocTemplate
+
+    styles = getSampleStyleSheet()
+    bold = ParagraphStyle("BoldBody", parent=styles["BodyText"], fontName="Helvetica-Bold")
+    narrative = " ".join(f"Item {k} explains that enrolment in district {k} rose in the year "
+                         f"and that the trend continued" for k in range(1, 9))
+    story = [P("1. Key results", styles["Heading2"]), P(narrative, bold), PageBreak(),
+             P("Contents", styles["Heading2"])]
+    story += [P(f"Section {k}: Highlights {'.' * 40} {20 + k}", bold) for k in range(1, 4)]
+    story += [P("79.1 - 89.0", bold), PageBreak()]
+    story += [P(f"Part {x}", bold) for x in "ABCDE"]
+    story += [P(sentences("P", 3), styles["BodyText"])]
+    SimpleDocTemplate(str(path), pagesize=A4, invariant=1).build(story)
+
+
+def test_bold_body_text_contents_lines_and_numbers_are_not_headings(tmp_path):
+    path = tmp_path / "front.pdf"
+    _front_matter_pdf(path)
+    doc = extract_pdf(path)
+    headings = [(e.page, e.text) for e in doc.elements if isinstance(e, Heading)]
+    assert headings == [(1, "1. Key results"), (2, "Contents"),
+                        (3, "Part A"), (3, "Part B"), (3, "Part C"), (3, "Part D"), (3, "Part E")]
+    page1 = " ".join(" ".join(e.text.split()) for e in doc.elements
+                      if isinstance(e, Paragraph) and e.page == 1)
+    assert "Item 1 explains" in page1 and "Item 8 explains" in page1   # all of it is body text
+    page2 = " ".join(" ".join(e.text.split()) for e in doc.elements
+                      if isinstance(e, Paragraph) and e.page == 2)
+    assert "Section 3: Highlights" in page2 and "79.1 - 89.0" in page2
+
+
+def test_stacked_pdf_headings_keep_the_last_three(tmp_path):
+    path = tmp_path / "front.pdf"
+    _front_matter_pdf(path)
+    chunks = Chunker(estimate_tokens).chunk(extract_pdf(path), "front.pdf")
+    (last,) = [c for c in chunks if c.page == 3]
+    assert last.section == "Part C > Part D > Part E"
+    assert all(len(c.section.split(" > ")) <= 3 for c in chunks)
