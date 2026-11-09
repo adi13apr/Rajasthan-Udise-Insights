@@ -243,6 +243,23 @@ chunk alone (phase 1); changing that would need a re-embedding.
 embedder; `hybrid_rerank` also loads the reranker (~1.1 GB, downloaded once). The reranker
 sits behind the same kind of small interface as the embedder (`name`, `score(query, passages)`).
 
+### Which mode is the default: the evaluation
+`python -m rag.evals.run_retrieval` runs 33 reviewed questions (exact codes, definitions, figures
+from the reports including Rajasthan rows, paraphrases) through all four modes. The rule for
+choosing the default was written in `rag/evals/RETRIEVAL_RESULTS.md` before the run and applied as
+written. Result (2026-11-09, laptop CPU, 2,320 chunks):
+
+| Mode | recall@5 | MRR@10 | p50 | p95 |
+|---|---|---|---|---|
+| `bm25` | 60.6 % | 0.526 | 0.006 s | 0.009 s |
+| `vector` | 57.6 % | 0.478 | 0.057 s | 0.219 s |
+| `hybrid` | 63.6 % | 0.545 | 0.107 s | 0.187 s |
+| `hybrid_rerank` | 66.7 % | 0.533 | 14.1 s | 15.6 s |
+
+**Default: `hybrid`.** The reranker answered one more question (+3.0 points, under the 5-point bar)
+and its p95 is 15.6 s (over 1.5 s). BM25 wins exact codes (8/8), vectors win definitions (4/7 vs
+1/7). What was missed, and why, is in `RETRIEVAL_RESULTS.md`.
+
 ### Tests (`tests/test_rag_retrieve.py`)
 A tiny Chroma index is written in a temp folder with a fake embedder whose vectors are word
 counts (so "similar" is predictable) and searched with a fake reranker that counts a word. The

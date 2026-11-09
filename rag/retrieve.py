@@ -40,7 +40,7 @@ from pathlib import Path
 from . import config as C
 
 MODES = ("bm25", "vector", "hybrid", "hybrid_rerank")
-DEFAULT_MODE = "hybrid"   # chosen by the rule in rag/evals/RETRIEVAL_RESULTS.md
+DEFAULT_MODE = "hybrid"   # picked by the rule in rag/evals/RETRIEVAL_RESULTS.md (eval of 2026-11-09)
 RRF_K = 60                # Reciprocal Rank Fusion constant
 CANDIDATES = 50           # how many results of each list go into the fusion
 RERANK_POOL = 30          # how many fused results the reranker re-scores

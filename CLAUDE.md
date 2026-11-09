@@ -210,7 +210,7 @@ then the Sattva analysis (phases A1-A6).
   bm25 (rank_bm25 over title + full chunk text; tokenizer keeps single digits, splits item_group/2024-25, drops Indian
   commas), vector (Chroma + embed_query), hybrid (RRF k=60 over top 50 each), hybrid_rerank (top 30 -> BAAI/bge-reranker-base,
   top 5). `python -m rag.evals.run_retrieval [--check]`: refuses while questions have needs_review; selection rule written
-  first in `rag/evals/RETRIEVAL_RESULTS.md`, coded as `choose_default`. 2025-26 report: 12 image-only pages (cover + 11
+  first in `rag/evals/RETRIEVAL_RESULTS.md`, coded as `choose_default`. First run 2026-11-09 (33 questions, CPU): recall@5 bm25 60.6 %, vector 57.6 %, hybrid 63.6 %, hybrid_rerank 66.7 % (p95 15.6 s) -> default `hybrid`. 2025-26 report: 12 image-only pages (cover + 11
   section dividers, titles only).
 - RAG phase 3 (`rag/sql_tool.py`, `rag/schema_card.py`, branch rag-phase3-sql): `SqlTool().run(sql)` over the gold
   DuckDB (`UDISE_GOLD_DB`, else this checkout's, else the main checkout's via git-common-dir), opened read_only with
