@@ -194,6 +194,15 @@ then the Sattva analysis (phases A1-A6).
   mismatches), official 8/8. DynamoDB manifest `udise-ingest-manifest` (branch feature/aws-dynamodb-manifest):
   one item per bronze file (status PASSED/QUARANTINED, etag); same etag already PASSED -> skipped;
   validator role GetItem/PutItem only; `python -m aws.manifest_summary`. Backfill: 94 PASSED. Credentials only via `aws login`; boto3 needs `boto3[crt]`.
+- RAG phase 1 (`rag/`, branch rag-phase1-ingest, design in `rag/README.md`): `python -m rag.ingest` reads
+  `docs_corpus/manifest.csv` (only file of the corpus in the repo; `file` = repo path or name in
+  `UDISE_DOCS_DIR`, default E:\udise-docs), extracts PDF (pdfplumber, tables found by ruling lines, bold header
+  rows) and Markdown, chunks (~450 tokens, max 512 by the bge tokenizer, ~15% overlap, tables whole-row with
+  header repeated), embeds with BAAI/bge-small-en-v1.5 (only queries get the instruction prefix), stores in
+  ChromaDB at `UDISE_RAG_DIR` (default data/rag/chroma, gitignored) with a per-file state hash; writes
+  `reports/rag_ingest.json`. No LLM calls yet. Deps `requirements-rag.txt`, venv `D:\dev\.venv-rag` (the global
+  Python has a transformers/huggingface-hub version clash); CI job `rag` installs only chromadb + reportlab and
+  tests use a fake embedder and a word-count token estimate.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).

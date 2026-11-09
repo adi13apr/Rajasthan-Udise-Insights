@@ -56,3 +56,24 @@ jobs:
         with:
           name: spark-parity-sample
           path: data/sample/reports/spark_parity.*
+
+  # RAG document ingestion (rag/): chunking, PDF extraction and the ChromaDB index, on
+  # synthetic documents with a fake embedder. Installs only chromadb and reportlab (pinned in
+  # requirements-rag.txt), not sentence-transformers/torch, and runs offline from Hugging Face,
+  # so CI never downloads a model.
+  rag:
+    runs-on: ubuntu-latest
+    env:
+      HF_HUB_OFFLINE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install dependencies (main + chromadb + reportlab)
+        run: |
+          pip install -r requirements.txt
+          pip install $(grep -E '^(chromadb|reportlab)==' requirements-rag.txt | cut -d' ' -f1)
+      - name: RAG tests
+        run: python -m pytest tests/test_rag_chunking.py tests/test_rag_pdf.py tests/test_rag_ingest.py -v

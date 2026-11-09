@@ -1,0 +1,10 @@
+# RAG layer (rag/): document ingestion into a local ChromaDB index. Kept out of requirements.txt
+# on purpose: the main pipeline and its CI job do not need it. Exact versions it was tested with.
+-r requirements.txt
+chromadb==1.5.9     # persistent vector index (rag/store.py)
+reportlab==5.0.0    # builds the synthetic PDFs used by tests/test_rag_*.py
+# The real embedder (rag/embedder.py, BAAI/bge-small-en-v1.5 on CPU). Not installed in CI:
+# the tests use a tiny fake embedder and a word-count token estimate, so CI never downloads a model.
+sentence-transformers==5.2.0
+transformers==4.57.6
+torch==2.6.0

@@ -201,3 +201,23 @@ therefore change only when the data or the code changes.
   decimals and the engines may round a .xxx5 value differently). Any mismatch fails the run.
 - **Spark stays optional.** `requirements-spark.txt` and a separate CI job; the main job and
   `requirements.txt` do not need Java.
+
+## 14. Document ingestion for RAG (phase 1 of 5)
+
+`rag/` ingests the documents listed in `docs_corpus/manifest.csv` (schemas, the project's own
+notes, later the official reports in `UDISE_DOCS_DIR`) into a local ChromaDB index, so later
+phases can answer questions from documents as well as from the gold tables. Full reasoning in
+`rag/README.md`; in short:
+
+- **Chunks of ~450 tokens, never above 512**, counted with the embedding model's tokenizer:
+  bge-small-en-v1.5 ignores everything after 512 tokens, so a longer chunk could not be found
+  by its end. ~15% overlap so no sentence is lost on a boundary; chunks never cross a heading.
+- **Tables are their own chunks**, split only between rows with the header repeated, so numbers
+  are never separated from the header that explains them.
+- **Deterministic ids** (`sha256(file | page | offset)`) and **idempotent re-runs** (content +
+  manifest + settings hash per file; changed files replaced, removed files deleted).
+- **Local and free:** sentence-transformers on CPU, no LLM and no paid API in this phase. The
+  model sits behind an `Embedder` interface (separate document and query methods: only queries
+  get bge's instruction prefix).
+- **Optional, like Spark:** `requirements-rag.txt` and a separate CI job that installs only
+  chromadb and reportlab and uses a fake embedder, so CI never downloads a model.

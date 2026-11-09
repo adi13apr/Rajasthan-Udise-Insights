@@ -1,0 +1,5 @@
+file,title,publisher,year,doc_type,source_url
+docs/DSP_Schema_2024-25.pdf,Data Sharing Portal - Schema,"UDISE+, Ministry of Education, Government of India",2024-25,schema,https://microdata.udiseplus.gov.in
+docs/DSP_Schema_2025-26.pdf,Data Sharing Portal - Schema (2025-26),"UDISE+, Ministry of Education, Government of India",2025-26,schema,https://microdata.udiseplus.gov.in
+docs/design_decisions.md,Design decisions,Rajasthan UDISE+ Insights (project documentation),2026,project_doc,
+DATA_QUALITY_LOG.md,Data Quality Log,Rajasthan UDISE+ Insights (project documentation),2026,project_doc,
