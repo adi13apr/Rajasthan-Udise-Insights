@@ -2,8 +2,10 @@
 
 Synthetic data only, and no AWS calls: bronze files are made by the real pipeline code
 (pipeline.bronze.load_bronze) from tiny zips, the contract by aws.make_contract, and S3 is a
-small fake. boto3 is not needed (the main CI job does not install it).
+small fake, and so is the DynamoDB manifest table. boto3 is not needed (the main CI job does
+not install it).
 """
+import hashlib
 import importlib
 import io
 import json
@@ -193,14 +195,24 @@ def test_every_failure_is_listed_first_one_is_the_rule(bronze, contract):
 
 # --- Lambda handler with a fake S3 ------------------------------------------------------------
 
+def etag(data: bytes) -> str:
+    """S3's etag of a single-part upload: the MD5 of the bytes."""
+    return hashlib.md5(data).hexdigest()
+
+
 class FakeS3:
-    def __init__(self, objects: dict[str, bytes]):
+    def __init__(self, objects: dict[str, bytes], calls: list | None = None):
         self.objects = dict(objects)
-        self.calls = []
+        self.calls = [] if calls is None else calls
 
     def get_object(self, Bucket, Key):
         self.calls.append(("get", Key))
-        return {"Body": io.BytesIO(self.objects[Key])}
+        data = self.objects[Key]
+        return {"Body": io.BytesIO(data), "ETag": f'"{etag(data)}"'}
+
+    def head_object(self, Bucket, Key):
+        self.calls.append(("head", Key))
+        return {"ETag": f'"{etag(self.objects[Key])}"', "ContentLength": len(self.objects[Key])}
 
     def put_object(self, Bucket, Key, Body, ContentType=None):
         self.calls.append(("put", Key))
@@ -211,17 +223,40 @@ class FakeS3:
         del self.objects[Key]
 
 
+class FakeTable:
+    """The DynamoDB manifest table: get_item / put_item of the boto3 Table resource, plain values."""
+    def __init__(self, calls: list | None = None):
+        self.items: dict[str, dict] = {}
+        self.calls = [] if calls is None else calls
+
+    def get_item(self, Key, ConsistentRead=False):
+        self.calls.append(("ddb_get", Key["s3_key"]))
+        item = self.items.get(Key["s3_key"])
+        return {"Item": dict(item)} if item else {}
+
+    def put_item(self, Item):
+        self.calls.append(("ddb_put", Item["s3_key"]))
+        self.items[Item["s3_key"]] = dict(Item)
+
+
+class FakeDynamoResource:
+    def Table(self, name):
+        return FakeTable()
+
+
 @pytest.fixture
 def handler(monkeypatch, contract):
-    """aws/bronze_validator/handler.py imported as in Lambda, with boto3 and the contract faked."""
+    """aws/bronze_validator/handler.py imported as in Lambda, with boto3, the contract and the
+    manifest table faked (handler.MANIFEST is an empty FakeTable)."""
     folder = ROOT / "aws" / "bronze_validator"
     monkeypatch.syspath_prepend(str(folder))
-    fake_boto3 = types.SimpleNamespace(client=lambda name: None)
+    fake_boto3 = types.SimpleNamespace(client=lambda name: None, resource=lambda name: FakeDynamoResource())
     monkeypatch.setitem(sys.modules, "boto3", fake_boto3)
     monkeypatch.delitem(sys.modules, "handler", raising=False)
     monkeypatch.delitem(sys.modules, "validator", raising=False)
     module = importlib.import_module("handler")
     monkeypatch.setattr(module, "CONTRACT", contract)
+    monkeypatch.setattr(module, "MANIFEST", FakeTable())
     return module
 
 
@@ -283,6 +318,123 @@ def test_direct_call_quarantines_like_an_upload(handler, bronze, monkeypatch):
     assert json.loads(s3.objects[result["results"][0]["quarantine_key"] + ".reason.json"])["_run_id"] == "req-2"
 
 
+# --- Ingestion manifest (DynamoDB) with a fake table --------------------------------------------
+
+ITEM_FIELDS = {"s3_key", "dataset", "year", "row_count", "etag", "status", "reason", "validated_at", "run_id"}
+
+
+def test_manifest_item_written_when_a_file_passes(handler, bronze, monkeypatch):
+    data = file_bytes(bronze, ODD_KEY)
+    monkeypatch.setattr(handler, "S3", FakeS3({ODD_KEY: data}))
+    result = handler.lambda_handler(s3_event(ODD_KEY), types.SimpleNamespace(aws_request_id="req-3"))
+    assert result["results"][0]["result"] == "ok"
+    item = handler.MANIFEST.items[ODD_KEY]
+    assert set(item) == ITEM_FIELDS
+    assert (item["dataset"], item["year"], item["row_count"]) == ("enrolment1", "2025-26", 2)
+    assert (item["status"], item["etag"], item["run_id"]) == ("PASSED", etag(data), "req-3")
+    assert re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\+00:00", item["validated_at"])
+
+
+def test_manifest_item_written_when_a_file_is_quarantined(handler, bronze, monkeypatch):
+    bad = rewrite(file_bytes(bronze, KEY), lambda t: t.slice(0, 1))
+    calls = []                                       # one log for S3 and DynamoDB: the order of writes
+    monkeypatch.setattr(handler, "S3", FakeS3({KEY: bad}, calls))
+    monkeypatch.setattr(handler, "MANIFEST", FakeTable(calls))
+    result = handler.lambda_handler(s3_event(KEY), types.SimpleNamespace(aws_request_id="req-4"))
+    assert result["quarantined"] == 1
+    item = handler.MANIFEST.items[KEY]
+    assert set(item) == ITEM_FIELDS | {"quarantine_key"}
+    assert (item["status"], item["etag"], item["row_count"]) == ("QUARANTINED", etag(bad), 1)  # rows in the file
+    assert item["reason"] == "row_count_mismatch: 1 rows, expected 3"
+    assert item["quarantine_key"] == result["results"][0]["quarantine_key"]
+    # the manifest item is written before the bronze file is deleted (a retry finds the file again)
+    assert [c[0] for c in calls if c[0] in ("ddb_put", "delete")] == ["ddb_put", "delete"]
+
+
+def test_same_etag_already_passed_is_skipped(handler, bronze, monkeypatch):
+    s3 = FakeS3({ODD_KEY: file_bytes(bronze, ODD_KEY)})
+    monkeypatch.setattr(handler, "S3", s3)
+    handler.lambda_handler(s3_event(ODD_KEY), None)
+    first = dict(handler.MANIFEST.items[ODD_KEY])
+    s3.calls.clear()
+
+    result = handler.lambda_handler(s3_event(ODD_KEY), None)          # identical re-upload
+    assert result["results"][0]["result"] == "unchanged"
+    assert (result["checked"], result["unchanged"]) == (0, 1)
+    assert s3.calls == [("head", ODD_KEY)]                            # not downloaded, not checked
+    assert handler.MANIFEST.items[ODD_KEY] == first                   # item not rewritten
+
+
+def test_changed_etag_is_validated_again(handler, bronze, monkeypatch):
+    good = file_bytes(bronze, KEY)
+    s3 = FakeS3({KEY: good})
+    monkeypatch.setattr(handler, "S3", s3)
+    handler.lambda_handler(s3_event(KEY), None)
+    assert handler.MANIFEST.items[KEY]["status"] == "PASSED"
+
+    bad = rewrite(good, lambda t: t.slice(0, 1))                      # new upload, same key
+    s3.objects[KEY] = bad
+    result = handler.lambda_handler(s3_event(KEY), None)
+    assert result["results"][0]["result"] == "quarantined"
+    assert result["results"][0]["previous_status"] == "PASSED"
+    item = handler.MANIFEST.items[KEY]
+    assert (item["status"], item["etag"]) == ("QUARANTINED", etag(bad))
+
+
+def test_quarantined_file_is_checked_again_even_with_the_same_etag(handler, bronze, monkeypatch):
+    """Only a PASS lets a re-upload skip: the same bad bytes uploaded again are quarantined again."""
+    bad = rewrite(file_bytes(bronze, KEY), lambda t: t.slice(0, 1))
+    s3 = FakeS3({KEY: bad})
+    monkeypatch.setattr(handler, "S3", s3)
+    handler.lambda_handler(s3_event(KEY), None)
+    s3.objects[KEY] = bad
+    result = handler.lambda_handler(s3_event(KEY), None)
+    assert result["results"][0]["result"] == "quarantined"
+    assert handler.MANIFEST.items[KEY]["status"] == "QUARANTINED"
+
+
+def test_force_rechecks_a_passed_file(handler, bronze, monkeypatch):
+    monkeypatch.setattr(handler, "S3", FakeS3({ODD_KEY: file_bytes(bronze, ODD_KEY)}))
+    monkeypatch.setattr(handler, "BUCKET", "b")
+    handler.lambda_handler({"keys": [ODD_KEY]}, types.SimpleNamespace(aws_request_id="req-5"))
+    result = handler.lambda_handler({"keys": [ODD_KEY], "force": True}, types.SimpleNamespace(aws_request_id="req-6"))
+    assert result["results"][0]["result"] == "ok"
+    assert handler.MANIFEST.items[ODD_KEY]["run_id"] == "req-6"
+
+
+def test_dry_run_never_skips_and_writes_nothing(handler, bronze, monkeypatch):
+    """The deploy smoke test must exercise the real checks, even on a file that already PASSED."""
+    monkeypatch.setattr(handler, "S3", FakeS3({ODD_KEY: file_bytes(bronze, ODD_KEY)}))
+    monkeypatch.setattr(handler, "BUCKET", "b")
+    handler.lambda_handler({"keys": [ODD_KEY]}, None)
+    before = dict(handler.MANIFEST.items)
+    handler.MANIFEST.calls.clear()
+    result = handler.lambda_handler({"keys": [ODD_KEY], "dry_run": True}, None)
+    assert result["results"][0]["result"] == "ok"
+    assert result["results"][0]["previous_status"] == "PASSED"
+    assert [c[0] for c in handler.MANIFEST.calls] == ["ddb_get"]      # read only
+    assert handler.MANIFEST.items == before
+
+
+def template_block(name: str) -> str:
+    """One top-level resource of aws/template.yaml, as text (the main CI job has no PyYAML)."""
+    text = (ROOT / "aws" / "template.yaml").read_text(encoding="utf-8")
+    return re.search(rf"^  {name}:\n(.*?)(?=^  \S|^\S)", text, re.S | re.M).group(1)
+
+
+def test_template_manifest_table_and_least_privilege_access():
+    table = template_block("ManifestTable")
+    assert "Type: AWS::DynamoDB::Table" in table and "TableName: udise-ingest-manifest" in table
+    assert "BillingMode: PAY_PER_REQUEST" in table
+    assert "{AttributeName: s3_key, AttributeType: S}" in table and "{AttributeName: s3_key, KeyType: HASH}" in table
+    role = template_block("ValidatorRole")
+    statement = re.search(r"Sid: ReadAndWriteManifestItems\n(.*?)(?=\n\s+- Sid:)", role, re.S).group(1)
+    assert "Action: [dynamodb:GetItem, dynamodb:PutItem]" in statement
+    assert "Resource: !GetAtt ManifestTable.Arn" in statement
+    assert role.count("dynamodb:") == 2                                # nothing else on DynamoDB
+    assert "MANIFEST_TABLE: !Ref ManifestTable" in template_block("ValidatorFunction")
+
+
 # --- Custom resource in aws/template.yaml (bucket trigger + lifecycle rule) -------------------
 
 class ClientError(Exception):  # stands in for botocore.exceptions.ClientError
@@ -331,7 +483,9 @@ def bucket_config_code() -> str:
 # module). The only extra modules available are stand-ins for what Lambda really provides:
 # boto3/botocore (runtime) and, for the validator, pyarrow (AWS SDK for pandas layer).
 
-RUNTIME = {"boto3/__init__.py": "def client(*args, **kwargs):\n    return None\n",
+RUNTIME = {"boto3/__init__.py": ("def client(*args, **kwargs):\n    return None\n"
+                                  "class _Resource:\n    def Table(self, name):\n        return None\n"
+                                  "def resource(*args, **kwargs):\n    return _Resource()\n"),
            "botocore/__init__.py": "",
            "botocore/exceptions.py": "class ClientError(Exception):\n    pass\n"}
 PANDAS_LAYER = {"pyarrow/__init__.py": "", "pyarrow/parquet.py": ""}
@@ -497,3 +651,16 @@ def test_a_failed_reply_does_not_crash_the_function(bucket_config):
     bucket_config["s3"] = FakeBucketS3()
     bucket_config["reply_error"] = OSError("network unreachable")
     assert bucket_config["handler"](cfn_event("Create"), None) is None  # logged; ServiceTimeout ends the wait
+
+
+def test_manifest_summary_counts():
+    from aws.manifest_summary import summarise
+    items = [{"s3_key": "a", "dataset": "facility", "year": "2024-25", "status": "PASSED", "row_count": 5},
+             {"s3_key": "b", "dataset": "facility", "year": "2025-26", "status": "PASSED", "row_count": 7},
+             {"s3_key": "c", "dataset": "teacher", "year": "2025-26", "status": "QUARANTINED", "row_count": 1,
+              "reason": "row_count_mismatch: 1 rows, expected 3"}]
+    s = summarise(items)
+    assert s["by_status"] == {"PASSED": 2, "QUARANTINED": 1}
+    assert s["by_dataset"] == {"facility": 2, "teacher": 1}
+    assert (s["rows"], s["rows_passed"]) == (13, 12)
+    assert s["not_passed"] == [("c", "QUARANTINED", "row_count_mismatch: 1 rows, expected 3")]

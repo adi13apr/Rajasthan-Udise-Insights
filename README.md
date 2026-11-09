@@ -149,11 +149,12 @@ for the platform (Databricks, Delta, Unity Catalog) and for data that outgrows o
 The tables in the workspace are school-level UDISE+ data: keep them in your own workspace and do
 not share them (portal terms); only district-level results are published.
 
-## AWS architecture (S3, Lambda, Athena)
+## AWS architecture (S3, Lambda, DynamoDB, Athena)
 
 `aws/` runs the same lakehouse on **AWS, serverless**: bronze files in **S3**, a **Lambda**
-function that checks every bronze upload, and **Athena** (SQL over the Parquet files in S3) that
-builds silver, quarantine and the gold star schema. Everything except the bucket is defined in one
+function that checks every bronze upload and records the result in a **DynamoDB** ingestion
+manifest, and **Athena** (SQL over the Parquet files in S3) that builds silver, quarantine and the
+gold star schema. Everything except the bucket is defined in one
 **CloudFormation** template, so it can be created and removed with one command each. The same
 rules (`pipeline/rules.py`), the same star schema and the same official-figure checks are used, and
 `python -m aws.parity` proves Athena and DuckDB give the same answers. It runs on the AWS Free plan
@@ -164,6 +165,7 @@ flowchart LR
     L["local data/bronze<br/>94 Parquet files, 31.7 MB"] -->|"aws/upload_bronze.py<br/>boto3, skips same MD5"| B["S3 bronze/<br/>dataset/year=YYYY-YY/"]
     B -->|"S3 trigger<br/>bronze/ + .parquet"| LV["Lambda udise-bronze-validator<br/>file footer vs contract.json"]
     LV -->|"bad file + reason JSON"| QF["S3 quarantine/files/"]
+    LV <-->|"GetItem: same etag PASSED? skip<br/>PutItem: one item per file"| M[("DynamoDB udise-ingest-manifest<br/>key s3_key, on-demand")]
     B --> AB["Athena bronze_* tables<br/>external, partitioned by year"]
     AB -->|"SQL generated from<br/>pipeline/rules.py (CTAS)"| S["S3 silver/<br/>+ quarantine/rows/"]
     S -->|"sql/athena/*.sql (CTAS)"| G[("S3 gold/<br/>star schema + marts")]
@@ -171,6 +173,7 @@ flowchart LR
     G -->|"aws/parity.py"| P["reports/aws_parity.md<br/>vs DuckDB + official figures"]
     CFN["CloudFormation stack udise-aws<br/>aws/template.yaml"] -.-> LV
     CFN -.-> WG["Athena workgroup udise-wg<br/>1 GB per-query scan limit"]
+    CFN -.-> M
 ```
 
 **What each piece does, in simple words**
@@ -180,10 +183,40 @@ flowchart LR
 | S3 bucket `udise-lake-aditya-2026` | file storage, one prefix per layer: `bronze/`, `silver/`, `quarantine/`, `gold/`, `reference/` | the lake: cheap storage, Parquet files any engine can read |
 | `aws/upload_bronze.py` | copies local bronze to `bronze/<dataset>/year=<YYYY-YY>/`, same layout | skips files whose MD5 already matches, so a re-run uploads only what changed |
 | Lambda `udise-bronze-validator` (`aws/bronze_validator/`) | runs on every `.parquet` upload to `bronze/`: is the file in `contract.json`, readable, with exactly the expected columns, types and row count, and is every `_year` the folder's year? | a gate at the door: a bad file is moved to `quarantine/files/` with a `.reason.json` before anything reads it. It only writes to `quarantine/`, so it cannot trigger itself |
+| DynamoDB table `udise-ingest-manifest` | one item per bronze file, written by the validator after every check (details below) | a record of what was ingested and whether it passed, and it makes uploads idempotent: an identical re-upload is not checked twice |
 | `aws/make_contract.py` | writes `contract.json` from the local bronze files (94 files, 1,720,687 rows, 7 column layouts) | the "expected" side of the checks; file names, columns and counts only, no school data |
 | Athena + Glue catalog, database `udise` | `aws/athena_build.py` registers the bronze tables, then builds every other table with CTAS (`CREATE TABLE ... AS SELECT`, written as Parquet to its own S3 prefix) | silver rules are generated as SQL from `pipeline/rules.py` (one rule catalogue for DuckDB, Spark and Athena); gold is `sql/` translated to Athena SQL (`sql/athena/`, each file lists what changed) |
 | Workgroup `udise-wg` | where every query runs; **1 GB scan limit per query**; results to `athena-results/` (deleted after 7 days by a lifecycle rule) | Athena bills by data scanned, so a runaway query is cancelled, not paid for |
-| CloudFormation stack `udise-aws` (`aws/template.yaml`) | workgroup, both Lambdas, least-privilege IAM roles, log groups (7 days), and a custom resource that adds the S3 trigger and lifecycle rule to the existing bucket | infrastructure as code. CloudFormation cannot change a bucket it did not create, so a small function does it (what AWS CDK does under the hood) |
+| CloudFormation stack `udise-aws` (`aws/template.yaml`) | workgroup, both Lambdas, the DynamoDB table, least-privilege IAM roles, log groups (7 days), and a custom resource that adds the S3 trigger and lifecycle rule to the existing bucket | infrastructure as code. CloudFormation cannot change a bucket it did not create, so a small function does it (what AWS CDK does under the hood) |
+
+**Ingestion manifest (DynamoDB)**
+
+The validator writes one item per bronze file to the table `udise-ingest-manifest` (partition key
+`s3_key`, on-demand billing, so there is no capacity to size and it costs only per request):
+
+| Attribute | Example |
+|---|---|
+| `s3_key` | `bronze/facility/year=2025-26/facility_data_RAJASTHAN_2025-26.parquet` |
+| `dataset`, `year` | `facility`, `2025-26` (from the key) |
+| `row_count` | `106445` (from the file's footer) |
+| `etag` | S3's fingerprint of the file's bytes (the MD5 for these single-part uploads) |
+| `status`, `reason` | `PASSED`, `all contract checks passed`; or `QUARANTINED`, `row_count_mismatch: 1 rows, expected 3` |
+| `validated_at`, `run_id` | UTC time of the check; the Lambda request id (also in the logs) |
+
+- **Idempotent re-uploads.** Before checking a file, the Lambda looks its key up (`GetItem`,
+  strongly consistent). If the same etag already `PASSED`, it returns `unchanged` without
+  downloading or checking the file. A new etag means new bytes, so the file is checked again. A
+  `QUARANTINED` file is always checked again: only a pass lets a file skip.
+- **Order of writes.** For a bad file: quarantine copy, then reason file, then the manifest item,
+  and only then is the bronze file deleted. If any step fails, the file is still in `bronze/` and
+  S3's retry runs the whole check again.
+- **Least privilege.** The validator's role may only `GetItem` and `PutItem` on this one table
+  (no Scan, Query or Delete). The scan summary runs with your own login.
+- Dry runs (the deploy smoke test) always run the real checks and write nothing.
+  `revalidate_bronze.py --force` re-checks files that already passed (after a validator or
+  contract change).
+- Why DynamoDB and not a file in S3: a single-key lookup and write take milliseconds, many
+  Lambda runs can write at once without overwriting each other's results, and there is no server.
 
 **Deploy, run, tear down** (Windows PowerShell; the `.sh` scripts need Git Bash's `bash`):
 
@@ -194,7 +227,8 @@ python run_pipeline.py                           # local bronze (data/bronze/)
 python -m aws.make_contract                      # aws/bronze_validator/contract.json
 bash aws/deploy.sh                               # cfn-lint, package, deploy stack, smoke-test the Lambda
 python -m aws.upload_bronze --check              # upload bronze; report anything quarantined
-python -m aws.revalidate_bronze                  # only if the validator changed after files were uploaded
+python -m aws.revalidate_bronze                  # check files already in bronze/ (fills the manifest); --force after a validator change
+python -m aws.manifest_summary                   # scan the DynamoDB manifest: counts by status, dataset, year
 python -m aws.athena_build                       # bronze -> silver -> gold in Athena + tests + official figures
 python -m aws.parity                             # Athena vs DuckDB; exit code 1 on any mismatch
 bash aws/teardown.sh                             # delete the stack and artifacts/ (asks to type 'delete')
@@ -209,6 +243,11 @@ If the AWS CLI prints a `'charmap' codec` error on Windows, run `$env:PYTHONUTF8
 - Stack `udise-aws`: `CREATE_COMPLETE` in 1 min 41 s; every later update `UPDATE_COMPLETE` with
   the smoke test passing.
 - Upload: 94 files, 31.7 MB, 288.1 s. Validation: **94 ok, 0 quarantined** (47.1 s).
+- DynamoDB manifest (stack update `UPDATE_COMPLETE` in 1 min 59 s, smoke test ok): the backfill
+  (`revalidate_bronze`) checked **94 files, 94 ok** in 35.3 s; running it again returned
+  **unchanged 94** in 33.6 s (no file downloaded or re-checked). Scan (`manifest_summary`):
+  **94 items, all PASSED**, 1,720,687 rows (equal to `contract.json`); by dataset: enrolment1 82
+  (41 districts x 2 years), facility 4, profile1 4, teacher 4.
 - Athena build, run `20261108T042139Z`: **PASSED**, 103 queries, 172.0 MB scanned, 345.4 s.
 
 | Step | Queries | Seconds | MB scanned |
@@ -326,10 +365,11 @@ pipeline/
   build.py, checks.py  pandas school-year table and the QA report
 spark/                 PySpark version of silver and gold (Databricks notebook, parity check)
 aws/
-  template.yaml        CloudFormation: Athena workgroup, validator Lambda, IAM roles, S3 trigger
+  template.yaml        CloudFormation: Athena workgroup, validator Lambda, DynamoDB manifest, IAM roles, S3 trigger
   deploy.sh, teardown.sh  create / update (with smoke test) and remove the stack
   bronze_validator/    Lambda: footer checks of each bronze upload vs contract.json
   upload_bronze.py     local bronze -> S3; revalidate_bronze.py, make_contract.py
+  manifest_summary.py  scan of the DynamoDB ingestion manifest (counts by status / dataset / year)
   athena_build.py      Athena: bronze tables -> silver (rules as SQL) -> gold -> tests -> official figures
   parity.py            Athena vs DuckDB, cell by cell
 sql/                   star schema and marts (numbered, run in order), tests/, validation/;

@@ -10,6 +10,7 @@ BUCKET = "udise-lake-aditya-2026"
 STACK = "udise-aws"
 WORKGROUP = "udise-wg"
 DATABASE = "udise"
+MANIFEST_TABLE = "udise-ingest-manifest"   # DynamoDB, one item per bronze file (template.yaml)
 
 BRONZE_PREFIX = "bronze/"
 QUARANTINE_FILES_PREFIX = "quarantine/files/"

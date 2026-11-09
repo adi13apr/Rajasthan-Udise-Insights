@@ -94,3 +94,14 @@ call fails because the Free plan does not allow a service, stop and report; no w
   `range()`, list functions, `anti join`.
 - The `primary` workgroup has no result location of its own (it was set in the console's
   editor settings), so queries from code must use `udise-wg`.
+
+## Addition: DynamoDB ingestion manifest (branch feature/aws-dynamodb-manifest)
+
+- Table `udise-ingest-manifest` in the stack: on-demand billing, partition key `s3_key` (string),
+  deleted with the stack. The validator role gets `dynamodb:GetItem` and `dynamodb:PutItem` on
+  that table only.
+- The validator writes one item per checked file: `s3_key, dataset, year, row_count, etag,
+  status (PASSED / QUARANTINED), reason, validated_at, run_id` (+ `quarantine_key`).
+- Before checking, it looks the key up: same etag already PASSED -> `unchanged`, no download.
+  QUARANTINED is always re-checked. Dry runs never skip and never write; `force` re-checks.
+- Backfill with `python -m aws.revalidate_bronze`; summary with `python -m aws.manifest_summary`.

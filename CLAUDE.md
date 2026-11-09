@@ -191,7 +191,9 @@ then the Sattva analysis (phases A1-A6).
   + 7-day athena-results/ rule (replies itself; no cfnresponse in python3.13). `python -m aws.athena_build`
   (silver SQL generated from pipeline/rules.py, gold from `sql/athena/`), `python -m aws.parity`. First full
   run 2026-11-08: 94/94 files valid, build PASSED (103 queries, 172.0 MB), parity PASS (22,194 cells, 0
-  mismatches), official 8/8. Credentials only via `aws login`; boto3 needs `boto3[crt]`.
+  mismatches), official 8/8. DynamoDB manifest `udise-ingest-manifest` (branch feature/aws-dynamodb-manifest):
+  one item per bronze file (status PASSED/QUARANTINED, etag); same etag already PASSED -> skipped;
+  validator role GetItem/PutItem only; `python -m aws.manifest_summary`. Backfill: 94 PASSED. Credentials only via `aws login`; boto3 needs `boto3[crt]`.
 - `pipeline/build.py`: reads silver (`silver.tables_for_build()`); school-year table (enrolment by stage and sex, SC/ST/CWSN,
   facility flags, infra index, teachers, PTR, single-teacher, quality flags) and
   district summaries (girls' share, retention gap, progression ratios).
